@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1251">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.0  (Win32)">
+	<META NAME="CREATED" CONTENT="20090405;13113900">
+	<META NAME="CHANGED" CONTENT="20090504;21283900">
+	<META NAME="Поле 1" CONTENT="">
+	<META NAME="Поле 2" CONTENT="">
+	<META NAME="Поле 3" CONTENT="">
+	<META NAME="Поле 4" CONTENT="">
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H1 ALIGN=CENTER>KefirBB user guide</H1>
+<P ALIGN=CENTER>(version 0.4)</P>
+<P ALIGN=CENTER><BR><BR>
+</P>
+<P>I speak English bad. So less words, more code.</P>
+<H2>Overview</H2>
+<P>KefirBB is a library for text processing. For example for convert
+bb-codes to html. Simple example:</P>
+<PRE>TextProcessor processor = BBProcessorFactory.getInstance().create();
+assert processor.process(&quot;[b]Oi![/b]&quot;).equals(&quot;&lt;span style=\&quot;font-weight:bold;\&quot;&gt;Oi!&lt;/span&gt;&quot;);</PRE><P>
+At this code I create the BB-code processor and convert bb-code text
+to html-text.</P>
+<H2>Version 0.4 futures</H2>
+<P>Prefix and suffix added in each converted text.</P>
+<PRE>    &lt;prefix&gt;&amp;lt;!-- bbcodes begin --&amp;gt;&lt;/prefix&gt;
+    &lt;suffix&gt;&amp;lt;!-- bbcodes end --&amp;gt;&lt;/suffix&gt;</PRE><P>
+At this configuration defines prefix and suffix comment. Result of
+uses:</P>
+<PRE>    assert &quot;&lt;!-- bbcodes begin --&gt;Test&lt;!-- bbcodes end --&gt;&quot;.equals(processor.process(&ldquo;Test&rdquo;));</PRE><P>
+Parameters be added. You can define parameter in XML configuration
+file, XML properties file, properties format file or at runtime.
+Runtime parameters have biggest priority. After XML-properties file,
+properties file and XML configuration parameters.</P>
+<P>The example of XML-configuration fragment defined parameters:</P>
+<PRE>    &lt;params&gt;
+        &lt;param name=&quot;var1&quot; value=&quot;1&quot;/&gt;
+        &lt;param name=&quot;var2&quot; value=&quot;2&quot;/&gt;
+    &lt;/params&gt;</PRE><P>
+Format of XML-properties and properties files see in the Java API
+documentation, class <TT>java.util.Properties</TT>. When you use
+default method <TT>BBProcessorFactory.create()</TT> factory try find
+properties file:<BR>kefirbb.properties &ndash; for properties
+file<BR>kefirbb.properties.xml &ndash; for XML properties file.</P>
+<P>If you want use programming parameters use
+<TT>ru.perm.kefir.bbcode.ConfigurationFactory</TT> and
+<TT>ru.perm.kefir.bbcode.Configuration</TT> classes.</P>
+<H2>Configuration</H2>
+<P>KefirBB can be configured with XML configuration file. In
+configuration file defines codes and scopes. Codes define how text
+will be converted. Scope defines allow codes when codes put in other
+codes.</P>
+<P>To define codes uses tag &ldquo;code&rdquo;. In this tags uses
+tags &ldquo;pattern&rdquo; and &ldquo;template&rdquo;. &ldquo;pattern&rdquo;
+uses to parse code in source text. &ldquo;template&rdquo; uses to
+generate new text.</P>
+<PRE>    &lt;code name=&quot;aquote&quot;&gt;
+        &lt;pattern&gt;[aquote]&lt;var/&gt;[/aquote]&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;laquo;&lt;var/&gt;&amp;amp;raquo;&lt;/template&gt;
+    &lt;/code&gt;</PRE><P>
+Tag &ldquo;var&rdquo; uses to define put-in text wich can be
+processed. Tag &ldquo;var&rdquo; also can have attributes: name,
+parse, scope, inherit.</P>
+<P>name &ndash; define variable name<BR>parse &ndash; if this
+attribute is false, then var mustn't process<BR>scope &ndash; define
+scope to process text<BR>inherit &ndash; if true, parsing with scope
+of wrap code</P>
+<P>Tag &ldquo;scope&rdquo; define scope and contains list of
+&ldquo;coderef&rdquo; tag, wich specify code.</P>
+<P>Default configuration file places at
+&ldquo;classpath:/ru/perm/kefir/bbcode/default.xml&rdquo;:</P>
+<PRE>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;configuration xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+               xmlns=&quot;http://kefir-bb.sourceforge.net/schemas&quot;
+               xsi:schemaLocation=&quot;http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.4.xsd&quot;&gt;
+    &lt;!-- XML escape symbols --&gt;
+    &lt;scope name=&quot;escapeXml&quot;&gt;
+        &lt;coderef name=&quot;amp&quot;/&gt;
+        &lt;coderef name=&quot;apos&quot;/&gt;
+        &lt;coderef name=&quot;lt&quot;/&gt;
+        &lt;coderef name=&quot;gt&quot;/&gt;
+        &lt;coderef name=&quot;quot&quot;/&gt;
+    &lt;/scope&gt;
+    &lt;code name=&quot;amp&quot; priority=&quot;100&quot;&gt;
+        &lt;pattern&gt;&amp;amp;&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;amp;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;apos&quot; priority=&quot;100&quot;&gt;
+        &lt;pattern&gt;&amp;apos;&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;apos;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;lt&quot; priority=&quot;100&quot;&gt;
+        &lt;pattern&gt;&amp;lt;&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;lt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;gt&quot; priority=&quot;100&quot;&gt;
+        &lt;pattern&gt;&amp;gt;&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;quot&quot; priority=&quot;100&quot;&gt;
+        &lt;pattern&gt;&amp;quot;&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;quot;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Root scope. This scope uses when processor started work and by default, if not set other scope --&gt;
+    &lt;scope name=&quot;ROOT&quot; parent=&quot;escapeXml&quot;&gt;
+        &lt;coderef name=&quot;br1&quot;/&gt;
+        &lt;coderef name=&quot;br2&quot;/&gt;
+        &lt;coderef name=&quot;br3&quot;/&gt;
+        &lt;coderef name=&quot;br4&quot;/&gt;
+        &lt;coderef name=&quot;slash&quot;/&gt;
+        &lt;coderef name=&quot;left_square_bracket&quot;/&gt;
+        &lt;coderef name=&quot;right_square_bracket&quot;/&gt;
+        &lt;coderef name=&quot;bold&quot;/&gt;
+        &lt;coderef name=&quot;u&quot;/&gt;
+        &lt;coderef name=&quot;s&quot;/&gt;
+        &lt;coderef name=&quot;i&quot;/&gt;
+        &lt;coderef name=&quot;code&quot;/&gt;
+        &lt;coderef name=&quot;img&quot;/&gt;
+        &lt;coderef name=&quot;img1&quot;/&gt;
+        &lt;coderef name=&quot;url1&quot;/&gt;
+        &lt;coderef name=&quot;url2&quot;/&gt;
+        &lt;coderef name=&quot;url3&quot;/&gt;
+        &lt;coderef name=&quot;url4&quot;/&gt;
+        &lt;coderef name=&quot;url5&quot;/&gt;
+        &lt;coderef name=&quot;url6&quot;/&gt;
+        &lt;coderef name=&quot;url7&quot;/&gt;
+        &lt;coderef name=&quot;url8&quot;/&gt;
+        &lt;coderef name=&quot;color&quot;/&gt;
+        &lt;coderef name=&quot;quote&quot;/&gt;
+        &lt;coderef name=&quot;aquote&quot;/&gt;
+        &lt;coderef name=&quot;size&quot;/&gt;
+        &lt;coderef name=&quot;symbol&quot;/&gt;
+        &lt;coderef name=&quot;table&quot;/&gt;
+    &lt;/scope&gt;
+
+    &lt;!-- line feed characters --&gt;
+    &lt;code name=&quot;br1&quot; priority=&quot;3&quot;&gt;
+        &lt;pattern&gt;&amp;#x0A;&amp;#x0D;&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;br/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;br2&quot; priority=&quot;2&quot;&gt;
+        &lt;pattern&gt;&amp;#x0D;&amp;#x0A;&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;br/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;br3&quot; priority=&quot;1&quot;&gt;
+        &lt;pattern&gt;&amp;#x0A;&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;br/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;br4&quot; priority=&quot;0&quot;&gt;
+        &lt;pattern&gt;&amp;#x0D;&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;br/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!--
+        Escape bb-code symbols
+        double slash to slash
+        slash + square bracket to square bracket
+     --&gt;
+    &lt;code name=&quot;slash&quot; priority=&quot;10&quot;&gt;
+        &lt;pattern&gt;\\&lt;/pattern&gt;
+        &lt;template&gt;\&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;left_square_bracket&quot; priority=&quot;9&quot;&gt;
+        &lt;pattern&gt;\[&lt;/pattern&gt;
+        &lt;template&gt;[&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;right_square_bracket&quot; priority=&quot;9&quot;&gt;
+        &lt;pattern&gt;\]&lt;/pattern&gt;
+        &lt;template&gt;]&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Simple formatting --&gt;
+    &lt;code name=&quot;bold&quot;&gt;
+        &lt;pattern&gt;[b]&lt;var/&gt;[/b]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;font-weight:bold;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;u&quot;&gt;
+        &lt;pattern&gt;[u]&lt;var/&gt;[/u]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;text-decoration:underline;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;s&quot;&gt;
+        &lt;pattern&gt;[s]&lt;var/&gt;[/s]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;text-decoration:line-through;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;i&quot;&gt;
+        &lt;pattern&gt;[i]&lt;var/&gt;[/i]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;font-style:italic;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Quote code block --&gt;
+    &lt;code name=&quot;code&quot;&gt;
+        &lt;pattern&gt;[code]&lt;var scope=&quot;codeScope&quot;/&gt;[/code]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;pre&amp;gt;&lt;var/&gt;&amp;lt;/pre&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;scope name=&quot;codeScope&quot; parent=&quot;escapeXml&quot;&gt;
+        &lt;coderef name=&quot;br1&quot;/&gt;
+        &lt;coderef name=&quot;br2&quot;/&gt;
+        &lt;coderef name=&quot;br3&quot;/&gt;
+        &lt;coderef name=&quot;br4&quot;/&gt;
+        &lt;coderef name=&quot;slash&quot;/&gt;
+        &lt;coderef name=&quot;left_square_bracket&quot;/&gt;
+        &lt;coderef name=&quot;right_square_bracket&quot;/&gt;
+        &lt;coderef name=&quot;symbol&quot;/&gt;
+    &lt;/scope&gt;
+
+    &lt;!-- Insert image --&gt;
+    &lt;code name=&quot;img&quot;&gt;
+        &lt;pattern&gt;[img]http://&lt;var scope=&quot;escapeXml&quot;/&gt;[/img]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;img src=&amp;quot;http://&lt;var/&gt;&amp;quot;/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;img1&quot;&gt;
+        &lt;pattern&gt;[img]/&lt;var scope=&quot;escapeXml&quot;/&gt;[/img]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;img src=&amp;quot;/&lt;var/&gt;&amp;quot;/&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Links. http, malto protocols --&gt;
+    &lt;code name=&quot;url1&quot; priority=&quot;6&quot;&gt;
+        &lt;pattern&gt;[url=http://&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;http://&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url2&quot; priority=&quot;5&quot;&gt;
+        &lt;pattern&gt;[url=mailto:&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;mailto:&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url7&quot; priority=&quot;5&quot;&gt;
+        &lt;pattern&gt;[url=/&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;/&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url3&quot; priority=&quot;4&quot;&gt;
+        &lt;pattern&gt;[url=&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;http://&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url4&quot; priority=&quot;3&quot;&gt;
+        &lt;pattern&gt;[url]http://&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;http://&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;http://&lt;var name=&quot;url&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url5&quot; priority=&quot;2&quot;&gt;
+        &lt;pattern&gt;[url]mailto:&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;mailto:&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;mailto:&lt;var name=&quot;url&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url8&quot; priority=&quot;2&quot;&gt;
+        &lt;pattern&gt;[url]/&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;/&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;/&lt;var name=&quot;url&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;code name=&quot;url6&quot; priority=&quot;1&quot;&gt;
+        &lt;pattern&gt;[url]&lt;var name=&quot;url&quot; scope=&quot;escapeXml&quot;/&gt;[/url]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;a href=&amp;quot;http://&lt;var name=&quot;url&quot;/&gt;&amp;quot;&amp;gt;&lt;var name=&quot;url&quot;/&gt;&amp;lt;/a&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Font color --&gt;
+    &lt;code name=&quot;color&quot;&gt;
+        &lt;pattern&gt;[color=&lt;var name=&quot;color&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/color]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;color:&lt;var name=&quot;color&quot;/&gt;;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Qote block --&gt;
+    &lt;code name=&quot;quote&quot;&gt;
+        &lt;pattern&gt;[quote]&lt;var/&gt;[/quote]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;blockquote&amp;gt;&lt;var/&gt;&amp;lt;/blockquote&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- angle quotes --&gt;
+    &lt;code name=&quot;aquote&quot;&gt;
+        &lt;pattern&gt;[aquote]&lt;var/&gt;[/aquote]&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;laquo;&lt;var/&gt;&amp;amp;raquo;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Font size --&gt;
+    &lt;code name=&quot;size&quot;&gt;
+        &lt;pattern&gt;[size=&lt;var name=&quot;size&quot; scope=&quot;escapeXml&quot;/&gt;]&lt;var name=&quot;text&quot;/&gt;[/size]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;span style=&amp;quot;font-size:&lt;var name=&quot;size&quot;/&gt;;&amp;quot;&amp;gt;&lt;var name=&quot;text&quot;/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Special html symbols --&gt;
+    &lt;code name=&quot;symbol&quot;&gt;
+        &lt;pattern&gt;[symbol=&lt;var scope=&quot;escapeXml&quot;/&gt;/]&lt;/pattern&gt;
+        &lt;template&gt;&amp;amp;&lt;var/&gt;;&lt;/template&gt;
+    &lt;/code&gt;
+
+    &lt;!-- Simple table --&gt;
+    &lt;code name=&quot;table&quot;&gt;
+        &lt;pattern&gt;[table]&lt;var scope=&quot;tableScope&quot;/&gt;[/table]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;table&amp;gt;&lt;var/&gt;&amp;lt;/table&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;scope name=&quot;tableScope&quot; parent=&quot;escapeXml&quot;&gt;
+        &lt;coderef name=&quot;tr&quot;/&gt;
+    &lt;/scope&gt;
+    &lt;code name=&quot;tr&quot;&gt;
+        &lt;pattern&gt;[tr]&lt;var scope=&quot;trScope&quot;/&gt;[/tr]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;tr&amp;gt;&lt;var/&gt;&amp;lt;/tr&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+    &lt;scope name=&quot;trScope&quot; parent=&quot;escapeXml&quot;&gt;
+        &lt;coderef name=&quot;td&quot;/&gt;
+    &lt;/scope&gt;
+    &lt;code name=&quot;td&quot;&gt;
+        &lt;pattern&gt;[td]&lt;var/&gt;[/td]&lt;/pattern&gt;
+        &lt;template&gt;&amp;lt;td&amp;gt;&lt;var/&gt;&amp;lt;/td&amp;gt;&lt;/template&gt;
+    &lt;/code&gt;
+&lt;/configuration&gt;</PRE><P>
+Schema location is
+&ldquo;<A HREF="http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.3.xsd">http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.4.xsd</A>&rdquo;:</P>
+<PRE>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;xsd:schema xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot;
+            targetNamespace=&quot;http://kefir-bb.sourceforge.net/schemas&quot;
+            xmlns=&quot;http://kefir-bb.sourceforge.net/schemas&quot;
+            elementFormDefault=&quot;qualified&quot;
+            attributeFormDefault=&quot;unqualified&quot;&gt;
+    &lt;xsd:complexType name=&quot;templateType&quot; mixed=&quot;true&quot;&gt;
+        &lt;xsd:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+            &lt;xsd:element name=&quot;var&quot;&gt;
+                &lt;xsd:complexType&gt;
+                    &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:string&quot; default=&quot;variable&quot;/&gt;
+                &lt;/xsd:complexType&gt;
+            &lt;/xsd:element&gt;
+        &lt;/xsd:choice&gt;
+    &lt;/xsd:complexType&gt;
+
+    &lt;xsd:element name=&quot;configuration&quot;&gt;
+        &lt;xsd:complexType&gt;
+            &lt;xsd:sequence&gt;
+                &lt;xsd:element name=&quot;params&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;&gt;
+                    &lt;xsd:complexType&gt;
+                        &lt;xsd:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                            &lt;xsd:element name=&quot;param&quot;&gt;
+                                &lt;xsd:complexType&gt;
+                                    &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:string&quot; use=&quot;required&quot;/&gt;
+                                    &lt;xsd:attribute name=&quot;value&quot; type=&quot;xsd:string&quot; use=&quot;required&quot;/&gt;
+                                &lt;/xsd:complexType&gt;
+                            &lt;/xsd:element&gt;
+                        &lt;/xsd:choice&gt;
+                    &lt;/xsd:complexType&gt;
+                &lt;/xsd:element&gt;
+                &lt;xsd:element name=&quot;prefix&quot; type=&quot;templateType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
+                &lt;xsd:element name=&quot;suffix&quot; type=&quot;templateType&quot; minOccurs=&quot;0&quot; maxOccurs=&quot;1&quot;/&gt;
+                &lt;xsd:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                    &lt;xsd:element name=&quot;code&quot;&gt;
+                        &lt;xsd:complexType&gt;
+                            &lt;xsd:sequence&gt;
+                                &lt;xsd:element name=&quot;pattern&quot;&gt;
+                                    &lt;xsd:complexType mixed=&quot;true&quot;&gt;
+                                        &lt;xsd:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                                            &lt;xsd:element name=&quot;var&quot;&gt;
+                                                &lt;xsd:complexType&gt;
+                                                    &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:string&quot; default=&quot;variable&quot;/&gt;
+                                                    &lt;xsd:attribute name=&quot;parse&quot; type=&quot;xsd:boolean&quot; default=&quot;true&quot;/&gt;
+                                                    &lt;xsd:attribute name=&quot;scope&quot; type=&quot;xsd:IDREF&quot; default=&quot;ROOT&quot;/&gt;
+                                                    &lt;xsd:attribute name=&quot;inherit&quot; type=&quot;xsd:boolean&quot; default=&quot;false&quot;/&gt;
+                                                &lt;/xsd:complexType&gt;
+                                            &lt;/xsd:element&gt;
+                                        &lt;/xsd:choice&gt;
+                                    &lt;/xsd:complexType&gt;
+                                &lt;/xsd:element&gt;
+                                &lt;xsd:element name=&quot;template&quot; type=&quot;templateType&quot;/&gt;
+                            &lt;/xsd:sequence&gt;
+                            &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:ID&quot;/&gt;
+                            &lt;xsd:attribute name=&quot;priority&quot; type=&quot;xsd:integer&quot; default=&quot;0&quot;/&gt;
+                        &lt;/xsd:complexType&gt;
+                    &lt;/xsd:element&gt;
+                    &lt;xsd:element name=&quot;scope&quot;&gt;
+                        &lt;xsd:complexType&gt;
+                            &lt;xsd:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;
+                                &lt;xsd:element name=&quot;coderef&quot;&gt;
+                                    &lt;xsd:complexType&gt;
+                                        &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:IDREF&quot; use=&quot;required&quot;/&gt;
+                                    &lt;/xsd:complexType&gt;
+                                &lt;/xsd:element&gt;
+                            &lt;/xsd:choice&gt;
+                            &lt;xsd:attribute name=&quot;name&quot; type=&quot;xsd:ID&quot; use=&quot;required&quot;/&gt;
+                            &lt;xsd:attribute name=&quot;parent&quot; type=&quot;xsd:string&quot; use=&quot;optional&quot;/&gt;
+                            &lt;xsd:attribute name=&quot;ignoreText&quot; type=&quot;xsd:boolean&quot; use=&quot;optional&quot; default=&quot;false&quot;/&gt;
+                        &lt;/xsd:complexType&gt;
+                    &lt;/xsd:element&gt;
+                &lt;/xsd:choice&gt;
+            &lt;/xsd:sequence&gt;
+        &lt;/xsd:complexType&gt;
+    &lt;/xsd:element&gt;
+&lt;/xsd:schema&gt;</PRE><H2>
+Usage</H2>
+<P>This code find configuration file at &ldquo;classpath:/kefirbb.xml&rdquo;,
+which must be defined by user. If can't using default configuration
+file at &ldquo;classpath:/ru/perm/kefir/bbcode/default.xml&rdquo;:</P>
+<PRE>TextProcessor processor = BBProcessorFactory.getInstance().create();</PRE><P>
+This code create TextProcessor using configuration file from
+resource:</P>
+<PRE>TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(&quot;ru/perm/kefir/bbcode/test.xml&quot;);</PRE><P>
+This code create TextProcessor using configuration file from
+resource:</P>
+<PRE>TextProcessor processor = BBProcessorFactory.getInstance().create(&quot;kefirbb.xml&quot;);
+TextProcessor processor = BBProcessorFactory.getInstance().create(new File(&quot;kefirbb.xml&quot;));</PRE><P>
+Next code use <TT>ru.perm.kefir.bbcode.ConfigurationFactory</TT> and
+<TT>ru.perm.kefir.bbcode.Configuration</TT> classes:</P>
+<PRE>Configuration configuration = ConfigurationFactory.getInstance().create();
+configuration.setParam(&quot;myparameter&quot;, &quot;any object&quot;);
+TextProcessor <SPAN LANG="en-US">p</SPAN>rocessor = configuration.create();</PRE>
+</BODY>
+</HTML>

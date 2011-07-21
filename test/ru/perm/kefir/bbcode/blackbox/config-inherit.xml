@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.3.xsd">
+    <scope name="ROOT">
+        <coderef name="stars"/>
+    </scope>
+    <scope name="myscope">
+        <coderef name="brackets"/>
+    </scope>
+    <code name="stars">
+        <pattern>*<var scope="myscope"/>*</pattern>
+        <template>^<var/>^</template>
+    </code>
+    <code name="brackets">
+        <pattern>[<var inherit="true"/>]</pattern>
+        <template>(<var/>)</template>
+    </code>
+</configuration>

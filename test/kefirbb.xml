@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.4.xsd">
+    <params>
+        <param name="var1" value="1"/>
+        <param name="var2" value="1"/>
+        <param name="var3" value="1"/>
+        <param name="var4" value="1"/>
+        <param name="var5" value="1"/>
+    </params>
+
+    <code name="def">
+        <pattern>def <var name="var5"/>;</pattern>
+        <template><var name="var1"/><var name="var2"/><var name="var3"/><var name="var4"/><var name="var5"/></template>
+    </code>
+    <code name="print">
+        <pattern>print;</pattern>
+        <template><var name="var1"/><var name="var2"/><var name="var3"/><var name="var4"/><var name="var5"/></template>
+    </code>
+
+    <code>
+        <pattern>test</pattern>
+        <template>default</template>
+    </code>
+
+</configuration>

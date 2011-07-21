@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas
+               http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
+    <code>
+        <pattern><constant value="tEsT" ignoreCase="true"/></pattern>
+        <template>Passed!</template>
+    </code>
+
+    <code>
+        <pattern><constant value="&lt;b&gt;" ignoreCase="true"/><var/><constant value="&lt;/b&gt;" ignoreCase="true"/></pattern>
+        <template>[B]<var/>[/B]</template>
+    </code>
+
+    <code>
+        <pattern ignoreCase="true">[b]<var/>[/b]</pattern>
+        <template>&lt;b&gt;<var/>&lt;/b&gt;</template>
+    </code>
+
+    <code>
+        <pattern ignoreCase="true">[S]<var/><constant value="[/s]" ignoreCase="false"/></pattern>
+        <template>&lt;s&gt;<var/>&lt;/s&gt;</template>
+    </code>
+</configuration>

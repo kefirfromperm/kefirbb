@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.4.xsd">
+    <code>
+        <pattern>def <var name="value" parse="false"/>;</pattern>
+        <template/>
+    </code>
+    <code>
+        <pattern>print;</pattern>
+        <template><var name="value"/></template>
+    </code>
+</configuration>

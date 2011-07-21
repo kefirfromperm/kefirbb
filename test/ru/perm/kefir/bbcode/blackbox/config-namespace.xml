@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bb:configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns:bb="http://kefir-bb.sourceforge.net/schemas"
+                  xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas
+                  http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+    <bb:code>
+        <bb:pattern>test</bb:pattern>
+        <bb:template>namespace</bb:template>
+    </bb:code>
+</bb:configuration>

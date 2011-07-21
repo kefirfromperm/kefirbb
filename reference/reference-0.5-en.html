@@ -1,0 +1,233 @@
+<html>
+<head>
+    <meta content="text/html;charset=UTF-8">
+    <title>KefirBB user guide, version 0.5</title>
+</head>
+<body>
+<h1>KefirBB user guide</h1>
+
+<p>KefirBB user guide, version 0.5, english.</p>
+
+<h2>Introduction</h2>
+
+<p>
+    KefirBB is a Java-library for text processing. Initially it develop for BB2HTML translation.
+    But flexible cponfiguration allowed use it for others translations. For example
+    XML2HTML or for HTML filtration.
+</p>
+
+<h2>Getting started</h2>
+
+<p>
+    At first you must download <em>kefir-bb-0.5.jar</em> and add it to your application classpath.
+    Files can be downloaded from official project site
+    <a href="http://kefir-bb.sourceforge.net">http://kefir-bb.sourceforge.net</a>
+</p>
+
+<p>
+    You can get processor object implements interface <code>ru.perm.kefir.bbcode.TextProcessor</code> with
+    <em>ru.perm.kefir.bbcode.BBProcessorFactory</em>:
+</p>
+<blockquote>
+    <code>
+        TextProcessor processor = BBProcessorFactory.getInstance().create();
+    </code>
+</blockquote>
+<p>
+    Now you can use it for text processing:
+</p>
+<blockquote>
+    <code>
+        assert &quot;&amp;amp;&quot;.equals(processor.process(&quot;&amp;&quot;));
+    </code>
+</blockquote>
+<p>
+    The <code>processor</code> is thread-safe. You can use it in some threads.
+</p>
+<h2>Configuration</h2>
+<h3>Declarative configuration</h3>
+<p>
+    KefirBB has very flexible configuration. User can use own configuration with configuration file
+    <em>kefirbb.xml</em> in <em>classpath</em>. Other default configuration at
+    <em>~classpath:/ru/perm/kefir/bbcode/default.xml</em> will be used.
+</p>
+<p>
+    Configuration file is the XML-file, that define text translation. The XML schema can be got at
+    <a href="http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd</a>.
+    The <code>configuration</code> is a root tag of document. This is simple example of configuration
+    of processor which filter XML special symbols:
+</p>
+<blockquote>
+    <code>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br/>
+        &lt;configuration xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://kefir-bb.sourceforge.net/schemas&quot;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://kefir-bb.sourceforge.net/schemas
+        http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- XML escape symbols --&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;scope name=&quot;ROOT&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;amp;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;amp;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;apos;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;apos;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;lt;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;lt;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;gt;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;gt;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;quot;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;quot;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/scope&gt;<br/>
+        &lt;/configuration&gt;
+    </code>
+</blockquote>
+<h4>Codes</h4>
+<p>
+    Code is a atomic unit of text tranlation. Code define which how text fragment must be translated.
+</p>
+<p>
+    Code can be defined with <code>code</code> tag. Tag must contain two tags:
+    <code>pattern</code> &mdash; the pattern for search a text fragment for translation;
+    <code>template</code> &mdash; the template for text generation.
+    Tag <code>code</code> has 2 attributes:
+    <code>name</code> define name of code and
+    <code>priority</code> define priority of code (bigger value is greater priority, "0" by default).
+</p>
+<p>
+    Tag <code>pattern</code> can contains plain text and tags <code>var</code>. The text processor
+    find text fragments for translation by text in <code>pattern</code> tag. Tag <code>var</code> define
+    variable and has attributes:
+</p>
+<ul>
+    <li><code>name</code> &mdash; name of variable, "variable" by default;</li>
+    <li>
+        <code>parse</code> &mdash; mark that variable value must be processed, "true" by default;</li>
+    <li>
+        <code>regex</code> &mdash; regular expression for variable validation,
+        used if <code>parse=false</code>;
+    </li>
+    <li>
+        <code>scope</code> &mdash; scope for process variable,
+        used if <code>parse=true</code>, "ROOT" by default;
+    </li>
+    <li>
+        <code>inherit</code> &mdash; mark that scope must be inherit from outer code, "false" by default;
+    </li>
+    <li>
+        <code>transparent</code> &mdash; mark that variable can be accessible from outer code, "false" by default.
+    </li>
+</ul>
+<p>
+    Tag <code>template</code> can contains text and <code>var</code> tags, for generation.
+    But <code>var</code> accept only one attribute <code>name</code>, "variable" by default.
+</p>
+<p>Example of <code>code</code> tag:</p>
+<blockquote>
+    <code>
+        &lt;code name=&quot;bold&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;[b]&lt;var inherit=&quot;true&quot;/&gt;[/b]&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;lt;span style=&amp;quot;font-weight:bold;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;<br/>
+        &lt;/code&gt;
+    </code>
+</blockquote>
+<p>
+    Tag <code>code</code> can be defined inside tags <code>configuration</code> or <code>scope</code>.
+</p>
+<h4>Scopes</h4>
+<p>
+    Scope define which codes can be used for text processing. By default used  scope with name "ROOT".
+    If user not defined "ROOT" scope. Then all codes defined outside <code>scope</code> tags
+    will be added to ROOT-scope.
+</p>
+<p>
+    Scope can be defined with <code>scope</code> tag which must be inside <code>configuration</code> tag.
+    Tag <code>scope</code> has attributes:
+</p>
+<ul>
+    <li><code>name</code> &mdash; name of scope;</li>
+    <li><code>parent</code> &mdash; parent scope, all codes from parent will be added to child scope;</li>
+    <li><code>ignoreText</code> &mdash; ignore texts outside codes.</li>
+</ul>
+<p>
+    Tag <code>scope</code> can contains <code>code</code> for code definition and <code>coderef</code> tag
+    as reference for code defined outside of scope. Tag <code>coderef</code> has one attribute <code>name</code>
+    which indicate code by name.
+</p>
+<h4>Parameters</h4>
+<p>
+    Parameters is a predefined variables which cna be used for text generation. It can be defined inside
+    <code>params</code> tag with <code>param</code> tags, which has two attributes:
+    <code>name</code> &mdash; variable name and <code>value</code> &mdash; variable value. For example:
+</p>
+<blockquote>
+    <code>
+        &lt;params&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;param name="music" value="Punk"/&gt;<br/>
+        &lt;/params&gt;
+    </code>
+</blockquote>
+<p>
+    Also parameters can be defined in standard properties file <em>kefirbb.properties</em> or
+    <em>kefirbb.properties.xml</em> at <em>classpath</em>. See <code>java.util.Properties</code>.
+</p>
+<h4>Prefix and suffix</h4>
+<p>
+    Prefix and suffix will be added at begin and end of processed text. They defined with <code>prefix</code> and
+    <code>suffix</code> tags analogous <code>template</code> tag
+</p>
+<h3>Programmatic configuration</h3>
+<p>
+    Programmatic configuration define with <code>ru.perm.kefir.bbcode.Configuration</code> class. For example:
+</p>
+<blockquote>
+    <code>
+        // Create configuration<br/>
+        Configuration cfg = new Configuration();<br/>
+        <br/>
+        // Set the prefix and suffix<br/>
+        cfg.setPrefix(new Template(Arrays.asList(new Constant("["))));<br/>
+        cfg.setSuffix(new Template(Arrays.asList(new Constant("]"))));<br/>
+        <br/>
+        // Configure default scope<br/>
+        Scope scope = new Scope(Scope.ROOT);<br/>
+        <br/>
+        // Create code and add it to scope<br/>
+        Code code = new Code(<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;new Pattern(Arrays.asList(new Constant("val"))),<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;new Template(Arrays.asList(new NamedValue("value")))<br/>
+        );<br/>
+        Set&lt;Code&gt; codes = new HashSet&lt;Code&gt;();<br/>
+        codes.add(code);<br/>
+        scope.setScopeCodes(codes);<br/>
+        <br/>
+        // Set scope to configuration<br/>
+        cfg.setScope(scope);<br/>
+        <br/>
+        // Set the parameter<br/>
+        cfg.addParam("value", "KefirBB");
+    </code>
+</blockquote>
+<p>
+    Also tou can get configuration with <code>ru.perm.kefir.bbcode.ConfigurationFactory</code>:
+</p>
+<blockquote>
+    <code>
+        Configuration configuration = ConfigurationFactory.getInstance().create();
+    </code>
+</blockquote>
+<hr/>
+<p>
+    Vitaliy Samolovskih aka Kefir<br/>
+    <a href="mailto:kefir@perm.ru">kefir@perm.ru</a>
+</p>
+</body>
+</html>

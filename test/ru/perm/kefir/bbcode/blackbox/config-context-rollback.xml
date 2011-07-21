@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.4.xsd">
+    <code priority="3">
+        <pattern>[<var name="val" parse="false"/>]<var name="text"/>[/]</pattern>
+        <template><var name="text"/></template>
+    </code>
+    <code priority="2">
+        <pattern>(<var name="val" parse="false"/>)<var name="text"/>(/)</pattern>
+        <template><var name="text"/></template>
+    </code>
+    <code priority="1">
+        <pattern>(<var name="any" parse="false"/>)</pattern>
+        <template><var name="val"/></template>
+    </code>
+</configuration>

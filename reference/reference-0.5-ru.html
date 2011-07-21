@@ -1,0 +1,249 @@
+<html>
+<head>
+    <meta content="text/html;charset=UTF-8">
+    <title>Руководство пользователя KefirBB, версия 0.5</title>
+</head>
+<body>
+<h1>Руководство пользователя KefirBB</h1>
+
+<p>Руководство пользователя KefirBB, версия 0.5, русский язык.</p>
+
+<h2>Введение</h2>
+
+<p>
+    KefirBB &mdash; это Java-библиотека для преобразования текста между различными форматами.
+    Изначально KefirBB разрабатывалась для преобразования BB-кодов в HTML. Однако гибкие возможности
+    конфигурирования позволили использовать её и для других преобразований. Например для преобразования
+    XML в HTML или для фильтрации HTML-тэгов.
+</p>
+
+<h2>Начало работы</h2>
+
+<p>
+    Для того чтобы начать работать с KefirBB вам нужно получить файл <em>kefir-bb-0.5.jar</em> и добавить его в
+    <em>classpath</em> своего приложения. Скачать библиотеку можно с официальной страницы проекта
+    <a href="http://kefir-bb.sourceforge.net">http://kefir-bb.sourceforge.net</a>.
+</p>
+
+<p>
+    Чтобы преобразовать текст, для начала вы должны получить объект типа <code>ru.perm.kefir.bbcode.TextProcessor</code>:
+</p>
+<blockquote>
+    <code>
+        TextProcessor processor = BBProcessorFactory.getInstance().create();
+    </code>
+</blockquote>
+<p>
+    Теперь вы можете использовать его для преобразования вашего текста:
+</p>
+<blockquote>
+    <code>
+        assert &quot;&amp;amp;&quot;.equals(processor.process(&quot;&amp;&quot;));
+    </code>
+</blockquote>
+<p>
+    Объект <code>processor</code> является потокобезопасным. Это означает, что его можно использовать
+    в нескольких потоках одновременно.
+</p>
+<h2>Конфигурация</h2>
+<h3>Декларативная конфигурация</h3>
+<p>
+    KefirBB имеет очень гибкую конфигурацию. Пользователь может использовать свои настройки добавив файл конфигурации
+    <em>kefirbb.xml</em> в <em>classpath</em>. Если пользователь этого не сделает, то для настройки будет использован
+    файл конфигурации по умолчанию, находящийся <em>~classpath:/ru/perm/kefir/bbcode/default.xml</em>.
+</p>
+<p>
+    Файл конфигурации &mdash; это XML-файл описывающий преобразование текста. Схема находится по адресу:
+    <a href="http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd</a>.
+    В качестве корневого должен быть использован тэг <code>configuration</code>.
+    Пример простой конфигурации для процессора, фильтрующего спецсимволы XML:
+</p>
+<blockquote>
+    <code>
+        &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;<br/>
+        &lt;configuration xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlns=&quot;http://kefir-bb.sourceforge.net/schemas&quot;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation=&quot;http://kefir-bb.sourceforge.net/schemas
+        http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- XML escape symbols --&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;scope name=&quot;ROOT&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;amp;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;amp;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;apos;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;apos;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;lt;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;lt;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;gt;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;gt;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;&amp;quot;&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;amp;quot;&lt;/template&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/code&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/scope&gt;<br/>
+        &lt;/configuration&gt;
+    </code>
+</blockquote>
+<h4>Коды</h4>
+<p>
+    Код &mdash; это основная единица преобразования текста. Именно код определяет какой фрагмент текста должен быть преобразован
+    и как он должен быть преобразован.
+</p>
+<p>
+    Код определяется при помощи тэга <code>code</code>. Внутри которого обязательны 2 тэга:
+    <code>pattern</code> &mdash; образец по которому находится фрагмент текста, который должен быть обработан;
+    <code>template</code> &mdash; шаблон для генерации нового текста.
+    Так же у тэга <code>code</code> определены 2 аттрибута:
+    <code>name</code> &mdash; название тэга и
+    <code>priority</code> &mdash; приоритет кода (чем больше тем выше приоритет, по умолчанию "0").
+</p>
+<p>
+    Тэг <code>pattern</code> может содержать текст и тэг <code>var</code>. Во время обработки процессор ищет
+    фрагменты текста соответствующие тексту в тэге <code>pattern</code> кода. Тэг <code>var</code> введен для
+    определения переменных значений и имеет следующие атрибуты:
+</p>
+<ul>
+    <li><code>name</code> &mdash; название переменной, по умолчанию "variable";</li>
+    <li>
+        <code>parse</code> &mdash; флаг указывающий на то, требуется ли обработка текста переменной,
+        по умолчанию "true";</li>
+    <li>
+        <code>regex</code> &mdash; регулярное выражение, которому должна удовлетворять переменная,
+        используется только если <code>parse=false</code>;
+    </li>
+    <li>
+        <code>scope</code> &mdash; определяет область видимости, которая будет использована для обработки
+        текста переменной, используется только если <code>parse=true</code>, по умолчанию "ROOT";
+    </li>
+    <li>
+        <code>inherit</code> &mdash; определяет что нужно унаследовать область видимости от внешнего кода,
+        по умолчанию "false";
+    </li>
+    <li>
+        <code>transparent</code> &mdash; определяет что переменная должна быть видна внешнему коду,
+        по умолчанию "false", введен для обработки атрибутов.
+    </li>
+</ul>
+<p>
+    Тэг <code>template</code> так же может содержит текст и тэг <code>var</code>, однако тэг
+    <code>var</code> может иметь только 1 атрибут <code>name</code>, по умолчанию "variable",
+    чтобы определить, значение какой переменной подставить в текст.
+</p>
+<p>Пример тэга <code>code</code>:</p>
+<blockquote>
+    <code>
+        &lt;code name=&quot;bold&quot;&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;pattern&gt;[b]&lt;var inherit=&quot;true&quot;/&gt;[/b]&lt;/pattern&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;template&gt;&amp;lt;span style=&amp;quot;font-weight:bold;&amp;quot;&amp;gt;&lt;var/&gt;&amp;lt;/span&amp;gt;&lt;/template&gt;<br/>
+        &lt;/code&gt;
+    </code>
+</blockquote>
+<p>
+    Тэг <code>code</code> может быть определен непосредственно внутри тэга <code>configuration</code>
+    или внутри тэга <code>scope</code>.
+</p>
+<h4>Область видимости</h4>
+<p>
+    Область видимости определяет какие коды могут быть использованы для обработки фрагмента текста.
+    По умолчанию используется область видимости с именем "ROOT". Даже если она не определена
+    в конфигурации то она все равно будет создана и в нее будут включены все коды определенные
+    в тэге <code>configuration</code> но не в тэгах <code>scope</code>. Это удобно &mdash; для
+    простых конфигурация с небольшим количеством кодов разработчик может вовсе не заботиться об областях видимости.
+</p>
+<p>
+    Область видимости определяется при помощи тэга <code>scope</code>, который может находиться внутри тэга
+    <code>configuration</code>. Для тэга <code>scope</code> определны следующие атрибуты:
+</p>
+<ul>
+    <li><code>name</code> &mdash; название области видимости;</li>
+    <li><code>parent</code> &mdash; область видимости из которой будут унаследованы все коды;</li>
+    <li>
+        <code>ignoreText</code> &mdash; означает что при обработке текста в этой области видимости нужно
+        игнорировать весь текст, который не относится ни к одному из допустимых внутри этой области видимости кодов.
+    </li>
+</ul>
+<p>
+    Внутри тэга <code>scope</code> допустимы тэги: <code>code</code> &mdash; для определения кода (см. выше) и
+    <code>coderef</code> &mdash; для ссылки на код, определенный вне тэга <code>scope</code>. У тэга
+    <code>coderef</code> определен 1 атрибут <code>name</code> который должен совпадать с именем кода.
+</p>
+<h4>Параметры</h4>
+<p>
+    Параметры &mdash; это заранее определенные переменные, которые могут быть использованы при генерации текста в кодах,
+    префиксе и суффиксе.
+    Параметры определяются внутри тэга <code>params</code> при помощи тэгов <code>param</code>,
+    у которых есть 2 атрибута:
+    <code>name</code> &mdash; название переменной, <code>value</code> &mdash; значение. Например:
+</p>
+<blockquote>
+    <code>
+        &lt;params&gt;<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;param name="music" value="Punk"/&gt;<br/>
+        &lt;/params&gt;
+    </code>
+</blockquote>
+<p>
+    Так же параметры могут быть заданы в отдельном файле <em>kefirbb.properties</em> или
+    <em>kefirbb.properties.xml</em> в <em>classpath</em>. Форматы файлов определены в классе
+    <code>java.util.Properties</code>.
+</p>
+<h4>Префикс и суффикс</h4>
+<p>
+    Префикс и суффикс добавляются в начале и конце обрабатываемого текста соответственно. Определяются при помощи тэгов
+    <code>prefix</code> и <code>suffix</code>, аналогично тэгу <code>template</code>.
+</p>
+<h3>Программная конфигурация</h3>
+<p>
+    Программная кофигурация задается классом <code>ru.perm.kefir.bbcode.Configuration</code>. Пример:
+</p>
+<blockquote>
+    <code>
+        // Create configuration<br/>
+        Configuration cfg = new Configuration();<br/>
+        <br/>
+        // Set the prefix and suffix<br/>
+        cfg.setPrefix(new Template(Arrays.asList(new Constant("["))));<br/>
+        cfg.setSuffix(new Template(Arrays.asList(new Constant("]"))));<br/>
+        <br/>
+        // Configure default scope<br/>
+        Scope scope = new Scope(Scope.ROOT);<br/>
+        <br/>
+        // Create code and add it to scope<br/>
+        Code code = new Code(<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;new Pattern(Arrays.asList(new Constant("val"))),<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;new Template(Arrays.asList(new NamedValue("value")))<br/>
+        );<br/>
+        Set&lt;Code&gt; codes = new HashSet&lt;Code&gt;();<br/>
+        codes.add(code);<br/>
+        scope.setScopeCodes(codes);<br/>
+        <br/>
+        // Set scope to configuration<br/>
+        cfg.setScope(scope);<br/>
+        <br/>
+        // Set the parameter<br/>
+        cfg.addParam("value", "KefirBB");
+    </code>
+</blockquote>
+<p>
+    Так же вы можете получить программную конфигурацию при помощи
+    <code>ru.perm.kefir.bbcode.ConfigurationFactory</code>:
+</p>
+<blockquote>
+    <code>
+        Configuration configuration = ConfigurationFactory.getInstance().create();
+    </code>
+</blockquote>
+<hr/>
+<p>
+    Самоловских Виталий aka Kefir<br/>
+    <a href="mailto:kefir@perm.ru">kefir@perm.ru</a>
+</p>
+</body>
+</html>

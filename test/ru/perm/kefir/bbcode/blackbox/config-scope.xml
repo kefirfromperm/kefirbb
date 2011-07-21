@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+    <scope name="ROOT">
+        <coderef name="b1"/>
+        <coderef name="b3"/>
+        <code name="b4">
+            <pattern>er</pattern>
+            <template>ga</template>
+        </code>
+    </scope>
+    <scope name="sc">
+        <coderef name="b2"/>
+    </scope>
+    <code name="b1">
+        <pattern>[<var scope="sc"/>]</pattern>
+        <template>*<var/>*</template>
+    </code>
+    <code name="b2">
+        <pattern>(<var/>)</pattern>
+        <template>^<var/>^</template>
+    </code>
+    <code name="b3">
+        <pattern>(</pattern>
+        <template>:(</template>
+    </code>
+</configuration>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas
+               http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+    <code>
+        <pattern>&lt;<var name="name" regex="\w*"/> <var name="attrs" transparent="true"/>/&gt;</pattern>
+        <template>tag=<var name="name"/>,a=<var name="a"/>,b=<var name="b"/>,c=<var name="c"/></template>
+    </code>
+    <code>
+        <pattern>a=&quot;<var name="a"/>&quot;</pattern>
+        <template/>
+    </code>
+    <code>
+        <pattern>b=&quot;<var name="b"/>&quot;</pattern>
+        <template/>
+    </code>
+    <code>
+        <pattern>c=&quot;<var name="c"/>&quot;</pattern>
+        <template/>
+    </code>
+</configuration>

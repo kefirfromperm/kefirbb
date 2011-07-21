@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://kefir-bb.sourceforge.net/schemas"
+            xmlns="http://kefir-bb.sourceforge.net/schemas"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+    <xsd:element name="configuration">
+        <xsd:complexType>
+            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                <xsd:element name="code">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="pattern">
+                                <xsd:complexType mixed="true">
+                                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                        <xsd:element name="var">
+                                            <xsd:complexType>
+                                                <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                                                <xsd:attribute name="parse" type="xsd:boolean" default="true"/>
+                                                <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
+                                                <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:choice>
+                                </xsd:complexType>
+                            </xsd:element>
+                            <xsd:element name="template">
+                                <xsd:complexType mixed="true">
+                                    <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                        <xsd:element name="var">
+                                            <xsd:complexType>
+                                                <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:choice>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                        <xsd:attribute name="name" type="xsd:ID"/>
+                        <xsd:attribute name="priority" type="xsd:integer" default="0"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="scope">
+                    <xsd:complexType>
+                        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                            <xsd:element name="coderef">
+                                <xsd:complexType>
+                                    <xsd:attribute name="name" type="xsd:IDREF" use="required"/>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:choice>
+                        <xsd:attribute name="name" type="xsd:ID" use="required"/>
+                        <xsd:attribute name="parent" type="xsd:string" use="optional"/>
+                    </xsd:complexType>
+                </xsd:element>
+            </xsd:choice>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

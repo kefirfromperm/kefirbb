@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+    <code>
+        <pattern><var name="name" regex="\w+"/>=<var name="value"/></pattern>
+        <template>Set <var name="value"/> to <var name="name"/>.</template>
+    </code>
+</configuration>
