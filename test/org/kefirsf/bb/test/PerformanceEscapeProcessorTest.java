@@ -1,35 +1,43 @@
-package ru.perm.kefir.bbcode;
+package org.kefirsf.bb.test;
 
-import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.EscapeXmlProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
+import java.util.Random;
 
 /**
+ * Test performance of EscapeProcessor
+ *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class PerformanceStaticTest {
-    public static void main(String[] args) throws IOException {
-        StringBuilder builder = new StringBuilder();
+public class PerformanceEscapeProcessorTest {
+    private static final String[] STRINGS = {
+            ">",
+            "<",
+            "'",
+            "\"",
+            "&",
+            "a",
+            "s",
+            "d",
+            "f",
+            "g",
+            "h",
+            "http://kefir-bb.sourceforge.net"
+    };
 
-        Reader reader = new InputStreamReader(new FileInputStream("resource/text.txt"), "utf-8");
-        try {
-            char[] buf = new char[4096];
-            int len;
-            while (0 < (len = reader.read(buf))) {
-                builder.append(buf, 0, len);
-            }
-        } finally {
-            reader.close();
+    public static void main(String[] args) {
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 1000000; i++) {
+            builder.append(STRINGS[random.nextInt(STRINGS.length)]);
         }
         String text = builder.toString();
 
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/default.xml");
+        TextProcessor processor = EscapeXmlProcessorFactory.getInstance().create();
+
 
         long start = System.currentTimeMillis();
         String result = processor.process(text);
@@ -45,5 +53,6 @@ public class PerformanceStaticTest {
         );
 
         System.out.println(MessageFormat.format("Result: {0}", result.substring(0, 256)));
+
     }
 }

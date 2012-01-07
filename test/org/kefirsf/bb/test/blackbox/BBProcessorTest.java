@@ -1,4 +1,4 @@
-package ru.perm.kefir.bbcode.blackbox;
+package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
@@ -6,7 +6,7 @@ import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 import org.kefirsf.bb.configuration.Configuration;
 
-import static ru.perm.kefir.bbcode.Assert.assertProcess;
+import static org.kefirsf.bb.test.Assert.assertProcess;
 
 /**
  * Класс для тестирования обработчика BB-кодов
@@ -17,7 +17,7 @@ public class BBProcessorTest {
     @Test
     public void testPrefix() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-prefix.xml"
+                "org/kefirsf/bb/test/blackbox/config-prefix.xml"
         );
         assertProcess(processor, "^text^", "prefixtext");
         assertProcess(processor, "(^text^)", "[prefixtext]");
@@ -28,7 +28,7 @@ public class BBProcessorTest {
     public void testPrefixAndSuffix() {
         assertProcess(
                 BBProcessorFactory.getInstance().createFromResource(
-                        "ru/perm/kefir/bbcode/blackbox/config-prefixsuffix.xml"
+                        "org/kefirsf/bb/test/blackbox/config-prefixsuffix.xml"
                 ),
                 "<!-- bbcodes begin -->Test<!-- bbcodes end -->",
                 "Test"
@@ -39,7 +39,7 @@ public class BBProcessorTest {
     public void testContextRollback() {
         assertProcess(
                 BBProcessorFactory.getInstance().createFromResource(
-                        "ru/perm/kefir/bbcode/blackbox/config-context-rollback.xml"
+                        "org/kefirsf/bb/test/blackbox/config-context-rollback.xml"
                 ),
                 "1",
                 "[1](2)[/]"
@@ -50,7 +50,7 @@ public class BBProcessorTest {
     public void testVariable() {
         assertProcess(
                 BBProcessorFactory.getInstance().createFromResource(
-                        "ru/perm/kefir/bbcode/blackbox/config-variable.xml"
+                        "org/kefirsf/bb/test/blackbox/config-variable.xml"
                 ),
                 "Oi!",
                 "def Oi!;print;"
@@ -61,7 +61,7 @@ public class BBProcessorTest {
     public void testNotClosed() {
         assertProcess(
                 BBProcessorFactory.getInstance().createFromResource(
-                        "ru/perm/kefir/bbcode/blackbox/config-variable.xml"
+                        "org/kefirsf/bb/test/blackbox/config-variable.xml"
                 ),
                 "def Oi!",
                 "def Oi!"
@@ -71,7 +71,7 @@ public class BBProcessorTest {
     @Test
     public void testParameters() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-parameters.xml"
+                "org/kefirsf/bb/test/blackbox/config-parameters.xml"
         );
         assertProcess(processor, "Oi!", "print;");
         assertProcess(processor, "PunkOi!", "print punk;print;");
@@ -92,7 +92,7 @@ public class BBProcessorTest {
     @Test
     public void testRegex() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-regex.xml"
+                "org/kefirsf/bb/test/blackbox/config-regex.xml"
         );
         assertProcess(processor, "v:3", "def v=3;");
         assertProcess(processor, "var:33", "def var=33;");
@@ -105,7 +105,7 @@ public class BBProcessorTest {
     @Test
     public void testTransparent() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-transparent.xml"
+                "org/kefirsf/bb/test/blackbox/config-transparent.xml"
         );
         assertProcess(processor, "tag=tag,a=2,b=1,c=3", "<tag b=\"1\" a=\"2\" c=\"3\" />");
         assertProcess(processor, "tag=tag,a=2,b=null,c=3", "<tag a=\"2\" c=\"3\" />");
@@ -114,7 +114,7 @@ public class BBProcessorTest {
     @Test
     public void testOpenCodes() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-open.xml"
+                "org/kefirsf/bb/test/blackbox/config-open.xml"
         );
         assertProcess(processor, "Set value to name.", "name=value");
     }
@@ -122,7 +122,7 @@ public class BBProcessorTest {
     @Test
     public void testIgnoreCase() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "ru/perm/kefir/bbcode/blackbox/config-ignore-case.xml"
+                "org/kefirsf/bb/test/blackbox/config-ignore-case.xml"
         );
         assertProcess(processor, "Passed!", "test");
         assertProcess(processor, "Passed!", "TEST");

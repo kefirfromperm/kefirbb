@@ -1,9 +1,9 @@
-package ru.perm.kefir.bbcode.blackbox;
+package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Test;
 import org.kefirsf.bb.EscapeXmlProcessorFactory;
 
-import static ru.perm.kefir.bbcode.Assert.assertProcess;
+import static org.kefirsf.bb.test.Assert.assertProcess;
 
 /**
  * Test escape XML processor

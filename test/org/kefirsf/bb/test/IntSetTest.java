@@ -1,4 +1,4 @@
-package ru.perm.kefir.bbcode;
+package org.kefirsf.bb.test;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -185,20 +185,20 @@
             </classpath>
 
             <!-- Black box -->
-            <test name="ru.perm.kefir.bbcode.blackbox.BBProcessorTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.CreateTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.ScopeTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.EscapeXmlProcessorTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.DefaultConfigurationTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.RollbackTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.ProgrammaticConfigurationTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.DynamicConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.BBProcessorTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.CreateTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.ScopeTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.EscapeXmlProcessorTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.DefaultConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.RollbackTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.ProgrammaticConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
 
             <!-- Module tests -->
-            <test name="ru.perm.kefir.bbcode.SourceTest"/>
-            <test name="ru.perm.kefir.bbcode.ContextTest"/>
-            <test name="ru.perm.kefir.bbcode.IntSetTest"/>
-            <test name="ru.perm.kefir.bbcode.TextProcessorChainTest"/>
+            <test name="org.kefirsf.bb.test.SourceTest"/>
+            <test name="org.kefirsf.bb.test.ContextTest"/>
+            <test name="org.kefirsf.bb.test.IntSetTest"/>
+            <test name="org.kefirsf.bb.test.TextProcessorChainTest"/>
         </junit>
     </target>
 
@@ -221,20 +221,20 @@
             </classpath>
 
             <!-- Black box -->
-            <test name="ru.perm.kefir.bbcode.blackbox.BBProcessorTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.CreateTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.ScopeTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.EscapeXmlProcessorTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.DefaultConfigurationTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.RollbackTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.ProgrammaticConfigurationTest"/>
-            <test name="ru.perm.kefir.bbcode.blackbox.DynamicConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.BBProcessorTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.CreateTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.ScopeTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.EscapeXmlProcessorTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.DefaultConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.RollbackTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.ProgrammaticConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
 
             <!-- Module tests -->
-            <test name="ru.perm.kefir.bbcode.SourceTest"/>
-            <test name="ru.perm.kefir.bbcode.ContextTest"/>
-            <test name="ru.perm.kefir.bbcode.IntSetTest"/>
-            <test name="ru.perm.kefir.bbcode.TextProcessorChainTest"/>
+            <test name="org.kefirsf.bb.test.SourceTest"/>
+            <test name="org.kefirsf.bb.test.ContextTest"/>
+            <test name="org.kefirsf.bb.test.IntSetTest"/>
+            <test name="org.kefirsf.bb.test.TextProcessorChainTest"/>
         </junit>
     </target>
 

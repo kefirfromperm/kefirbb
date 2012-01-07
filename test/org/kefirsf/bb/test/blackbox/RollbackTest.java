@@ -1,4 +1,4 @@
-package ru.perm.kefir.bbcode.blackbox;
+package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Assert;
 import org.junit.Test;

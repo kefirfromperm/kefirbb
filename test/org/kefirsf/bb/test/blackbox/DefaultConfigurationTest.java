@@ -1,10 +1,10 @@
-package ru.perm.kefir.bbcode.blackbox;
+package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
-import ru.perm.kefir.bbcode.Assert;
+import org.kefirsf.bb.test.Assert;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir

@@ -1,4 +1,4 @@
-package ru.perm.kefir.bbcode.blackbox;
+package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
@@ -7,7 +7,7 @@ import org.kefirsf.bb.TextProcessorFactoryException;
 
 import java.io.File;
 
-import static ru.perm.kefir.bbcode.Assert.assertProcess;
+import static org.kefirsf.bb.test.Assert.assertProcess;
 
 /**
  * @author Kefir
@@ -15,7 +15,7 @@ import static ru.perm.kefir.bbcode.Assert.assertProcess;
 public class CreateTest {
     @Test
     public void loadFromResource() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/blackbox/config-resource.xml");
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/test/blackbox/config-resource.xml");
         assertProcess(processor, "resource", "test");
     }
 
@@ -29,13 +29,13 @@ public class CreateTest {
 
     @Test
     public void namespace() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/blackbox/config-namespace.xml");
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/test/blackbox/config-namespace.xml");
         assertProcess(processor, "namespace", "test");
     }
 
     @Test(expected = TextProcessorFactoryException.class)
     public void invalidConfig() {
-        BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/blackbox/config-invalid.xml");
+        BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/test/blackbox/config-invalid.xml");
         assert false;
     }
 

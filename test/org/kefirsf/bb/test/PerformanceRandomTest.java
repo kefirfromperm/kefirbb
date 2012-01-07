@@ -1,4 +1,4 @@
-package ru.perm.kefir.bbcode;
+package org.kefirsf.bb.test;
 
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
