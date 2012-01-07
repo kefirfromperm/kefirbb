@@ -1,8 +1,8 @@
 package ru.perm.kefir.bbcode.blackbox;
 
 import org.junit.Test;
+import org.kefirsf.bb.configuration.*;
 import ru.perm.kefir.bbcode.Assert;
-import ru.perm.kefir.bbcode.configuration.*;
 
 import java.util.Arrays;
 import java.util.HashSet;

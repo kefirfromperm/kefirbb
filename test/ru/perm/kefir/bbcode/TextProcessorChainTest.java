@@ -1,6 +1,9 @@
 package ru.perm.kefir.bbcode;
 
 import org.junit.Test;
+import org.kefirsf.bb.EscapeProcessor;
+import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.TextProcessorChain;
 
 import java.util.Arrays;
 
@@ -9,7 +12,7 @@ import java.util.Arrays;
  */
 public class TextProcessorChainTest {
     @Test
-    public void test(){
+    public void test() {
         TextProcessor chain = new TextProcessorChain(
                 Arrays.asList(
                         new EscapeProcessor(new String[][]{{"1", "2"}}),

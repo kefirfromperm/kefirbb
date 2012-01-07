@@ -1,7 +1,9 @@
 package ru.perm.kefir.bbcode;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+import org.kefirsf.bb.Source;
+
+import static org.junit.Assert.*;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir
@@ -39,7 +41,7 @@ public class SourceTest {
     @Test
     public void testGetOffset() {
         Source source = new Source(EXAMPLE);
-        for (int i = 0; i < source.getLength();) {
+        for (int i = 0; i < source.getLength(); ) {
             assertEquals(source.getOffset(), i);
             i++;
             source.incOffset();
@@ -50,7 +52,7 @@ public class SourceTest {
     public void testIncOffset() {
         Source source = new Source(EXAMPLE);
         int inc = 3;
-        for (int i = 0; i < source.getLength();) {
+        for (int i = 0; i < source.getLength(); ) {
             assertEquals(source.getOffset(), i);
             i += 3;
             source.incOffset(inc);

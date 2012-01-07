@@ -1,5 +1,8 @@
 package ru.perm.kefir.bbcode;
 
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +29,7 @@ public class PerformanceStaticTest {
         }
         String text = builder.toString();
 
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/default.xml");
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/default.xml");
 
         long start = System.currentTimeMillis();
         String result = processor.process(text);
@@ -34,11 +37,11 @@ public class PerformanceStaticTest {
 
         DecimalFormat format = new DecimalFormat("# ##0");
         System.out.println(
-            MessageFormat.format("Text length: {0} chars.", format.format(text.length()))
+                MessageFormat.format("Text length: {0} chars.", format.format(text.length()))
         );
 
         System.out.println(
-            MessageFormat.format("Time: {0} milliseconds.", format.format(finish - start))
+                MessageFormat.format("Time: {0} milliseconds.", format.format(finish - start))
         );
 
         System.out.println(MessageFormat.format("Result: {0}", result.substring(0, 256)));

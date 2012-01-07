@@ -2,9 +2,9 @@ package ru.perm.kefir.bbcode.blackbox;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
 import ru.perm.kefir.bbcode.Assert;
-import ru.perm.kefir.bbcode.BBProcessorFactory;
-import ru.perm.kefir.bbcode.TextProcessor;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir
@@ -25,7 +25,7 @@ public class DefaultConfigurationTest {
      */
     @Before
     public void createProcessor() {
-        processor = BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/default.xml");
+        processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/default.xml");
     }
 
     /**
@@ -34,8 +34,8 @@ public class DefaultConfigurationTest {
     @Test
     public void escape() {
         assertProcess(
-            "&amp;gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&apos;",
-            "&gt;<a href=\"\"></a>'"
+                "&amp;gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&apos;",
+                "&gt;<a href=\"\"></a>'"
         );
     }
 
@@ -192,7 +192,7 @@ public class DefaultConfigurationTest {
     }
 
     @Test
-    public void table(){
+    public void table() {
         assertProcess("<table></table>", "[table][/table]");
         assertProcess("<table></table>", "[table]Test[/table]");
         assertProcess("<table></table>", "[table][*Test*][/table]");
@@ -200,8 +200,8 @@ public class DefaultConfigurationTest {
         assertProcess("<table><tr></tr></table>", "[table][tr]Test[/tr][/table]");
         assertProcess("<table><tr></tr></table>", "[table][tr][*Test*][/tr][/table]");
         assertProcess(
-            "<table><tr><th>header1</th><th>header2</th></tr><tr><td>column1</td><td>column2</td></tr></table>", 
-            "[table][tr][th]header1[/th][th]header2[/th][/tr][tr][td]column1[/td][td]column2[/td][/tr][/table]"
+                "<table><tr><th>header1</th><th>header2</th></tr><tr><td>column1</td><td>column2</td></tr></table>",
+                "[table][tr][th]header1[/th][th]header2[/th][/tr][tr][td]column1[/td][td]column2[/td][/tr][/table]"
         );
     }
 }

@@ -2,8 +2,8 @@ package ru.perm.kefir.bbcode.blackbox;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.perm.kefir.bbcode.BBProcessorFactory;
-import ru.perm.kefir.bbcode.TextProcessor;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir
@@ -17,7 +17,7 @@ public class RollbackTest {
         }
         String text = builder.toString();
 
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("ru/perm/kefir/bbcode/default.xml");
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/default.xml");
         long start = System.currentTimeMillis();
         Assert.assertEquals(text, processor.process(text));
         long finish = System.currentTimeMillis();

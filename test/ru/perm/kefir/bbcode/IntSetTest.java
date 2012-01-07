@@ -2,6 +2,7 @@ package ru.perm.kefir.bbcode;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.kefirsf.bb.IntSet;
 
 import java.util.Random;
 
@@ -12,12 +13,12 @@ public class IntSetTest {
     private IntSet set;
 
     @Before
-    public void init(){
+    public void init() {
         set = new IntSet();
     }
 
     @Test
-    public void test(){
+    public void test() {
         Assert.assertFalse(set.contains(0));
         set.add(0);
         Assert.assertTrue(set.contains(0));
@@ -45,9 +46,9 @@ public class IntSetTest {
     }
 
     @Test
-    public void testRandom(){
+    public void testRandom() {
         Random random = new Random();
-        for(int i=0; i<100000; i++){
+        for (int i = 0; i < 100000; i++) {
             int value = random.nextInt();
             set.add(value);
             Assert.assertTrue(set.contains(value));
@@ -55,10 +56,10 @@ public class IntSetTest {
     }
 
     @Test
-    public void testRandom1(){
+    public void testRandom1() {
         int[] vals = new int[10000];
         Random random = new Random();
-        for(int i=0; i<vals.length; i++){
+        for (int i = 0; i < vals.length; i++) {
             vals[i] = random.nextInt();
             set.add(vals[i]);
         }

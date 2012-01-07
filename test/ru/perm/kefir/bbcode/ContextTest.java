@@ -1,6 +1,9 @@
 package ru.perm.kefir.bbcode;
 
 import org.junit.Test;
+import org.kefirsf.bb.Context;
+import org.kefirsf.bb.WConstant;
+import org.kefirsf.bb.WPatternElement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

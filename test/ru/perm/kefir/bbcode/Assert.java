@@ -1,5 +1,7 @@
 package ru.perm.kefir.bbcode;
 
+import org.kefirsf.bb.TextProcessor;
+
 /**
  * Class contains static assert methods
  *

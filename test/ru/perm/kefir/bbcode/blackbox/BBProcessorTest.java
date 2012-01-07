@@ -1,10 +1,10 @@
 package ru.perm.kefir.bbcode.blackbox;
 
 import org.junit.Test;
-import ru.perm.kefir.bbcode.BBProcessorFactory;
-import ru.perm.kefir.bbcode.ConfigurationFactory;
-import ru.perm.kefir.bbcode.TextProcessor;
-import ru.perm.kefir.bbcode.configuration.Configuration;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.ConfigurationFactory;
+import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.configuration.Configuration;
 
 import static ru.perm.kefir.bbcode.Assert.assertProcess;
 

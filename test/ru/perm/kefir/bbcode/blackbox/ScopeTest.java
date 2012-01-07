@@ -1,9 +1,9 @@
 package ru.perm.kefir.bbcode.blackbox;
 
 import org.junit.Test;
-import ru.perm.kefir.bbcode.BBProcessorFactory;
-import ru.perm.kefir.bbcode.TextProcessor;
-import ru.perm.kefir.bbcode.TextProcessorFactoryException;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.TextProcessorFactoryException;
 
 import static ru.perm.kefir.bbcode.Assert.assertProcess;
 
