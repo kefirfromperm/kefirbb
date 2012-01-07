@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.WTemplateElement;
+import org.kefirsf.bb.comp.WTemplateElement;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir

@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.*;
+import org.kefirsf.bb.comp.*;
 
 import java.util.Map;
 

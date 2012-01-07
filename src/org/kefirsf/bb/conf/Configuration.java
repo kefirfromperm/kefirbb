@@ -1,6 +1,10 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.*;
+import org.kefirsf.bb.BBProcessor;
+import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.TextProcessorFactory;
+import org.kefirsf.bb.comp.AbstractCode;
+import org.kefirsf.bb.comp.WScope;
 
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

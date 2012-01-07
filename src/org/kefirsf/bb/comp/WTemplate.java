@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
 
 import java.io.IOException;
 import java.util.Collections;

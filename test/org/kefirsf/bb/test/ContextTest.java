@@ -1,9 +1,9 @@
 package org.kefirsf.bb.test;
 
 import org.junit.Test;
-import org.kefirsf.bb.Context;
-import org.kefirsf.bb.WConstant;
-import org.kefirsf.bb.WPatternElement;
+import org.kefirsf.bb.comp.Context;
+import org.kefirsf.bb.comp.WConstant;
+import org.kefirsf.bb.comp.WPatternElement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;

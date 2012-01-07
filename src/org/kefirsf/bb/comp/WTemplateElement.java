@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
 
 /**
  * The element of template to build target text

@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
 
 /**
  * Constant element of pattern or template

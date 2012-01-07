@@ -1,7 +1,7 @@
 package org.kefirsf.bb.test;
 
 import org.junit.Test;
-import org.kefirsf.bb.Source;
+import org.kefirsf.bb.comp.Source;
 
 import static org.junit.Assert.*;
 

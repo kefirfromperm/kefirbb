@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
 
 /**
  * Named value to build target text

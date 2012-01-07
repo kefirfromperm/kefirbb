@@ -1,4 +1,6 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
+
+import org.kefirsf.bb.IntSet;
 
 import java.io.IOException;
 import java.util.HashMap;

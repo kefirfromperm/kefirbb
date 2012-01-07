@@ -1,7 +1,7 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.WTemplate;
-import org.kefirsf.bb.WTemplateElement;
+import org.kefirsf.bb.comp.WTemplate;
+import org.kefirsf.bb.comp.WTemplateElement;
 
 import java.util.ArrayList;
 import java.util.Collections;

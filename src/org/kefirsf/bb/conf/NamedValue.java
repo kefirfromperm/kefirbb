@@ -1,7 +1,7 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.WNamedValue;
-import org.kefirsf.bb.WTemplateElement;
+import org.kefirsf.bb.comp.WNamedValue;
+import org.kefirsf.bb.comp.WTemplateElement;
 
 /**
  * @author Vitaliy Samolovskih aka Kefir

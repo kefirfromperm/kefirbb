@@ -1,9 +1,9 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.AbstractCode;
-import org.kefirsf.bb.WPattern;
-import org.kefirsf.bb.WPatternElement;
-import org.kefirsf.bb.WScope;
+import org.kefirsf.bb.comp.AbstractCode;
+import org.kefirsf.bb.comp.WPattern;
+import org.kefirsf.bb.comp.WPatternElement;
+import org.kefirsf.bb.comp.WScope;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
+
+import org.kefirsf.bb.TextProcessorFactoryException;
 
 import java.util.*;
 
