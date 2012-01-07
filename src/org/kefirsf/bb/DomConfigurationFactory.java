@@ -1,6 +1,6 @@
 package org.kefirsf.bb;
 
-import org.kefirsf.bb.configuration.*;
+import org.kefirsf.bb.conf.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

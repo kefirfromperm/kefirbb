@@ -1,4 +1,4 @@
-package org.kefirsf.bb.configuration;
+package org.kefirsf.bb.conf;
 
 import org.kefirsf.bb.AbstractCode;
 import org.kefirsf.bb.WPatternElement;

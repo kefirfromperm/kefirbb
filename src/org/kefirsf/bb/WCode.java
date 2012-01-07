@@ -1,6 +1,6 @@
 package org.kefirsf.bb;
 
-import org.kefirsf.bb.configuration.Code;
+import org.kefirsf.bb.conf.Code;
 
 import java.io.IOException;
 

@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.configuration.Configuration;
+import org.kefirsf.bb.conf.Configuration;
 
 import static org.kefirsf.bb.test.Assert.assertProcess;
 
