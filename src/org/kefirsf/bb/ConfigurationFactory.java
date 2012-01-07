@@ -1,6 +1,7 @@
 package org.kefirsf.bb;
 
 import org.kefirsf.bb.conf.Configuration;
+import org.kefirsf.bb.util.Util;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

@@ -1,10 +1,10 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.Util;
 import org.kefirsf.bb.comp.AbstractCode;
 import org.kefirsf.bb.comp.ConstantCode;
 import org.kefirsf.bb.comp.WCode;
 import org.kefirsf.bb.comp.WScope;
+import org.kefirsf.bb.util.Util;
 
 import java.util.List;
 import java.util.Map;

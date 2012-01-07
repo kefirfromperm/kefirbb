@@ -1,8 +1,8 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.Util;
 import org.kefirsf.bb.comp.AbstractCode;
 import org.kefirsf.bb.comp.WScope;
+import org.kefirsf.bb.util.Util;
 
 import java.util.HashSet;
 import java.util.Map;

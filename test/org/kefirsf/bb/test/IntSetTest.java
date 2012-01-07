@@ -2,7 +2,7 @@ package org.kefirsf.bb.test;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.kefirsf.bb.IntSet;
+import org.kefirsf.bb.util.IntSet;
 
 import java.util.Random;
 

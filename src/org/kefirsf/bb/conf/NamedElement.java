@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.Util;
+import org.kefirsf.bb.util.Util;
 
 /**
  * Named element definition

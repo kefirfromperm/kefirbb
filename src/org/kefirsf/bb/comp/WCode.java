@@ -1,7 +1,7 @@
 package org.kefirsf.bb.comp;
 
-import org.kefirsf.bb.Util;
 import org.kefirsf.bb.conf.Code;
+import org.kefirsf.bb.util.Util;
 
 import java.io.IOException;
 

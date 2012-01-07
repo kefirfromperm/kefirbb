@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.util;
 
 /**
  * Best performance set of primitive type int

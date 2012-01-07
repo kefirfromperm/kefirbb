@@ -1,4 +1,4 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.util;
 
 import java.io.InputStream;
 import java.util.UUID;
@@ -19,7 +19,7 @@ public final class Util {
      * @param resourceName resource name
      * @return input stream
      */
-    static InputStream openResourceStream(String resourceName) {
+    public static InputStream openResourceStream(String resourceName) {
         InputStream stream = null;
         ClassLoader classLoader = Util.class.getClassLoader();
         if (classLoader != null) {
