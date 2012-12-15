@@ -139,7 +139,7 @@ public class DomConfigurationFactory {
         if (prefixElementList.getLength() > 0) {
             fix = parseTemplate(prefixElementList.item(0));
         } else {
-            fix = Template.EMPTY;
+            fix = new Template();
         }
         return fix;
     }
@@ -290,8 +290,7 @@ public class DomConfigurationFactory {
         for (int k = 0; k < patternLength; k++) {
             Node el = patternList.item(k);
             if (el.getNodeType() == Node.TEXT_NODE) {
-                Constant constant = new Constant(el.getNodeValue());
-                constant.setIgnoreCase(ignoreCase);
+                Constant constant = new Constant(el.getNodeValue(), ignoreCase);
                 elements.add(constant);
             } else if (
                     el.getNodeType() == Node.ELEMENT_NODE
@@ -319,9 +318,10 @@ public class DomConfigurationFactory {
      * @return constant definition
      */
     private Constant parseConstant(Node el, boolean ignoreCase) {
-        Constant constant = new Constant(nodeAttribute(el, TAG_CONSTANT_ATTR_VALUE));
-        constant.setIgnoreCase(nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase));
-        return constant;
+        return new Constant(
+                nodeAttribute(el, TAG_CONSTANT_ATTR_VALUE),
+                nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase)
+        );
     }
 
     private PatternElement parseNamedElement(Node el) {

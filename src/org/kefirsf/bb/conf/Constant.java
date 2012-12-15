@@ -1,14 +1,24 @@
 package org.kefirsf.bb.conf;
 
 /**
+ * Define constants.
+ *
+ * This class if immutable so we don't need synchronize it.
+ *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Constant implements TemplateElement, PatternElement {
+public final class Constant implements TemplateElement, PatternElement {
     private final String value;
-    private boolean ignoreCase = false;
+    private final boolean ignoreCase;
 
     public Constant(String value) {
         this.value = value;
+        ignoreCase = false;
+    }
+
+    public Constant(String value, boolean ignoreCase) {
+        this.value = value;
+        this.ignoreCase = ignoreCase;
     }
 
     public String getValue() {
@@ -17,9 +27,5 @@ public class Constant implements TemplateElement, PatternElement {
 
     public boolean isIgnoreCase() {
         return ignoreCase;
-    }
-
-    public void setIgnoreCase(boolean ignoreCase) {
-        this.ignoreCase = ignoreCase;
     }
 }

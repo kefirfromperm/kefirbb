@@ -9,62 +9,69 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Configuration {
+public final class Configuration {
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     private Map<String, Scope> scopes = null;
-    private Template prefix = Template.EMPTY;
-    private Template suffix = Template.EMPTY;
+    private Template prefix = new Template();
+    private Template suffix = new Template();
     private final Map<String, Object> params = new HashMap<String, Object>();
 
     /**
      * Create the configuration
      */
     public Configuration() {
+        writeLock();
+        try {
+            prefix.setConfiguration(this);
+            suffix.setConfiguration(this);
+        } finally {
+            writeUnlock();
+        }
     }
 
     /**
      * Lock configuration for read actions.
      */
-    public void readLock(){
+    public void readLock() {
         lock.readLock().lock();
     }
 
     /**
      * Unlock configuration for read actions.
      */
-    public void readUnlock(){
+    public void readUnlock() {
         lock.readLock().unlock();
     }
 
     /**
      * @throws IllegalStateException if configuration is not locking for read or write actions.
      */
-    void assertReadLock(){
-         if(!lock.isWriteLockedByCurrentThread() && lock.getReadHoldCount()<=0){
-             throw new IllegalStateException("Configuration is not locked for read or write actions.");
-         }
+    void assertReadLock() {
+        if (!lock.isWriteLockedByCurrentThread() && lock.getReadHoldCount() <= 0) {
+            throw new IllegalStateException("Configuration is not locked for read or write actions.");
+        }
     }
 
     /**
      * Lock configuration for write actions.
      */
-    public void writeLock(){
+    public void writeLock() {
         lock.writeLock().lock();
     }
 
     /**
      * Unlock configuration for write actions.
      */
-    public void writeUnlock(){
+    public void writeUnlock() {
         lock.writeLock().unlock();
     }
 
     /**
      * @throws IllegalStateException if configuration is not locking for write actions.
      */
-    void assertWriteLock(){
-        if(!lock.isWriteLockedByCurrentThread()){
+    void assertWriteLock() {
+        if (!lock.isWriteLockedByCurrentThread()) {
             throw new IllegalStateException("Configuration is not locked for write actions.");
         }
     }
@@ -83,6 +90,7 @@ public class Configuration {
         assertWriteLock();
         this.scopes = new HashMap<String, Scope>();
         for (Scope scope : scopes) {
+            scope.setConfiguration(this);
             this.scopes.put(scope.getName(), scope);
         }
     }
@@ -114,11 +122,11 @@ public class Configuration {
      */
     public void setPrefix(Template prefix) {
         assertWriteLock();
-        if (prefix != null) {
-            this.prefix = prefix;
-        } else {
-            this.prefix = Template.EMPTY;
+        if (prefix == null) {
+            throw new IllegalArgumentException("Parameter prefix can't be null.");
         }
+        prefix.setConfiguration(this);
+        this.prefix = prefix;
     }
 
     public Template getSuffix() {
@@ -133,14 +141,16 @@ public class Configuration {
      */
     public void setSuffix(Template suffix) {
         assertWriteLock();
-        if (suffix != null) {
-            this.suffix = suffix;
-        } else {
-            this.suffix = Template.EMPTY;
+        if (suffix == null) {
+            throw new IllegalArgumentException("Parameter suffix can't be null.");
         }
+
+        suffix.setConfiguration(this);
+        this.suffix = suffix;
     }
 
     public Map<String, Object> getParams() {
+        assertReadLock();
         return params;
     }
 

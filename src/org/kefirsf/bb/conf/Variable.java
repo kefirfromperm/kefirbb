@@ -3,7 +3,7 @@ package org.kefirsf.bb.conf;
 /**
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Variable extends NamedElement implements PatternElement {
+public final class Variable extends NamedElement implements PatternElement {
     private final java.util.regex.Pattern regex;
 
     public Variable(String name) {

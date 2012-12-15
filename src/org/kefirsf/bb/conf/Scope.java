@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Scope {
+public final class Scope extends ConfPart {
     /**
      * Default name for root scope. If ROOT scope not defined in configuration
      * then all codes add to default ROOT scope.
@@ -20,7 +20,7 @@ public final class Scope {
     private final String name;
     private String parent;
     private boolean ignoreText;
-    private Set<Code> codes = new HashSet<Code>();
+    private final Set<Code> codes = new HashSet<Code>();
 
     public Scope() {
         name = Util.generateRandomName();
@@ -38,35 +38,61 @@ public final class Scope {
         this.ignoreText = ignoreText;
     }
 
+    @Override
+    public void setConfiguration(Configuration configuration) {
+        super.setConfiguration(configuration);
+        for(Code code:codes){
+            code.setConfiguration(configuration);
+        }
+    }
+
     public String getName() {
+        assertReadLock();
         return name;
     }
 
     public String getParent() {
+        assertReadLock();
         return parent;
     }
 
     public boolean isIgnoreText() {
+        assertReadLock();
         return ignoreText;
     }
 
     public Set<Code> getCodes() {
+        assertReadLock();
         return codes;
     }
 
     public void setParent(String parent) {
+        assertWriteLock();
         this.parent = parent;
     }
 
     public void setIgnoreText(boolean ignoreText) {
+        assertWriteLock();
         this.ignoreText = ignoreText;
     }
 
     public void setCodes(Set<Code> codes) {
-        this.codes = codes;
+        if(codes==null){
+            throw new IllegalArgumentException("Parameter codes can't be null.");
+        }
+
+        assertWriteLock();
+        if (configuration != null) {
+            for (Code code : codes) {
+                code.setConfiguration(configuration);
+            }
+        }
+        this.codes.clear();
+        this.codes.addAll(codes);
     }
 
     public void addCode(Code code) {
+        assertWriteLock();
         codes.add(code);
     }
 

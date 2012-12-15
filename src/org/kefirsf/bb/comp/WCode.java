@@ -1,8 +1,5 @@
 package org.kefirsf.bb.comp;
 
-import org.kefirsf.bb.conf.Code;
-import org.kefirsf.bb.util.Util;
-
 import java.io.IOException;
 
 /**
@@ -15,17 +12,6 @@ public class WCode extends AbstractCode {
      * Pattern for parsing code
      */
     private final WPattern pattern;
-
-    /**
-     * Create bb-code with default name and zero priority.
-     *
-     * @param pattern  parse pattern
-     * @param template building tamplate
-     */
-    public WCode(WPattern pattern, WTemplate template) {
-        super(template, Util.generateRandomName(), Code.DEFAULT_PRIORITY);
-        this.pattern = pattern;
-    }
 
     /**
      * Create the bb-code with priority

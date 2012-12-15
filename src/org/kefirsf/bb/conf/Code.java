@@ -7,7 +7,7 @@ import org.kefirsf.bb.util.Util;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Code {
+public final class Code extends ConfPart {
     public static final int DEFAULT_PRIORITY = 0;
 
     private final String name;
@@ -48,6 +48,18 @@ public final class Code {
         this.template = template;
     }
 
+    @Override
+    public void setConfiguration(Configuration configuration) {
+        super.setConfiguration(configuration);
+        if(pattern!=null){
+            pattern.setConfiguration(configuration);
+        }
+
+        if(template!=null){
+            template.setConfiguration(configuration);
+        }
+    }
+
     /**
      * Check name parameter in constructor
      *
@@ -65,6 +77,7 @@ public final class Code {
      * @return name of code
      */
     public String getName() {
+        assertReadLock();
         return name;
     }
 
@@ -72,6 +85,7 @@ public final class Code {
      * @return code priority
      */
     public int getPriority() {
+        assertReadLock();
         return priority;
     }
 
@@ -79,6 +93,7 @@ public final class Code {
      * @param priority code priority
      */
     public void setPriority(int priority) {
+        assertWriteLock();
         this.priority = priority;
     }
 
@@ -88,6 +103,7 @@ public final class Code {
      * @return pattern definition object
      */
     public Pattern getPattern() {
+        assertReadLock();
         return pattern;
     }
 
@@ -97,6 +113,10 @@ public final class Code {
      * @param pattern pattern definition object
      */
     public void setPattern(Pattern pattern) {
+        assertWriteLock();
+        if(configuration!=null){
+            pattern.setConfiguration(configuration);
+        }
         this.pattern = pattern;
     }
 
@@ -106,6 +126,7 @@ public final class Code {
      * @return template definition  object
      */
     public Template getTemplate() {
+        assertReadLock();
         return template;
     }
 
@@ -115,6 +136,10 @@ public final class Code {
      * @param template template definition  object
      */
     public void setTemplate(Template template) {
+        assertWriteLock();
+        if(configuration!=null){
+            template.setConfiguration(configuration);
+        }
         this.template = template;
     }
 

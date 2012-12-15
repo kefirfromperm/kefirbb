@@ -3,7 +3,7 @@ package org.kefirsf.bb.conf;
 /**
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Text extends NamedElement implements PatternElement {
+public final class Text extends NamedElement implements PatternElement {
     private final String scope;
     private final boolean transparent;
 
