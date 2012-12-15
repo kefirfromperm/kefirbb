@@ -1,13 +1,5 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.BBProcessorFactory;
-import org.kefirsf.bb.comp.AbstractCode;
-import org.kefirsf.bb.comp.WPatternElement;
-import org.kefirsf.bb.comp.WScope;
-import org.kefirsf.bb.comp.WText;
-
-import java.util.Map;
-
 /**
  * @author Vitaliy Samolovskih aka Kefir
  */
@@ -27,21 +19,5 @@ public class Text extends NamedElement implements PatternElement {
 
     public boolean isTransparent() {
         return transparent;
-    }
-
-    public WPatternElement create(
-            Configuration configuration,
-            Map<Scope, WScope> scopes,
-            Map<Code, AbstractCode> codes
-    ) {
-        if (scope != null) {
-            return new WText(
-                    getName(),
-                    BBProcessorFactory.create(configuration.getScope(scope), configuration, scopes, codes),
-                    isTransparent()
-            );
-        } else {
-            return new WText(getName(), isTransparent());
-        }
     }
 }

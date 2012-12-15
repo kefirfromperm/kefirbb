@@ -116,7 +116,13 @@ public final class BBProcessorFactory implements TextProcessorFactory {
 
         List<WPatternElement> elements = new ArrayList<WPatternElement>();
         for (PatternElement element : pattern.getElements()) {
-            elements.add(element.create(configuration, createdScopes, codes));
+            if(element instanceof Variable){
+                elements.add(create(((Variable) element)));
+            } else if(element instanceof Text){
+                elements.add(create(((Text) element), configuration, createdScopes, codes));
+            } else if(element instanceof Constant){
+                elements.add(createPatternConstant(((Constant) element)));
+            }
         }
         return new WPattern(elements);
     }
@@ -147,6 +153,34 @@ public final class BBProcessorFactory implements TextProcessorFactory {
 
     public static WConstant create(Constant constant) {
         return new WConstant(constant.getValue());
+    }
+
+    public static WVariable create(Variable variable) {
+        return new WVariable(variable.getName(), variable.getRegex());
+    }
+
+    public static WPatternElement create(Text text,
+                                         Configuration configuration,
+                                         Map<Scope, WScope> scopes,
+                                         Map<Code, AbstractCode> codes
+    ) {
+        if (text.getScope() != null) {
+            return new WText(
+                    text.getName(),
+                    create(configuration.getScope(text.getScope()), configuration, scopes, codes),
+                    text.isTransparent()
+            );
+        } else {
+            return new WText(text.getName(), text.isTransparent());
+        }
+    }
+
+    public static WPatternElement createPatternConstant(Constant constant) {
+        if (!constant.isIgnoreCase()) {
+            return new WConstant(constant.getValue());
+        } else {
+            return new WConstantIgnoreCase(constant.getValue());
+        }
     }
 
     /**
