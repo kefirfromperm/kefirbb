@@ -131,10 +131,22 @@ public final class BBProcessorFactory implements TextProcessorFactory {
         List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
         if (template.getElements() != null) {
             for (TemplateElement element : template.getElements()) {
-                elements.add(element.create());
+                if(element instanceof Constant){
+                    elements.add(create(((Constant) element)));
+                }else if(element instanceof NamedValue){
+                    elements.add(create(((NamedValue) element)));
+                }
             }
         }
         return new WTemplate(elements);
+    }
+
+    public static WTemplateElement create(NamedValue namedValue) {
+        return new WNamedValue(namedValue.getName());
+    }
+
+    public static WConstant create(Constant constant) {
+        return new WConstant(constant.getValue());
     }
 
     /**

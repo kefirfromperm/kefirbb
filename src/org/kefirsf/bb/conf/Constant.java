@@ -15,10 +15,6 @@ public class Constant implements TemplateElement, PatternElement {
         this.value = value;
     }
 
-    public WConstant create() {
-        return new WConstant(getValue());
-    }
-
     public WPatternElement create(Configuration configuration, Map<Scope, WScope> scopes, Map<Code, AbstractCode> codes) {
         if (!isIgnoreCase()) {
             return new WConstant(getValue());
