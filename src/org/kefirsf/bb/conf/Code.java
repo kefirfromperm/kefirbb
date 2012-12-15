@@ -1,13 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.comp.AbstractCode;
-import org.kefirsf.bb.comp.ConstantCode;
-import org.kefirsf.bb.comp.WCode;
-import org.kefirsf.bb.comp.WScope;
 import org.kefirsf.bb.util.Util;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * Code description.
@@ -64,43 +57,6 @@ public final class Code {
         if (name == null) {
             throw new IllegalArgumentException("Code name can't be null.");
         }
-    }
-
-    /**
-     * Create code from this definition
-     *
-     * @param configuration text processor configuration
-     * @param createdScopes scopes are created already
-     * @param codes         codes are created already
-     * @return code object
-     */
-    public AbstractCode create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
-        if (pattern == null) {
-            throw new IllegalStateException("Field pattern can't be null.");
-        }
-
-        if (template == null) {
-            throw new IllegalStateException("Field template can't be null.");
-        }
-
-        AbstractCode code = codes.get(this);
-        if (code == null) {
-            List<? extends PatternElement> patternElements = getPattern().getElements();
-            PatternElement first = patternElements.get(0);
-            if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
-                code = new ConstantCode(
-                        ((Constant) first).getValue(), getTemplate().create(), getName(), getPriority()
-                );
-            } else {
-                code = new WCode(
-                        getPattern().create(configuration, createdScopes, codes),
-                        getTemplate().create(),
-                        getName(),
-                        getPriority()
-                );
-            }
-        }
-        return code;
     }
 
     /**
@@ -177,4 +133,6 @@ public final class Code {
     public int hashCode() {
         return name.hashCode();
     }
+
+
 }

@@ -62,7 +62,7 @@ public class Pattern {
      * @param codes         codes
      * @return pattern
      */
-    WPattern create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+    public WPattern create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
         if (this.elements == null || this.elements.isEmpty()) {
             throw new IllegalStateException("Pattern elements list can't be empty.");
         }

@@ -1,17 +1,14 @@
 package org.kefirsf.bb;
 
 import org.kefirsf.bb.comp.AbstractCode;
+import org.kefirsf.bb.comp.ConstantCode;
+import org.kefirsf.bb.comp.WCode;
 import org.kefirsf.bb.comp.WScope;
-import org.kefirsf.bb.conf.Code;
-import org.kefirsf.bb.conf.Configuration;
-import org.kefirsf.bb.conf.Scope;
+import org.kefirsf.bb.conf.*;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Factory for creating BBProcessor from Stream, File, Resource with configuration or default bb-processor.
@@ -60,12 +57,50 @@ public final class BBProcessorFactory implements TextProcessorFactory {
             }
             Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
             for (Code code : scope.getCodes()) {
-                scopeCodes.add(code.create(configuration, createdScopes, codes));
+                scopeCodes.add(create(code, configuration, createdScopes, codes));
             }
             created.setScopeCodes(scopeCodes);
             created.init();
         }
         return created;
+    }
+
+    /**
+     * Create code from this definition
+     *
+     * @param thisCode
+     * @param configuration text processor configuration
+     * @param createdScopes scopes are created already
+     * @param codes         codes are created already
+     * @return code object
+     */
+    public static AbstractCode create(Code thisCode, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+        if (thisCode.getPattern() == null) {
+            throw new IllegalStateException("Field pattern can't be null.");
+        }
+
+        if (thisCode.getTemplate() == null) {
+            throw new IllegalStateException("Field template can't be null.");
+        }
+
+        AbstractCode code = codes.get(thisCode);
+        if (code == null) {
+            List<? extends PatternElement> patternElements = thisCode.getPattern().getElements();
+            PatternElement first = patternElements.get(0);
+            if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
+                code = new ConstantCode(
+                        ((Constant) first).getValue(), thisCode.getTemplate().create(), thisCode.getName(), thisCode.getPriority()
+                );
+            } else {
+                code = new WCode(
+                        thisCode.getPattern().create(configuration, createdScopes, codes),
+                        thisCode.getTemplate().create(),
+                        thisCode.getName(),
+                        thisCode.getPriority()
+                );
+            }
+        }
+        return code;
     }
 
     /**
