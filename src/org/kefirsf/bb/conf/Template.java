@@ -1,8 +1,5 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.comp.WTemplate;
-import org.kefirsf.bb.comp.WTemplateElement;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +22,7 @@ public class Template {
      * Create template with empty content
      */
     public Template() {
-        this.elements = new ArrayList<TemplateElement>();
+        this.setElements(new ArrayList<TemplateElement>());
     }
 
     /**
@@ -34,7 +31,7 @@ public class Template {
      * @param elements template definition elements
      */
     public Template(List<? extends TemplateElement> elements) {
-        this.elements = elements;
+        this.setElements(elements);
     }
 
     /**
@@ -46,18 +43,7 @@ public class Template {
         return elements;
     }
 
-    /**
-     * Create template from definition
-     *
-     * @return template
-     */
-    public WTemplate create() {
-        List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
-        if (this.elements != null) {
-            for (TemplateElement element : this.elements) {
-                elements.add(element.create());
-            }
-        }
-        return new WTemplate(elements);
+    public void setElements(List<? extends TemplateElement> elements) {
+        this.elements = elements;
     }
 }

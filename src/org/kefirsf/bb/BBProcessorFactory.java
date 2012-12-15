@@ -86,12 +86,12 @@ public final class BBProcessorFactory implements TextProcessorFactory {
             PatternElement first = patternElements.get(0);
             if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
                 code = new ConstantCode(
-                        ((Constant) first).getValue(), thisCode.getTemplate().create(), thisCode.getName(), thisCode.getPriority()
+                        ((Constant) first).getValue(), create(thisCode.getTemplate()), thisCode.getName(), thisCode.getPriority()
                 );
             } else {
                 code = new WCode(
                         create(thisCode.getPattern(), configuration, createdScopes, codes),
-                        thisCode.getTemplate().create(),
+                        create(thisCode.getTemplate()),
                         thisCode.getName(),
                         thisCode.getPriority()
                 );
@@ -122,6 +122,22 @@ public final class BBProcessorFactory implements TextProcessorFactory {
     }
 
     /**
+     * Create template from definition
+     *
+     * @return template
+     * @param template
+     */
+    public static WTemplate create(Template template) {
+        List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
+        if (template.getElements() != null) {
+            for (TemplateElement element : template.getElements()) {
+                elements.add(element.create());
+            }
+        }
+        return new WTemplate(elements);
+    }
+
+    /**
      * Create the default bb-code processor.
      *
      * @return Default bb-code processor
@@ -145,8 +161,8 @@ public final class BBProcessorFactory implements TextProcessorFactory {
 
         processor = new BBProcessor();
         processor.setScope(create(conf.getRootScope(), conf, createdScopes, codes));
-        processor.setPrefix(conf.getPrefix().create());
-        processor.setSuffix(conf.getSuffix().create());
+        processor.setPrefix(create(conf.getPrefix()));
+        processor.setSuffix(create(conf.getSuffix()));
         processor.setParams(conf.getParams());
         return processor;
     }
