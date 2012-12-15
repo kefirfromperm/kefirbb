@@ -1,11 +1,9 @@
 package org.kefirsf.bb;
 
-import org.kefirsf.bb.comp.*;
-import org.kefirsf.bb.conf.*;
+import org.kefirsf.bb.conf.Configuration;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.*;
 
 /**
  * Factory for creating BBProcessor from Stream, File, Resource with configuration or default bb-processor.
@@ -35,155 +33,6 @@ public final class BBProcessorFactory implements TextProcessorFactory {
     }
 
     /**
-     * Create scope
-     *
-     * @param scope
-     * @param configuration text processor configuration
-     * @param createdScopes created scopes
-     * @param codes         codes
-     * @return scope
-     */
-    public static WScope create(Scope scope, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
-        WScope created = createdScopes.get(scope);
-        if (created == null) {
-            created = new WScope(scope.getName());
-            createdScopes.put(scope, created);
-            created.setIgnoreText(scope.isIgnoreText());
-            if (scope.getParent() != null) {
-                created.setParent(create(configuration.getScope(scope.getParent()), configuration, createdScopes, codes));
-            }
-            Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
-            for (Code code : scope.getCodes()) {
-                scopeCodes.add(create(code, configuration, createdScopes, codes));
-            }
-            created.setScopeCodes(scopeCodes);
-            created.init();
-        }
-        return created;
-    }
-
-    /**
-     * Create code from this definition
-     *
-     * @param thisCode
-     * @param configuration text processor configuration
-     * @param createdScopes scopes are created already
-     * @param codes         codes are created already
-     * @return code object
-     */
-    public static AbstractCode create(Code thisCode, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
-        if (thisCode.getPattern() == null) {
-            throw new IllegalStateException("Field pattern can't be null.");
-        }
-
-        if (thisCode.getTemplate() == null) {
-            throw new IllegalStateException("Field template can't be null.");
-        }
-
-        AbstractCode code = codes.get(thisCode);
-        if (code == null) {
-            List<? extends PatternElement> patternElements = thisCode.getPattern().getElements();
-            PatternElement first = patternElements.get(0);
-            if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
-                code = new ConstantCode(
-                        ((Constant) first).getValue(), create(thisCode.getTemplate()), thisCode.getName(), thisCode.getPriority()
-                );
-            } else {
-                code = new WCode(
-                        create(thisCode.getPattern(), configuration, createdScopes, codes),
-                        create(thisCode.getTemplate()),
-                        thisCode.getName(),
-                        thisCode.getPriority()
-                );
-            }
-        }
-        return code;
-    }
-
-    /**
-     * Create pattern for text parsing
-     *
-     * @param pattern
-     * @param configuration text processor configuration
-     * @param createdScopes scopes was created already
-     * @param codes         codes
-     * @return pattern
-     */
-    public static WPattern create(Pattern pattern, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
-        if (pattern.getElements() == null || pattern.getElements().isEmpty()) {
-            throw new IllegalStateException("Pattern elements list can't be empty.");
-        }
-
-        List<WPatternElement> elements = new ArrayList<WPatternElement>();
-        for (PatternElement element : pattern.getElements()) {
-            if(element instanceof Variable){
-                elements.add(create(((Variable) element)));
-            } else if(element instanceof Text){
-                elements.add(create(((Text) element), configuration, createdScopes, codes));
-            } else if(element instanceof Constant){
-                elements.add(createPatternConstant(((Constant) element)));
-            }
-        }
-        return new WPattern(elements);
-    }
-
-    /**
-     * Create template from definition
-     *
-     * @return template
-     * @param template
-     */
-    public static WTemplate create(Template template) {
-        List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
-        if (template.getElements() != null) {
-            for (TemplateElement element : template.getElements()) {
-                if(element instanceof Constant){
-                    elements.add(create(((Constant) element)));
-                }else if(element instanceof NamedValue){
-                    elements.add(create(((NamedValue) element)));
-                }
-            }
-        }
-        return new WTemplate(elements);
-    }
-
-    public static WTemplateElement create(NamedValue namedValue) {
-        return new WNamedValue(namedValue.getName());
-    }
-
-    public static WConstant create(Constant constant) {
-        return new WConstant(constant.getValue());
-    }
-
-    public static WVariable create(Variable variable) {
-        return new WVariable(variable.getName(), variable.getRegex());
-    }
-
-    public static WPatternElement create(Text text,
-                                         Configuration configuration,
-                                         Map<Scope, WScope> scopes,
-                                         Map<Code, AbstractCode> codes
-    ) {
-        if (text.getScope() != null) {
-            return new WText(
-                    text.getName(),
-                    create(configuration.getScope(text.getScope()), configuration, scopes, codes),
-                    text.isTransparent()
-            );
-        } else {
-            return new WText(text.getName(), text.isTransparent());
-        }
-    }
-
-    public static WPatternElement createPatternConstant(Constant constant) {
-        if (!constant.isIgnoreCase()) {
-            return new WConstant(constant.getValue());
-        } else {
-            return new WConstantIgnoreCase(constant.getValue());
-        }
-    }
-
-    /**
      * Create the default bb-code processor.
      *
      * @return Default bb-code processor
@@ -200,17 +49,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
      * @return bb-code text processor
      */
     public TextProcessor create(Configuration conf) {
-        BBProcessor processor;
-
-        Map<Scope, WScope> createdScopes = new HashMap<Scope, WScope>();
-        Map<Code, AbstractCode> codes = new HashMap<Code, AbstractCode>();
-
-        processor = new BBProcessor();
-        processor.setScope(create(conf.getRootScope(), conf, createdScopes, codes));
-        processor.setPrefix(create(conf.getPrefix()));
-        processor.setSuffix(create(conf.getSuffix()));
-        processor.setParams(conf.getParams());
-        return processor;
+        return new ProcessorBuilder(conf).build();
     }
 
     /**
