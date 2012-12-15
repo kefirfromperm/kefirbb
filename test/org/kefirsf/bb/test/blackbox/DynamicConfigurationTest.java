@@ -18,25 +18,20 @@ public class DynamicConfigurationTest {
     @Test
     public void testAddCodeToRoot() {
         Configuration cfg = ConfigurationFactory.getInstance().create();
-        cfg.lock();
-        try {
-            cfg.setParam("path", "/img/");
-            Code code = new Code();
-            code.setPattern(new Pattern(Arrays.asList(new Constant(":)"))));
-            code.setTemplate(
-                    new Template(
-                            Arrays.asList(
-                                    new Constant("<img src=\""),
-                                    new NamedValue("path"),
-                                    new Constant("smile.gif"),
-                                    new Constant("\"/>")
-                            )
-                    )
-            );
-            cfg.getRootScope().addCode(code);
-        } finally {
-            cfg.unlock();
-        }
+        cfg.setParam("path", "/img/");
+        Code code = new Code();
+        code.setPattern(new Pattern(Arrays.asList(new Constant(":)"))));
+        code.setTemplate(
+                new Template(
+                        Arrays.asList(
+                                new Constant("<img src=\""),
+                                new NamedValue("path"),
+                                new Constant("smile.gif"),
+                                new Constant("\"/>")
+                        )
+                )
+        );
+        cfg.getRootScope().addCode(code);
         TextProcessor processor = BBProcessorFactory.getInstance().create(cfg);
 
         Assert.assertEquals("<img src=\"/img/smile.gif\"/>", processor.process(":)"));

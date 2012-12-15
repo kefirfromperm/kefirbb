@@ -81,40 +81,35 @@ public final class ConfigurationFactory {
                 }
             }
 
-            configuration.lock();
+            Properties properties = new Properties();
+
+            // Load properties from .property file
+            InputStream propertiesStream = null;
             try {
-                Properties properties = new Properties();
-
-                // Load properties from .property file
-                InputStream propertiesStream = null;
-                try {
-                    propertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_FILE);
-                    if (propertiesStream != null) {
-                        properties.load(propertiesStream);
-                    }
-                } finally {
-                    if (propertiesStream != null) {
-                        propertiesStream.close();
-                    }
+                propertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_FILE);
+                if (propertiesStream != null) {
+                    properties.load(propertiesStream);
                 }
-
-                // Load properties from xml file
-                InputStream xmlPropertiesStream = null;
-                try {
-                    xmlPropertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_XML_FILE);
-                    if (xmlPropertiesStream != null) {
-                        properties.loadFromXML(xmlPropertiesStream);
-                    }
-                } finally {
-                    if (xmlPropertiesStream != null) {
-                        xmlPropertiesStream.close();
-                    }
-                }
-
-                configuration.addParams(properties);
             } finally {
-                configuration.unlock();
+                if (propertiesStream != null) {
+                    propertiesStream.close();
+                }
             }
+
+            // Load properties from xml file
+            InputStream xmlPropertiesStream = null;
+            try {
+                xmlPropertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_XML_FILE);
+                if (xmlPropertiesStream != null) {
+                    properties.loadFromXML(xmlPropertiesStream);
+                }
+            } finally {
+                if (xmlPropertiesStream != null) {
+                    xmlPropertiesStream.close();
+                }
+            }
+
+            configuration.addParams(properties);
         } catch (IOException e) {
             throw new TextProcessorFactoryException(e);
         }

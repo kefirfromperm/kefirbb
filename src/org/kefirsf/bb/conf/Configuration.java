@@ -1,7 +1,6 @@
 package org.kefirsf.bb.conf;
 
 import java.util.*;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Configuration of bbcode processor.
@@ -15,26 +14,10 @@ public class Configuration {
     private Template suffix = Template.EMPTY;
     private final Map<String, Object> params = new HashMap<String, Object>();
 
-    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-
     /**
      * Create the configuration
      */
     public Configuration() {
-    }
-
-    /**
-     * Lock configuration for change
-     */
-    public void lock() {
-        lock.writeLock().lock();
-    }
-
-    /**
-     * unlock configuration
-     */
-    public void unlock() {
-        lock.writeLock().unlock();
     }
 
     public Set<Scope> getScopes() {
@@ -60,22 +43,9 @@ public class Configuration {
      * @param scopes scopes
      */
     public void setScopes(Iterable<Scope> scopes) {
-        assertLock();
-
         this.scopes = new HashMap<String, Scope>();
         for (Scope scope : scopes) {
             this.scopes.put(scope.getName(), scope);
-        }
-    }
-
-    /**
-     * Test if configuration was locked for changes.
-     *
-     * @throws IllegalStateException if configuration not locked.
-     */
-    private void assertLock() throws IllegalStateException {
-        if (!lock.isWriteLockedByCurrentThread()) {
-            throw new IllegalStateException("Configuration must be locked for change.");
         }
     }
 
@@ -85,7 +55,6 @@ public class Configuration {
      * @param prefix template for prefix
      */
     public void setPrefix(Template prefix) {
-        assertLock();
         if (prefix != null) {
             this.prefix = prefix;
         } else {
@@ -99,7 +68,6 @@ public class Configuration {
      * @param suffix template for suffix
      */
     public void setSuffix(Template suffix) {
-        assertLock();
         if (suffix != null) {
             this.suffix = suffix;
         } else {
@@ -126,7 +94,6 @@ public class Configuration {
      * @param value value of context parameter
      */
     public void addParam(String name, Object value) {
-        assertLock();
         params.put(name, value);
     }
 
@@ -136,7 +103,6 @@ public class Configuration {
      * @param params Map contained params
      */
     public void addParams(Map<String, ?> params) {
-        assertLock();
         this.params.putAll(params);
     }
 
@@ -146,7 +112,6 @@ public class Configuration {
      * @param properties Properties object
      */
     public void addParams(Properties properties) {
-        assertLock();
         for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             Object key = entry.getKey();
             if (key != null) {
@@ -161,7 +126,6 @@ public class Configuration {
      * @param name name of parameter
      */
     public void removeParam(String name) {
-        assertLock();
         this.params.remove(name);
     }
 
@@ -169,7 +133,6 @@ public class Configuration {
      * Remove all parameters from context.
      */
     public void clearParams() {
-        assertLock();
         this.params.clear();
     }
 

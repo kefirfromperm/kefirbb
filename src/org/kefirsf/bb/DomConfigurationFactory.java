@@ -70,46 +70,41 @@ public class DomConfigurationFactory {
     public Configuration create(Document dc) {
         // Create configuration
         Configuration configuration = new Configuration();
-        configuration.lock();
-        try {
-            // Parse parameters
-            configuration.addParams(parseParams(dc));
+        // Parse parameters
+        configuration.addParams(parseParams(dc));
 
-            // Parse prefix and suffix
-            configuration.setPrefix(parseFix(dc, TAG_PREFIX));
-            configuration.setSuffix(parseFix(dc, TAG_SUFFIX));
+        // Parse prefix and suffix
+        configuration.setPrefix(parseFix(dc, TAG_PREFIX));
+        configuration.setSuffix(parseFix(dc, TAG_SUFFIX));
 
-            // Parse codes and scope and set this to configuration
-            // Parse scopes
-            NodeList scopeNodeList = dc.getDocumentElement().getElementsByTagNameNS(SCHEMA_LOCATION, TAG_SCOPE);
-            Map<String, Scope> scopes = parseScopes(scopeNodeList);
+        // Parse codes and scope and set this to configuration
+        // Parse scopes
+        NodeList scopeNodeList = dc.getDocumentElement().getElementsByTagNameNS(SCHEMA_LOCATION, TAG_SCOPE);
+        Map<String, Scope> scopes = parseScopes(scopeNodeList);
 
-            boolean fillRoot = false;
-            Scope root;
-            if (!scopes.containsKey(Scope.ROOT)) {
-                root = new Scope(Scope.ROOT);
-                scopes.put(Scope.ROOT, root);
-                fillRoot = true;
-            } else {
-                root = scopes.get(Scope.ROOT);
-            }
-
-            // Parse codes
-            Map<String, Code> codes = parseCodes(dc);
-
-            // include codes in scopes
-            fillScopeCodes(scopeNodeList, scopes, codes);
-
-            // If root scope not defined in configuration file, then root scope fills all codes
-            if (fillRoot) {
-                root.setCodes(new HashSet<Code>(codes.values()));
-            }
-
-            // set root scope
-            configuration.setScopes(scopes.values());
-        } finally {
-            configuration.unlock();
+        boolean fillRoot = false;
+        Scope root;
+        if (!scopes.containsKey(Scope.ROOT)) {
+            root = new Scope(Scope.ROOT);
+            scopes.put(Scope.ROOT, root);
+            fillRoot = true;
+        } else {
+            root = scopes.get(Scope.ROOT);
         }
+
+        // Parse codes
+        Map<String, Code> codes = parseCodes(dc);
+
+        // include codes in scopes
+        fillScopeCodes(scopeNodeList, scopes, codes);
+
+        // If root scope not defined in configuration file, then root scope fills all codes
+        if (fillRoot) {
+            root.setCodes(new HashSet<Code>(codes.values()));
+        }
+
+        // set root scope
+        configuration.setScopes(scopes.values());
         // return configuration
         return configuration;
     }
