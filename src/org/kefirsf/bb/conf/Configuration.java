@@ -1,11 +1,5 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.BBProcessor;
-import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.TextProcessorFactory;
-import org.kefirsf.bb.comp.AbstractCode;
-import org.kefirsf.bb.comp.WScope;
-
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -15,7 +9,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Configuration implements TextProcessorFactory {
+public class Configuration {
     private Map<String, Scope> scopes = null;
     private Template prefix = Template.EMPTY;
     private Template suffix = Template.EMPTY;
@@ -27,34 +21,6 @@ public class Configuration implements TextProcessorFactory {
      * Create the configuration
      */
     public Configuration() {
-    }
-
-    /**
-     * Create text processor.
-     *
-     * @return text processor
-     * @throws IllegalStateException if scope not setted
-     */
-    public TextProcessor create() throws IllegalStateException {
-        BBProcessor processor;
-        lock.readLock().lock();
-        try {
-            if (scopes == null || scopes.isEmpty() || !scopes.containsKey(Scope.ROOT)) {
-                throw new IllegalStateException("Can't find root scope.");
-            }
-
-            Map<Scope, WScope> createdScopes = new HashMap<Scope, WScope>();
-            Map<Code, AbstractCode> codes = new HashMap<Code, AbstractCode>();
-
-            processor = new BBProcessor();
-            processor.setScope(scopes.get(Scope.ROOT).create(this, createdScopes, codes));
-            processor.setPrefix(prefix.create());
-            processor.setSuffix(suffix.create());
-            processor.setParams(params);
-        } finally {
-            lock.readLock().unlock();
-        }
-        return processor;
     }
 
     /**
@@ -205,5 +171,17 @@ public class Configuration implements TextProcessorFactory {
     public void clearParams() {
         assertLock();
         this.params.clear();
+    }
+
+    public Template getPrefix() {
+        return prefix;
+    }
+
+    public Template getSuffix() {
+        return suffix;
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
     }
 }

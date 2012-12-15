@@ -1,6 +1,7 @@
 package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Test;
+import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 import org.kefirsf.bb.conf.*;
@@ -36,7 +37,7 @@ public class DynamicConfigurationTest {
         } finally {
             cfg.unlock();
         }
-        TextProcessor processor = cfg.create();
+        TextProcessor processor = BBProcessorFactory.getInstance().create(cfg);
 
         Assert.assertEquals("<img src=\"/img/smile.gif\"/>", processor.process(":)"));
     }

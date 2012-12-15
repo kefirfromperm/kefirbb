@@ -1,6 +1,7 @@
 package org.kefirsf.bb.test.blackbox;
 
 import org.junit.Test;
+import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.conf.*;
 import org.kefirsf.bb.test.Assert;
 
@@ -43,6 +44,6 @@ public class ProgrammaticConfigurationTest {
             cfg.unlock();
         }
         // Test the configuration
-        Assert.assertProcess(cfg.create(), "[KefirBB]", "val");
+        Assert.assertProcess(BBProcessorFactory.getInstance().create(cfg), "[KefirBB]", "val");
     }
 }

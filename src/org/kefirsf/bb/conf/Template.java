@@ -51,7 +51,7 @@ public class Template {
      *
      * @return template
      */
-    WTemplate create() {
+    public WTemplate create() {
         List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
         if (this.elements != null) {
             for (TemplateElement element : this.elements) {

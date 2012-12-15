@@ -1,7 +1,15 @@
 package org.kefirsf.bb;
 
+import org.kefirsf.bb.comp.AbstractCode;
+import org.kefirsf.bb.comp.WScope;
+import org.kefirsf.bb.conf.Code;
+import org.kefirsf.bb.conf.Configuration;
+import org.kefirsf.bb.conf.Scope;
+
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Factory for creating BBProcessor from Stream, File, Resource with configuration or default bb-processor.
@@ -37,7 +45,27 @@ public final class BBProcessorFactory implements TextProcessorFactory {
      * @throws TextProcessorFactoryException when can't read the default code set resource
      */
     public TextProcessor create() {
-        return configurationFactory.create().create();
+        return create(configurationFactory.create());
+    }
+
+    /**
+     * Create TextProcessor by programmatic configuration.
+     *
+     * @param conf programmatic configuration
+     * @return bb-code text processor
+     */
+    public TextProcessor create(Configuration conf) {
+        BBProcessor processor;
+
+        Map<Scope, WScope> createdScopes = new HashMap<Scope, WScope>();
+        Map<Code, AbstractCode> codes = new HashMap<Code, AbstractCode>();
+
+        processor = new BBProcessor();
+        processor.setScope(conf.getRootScope().create(conf, createdScopes, codes));
+        processor.setPrefix(conf.getPrefix().create());
+        processor.setSuffix(conf.getSuffix().create());
+        processor.setParams(conf.getParams());
+        return processor;
     }
 
     /**
@@ -48,7 +76,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
      * @throws TextProcessorFactoryException when can't find or read the resource or illegal config file
      */
     public TextProcessor createFromResource(String resourceName) {
-        return configurationFactory.createFromResource(resourceName).create();
+        return create(configurationFactory.createFromResource(resourceName));
     }
 
     /**
@@ -59,7 +87,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
      * @throws TextProcessorFactoryException when can't build Document
      */
     public TextProcessor create(InputStream stream) {
-        return configurationFactory.create(stream).create();
+        return create(configurationFactory.create(stream));
     }
 
     /**
@@ -70,7 +98,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
      * @throws TextProcessorFactoryException any problems
      */
     public TextProcessor create(File file) {
-        return configurationFactory.create(file).create();
+        return create(configurationFactory.create(file));
     }
 
     /**

@@ -96,7 +96,7 @@ public final class Scope {
      * @param codes         codes
      * @return scope
      */
-    WScope create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+    public WScope create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
         WScope created = createdScopes.get(this);
         if (created == null) {
             created = new WScope(getName());

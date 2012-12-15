@@ -84,7 +84,7 @@ public class BBProcessorTest {
         } finally {
             configuration.unlock();
         }
-        TextProcessor defaultProcessor = configuration.create();
+        TextProcessor defaultProcessor = BBProcessorFactory.getInstance().create(configuration);
         assertProcess(defaultProcessor, "12345", "def 5;");
         assertProcess(defaultProcessor, "12344", "print;");
     }
