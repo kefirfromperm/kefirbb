@@ -23,28 +23,46 @@ public class Configuration {
     public Configuration() {
     }
 
+    /**
+     * Lock configuration for read actions.
+     */
     public void readLock(){
         lock.readLock().lock();
     }
 
+    /**
+     * Unlock configuration for read actions.
+     */
     public void readUnlock(){
         lock.readLock().unlock();
     }
 
+    /**
+     * @throws IllegalStateException if configuration is not locking for read or write actions.
+     */
     void assertReadLock(){
          if(!lock.isWriteLockedByCurrentThread() && lock.getReadHoldCount()<=0){
-             throw new IllegalStateException("Configuration is not locked for read actions.");
+             throw new IllegalStateException("Configuration is not locked for read or write actions.");
          }
     }
 
+    /**
+     * Lock configuration for write actions.
+     */
     public void writeLock(){
         lock.writeLock().lock();
     }
 
+    /**
+     * Unlock configuration for write actions.
+     */
     public void writeUnlock(){
         lock.writeLock().unlock();
     }
 
+    /**
+     * @throws IllegalStateException if configuration is not locking for write actions.
+     */
     void assertWriteLock(){
         if(!lock.isWriteLockedByCurrentThread()){
             throw new IllegalStateException("Configuration is not locked for write actions.");
