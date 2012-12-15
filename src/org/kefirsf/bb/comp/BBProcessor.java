@@ -1,9 +1,6 @@
-package org.kefirsf.bb;
+package org.kefirsf.bb.comp;
 
-import org.kefirsf.bb.comp.Context;
-import org.kefirsf.bb.comp.Source;
-import org.kefirsf.bb.comp.WScope;
-import org.kefirsf.bb.comp.WTemplate;
+import org.kefirsf.bb.TextProcessorAdapter;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -37,7 +34,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      *
      * @param source the source string
      * @return result string
-     * @see TextProcessor#process(CharSequence)
+     * @see org.kefirsf.bb.TextProcessor#process(CharSequence)
      */
     public CharSequence process(CharSequence source) {
         Context context = new Context();
