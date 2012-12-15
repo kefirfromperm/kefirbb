@@ -4,12 +4,12 @@ import java.io.InputStream;
 import java.util.UUID;
 
 /**
- * Util class
+ * Utils class
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Util {
-    private Util() {
+public final class Utils {
+    private Utils() {
     }
 
     /**
@@ -21,7 +21,7 @@ public final class Util {
      */
     public static InputStream openResourceStream(String resourceName) {
         InputStream stream = null;
-        ClassLoader classLoader = Util.class.getClassLoader();
+        ClassLoader classLoader = Utils.class.getClassLoader();
         if (classLoader != null) {
             stream = classLoader.getResourceAsStream(resourceName);
         }

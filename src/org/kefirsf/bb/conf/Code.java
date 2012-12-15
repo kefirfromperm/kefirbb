@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.util.Util;
+import org.kefirsf.bb.util.Utils;
 
 /**
  * Code description.
@@ -19,7 +19,7 @@ public final class Code extends ConfPart {
      * Construct code definition with random name and default priority.
      */
     public Code() {
-        this.name = Util.generateRandomName();
+        this.name = Utils.generateRandomName();
     }
 
     /**

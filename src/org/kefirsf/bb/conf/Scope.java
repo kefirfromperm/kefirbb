@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.util.Util;
+import org.kefirsf.bb.util.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +23,7 @@ public final class Scope extends ConfPart {
     private final Set<Code> codes = new HashSet<Code>();
 
     public Scope() {
-        name = Util.generateRandomName();
+        name = Utils.generateRandomName();
     }
 
     public Scope(String name) {

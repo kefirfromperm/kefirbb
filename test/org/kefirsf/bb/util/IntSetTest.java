@@ -1,8 +1,8 @@
-package org.kefirsf.bb.test;
+package org.kefirsf.bb.util;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.kefirsf.bb.util.IntSet;
+import org.kefirsf.bb.test.Assert;
 
 import java.util.Random;
 

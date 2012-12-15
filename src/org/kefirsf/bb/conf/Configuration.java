@@ -11,6 +11,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public final class Configuration {
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+    private final ThreadLocal<Boolean> readLocked = new ThreadLocal<Boolean>(){
+        @Override
+        protected Boolean initialValue() {
+            return Boolean.FALSE;
+        }
+    };
 
     private Map<String, Scope> scopes = null;
     private Template prefix = new Template();
@@ -35,12 +41,14 @@ public final class Configuration {
      */
     public void readLock() {
         lock.readLock().lock();
+        readLocked.set(Boolean.TRUE);
     }
 
     /**
      * Unlock configuration for read actions.
      */
     public void readUnlock() {
+        readLocked.set(Boolean.FALSE);
         lock.readLock().unlock();
     }
 
@@ -48,7 +56,7 @@ public final class Configuration {
      * @throws IllegalStateException if configuration is not locking for read or write actions.
      */
     void assertReadLock() {
-        if (!lock.isWriteLockedByCurrentThread() && lock.getReadHoldCount() <= 0) {
+        if (!(lock.isWriteLockedByCurrentThread() || readLocked.get())) {
             throw new IllegalStateException("Configuration is not locked for read or write actions.");
         }
     }

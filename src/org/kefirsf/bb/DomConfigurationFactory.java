@@ -1,7 +1,7 @@
 package org.kefirsf.bb;
 
 import org.kefirsf.bb.conf.*;
-import org.kefirsf.bb.util.Util;
+import org.kefirsf.bb.util.Utils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -243,7 +243,7 @@ public class DomConfigurationFactory {
      */
     private Code parseCode(Element codeElement) {
         // Code name
-        Code code = new Code(nodeAttribute(codeElement, TAG_CODE_ATTR_NAME, Util.generateRandomName()));
+        Code code = new Code(nodeAttribute(codeElement, TAG_CODE_ATTR_NAME, Utils.generateRandomName()));
 
         // Code priority
         code.setPriority(nodeAttribute(codeElement, TAG_CODE_ATTR_PRIORITY, Code.DEFAULT_PRIORITY));

@@ -1,7 +1,7 @@
 package org.kefirsf.bb;
 
 import org.kefirsf.bb.conf.Configuration;
-import org.kefirsf.bb.util.Util;
+import org.kefirsf.bb.util.Utils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -63,11 +63,11 @@ public final class ConfigurationFactory {
             InputStream stream = null;
             try {
                 // Search the user configuration
-                stream = Util.openResourceStream(DEFAULT_USER_CONFIGURATION_FILE);
+                stream = Utils.openResourceStream(DEFAULT_USER_CONFIGURATION_FILE);
 
                 // If user configuration not found then use default
                 if (stream == null) {
-                    stream = Util.openResourceStream(DEFAULT_CONFIGURATION_FILE);
+                    stream = Utils.openResourceStream(DEFAULT_CONFIGURATION_FILE);
                 }
 
                 if (stream != null) {
@@ -86,7 +86,7 @@ public final class ConfigurationFactory {
             // Load properties from .property file
             InputStream propertiesStream = null;
             try {
-                propertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_FILE);
+                propertiesStream = Utils.openResourceStream(DEFAULT_PROPERTIES_FILE);
                 if (propertiesStream != null) {
                     properties.load(propertiesStream);
                 }
@@ -99,7 +99,7 @@ public final class ConfigurationFactory {
             // Load properties from xml file
             InputStream xmlPropertiesStream = null;
             try {
-                xmlPropertiesStream = Util.openResourceStream(DEFAULT_PROPERTIES_XML_FILE);
+                xmlPropertiesStream = Utils.openResourceStream(DEFAULT_PROPERTIES_XML_FILE);
                 if (xmlPropertiesStream != null) {
                     properties.loadFromXML(xmlPropertiesStream);
                 }
@@ -137,7 +137,7 @@ public final class ConfigurationFactory {
         try {
             InputStream stream = null;
             try {
-                stream = Util.openResourceStream(resourceName);
+                stream = Utils.openResourceStream(resourceName);
 
                 if (stream != null) {
                     configuration = create(stream);

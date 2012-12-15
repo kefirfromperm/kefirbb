@@ -1,9 +1,7 @@
-package org.kefirsf.bb.test;
+package org.kefirsf.bb;
 
 import org.junit.Test;
-import org.kefirsf.bb.EscapeProcessor;
-import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.TextProcessorChain;
+import org.kefirsf.bb.test.Assert;
 
 import java.util.Arrays;
 

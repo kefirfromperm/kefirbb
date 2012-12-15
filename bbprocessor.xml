@@ -195,10 +195,10 @@
             <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
 
             <!-- Module tests -->
-            <test name="org.kefirsf.bb.test.SourceTest"/>
-            <test name="org.kefirsf.bb.test.ContextTest"/>
-            <test name="org.kefirsf.bb.test.IntSetTest"/>
-            <test name="org.kefirsf.bb.test.TextProcessorChainTest"/>
+            <test name="org.kefirsf.bb.comp.SourceTest"/>
+            <test name="org.kefirsf.bb.comp.ContextTest"/>
+            <test name="org.kefirsf.bb.util.IntSetTest"/>
+            <test name="org.kefirsf.bb.TextProcessorChainTest"/>
         </junit>
     </target>
 
@@ -231,10 +231,10 @@
             <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
 
             <!-- Module tests -->
-            <test name="org.kefirsf.bb.test.SourceTest"/>
-            <test name="org.kefirsf.bb.test.ContextTest"/>
-            <test name="org.kefirsf.bb.test.IntSetTest"/>
-            <test name="org.kefirsf.bb.test.TextProcessorChainTest"/>
+            <test name="org.kefirsf.bb.comp.SourceTest"/>
+            <test name="org.kefirsf.bb.comp.ContextTest"/>
+            <test name="org.kefirsf.bb.util.IntSetTest"/>
+            <test name="org.kefirsf.bb.TextProcessorChainTest"/>
         </junit>
     </target>
 
