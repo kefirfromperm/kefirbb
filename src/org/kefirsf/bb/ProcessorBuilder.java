@@ -5,7 +5,7 @@ import org.kefirsf.bb.conf.*;
 
 import java.util.*;
 
-public class ProcessorBuilder {
+class ProcessorBuilder {
     private final Configuration conf;
     private final Map<Scope, WScope> createdScopes;
     private final Map<Code, AbstractCode> codes;
