@@ -1,5 +1,6 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.comp.AbstractCode;
 import org.kefirsf.bb.comp.WPatternElement;
 import org.kefirsf.bb.comp.WScope;
@@ -36,7 +37,7 @@ public class Text extends NamedElement implements PatternElement {
         if (scope != null) {
             return new WText(
                     getName(),
-                    configuration.getScope(scope).create(configuration, scopes, codes),
+                    BBProcessorFactory.create(configuration.getScope(scope), configuration, scopes, codes),
                     isTransparent()
             );
         } else {

@@ -74,7 +74,7 @@ public final class Code {
      * @param codes         codes are created already
      * @return code object
      */
-    AbstractCode create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+    public AbstractCode create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
         if (pattern == null) {
             throw new IllegalStateException("Field pattern can't be null.");
         }

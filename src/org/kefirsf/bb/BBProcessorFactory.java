@@ -9,7 +9,9 @@ import org.kefirsf.bb.conf.Scope;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Factory for creating BBProcessor from Stream, File, Resource with configuration or default bb-processor.
@@ -39,6 +41,34 @@ public final class BBProcessorFactory implements TextProcessorFactory {
     }
 
     /**
+     * Create scope
+     *
+     * @param scope
+     * @param configuration text processor configuration
+     * @param createdScopes created scopes
+     * @param codes         codes
+     * @return scope
+     */
+    public static WScope create(Scope scope, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+        WScope created = createdScopes.get(scope);
+        if (created == null) {
+            created = new WScope(scope.getName());
+            createdScopes.put(scope, created);
+            created.setIgnoreText(scope.isIgnoreText());
+            if (scope.getParent() != null) {
+                created.setParent(create(configuration.getScope(scope.getParent()), configuration, createdScopes, codes));
+            }
+            Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
+            for (Code code : scope.getCodes()) {
+                scopeCodes.add(code.create(configuration, createdScopes, codes));
+            }
+            created.setScopeCodes(scopeCodes);
+            created.init();
+        }
+        return created;
+    }
+
+    /**
      * Create the default bb-code processor.
      *
      * @return Default bb-code processor
@@ -61,7 +91,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
         Map<Code, AbstractCode> codes = new HashMap<Code, AbstractCode>();
 
         processor = new BBProcessor();
-        processor.setScope(conf.getRootScope().create(conf, createdScopes, codes));
+        processor.setScope(create(conf.getRootScope(), conf, createdScopes, codes));
         processor.setPrefix(conf.getPrefix().create());
         processor.setSuffix(conf.getSuffix().create());
         processor.setParams(conf.getParams());

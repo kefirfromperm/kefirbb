@@ -1,11 +1,8 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.comp.AbstractCode;
-import org.kefirsf.bb.comp.WScope;
 import org.kefirsf.bb.util.Util;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -86,32 +83,5 @@ public final class Scope {
     @Override
     public int hashCode() {
         return name.hashCode();
-    }
-
-    /**
-     * Create scope
-     *
-     * @param configuration text processor configuration
-     * @param createdScopes created scopes
-     * @param codes         codes
-     * @return scope
-     */
-    public WScope create(Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
-        WScope created = createdScopes.get(this);
-        if (created == null) {
-            created = new WScope(getName());
-            createdScopes.put(this, created);
-            created.setIgnoreText(isIgnoreText());
-            if (getParent() != null) {
-                created.setParent(configuration.getScope(getParent()).create(configuration, createdScopes, codes));
-            }
-            Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
-            for (Code code : getCodes()) {
-                scopeCodes.add(code.create(configuration, createdScopes, codes));
-            }
-            created.setScopeCodes(scopeCodes);
-            created.init();
-        }
-        return created;
     }
 }
