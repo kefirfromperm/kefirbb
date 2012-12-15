@@ -16,14 +16,14 @@ public class Constant implements TemplateElement, PatternElement {
     }
 
     public WConstant create() {
-        return new WConstant(value);
+        return new WConstant(getValue());
     }
 
     public WPatternElement create(Configuration configuration, Map<Scope, WScope> scopes, Map<Code, AbstractCode> codes) {
-        if (!ignoreCase) {
-            return new WConstant(value);
+        if (!isIgnoreCase()) {
+            return new WConstant(getValue());
         } else {
-            return new WConstantIgnoreCase(value);
+            return new WConstantIgnoreCase(getValue());
         }
     }
 

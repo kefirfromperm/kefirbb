@@ -1,9 +1,6 @@
 package org.kefirsf.bb;
 
-import org.kefirsf.bb.comp.AbstractCode;
-import org.kefirsf.bb.comp.ConstantCode;
-import org.kefirsf.bb.comp.WCode;
-import org.kefirsf.bb.comp.WScope;
+import org.kefirsf.bb.comp.*;
 import org.kefirsf.bb.conf.*;
 
 import java.io.File;
@@ -93,7 +90,7 @@ public final class BBProcessorFactory implements TextProcessorFactory {
                 );
             } else {
                 code = new WCode(
-                        thisCode.getPattern().create(configuration, createdScopes, codes),
+                        create(thisCode.getPattern(), configuration, createdScopes, codes),
                         thisCode.getTemplate().create(),
                         thisCode.getName(),
                         thisCode.getPriority()
@@ -101,6 +98,27 @@ public final class BBProcessorFactory implements TextProcessorFactory {
             }
         }
         return code;
+    }
+
+    /**
+     * Create pattern for text parsing
+     *
+     * @param pattern
+     * @param configuration text processor configuration
+     * @param createdScopes scopes was created already
+     * @param codes         codes
+     * @return pattern
+     */
+    public static WPattern create(Pattern pattern, Configuration configuration, Map<Scope, WScope> createdScopes, Map<Code, AbstractCode> codes) {
+        if (pattern.getElements() == null || pattern.getElements().isEmpty()) {
+            throw new IllegalStateException("Pattern elements list can't be empty.");
+        }
+
+        List<WPatternElement> elements = new ArrayList<WPatternElement>();
+        for (PatternElement element : pattern.getElements()) {
+            elements.add(element.create(configuration, createdScopes, codes));
+        }
+        return new WPattern(elements);
     }
 
     /**
