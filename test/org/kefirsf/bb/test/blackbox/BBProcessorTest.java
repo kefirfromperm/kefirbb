@@ -77,8 +77,13 @@ public class BBProcessorTest {
         assertProcess(processor, "PunkOi!", "print punk;print;");
 
         Configuration configuration = ConfigurationFactory.getInstance().create();
-        configuration.setParam("var4", 4);
-        configuration.setParam("var5", 4);
+        configuration.writeLock();
+        try {
+            configuration.setParam("var4", 4);
+            configuration.setParam("var5", 4);
+        } finally {
+            configuration.writeUnlock();
+        }
         TextProcessor defaultProcessor = BBProcessorFactory.getInstance().create(configuration);
         assertProcess(defaultProcessor, "12345", "def 5;");
         assertProcess(defaultProcessor, "12344", "print;");

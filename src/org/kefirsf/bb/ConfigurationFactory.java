@@ -109,7 +109,12 @@ public final class ConfigurationFactory {
                 }
             }
 
-            configuration.addParams(properties);
+            configuration.writeLock();
+            try {
+                configuration.addParams(properties);
+            } finally {
+                configuration.writeUnlock();
+            }
         } catch (IOException e) {
             throw new TextProcessorFactoryException(e);
         }

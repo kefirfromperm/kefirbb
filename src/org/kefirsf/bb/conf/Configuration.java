@@ -1,6 +1,7 @@
 package org.kefirsf.bb.conf;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Configuration of bbcode processor.
@@ -9,6 +10,8 @@ import java.util.*;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class Configuration {
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
+
     private Map<String, Scope> scopes = null;
     private Template prefix = Template.EMPTY;
     private Template suffix = Template.EMPTY;
@@ -20,11 +23,54 @@ public class Configuration {
     public Configuration() {
     }
 
+    public void readLock(){
+        lock.readLock().lock();
+    }
+
+    public void readUnlock(){
+        lock.readLock().unlock();
+    }
+
+    void assertReadLock(){
+         if(!lock.isWriteLockedByCurrentThread() && lock.getReadHoldCount()<=0){
+             throw new IllegalStateException("Configuration is not locked for read actions.");
+         }
+    }
+
+    public void writeLock(){
+        lock.writeLock().lock();
+    }
+
+    public void writeUnlock(){
+        lock.writeLock().unlock();
+    }
+
+    void assertWriteLock(){
+        if(!lock.isWriteLockedByCurrentThread()){
+            throw new IllegalStateException("Configuration is not locked for write actions.");
+        }
+    }
+
     public Set<Scope> getScopes() {
+        assertReadLock();
         return new HashSet<Scope>(scopes.values());
     }
 
+    /**
+     * Set root scope for text processor.
+     *
+     * @param scopes scopes
+     */
+    public void setScopes(Iterable<Scope> scopes) {
+        assertWriteLock();
+        this.scopes = new HashMap<String, Scope>();
+        for (Scope scope : scopes) {
+            this.scopes.put(scope.getName(), scope);
+        }
+    }
+
     public Scope getScope(String name) {
+        assertReadLock();
         return scopes.get(name);
     }
 
@@ -34,19 +80,13 @@ public class Configuration {
      * @return root scope
      */
     public Scope getRootScope() {
+        assertReadLock();
         return scopes.get(Scope.ROOT);
     }
 
-    /**
-     * Set root scope for text processor.
-     *
-     * @param scopes scopes
-     */
-    public void setScopes(Iterable<Scope> scopes) {
-        this.scopes = new HashMap<String, Scope>();
-        for (Scope scope : scopes) {
-            this.scopes.put(scope.getName(), scope);
-        }
+    public Template getPrefix() {
+        assertReadLock();
+        return prefix;
     }
 
     /**
@@ -55,11 +95,17 @@ public class Configuration {
      * @param prefix template for prefix
      */
     public void setPrefix(Template prefix) {
+        assertWriteLock();
         if (prefix != null) {
             this.prefix = prefix;
         } else {
             this.prefix = Template.EMPTY;
         }
+    }
+
+    public Template getSuffix() {
+        assertReadLock();
+        return suffix;
     }
 
     /**
@@ -68,11 +114,16 @@ public class Configuration {
      * @param suffix template for suffix
      */
     public void setSuffix(Template suffix) {
+        assertWriteLock();
         if (suffix != null) {
             this.suffix = suffix;
         } else {
             this.suffix = Template.EMPTY;
         }
+    }
+
+    public Map<String, Object> getParams() {
+        return params;
     }
 
     /**
@@ -84,6 +135,7 @@ public class Configuration {
      * @see #addParam(String, Object)
      */
     public void setParam(String name, Object value) {
+        assertWriteLock();
         addParam(name, value);
     }
 
@@ -94,6 +146,7 @@ public class Configuration {
      * @param value value of context parameter
      */
     public void addParam(String name, Object value) {
+        assertWriteLock();
         params.put(name, value);
     }
 
@@ -103,6 +156,7 @@ public class Configuration {
      * @param params Map contained params
      */
     public void addParams(Map<String, ?> params) {
+        assertWriteLock();
         this.params.putAll(params);
     }
 
@@ -112,6 +166,7 @@ public class Configuration {
      * @param properties Properties object
      */
     public void addParams(Properties properties) {
+        assertWriteLock();
         for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             Object key = entry.getKey();
             if (key != null) {
@@ -126,6 +181,7 @@ public class Configuration {
      * @param name name of parameter
      */
     public void removeParam(String name) {
+        assertWriteLock();
         this.params.remove(name);
     }
 
@@ -133,18 +189,7 @@ public class Configuration {
      * Remove all parameters from context.
      */
     public void clearParams() {
+        assertWriteLock();
         this.params.clear();
-    }
-
-    public Template getPrefix() {
-        return prefix;
-    }
-
-    public Template getSuffix() {
-        return suffix;
-    }
-
-    public Map<String, Object> getParams() {
-        return params;
     }
 }

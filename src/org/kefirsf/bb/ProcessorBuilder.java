@@ -24,10 +24,15 @@ class ProcessorBuilder {
      */
     public BBProcessor build() {
         BBProcessor processor = new BBProcessor();
-        processor.setScope(createScope(conf.getRootScope()));
-        processor.setPrefix(createTemplate(conf.getPrefix()));
-        processor.setSuffix(createTemplate(conf.getSuffix()));
-        processor.setParams(conf.getParams());
+        conf.readLock();
+        try {
+            processor.setScope(createScope(conf.getRootScope()));
+            processor.setPrefix(createTemplate(conf.getPrefix()));
+            processor.setSuffix(createTemplate(conf.getSuffix()));
+            processor.setParams(conf.getParams());
+        } finally {
+            conf.readUnlock();
+        }
         return processor;
     }
 
@@ -171,6 +176,7 @@ class ProcessorBuilder {
 
     /**
      * Find or create the scope by name and return in
+     *
      * @param name scope name
      * @return scope
      */
