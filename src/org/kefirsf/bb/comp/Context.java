@@ -2,9 +2,7 @@ package org.kefirsf.bb.comp;
 
 import org.kefirsf.bb.util.IntSet;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,11 +35,6 @@ public class Context {
      * Code scope
      */
     private WScope scope;
-
-    /**
-     * Codes array for performance
-     */
-    private AbstractCode[] codes = new AbstractCode[0];
 
     /**
      * Context attributes
@@ -77,60 +70,13 @@ public class Context {
         this.setScope(parent.scope);
     }
 
-    /**
-     * Парсит тект с BB-кодами
-     *
-     * @throws java.io.IOException if can't append chars to target
-     */
-    public void parse() throws IOException {
-        while (hasNextAdjustedForTerminator()) {
-            if (!process()) {
-                if (scope.isIgnoreText()) {
-                    source.incOffset();
-                } else {
-                    getTarget().append(source.next());
-                }
-            }
-        }
-    }
-
-    /**
-     * Обрабатывает BB-коды
-     *
-     * @return true если найден BB-код
-     * @throws java.io.IOException if can't append to target
-     */
-    private boolean process() throws IOException {
-        int offset = source.getOffset();
-        if (checkBadTag(offset)) {
-            return false;
-        }
-
-        boolean suspicious = false;
-        boolean parsed = false;
-        for (AbstractCode code : codes) {
-            if (code.suspicious(source)) {
-                suspicious = true;
-                if (code.process(this)) {
-                    parsed = true;
-                    break;
-                }
-            }
-        }
-
-        if (suspicious && !parsed) {
-            addBadTag(offset);
-        }
-
-        return parsed;
-    }
 
     /**
      * Add the bag tag position
      *
      * @param offset offset of bad tag in source
      */
-    private void addBadTag(int offset) {
+    public void addBadTag(int offset) {
         scopeFalseMemo.add(offset);
     }
 
@@ -140,7 +86,7 @@ public class Context {
      * @param offset offset of tag
      * @return true if at this ofsset tag is bad
      */
-    private boolean checkBadTag(int offset) {
+    public boolean checkBadTag(int offset) {
         return scopeFalseMemo.contains(offset);
     }
 
@@ -150,7 +96,7 @@ public class Context {
      * @return true if chars exists
      *         false if chars canceled
      */
-    private boolean hasNextAdjustedForTerminator() {
+    public boolean hasNextAdjustedForTerminator() {
         return source.hasNext() && (terminator == null || !terminator.isNextIn(source));
     }
 
@@ -204,10 +150,6 @@ public class Context {
     public void setScope(WScope scope) {
         this.scope = scope;
 
-        // codes
-        List<AbstractCode> codeList = scope.getCodes();
-        codes = codeList.toArray(new AbstractCode[codeList.size()]);
-
         // Scope false memo
         scopeFalseMemo = falseMemo.get(scope);
         if (scopeFalseMemo == null) {
@@ -246,5 +188,9 @@ public class Context {
      */
     public void setTerminator(WPatternElement terminator) {
         this.terminator = terminator;
+    }
+
+    public WScope getScope() {
+        return scope;
     }
 }

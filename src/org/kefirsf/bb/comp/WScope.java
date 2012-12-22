@@ -2,7 +2,11 @@ package org.kefirsf.bb.comp;
 
 import org.kefirsf.bb.TextProcessorFactoryException;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * bb-code scope. Required for tables, for example.
@@ -35,7 +39,7 @@ public class WScope {
     /**
      * Code of scope include the parent codes
      */
-    private List<AbstractCode> cachedCodes = null;
+    private AbstractCode[] cachedCodes = null;
 
     /**
      * Mark that this scope is initialized
@@ -49,6 +53,44 @@ public class WScope {
      */
     public WScope(String name) {
         this.name = name;
+    }
+
+    /**
+     * Парсит тект с BB-кодами
+     *
+     * @throws java.io.IOException if can't append chars to target
+     */
+    public void process(Context context) throws IOException {
+        while (context.hasNextAdjustedForTerminator()) {
+            Source source = context.getSource();
+            int offset = source.getOffset();
+            boolean parsed = false;
+            if (!context.checkBadTag(offset)) {
+
+                boolean suspicious = false;
+                for (AbstractCode code : cachedCodes) {
+                    if (code.suspicious(source)) {
+                        suspicious = true;
+                        if (code.process(context)) {
+                            parsed = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (suspicious && !parsed) {
+                    context.addBadTag(offset);
+                }
+            }
+
+            if (!parsed) {
+                if (ignoreText) {
+                    source.incOffset();
+                } else {
+                    context.getTarget().append(source.next());
+                }
+            }
+        }
     }
 
     /**
@@ -91,7 +133,7 @@ public class WScope {
      *
      * @return list of codes in priority order.
      */
-    public List<AbstractCode> getCodes() {
+    private AbstractCode[] getCodes() {
         if (!initialized) {
             throw new IllegalStateException("Scope is not initialized.");
         }
@@ -102,28 +144,32 @@ public class WScope {
      * Cache scope codes. Join scope codes with parent scope codes.
      */
     private void cacheCodes() {
-        List<AbstractCode> list = new ArrayList<AbstractCode>();
+        Set<AbstractCode> set = new HashSet<AbstractCode>();
+
         if (parent != null) {
-            list.addAll(parent.getCodes());
+            set.addAll(Arrays.asList(parent.getCodes()));
         }
+
         if (scopeCodes != null) {
-            list.addAll(scopeCodes);
+            set.addAll(scopeCodes);
         }
-        Collections.sort(list,
+
+        cachedCodes = set.toArray(new AbstractCode[set.size()]);
+        Arrays.sort(
+                cachedCodes,
                 new Comparator<AbstractCode>() {
                     public int compare(AbstractCode code1, AbstractCode code2) {
                         return code2.compareTo(code1);
                     }
                 }
         );
-        cachedCodes = Collections.unmodifiableList(list);
     }
 
     /**
      * By default it is false.
      *
-     * @return true if not parsiable text mustn't append to result.
-     *         false if not parsiable text append to result as is.
+     * @return true if not parseable text mustn't append to result.
+     *         false if not parseable text append to result as is.
      */
     public boolean isIgnoreText() {
         return ignoreText;

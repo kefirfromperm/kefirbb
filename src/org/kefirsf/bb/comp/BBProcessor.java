@@ -50,7 +50,7 @@ public final class BBProcessor extends TextProcessorAdapter {
 
         try {
             prefix.generate(context);
-            context.parse();
+            scope.process(context);
             suffix.generate(context);
         } catch (IOException e) {
             // Never because StringBuilder not throw IOException

@@ -52,7 +52,7 @@ public class WText extends WNamedElement implements WPatternElement {
         }
         child.setTerminator(terminator);
         try {
-            child.parse();
+            child.getScope().process(child);
         } catch (IOException e) {
             // Never because StringBuilder don't throw IOException
         }
