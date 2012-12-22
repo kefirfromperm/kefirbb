@@ -37,7 +37,7 @@ class ProcessorBuilder {
     }
 
     /**
-     * Create a scope
+     * Find or create the scope.
      *
      * @param scope the scope configuration
      * @return scope scope
@@ -49,7 +49,7 @@ class ProcessorBuilder {
             createdScopes.put(scope, created);
             created.setIgnoreText(scope.isIgnoreText());
             if (scope.getParent() != null) {
-                created.setParent(getScope(scope.getParent()));
+                created.setParent(createScope(conf.getScope(scope.getParent())));
             }
             Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
             for (Code code : scope.getCodes()) {
@@ -166,21 +166,11 @@ class ProcessorBuilder {
         if (scopeName != null) {
             return new WText(
                     text.getName(),
-                    getScope(scopeName),
+                    createScope(conf.getScope(scopeName)),
                     text.isTransparent()
             );
         } else {
             return new WText(text.getName(), text.isTransparent());
         }
-    }
-
-    /**
-     * Find or create the scope by name and return in
-     *
-     * @param name scope name
-     * @return scope
-     */
-    private WScope getScope(String name) {
-        return createScope(conf.getScope(name));
     }
 }
