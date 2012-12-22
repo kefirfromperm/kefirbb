@@ -1,5 +1,6 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.util.ExceptionUtils;
 import org.kefirsf.bb.util.Utils;
 
 import java.util.HashSet;
@@ -78,7 +79,7 @@ public final class Scope extends ConfPart {
 
     public void setCodes(Set<Code> codes) {
         if(codes==null){
-            throw new IllegalArgumentException("Parameter codes can't be null.");
+            throw ExceptionUtils.nullArgument("codes");
         }
 
         assertWriteLock();

@@ -1,5 +1,7 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.util.ExceptionUtils;
+
 import java.util.*;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -131,7 +133,7 @@ public final class Configuration {
     public void setPrefix(Template prefix) {
         assertWriteLock();
         if (prefix == null) {
-            throw new IllegalArgumentException("Parameter prefix can't be null.");
+            throw ExceptionUtils.nullArgument("prefix");
         }
         prefix.setConfiguration(this);
         this.prefix = prefix;
@@ -150,7 +152,7 @@ public final class Configuration {
     public void setSuffix(Template suffix) {
         assertWriteLock();
         if (suffix == null) {
-            throw new IllegalArgumentException("Parameter suffix can't be null.");
+            throw ExceptionUtils.nullArgument("suffix");
         }
 
         suffix.setConfiguration(this);

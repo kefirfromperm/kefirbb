@@ -1,7 +1,9 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.util.ExceptionUtils;
+
 /**
- * The base class for all configuration classes
+ * The base class for all configuration classes.
  *
  * @author kefir
  */
@@ -13,7 +15,7 @@ abstract class ConfPart {
 
     public void setConfiguration(Configuration configuration) {
         if (configuration == null) {
-            throw new IllegalArgumentException("Parameter configuration can't be null.");
+            throw ExceptionUtils.nullArgument("configuration");
         }
 
         if (this.configuration == null) {

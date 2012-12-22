@@ -1,5 +1,6 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.util.ExceptionUtils;
 import org.kefirsf.bb.util.Utils;
 
 /**
@@ -67,7 +68,7 @@ public final class Code extends ConfPart {
      */
     private void assertNameNotNull(String name) {
         if (name == null) {
-            throw new IllegalArgumentException("Code name can't be null.");
+            throw ExceptionUtils.nullArgument(name);
         }
     }
 
