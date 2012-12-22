@@ -2,7 +2,9 @@ package org.kefirsf.bb.conf;
 
 import org.kefirsf.bb.util.ExceptionUtils;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
@@ -13,7 +15,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public final class Configuration {
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
-    private final ThreadLocal<Boolean> readLocked = new ThreadLocal<Boolean>(){
+    private final ThreadLocal<Boolean> readLocked = new ThreadLocal<Boolean>() {
         @Override
         protected Boolean initialValue() {
             return Boolean.FALSE;
@@ -39,56 +41,72 @@ public final class Configuration {
     }
 
     /**
-     * Lock configuration for read actions.
+     * Lock the configuration for read actions.
      */
     public void readLock() {
+        if (isReadLocked()) {
+            throw new IllegalStateException("The configuration already is locked for read actions.");
+        }
+
         lock.readLock().lock();
         readLocked.set(Boolean.TRUE);
     }
 
     /**
-     * Unlock configuration for read actions.
+     * Unlock the configuration for read actions.
      */
     public void readUnlock() {
+        if (!readLocked.get()) {
+            throw new IllegalStateException("The configuration is not locked for read actions.");
+        }
+
         readLocked.set(Boolean.FALSE);
         lock.readLock().unlock();
     }
 
     /**
-     * @throws IllegalStateException if configuration is not locking for read or write actions.
+     * Check configuration lock state.
+     *
+     * @throws IllegalStateException if the configuration is not locking for read or write actions.
      */
     void assertReadLock() {
-        if (!(lock.isWriteLockedByCurrentThread() || readLocked.get())) {
-            throw new IllegalStateException("Configuration is not locked for read or write actions.");
+        if (!isReadLocked()) {
+            throw new IllegalStateException("The configuration is not locked for read or write actions.");
         }
     }
 
+    private boolean isReadLocked() {
+        return (lock.isWriteLockedByCurrentThread() || readLocked.get());
+    }
+
     /**
-     * Lock configuration for write actions.
+     * Lock the configuration for write actions.
      */
     public void writeLock() {
+        if (lock.isWriteLockedByCurrentThread()) {
+            throw new IllegalStateException("The configuration already is locked for write actions.");
+        }
+
         lock.writeLock().lock();
     }
 
     /**
-     * Unlock configuration for write actions.
+     * Unlock the configuration for write actions.
      */
     public void writeUnlock() {
+        assertWriteLock();
         lock.writeLock().unlock();
     }
 
     /**
-     * @throws IllegalStateException if configuration is not locking for write actions.
+     * Check configuration lock state.
+     *
+     * @throws IllegalStateException if the configuration is not locking for write actions.
      */
     void assertWriteLock() {
         if (!lock.isWriteLockedByCurrentThread()) {
             throw new IllegalStateException("Configuration is not locked for write actions.");
         }
-    }
-
-    public Set<Scope> getScopes() {
-        assertReadLock();
-        return new HashSet<Scope>(scopes.values());
     }
 
     /**
@@ -105,6 +123,12 @@ public final class Configuration {
         }
     }
 
+    /**
+     * Get scope by name.
+     *
+     * @param name the scope name
+     * @return the scope
+     */
     public Scope getScope(String name) {
         assertReadLock();
         return scopes.get(name);
@@ -116,8 +140,7 @@ public final class Configuration {
      * @return root scope
      */
     public Scope getRootScope() {
-        assertReadLock();
-        return scopes.get(Scope.ROOT);
+        return getScope(Scope.ROOT);
     }
 
     public Template getPrefix() {
@@ -135,6 +158,7 @@ public final class Configuration {
         if (prefix == null) {
             throw ExceptionUtils.nullArgument("prefix");
         }
+
         prefix.setConfiguration(this);
         this.prefix = prefix;
     }
