@@ -52,11 +52,11 @@ public final class Code extends ConfPart {
     @Override
     public void setConfiguration(Configuration configuration) {
         super.setConfiguration(configuration);
-        if(pattern!=null){
+        if (pattern != null) {
             pattern.setConfiguration(configuration);
         }
 
-        if(template!=null){
+        if (template != null) {
             template.setConfiguration(configuration);
         }
     }
@@ -68,7 +68,7 @@ public final class Code extends ConfPart {
      */
     private void assertNameNotNull(String name) {
         if (name == null) {
-            throw ExceptionUtils.nullArgument(name);
+            throw ExceptionUtils.nullArgument("name");
         }
     }
 
@@ -115,7 +115,7 @@ public final class Code extends ConfPart {
      */
     public void setPattern(Pattern pattern) {
         assertWriteLock();
-        if(configuration!=null){
+        if (configuration != null) {
             pattern.setConfiguration(configuration);
         }
         this.pattern = pattern;
@@ -138,7 +138,7 @@ public final class Code extends ConfPart {
      */
     public void setTemplate(Template template) {
         assertWriteLock();
-        if(configuration!=null){
+        if (configuration != null) {
             template.setConfiguration(configuration);
         }
         this.template = template;
@@ -152,13 +152,10 @@ public final class Code extends ConfPart {
         Code code = (Code) o;
 
         return name.equals(code.name);
-
     }
 
     @Override
     public int hashCode() {
         return name.hashCode();
     }
-
-
 }

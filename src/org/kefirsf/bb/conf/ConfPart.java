@@ -22,7 +22,7 @@ abstract class ConfPart {
             configuration.assertWriteLock();
             this.configuration = configuration;
         } else if (!this.configuration.equals(configuration)) {
-            throw new IllegalStateException("Configuration already is set.");
+            throw new IllegalStateException("The configuration already is set.");
         }
     }
 

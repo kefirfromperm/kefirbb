@@ -2,6 +2,7 @@ package org.kefirsf.bb.conf;
 
 import org.kefirsf.bb.util.ExceptionUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -185,7 +186,7 @@ public final class Configuration {
 
     public Map<String, Object> getParams() {
         assertReadLock();
-        return params;
+        return Collections.unmodifiableMap(params);
     }
 
     /**
