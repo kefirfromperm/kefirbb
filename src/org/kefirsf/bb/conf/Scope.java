@@ -11,7 +11,7 @@ import java.util.Set;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Scope extends ConfPart {
+public final class Scope {
     /**
      * Default name for root scope. If ROOT scope not defined in configuration
      * then all codes add to default ROOT scope.
@@ -39,41 +39,27 @@ public final class Scope extends ConfPart {
         this.ignoreText = ignoreText;
     }
 
-    @Override
-    public void setConfiguration(Configuration configuration) {
-        super.setConfiguration(configuration);
-        for(Code code:codes){
-            code.setConfiguration(configuration);
-        }
-    }
-
     public String getName() {
-        assertReadLock();
         return name;
     }
 
     public String getParent() {
-        assertReadLock();
         return parent;
     }
 
     public boolean isIgnoreText() {
-        assertReadLock();
         return ignoreText;
     }
 
     public Set<Code> getCodes() {
-        assertReadLock();
         return codes;
     }
 
     public void setParent(String parent) {
-        assertWriteLock();
         this.parent = parent;
     }
 
     public void setIgnoreText(boolean ignoreText) {
-        assertWriteLock();
         this.ignoreText = ignoreText;
     }
 
@@ -82,18 +68,11 @@ public final class Scope extends ConfPart {
             throw ExceptionUtils.nullArgument("codes");
         }
 
-        assertWriteLock();
-        if (configuration != null) {
-            for (Code code : codes) {
-                code.setConfiguration(configuration);
-            }
-        }
         this.codes.clear();
         this.codes.addAll(codes);
     }
 
     public void addCode(Code code) {
-        assertWriteLock();
         codes.add(code);
     }
 

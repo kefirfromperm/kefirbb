@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * @author kefir
  */
-class ElementListOwner<T> extends ConfPart {
+class ElementListOwner<T> {
     protected List<? extends T> elements;
 
     public ElementListOwner() {
@@ -23,7 +23,6 @@ class ElementListOwner<T> extends ConfPart {
       * @return elements list
       */
      public List<? extends T> getElements() {
-         assertReadLock();
          return elements;
      }
 
@@ -33,7 +32,6 @@ class ElementListOwner<T> extends ConfPart {
       * @param elements elements list
       */
      public void setElements(List<? extends T> elements) {
-         assertWriteLock();
          this.elements = Collections.unmodifiableList(elements);
      }
 }

@@ -17,32 +17,28 @@ public class ProgrammaticConfigurationTest {
     public void test() {
         // Create configuration
         Configuration cfg = new Configuration();
-        cfg.writeLock();
-        try {
-            // Set the prefix and suffix
-            cfg.setPrefix(new Template(Arrays.asList(new Constant("["))));
-            cfg.setSuffix(new Template(Arrays.asList(new Constant("]"))));
 
-            // Configure default scope
-            Scope scope = new Scope(Scope.ROOT);
+        // Set the prefix and suffix
+        cfg.setPrefix(new Template(Arrays.asList(new Constant("["))));
+        cfg.setSuffix(new Template(Arrays.asList(new Constant("]"))));
 
-            // Create code and add it to scope
-            Code code = new Code();
-            code.setPattern(new Pattern(Arrays.asList(new Constant("val"))));
-            code.setTemplate(new Template(Arrays.asList(new NamedValue("value"))));
+        // Configure default scope
+        Scope scope = new Scope(Scope.ROOT);
 
-            Set<Code> codes = new HashSet<Code>();
-            codes.add(code);
-            scope.setCodes(codes);
+        // Create code and add it to scope
+        Code code = new Code();
+        code.setPattern(new Pattern(Arrays.asList(new Constant("val"))));
+        code.setTemplate(new Template(Arrays.asList(new NamedValue("value"))));
 
-            // Set scope to configuration
-            cfg.setScopes(Arrays.asList(scope));
+        Set<Code> codes = new HashSet<Code>();
+        codes.add(code);
+        scope.setCodes(codes);
 
-            // Set the parameter
-            cfg.addParam("value", "KefirBB");
-        } finally {
-            cfg.writeUnlock();
-        }
+        // Set scope to configuration
+        cfg.setScopes(Arrays.asList(scope));
+
+        // Set the parameter
+        cfg.addParam("value", "KefirBB");
 
         // Test the configuration
         Assert.assertProcess(BBProcessorFactory.getInstance().create(cfg), "[KefirBB]", "val");

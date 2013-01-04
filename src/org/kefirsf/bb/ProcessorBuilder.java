@@ -24,15 +24,10 @@ class ProcessorBuilder {
      */
     public BBProcessor build() {
         BBProcessor processor = new BBProcessor();
-        conf.readLock();
-        try {
-            processor.setScope(createScope(conf.getRootScope()));
-            processor.setPrefix(createTemplate(conf.getPrefix()));
-            processor.setSuffix(createTemplate(conf.getSuffix()));
-            processor.setParams(conf.getParams());
-        } finally {
-            conf.readUnlock();
-        }
+        processor.setScope(createScope(conf.getRootScope()));
+        processor.setPrefix(createTemplate(conf.getPrefix()));
+        processor.setSuffix(createTemplate(conf.getSuffix()));
+        processor.setParams(conf.getParams());
         return processor;
     }
 
