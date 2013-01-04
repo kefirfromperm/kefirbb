@@ -75,11 +75,11 @@ public class PatternConstant implements WPatternElement {
      *         false other
      */
     public boolean isNextIn(Source source) {
-        if(!ignoreCase){
-        return firstChar == source.current()
-                && source.hasNext(valueLength)
-                && value.contentEquals(source.subTo(valueLength));
-        }else{
+        if (!ignoreCase) {
+            return firstChar == source.current()
+                    && source.hasNext(valueLength)
+                    && value.contentEquals(source.subTo(valueLength));
+        } else {
             return source.hasNext(valueLength)
                     && value.equalsIgnoreCase(source.subTo(valueLength).toString());
         }
@@ -92,9 +92,9 @@ public class PatternConstant implements WPatternElement {
      * @return смещение константы
      */
     public int findIn(Source source) {
-        if(!ignoreCase){
+        if (!ignoreCase) {
             return source.find(value);
-        }else{
+        } else {
             boolean flag = false;
             int offset;
             for (offset = source.getOffset(); !flag && offset < source.getLength() - valueLength; offset++) {
