@@ -12,6 +12,11 @@ public class WConstant implements WPatternElement, WTemplateElement {
     private final String value;
 
     /**
+     * Mark ignore case
+     */
+    private final boolean ignoreCase;
+
+    /**
      * First char of constant. It need for better performance.
      */
     private final char firstChar;
@@ -30,6 +35,19 @@ public class WConstant implements WPatternElement, WTemplateElement {
         this.value = value;
         this.valueLength = value.length();
         this.firstChar = value.charAt(0);
+        this.ignoreCase = false;
+    }
+
+    /**
+     * Create constant element.
+     *
+     * @param value constant value
+     */
+    public WConstant(String value, boolean ignoreCase) {
+        this.value = value;
+        this.valueLength = value.length();
+        this.firstChar = value.charAt(0);
+        this.ignoreCase = ignoreCase;
     }
 
     /**
@@ -66,9 +84,14 @@ public class WConstant implements WPatternElement, WTemplateElement {
      *         false other
      */
     public boolean isNextIn(Source source) {
+        if(!ignoreCase){
         return firstChar == source.current()
                 && source.hasNext(valueLength)
                 && value.contentEquals(source.subTo(valueLength));
+        }else{
+            return source.hasNext(valueLength)
+                    && value.equalsIgnoreCase(source.subTo(valueLength).toString());
+        }
     }
 
     /**
@@ -78,7 +101,21 @@ public class WConstant implements WPatternElement, WTemplateElement {
      * @return смещение константы
      */
     public int findIn(Source source) {
-        return source.find(value);
+        if(!ignoreCase){
+            return source.find(value);
+        }else{
+            boolean flag = false;
+            int offset;
+            for (offset = source.getOffset(); !flag && offset < source.getLength() - valueLength; offset++) {
+                String str = source.subString(offset, offset + valueLength);
+                flag = str.equalsIgnoreCase(value);
+            }
+            if (flag) {
+                return offset;
+            } else {
+                return -1;
+            }
+        }
     }
 
     /**

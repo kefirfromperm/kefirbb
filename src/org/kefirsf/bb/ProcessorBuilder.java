@@ -148,7 +148,7 @@ class ProcessorBuilder {
         if (!constant.isIgnoreCase()) {
             return new WConstant(constant.getValue());
         } else {
-            return new WConstantIgnoreCase(constant.getValue());
+            return new WConstant(constant.getValue(), true);
         }
     }
 
