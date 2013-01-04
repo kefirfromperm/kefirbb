@@ -9,6 +9,7 @@ class ProcessorBuilder {
     private final Configuration conf;
     private final Map<Scope, WScope> createdScopes;
     private final Map<Code, AbstractCode> codes;
+    private final Map<Constant, PatternConstant> constants;
 
     /**
      * @param conf text processor configuration
@@ -17,6 +18,7 @@ class ProcessorBuilder {
         this.conf = conf;
         this.createdScopes = new HashMap<Scope, WScope>();
         this.codes = new HashMap<Code, AbstractCode>();
+        this.constants = new HashMap<Constant, PatternConstant>();
     }
 
     /**
@@ -145,11 +147,10 @@ class ProcessorBuilder {
      * @return pattern element for constant
      */
     private WPatternElement createPatternConstant(Constant constant) {
-        if (!constant.isIgnoreCase()) {
-            return new PatternConstant(constant.getValue());
-        } else {
-            return new PatternConstant(constant.getValue(), true);
+        if(!constants.containsKey(constant)){
+            constants.put(constant, new PatternConstant(constant.getValue(), constant.isIgnoreCase()));
         }
+        return constants.get(constant);
     }
 
     /**

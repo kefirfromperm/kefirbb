@@ -28,4 +28,24 @@ public final class Constant implements TemplateElement, PatternElement {
     public boolean isIgnoreCase() {
         return ignoreCase;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Constant constant = (Constant) o;
+
+        if (ignoreCase != constant.ignoreCase) return false;
+        if (!value.equals(constant.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value.hashCode();
+        result = 31 * result + (ignoreCase ? 1 : 0);
+        return result;
+    }
 }

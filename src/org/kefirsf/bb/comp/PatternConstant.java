@@ -109,6 +109,26 @@ public class PatternConstant implements WPatternElement {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PatternConstant that = (PatternConstant) o;
+
+        if (ignoreCase != that.ignoreCase) return false;
+        if (!value.equals(that.value)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = value.hashCode();
+        result = 31 * result + (ignoreCase ? 1 : 0);
+        return result;
+    }
+
     /**
      * @return string representation of this object.
      */
