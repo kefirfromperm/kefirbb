@@ -26,7 +26,17 @@ public class SourceTest {
 
     @Test
     public void testFind() {
-        assertEquals(new Source("aaaabbbbcccc").find("bc"), 7);
+        assertEquals(7, new Source("aaaabbbbcccc").find("bc"));
+
+        assertEquals(0, new Source("abc").find("a"));
+        assertEquals(1, new Source("abc").find("b"));
+        assertEquals(2, new Source("abc").find("c"));
+
+        assertEquals(0, new Source("abcd").find("ab"));
+        assertEquals(1, new Source("abcd").find("bc"));
+        assertEquals(2, new Source("abcd").find("cd"));
+
+        assertEquals(-1, new Source("abcd").find("f"));
     }
 
     @Test

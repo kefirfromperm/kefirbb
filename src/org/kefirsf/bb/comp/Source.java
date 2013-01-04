@@ -1,17 +1,17 @@
 package org.kefirsf.bb.comp;
 
+import java.util.Arrays;
+
 /**
  * Класс источник для парсинга BB-кодов
  *
  * @author Kefir
  */
 public class Source {
-    private static final int BUFF_SIZE = 4096;
-
     /**
-     * Текст ждля парсинга
+     * Текст для парсинга
      */
-    private final CharSequence text;
+    private final char[] text;
     private final int textLength;
 
     /**
@@ -26,60 +26,31 @@ public class Source {
      * @param text исходный текст
      */
     public Source(CharSequence text) {
-        this.text = text;
+        this.text = text.toString().toCharArray();
         textLength = text.length();
         updateCurrentChar();
     }
 
-    public int find(String value) {
-        if (text instanceof String) {
-            return ((String) text).indexOf(value, offset);
-        } else if (text instanceof StringBuilder) {
-            return ((StringBuilder) text).indexOf(value, offset);
-        } else if (text instanceof StringBuffer) {
-            return ((StringBuffer) text).indexOf(value, offset);
-        } else {
-            int inCharSequence = findInCharSequence(text.subSequence(offset, textLength), value);
-            if (inCharSequence >= 0) {
-                return offset + inCharSequence;
-            } else {
-                return -1;
-            }
-        }
-    }
-
     /**
-     * Find value in character sequence
+     * Find string in source starts with offset.
      *
-     * @param sequence character sequence
-     * @param value    searched value
-     * @return index of value in sequence
+     * @param value the string fo find
+     * @return index of substring, -1 if not found.
      */
-    private int findInCharSequence(CharSequence sequence, String value) {
-        if (value.length() == 0) {
-            throw new IllegalArgumentException("Argument value can't be empty.");
-        }
+    public int find(String value) {
+        int index = -1;
 
-        final int seqLength = sequence.length();
-        final int valLength = value.length();
+        int length = value.length();
+        char[] chars = value.toCharArray();
 
-        if (seqLength < valLength) {
-            return -1;
-        }
-
-        int index;
-        int size;
-
-        int nextSize = Math.max(BUFF_SIZE, valLength);
-        do {
-            size = nextSize;
-            if (size > seqLength) {
-                size = seqLength;
+        for (int i = offset; i < text.length - length + 1 && index < 0; i++) {
+            int j;
+            for (j = 0; j < length && chars[j] == text[i + j]; j++) {
             }
-
-            index = sequence.subSequence(0, size).toString().indexOf(value);
-            nextSize = 2 * size;
-        } while (index <= 0 && size < seqLength);
+            if (j == length) {
+                index = i;
+            }
+        }
 
         return index;
     }
@@ -119,7 +90,7 @@ public class Source {
 
     private void updateCurrentChar() {
         if (offset < textLength) {
-            currentChar = text.charAt(offset);
+            currentChar = text[offset];
         }
     }
 
@@ -180,7 +151,7 @@ public class Source {
      * @return подстрока
      */
     public CharSequence sub(int end) {
-        return text.subSequence(getOffset(), end);
+        return String.valueOf(Arrays.copyOfRange(text, getOffset(), end));
     }
 
     /**
@@ -194,7 +165,7 @@ public class Source {
     }
 
     public String subString(int start, int end) {
-        return text.subSequence(start, end).toString();
+        return Arrays.toString(Arrays.copyOfRange(text, start, end));
     }
 
     /**
