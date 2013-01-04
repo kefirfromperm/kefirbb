@@ -71,7 +71,7 @@ public class DomConfigurationFactory {
         // Create configuration
         Configuration configuration = new Configuration();
         // Parse parameters
-        configuration.addParams(parseParams(dc));
+        configuration.setParams(parseParams(dc));
 
         // Parse prefix and suffix
         configuration.setPrefix(parseFix(dc, TAG_PREFIX));
@@ -110,8 +110,8 @@ public class DomConfigurationFactory {
         return configuration;
     }
 
-    private Map<String, String> parseParams(Document dc) {
-        Map<String, String> params = new HashMap<String, String>();
+    private Map<String, Object> parseParams(Document dc) {
+        Map<String, Object> params = new HashMap<String, Object>();
         NodeList paramsElements = dc.getElementsByTagName(TAG_PARAMS);
         if (paramsElements.getLength() > 0) {
             Element paramsElement = (Element) paramsElements.item(0);

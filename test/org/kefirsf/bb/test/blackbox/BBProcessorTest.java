@@ -6,6 +6,9 @@ import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 import org.kefirsf.bb.conf.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.kefirsf.bb.test.Assert.assertProcess;
 
 /**
@@ -77,8 +80,13 @@ public class BBProcessorTest {
         assertProcess(processor, "PunkOi!", "print punk;print;");
 
         Configuration configuration = ConfigurationFactory.getInstance().create();
-        configuration.setParam("var4", 4);
-        configuration.setParam("var5", 4);
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.putAll(configuration.getParams());
+        params.put("var4", 4);
+        params.put("var5", 4);
+
+        configuration.setParams(params);
 
         TextProcessor defaultProcessor = BBProcessorFactory.getInstance().create(configuration);
         assertProcess(defaultProcessor, "12345", "def 5;");

@@ -8,6 +8,8 @@ import org.kefirsf.bb.conf.*;
 import org.kefirsf.bb.test.Assert;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Test dynamic configuration
@@ -18,7 +20,12 @@ public class DynamicConfigurationTest {
     @Test
     public void testAddCodeToRoot() {
         Configuration cfg = ConfigurationFactory.getInstance().create();
-        cfg.setParam("path", "/img/");
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.putAll(cfg.getParams());
+        params.put("path", "/img/");
+        cfg.setParams(params);
+
         Code code = new Code();
         code.setPattern(new Pattern(Arrays.asList(new Constant(":)"))));
         code.setTemplate(

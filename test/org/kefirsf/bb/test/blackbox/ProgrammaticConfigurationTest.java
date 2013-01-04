@@ -5,9 +5,7 @@ import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.conf.*;
 import org.kefirsf.bb.test.Assert;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Test the programmatic configuration
@@ -38,7 +36,10 @@ public class ProgrammaticConfigurationTest {
         cfg.setScopes(Arrays.asList(scope));
 
         // Set the parameter
-        cfg.addParam("value", "KefirBB");
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.putAll(cfg.getParams());
+        params.put("value", "KefirBB");
+        cfg.setParams(params);
 
         // Test the configuration
         Assert.assertProcess(BBProcessorFactory.getInstance().create(cfg), "[KefirBB]", "val");

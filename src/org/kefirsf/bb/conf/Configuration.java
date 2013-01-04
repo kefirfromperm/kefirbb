@@ -5,7 +5,6 @@ import org.kefirsf.bb.util.ExceptionUtils;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * Configuration of bbcode processor.
@@ -18,7 +17,7 @@ public final class Configuration {
     private Map<String, Scope> scopes = null;
     private Template prefix = new Template();
     private Template suffix = new Template();
-    private final Map<String, Object> params = new HashMap<String, Object>();
+    private Map<String, Object> params = new HashMap<String, Object>();
 
     /**
      * Create the configuration
@@ -95,63 +94,11 @@ public final class Configuration {
     }
 
     /**
-     * Add param with name <code>name</code> and value <code>value</code> to root context.
-     * Call addParam(String, object)
+     * Set parameters to configuration.
      *
-     * @param name  name of context parameter
-     * @param value value of context parameter
-     * @see #addParam(String, Object)
+     * @param params the map with parameters. Key is a parameter name.
      */
-    public void setParam(String name, Object value) {
-        addParam(name, value);
-    }
-
-    /**
-     * Add param with name <code>name</code> and value <code>value</code> to root context.
-     *
-     * @param name  name of context parameter
-     * @param value value of context parameter
-     */
-    public void addParam(String name, Object value) {
-        params.put(name, value);
-    }
-
-    /**
-     * Add param from map to root context.
-     *
-     * @param params Map contained params
-     */
-    public void addParams(Map<String, ?> params) {
-        this.params.putAll(params);
-    }
-
-    /**
-     * Add param from properties to root context.
-     *
-     * @param properties Properties object
-     */
-    public void addParams(Properties properties) {
-        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-            Object key = entry.getKey();
-            if (key != null) {
-                this.params.put(key.toString(), entry.getValue());
-            }
-        }
-    }
-
-    /**
-     * Remove parameter with name <code>name</code> from context.
-     *
-     * @param name name of parameter
-     */
-    public void removeParam(String name) {
-        this.params.remove(name);
-    }
-
-    /**
-     * Remove all parameters from context.
-     */
-    public void clearParams() {
-        this.params.clear();
+    public void setParams(Map<String, Object> params){
+        this.params = Collections.unmodifiableMap(params);
     }
 }

@@ -9,6 +9,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -109,10 +111,21 @@ public final class ConfigurationFactory {
                 }
             }
 
-            configuration.addParams(properties);
+            if (!properties.isEmpty()) {
+                Map<String, Object> params = new HashMap<String, Object>();
+                params.putAll(configuration.getParams());
+                for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+                    Object key = entry.getKey();
+                    if (key != null) {
+                        params.put(key.toString(), entry.getValue());
+                    }
+                }
+                configuration.setParams(params);
+            }
         } catch (IOException e) {
             throw new TextProcessorFactoryException(e);
         }
+
         return configuration;
     }
 
