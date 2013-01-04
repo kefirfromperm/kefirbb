@@ -105,7 +105,7 @@ class ProcessorBuilder {
         if (template.getElements() != null) {
             for (TemplateElement element : template.getElements()) {
                 if (element instanceof Constant) {
-                    elements.add(new WConstant(((Constant) element).getValue()));
+                    elements.add(new TemplateConstant(((Constant) element).getValue()));
                 } else if (element instanceof NamedValue) {
                     elements.add(new WNamedValue(((NamedValue) element).getName()));
                 }
@@ -146,9 +146,9 @@ class ProcessorBuilder {
      */
     private WPatternElement createPatternConstant(Constant constant) {
         if (!constant.isIgnoreCase()) {
-            return new WConstant(constant.getValue());
+            return new PatternConstant(constant.getValue());
         } else {
-            return new WConstant(constant.getValue(), true);
+            return new PatternConstant(constant.getValue(), true);
         }
     }
 

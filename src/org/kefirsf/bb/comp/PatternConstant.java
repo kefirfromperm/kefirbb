@@ -5,7 +5,7 @@ package org.kefirsf.bb.comp;
  *
  * @author Kefir
  */
-public class WConstant implements WPatternElement, WTemplateElement {
+public class PatternConstant implements WPatternElement {
     /**
      * Constant value
      */
@@ -31,7 +31,7 @@ public class WConstant implements WPatternElement, WTemplateElement {
      *
      * @param value constant value
      */
-    public WConstant(String value) {
+    public PatternConstant(String value) {
         this.value = value;
         this.valueLength = value.length();
         this.firstChar = value.charAt(0);
@@ -43,7 +43,7 @@ public class WConstant implements WPatternElement, WTemplateElement {
      *
      * @param value constant value
      */
-    public WConstant(String value, boolean ignoreCase) {
+    public PatternConstant(String value, boolean ignoreCase) {
         this.value = value;
         this.valueLength = value.length();
         this.firstChar = value.charAt(0);
@@ -65,15 +65,6 @@ public class WConstant implements WPatternElement, WTemplateElement {
         } else {
             return false;
         }
-    }
-
-    /**
-     * Return constant value
-     *
-     * @param context context. Not used.
-     */
-    public CharSequence generate(Context context) {
-        return value;
     }
 
     /**
