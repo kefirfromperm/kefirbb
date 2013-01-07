@@ -109,6 +109,14 @@ public class PatternConstant implements WPatternElement {
         }
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public boolean isIgnoreCase() {
+        return ignoreCase;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

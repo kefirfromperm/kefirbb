@@ -7,29 +7,32 @@ import java.util.*;
 
 class ProcessorBuilder {
     private final Configuration conf;
-    private final Map<Scope, WScope> createdScopes;
-    private final Map<Code, AbstractCode> codes;
-    private final Map<Constant, PatternConstant> constants;
+
+    private Map<Scope, WScope> createdScopes;
+    private Map<Code, AbstractCode> codes;
+    private Map<Constant, PatternConstant> constants;
 
     /**
      * @param conf text processor configuration
      */
     public ProcessorBuilder(Configuration conf) {
         this.conf = conf;
-        this.createdScopes = new HashMap<Scope, WScope>();
-        this.codes = new HashMap<Code, AbstractCode>();
-        this.constants = new HashMap<Constant, PatternConstant>();
     }
 
     /**
      * Build an processor.
      */
     public BBProcessor build() {
+        this.createdScopes = new HashMap<Scope, WScope>();
+        this.codes = new HashMap<Code, AbstractCode>();
+        this.constants = new HashMap<Constant, PatternConstant>();
+
         BBProcessor processor = new BBProcessor();
         processor.setScope(createScope(conf.getRootScope()));
         processor.setPrefix(createTemplate(conf.getPrefix()));
         processor.setSuffix(createTemplate(conf.getSuffix()));
         processor.setParams(conf.getParams());
+        processor.setConstants(new HashSet<PatternConstant>(constants.values()));
         return processor;
     }
 

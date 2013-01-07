@@ -5,6 +5,7 @@ import org.kefirsf.bb.TextProcessorAdapter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The bbcode processor. You can use the standard code set or define other.
@@ -19,6 +20,7 @@ public final class BBProcessor extends TextProcessorAdapter {
     private WTemplate prefix = null;
     private WTemplate suffix = null;
     private Map<String, Object> params = null;
+    private Set<PatternConstant> constants;
 
     /**
      * Create the bbcode processor
@@ -40,7 +42,9 @@ public final class BBProcessor extends TextProcessorAdapter {
         Context context = new Context();
         StringBuilder target = new StringBuilder();
         context.setTarget(target);
-        context.setSource(new Source(source));
+        Source source1 = new Source(source);
+        source1.findAllConstants(constants);
+        context.setSource(source1);
         context.setScope(scope);
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
@@ -112,5 +116,9 @@ public final class BBProcessor extends TextProcessorAdapter {
         } else {
             throw new IllegalStateException("Can't change parameters.");
         }
+    }
+
+    public void setConstants(Set<PatternConstant> constants) {
+        this.constants = constants;
     }
 }

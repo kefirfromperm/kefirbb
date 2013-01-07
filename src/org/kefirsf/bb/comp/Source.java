@@ -1,6 +1,6 @@
 package org.kefirsf.bb.comp;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * Класс источник для парсинга BB-кодов
@@ -20,6 +20,25 @@ public class Source {
     private int offset = 0;
     private char currentChar;
 
+    private class ConstEntry{
+        private final int index;
+        Set<PatternConstant> set = new HashSet<PatternConstant>();
+
+        private ConstEntry(int index) {
+            this.index = index;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+
+        public Set<PatternConstant> getSet() {
+            return set;
+        }
+    }
+
+    private List<ConstEntry> constantPositions = new ArrayList<ConstEntry>();
+
     /**
      * Создает класс источник
      *
@@ -29,6 +48,31 @@ public class Source {
         this.text = text.toString().toCharArray();
         textLength = text.length();
         updateCurrentChar();
+    }
+
+    public void findAllConstants(Set<PatternConstant> constants){
+        int index = -1;
+        for(int i = 0;i<textLength; i++){
+            for(PatternConstant constant:constants){
+                String value = constant.getValue();
+                int length = value.length();
+                if(length<=textLength-i){
+                    String str = String.valueOf(text, i, length);
+                    if(constant.isIgnoreCase()?value.equalsIgnoreCase(str):value.equals(str)){
+                        ConstEntry entry;
+                        if(index<0 || constantPositions.get(index).getIndex()!=i){
+                            entry = new ConstEntry(i);
+                            constantPositions.add(entry);
+                            index = constantPositions.size()-1;
+                        } else {
+                            entry = constantPositions.get(index);
+                        }
+
+                        entry.getSet().add(constant);
+                    }
+                }
+            }
+        }
     }
 
     /**
