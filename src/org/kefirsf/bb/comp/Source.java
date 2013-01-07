@@ -18,7 +18,6 @@ public class Source {
      * Смещение
      */
     private int offset = 0;
-    private char currentChar;
 
     private class ConstEntry {
         private final int index;
@@ -50,7 +49,6 @@ public class Source {
     public Source(CharSequence text) {
         this.text = text.toString().toCharArray();
         textLength = text.length();
-        updateCurrentChar();
     }
 
     public void findAllConstants(Set<PatternConstant> constants) {
@@ -167,13 +165,9 @@ public class Source {
      * @return символ
      */
     public char next() {
-        char c = current();
+        char c = text[offset];
         incOffset();
         return c;
-    }
-
-    public char current() {
-        return currentChar;
     }
 
     /**
@@ -191,18 +185,11 @@ public class Source {
     public void incOffset() {
         offset++;
         incConstantIndexOffset();
-        updateCurrentChar();
     }
 
     private void incConstantIndexOffset() {
         while (constantIndexOffset < constantIndexes.length && constantIndexes[constantIndexOffset] < offset) {
             constantIndexOffset++;
-        }
-    }
-
-    private void updateCurrentChar() {
-        if (offset < textLength) {
-            currentChar = text[offset];
         }
     }
 
@@ -214,7 +201,6 @@ public class Source {
     public void incOffset(int increment) {
         offset += increment;
         incConstantIndexOffset();
-        updateCurrentChar();
     }
 
     /**
@@ -226,8 +212,6 @@ public class Source {
         this.offset = offset;
 
         recalculateConstantIndexOffset();
-
-        updateCurrentChar();
     }
 
     private void recalculateConstantIndexOffset() {
