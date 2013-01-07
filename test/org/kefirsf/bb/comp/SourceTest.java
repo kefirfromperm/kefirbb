@@ -25,21 +25,6 @@ public class SourceTest {
     }
 
     @Test
-    public void testFind() {
-        assertEquals(7, new Source("aaaabbbbcccc").find("bc"));
-
-        assertEquals(0, new Source("abc").find("a"));
-        assertEquals(1, new Source("abc").find("b"));
-        assertEquals(2, new Source("abc").find("c"));
-
-        assertEquals(0, new Source("abcd").find("ab"));
-        assertEquals(1, new Source("abcd").find("bc"));
-        assertEquals(2, new Source("abcd").find("cd"));
-
-        assertEquals(-1, new Source("abcd").find("f"));
-    }
-
-    @Test
     public void testNext() {
         Source source = new Source(EXAMPLE);
         for (int i = 0; i < EXAMPLE_LENGTH; i++) {

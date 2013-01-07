@@ -99,30 +99,6 @@ public class Source {
     }
 
     /**
-     * Find string in source starts with offset.
-     *
-     * @param value the string fo find
-     * @return index of substring, -1 if not found.
-     */
-    public int find(String value) {
-        int index = -1;
-
-        int length = value.length();
-        char[] chars = value.toCharArray();
-
-        for (int i = offset; i < text.length - length + 1 && index < 0; i++) {
-            int j;
-            for (j = 0; j < length && chars[j] == text[i + j]; j++) {
-            }
-            if (j == length) {
-                index = i;
-            }
-        }
-
-        return index;
-    }
-
-    /**
      * Возвращает следующий симвойл и увеличивает смещение
      *
      * @return символ

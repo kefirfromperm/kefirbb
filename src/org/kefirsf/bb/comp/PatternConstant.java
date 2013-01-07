@@ -17,11 +17,6 @@ public class PatternConstant implements WPatternElement {
     private final boolean ignoreCase;
 
     /**
-     * First char of constant. It need for better performance.
-     */
-    private final char firstChar;
-
-    /**
      * Length of constant value
      */
     private final int valueLength;
@@ -31,22 +26,9 @@ public class PatternConstant implements WPatternElement {
      *
      * @param value constant value
      */
-    public PatternConstant(String value) {
-        this.value = value;
-        this.valueLength = value.length();
-        this.firstChar = value.charAt(0);
-        this.ignoreCase = false;
-    }
-
-    /**
-     * Create constant element.
-     *
-     * @param value constant value
-     */
     public PatternConstant(String value, boolean ignoreCase) {
         this.value = value;
         this.valueLength = value.length();
-        this.firstChar = value.charAt(0);
         this.ignoreCase = ignoreCase;
     }
 

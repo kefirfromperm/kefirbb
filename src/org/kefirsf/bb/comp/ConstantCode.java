@@ -8,24 +8,22 @@ import java.io.IOException;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class ConstantCode extends AbstractCode {
-    private final String value;
-    private final char firstChar;
+    private final PatternConstant constant;
     private final int valueLength;
 
     /**
      * Create bb-code with constant pattern
      *
-     * @param value    pattern value
+     * @param constant    pattern constant
      * @param template template
      * @param name     name of code
      * @param priority priority. If priority higher then code be checking early.
      */
-    public ConstantCode(String value, WTemplate template, String name, int priority) {
+    public ConstantCode(PatternConstant constant, WTemplate template, String name, int priority) {
         super(template, name, priority);
 
-        this.value = value;
-        this.firstChar = value.charAt(0);
-        this.valueLength = value.length();
+        this.constant = constant;
+        this.valueLength = constant.getValue().length();
     }
 
     @Override
@@ -37,8 +35,6 @@ public class ConstantCode extends AbstractCode {
 
     @Override
     public boolean suspicious(Source source) {
-        return firstChar == source.current()
-                && source.hasNext(valueLength)
-                && value.contentEquals(source.subTo(valueLength));
+        return source.nextIs(constant);
     }
 }

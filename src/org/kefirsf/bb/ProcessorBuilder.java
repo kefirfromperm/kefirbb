@@ -82,7 +82,7 @@ class ProcessorBuilder {
             PatternElement first = patternElements.get(0);
             if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
                 code = new ConstantCode(
-                        ((Constant) first).getValue(),
+                        createPatternConstant((Constant)first),
                         createTemplate(defCode.getTemplate()),
                         defCode.getName(),
                         defCode.getPriority()
@@ -149,7 +149,7 @@ class ProcessorBuilder {
      * @param constant constant definition
      * @return pattern element for constant
      */
-    private WPatternElement createPatternConstant(Constant constant) {
+    private PatternConstant createPatternConstant(Constant constant) {
         if(!constants.containsKey(constant)){
             constants.put(constant, new PatternConstant(constant.getValue(), constant.isIgnoreCase()));
         }

@@ -21,7 +21,7 @@ public class ContextTest {
     public void testTerminator() {
         Context ctx = new Context();
         assertNull(ctx.getTerminator());
-        WPatternElement terminator = new PatternConstant("test");
+        WPatternElement terminator = new PatternConstant("test", false);
         ctx.setTerminator(terminator);
         assertEquals(terminator, ctx.getTerminator());
     }
