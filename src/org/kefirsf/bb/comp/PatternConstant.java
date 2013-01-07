@@ -75,14 +75,7 @@ public class PatternConstant implements WPatternElement {
      *         false other
      */
     public boolean isNextIn(Source source) {
-        if (!ignoreCase) {
-            return firstChar == source.current()
-                    && source.hasNext(valueLength)
-                    && value.contentEquals(source.subTo(valueLength));
-        } else {
-            return source.hasNext(valueLength)
-                    && value.equalsIgnoreCase(source.subTo(valueLength).toString());
-        }
+        return source.nextIs(this);
     }
 
     /**
@@ -92,21 +85,7 @@ public class PatternConstant implements WPatternElement {
      * @return смещение константы
      */
     public int findIn(Source source) {
-        if (!ignoreCase) {
-            return source.find(value);
-        } else {
-            boolean flag = false;
-            int offset;
-            for (offset = source.getOffset(); !flag && offset < source.getLength() - valueLength; offset++) {
-                String str = source.subString(offset, offset + valueLength);
-                flag = str.equalsIgnoreCase(value);
-            }
-            if (flag) {
-                return offset;
-            } else {
-                return -1;
-            }
-        }
+        return source.find(this);
     }
 
     public String getValue() {
