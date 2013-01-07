@@ -9,7 +9,6 @@ import java.io.IOException;
  */
 public class ConstantCode extends AbstractCode {
     private final PatternConstant constant;
-    private final int valueLength;
 
     /**
      * Create bb-code with constant pattern
@@ -23,12 +22,11 @@ public class ConstantCode extends AbstractCode {
         super(template, name, priority);
 
         this.constant = constant;
-        this.valueLength = constant.getValue().length();
     }
 
     @Override
     public boolean process(Context context) throws IOException {
-        context.getSource().incOffset(valueLength);
+        context.getSource().incOffset(constant.getValue().length());
         template.generate(context);
         return true;
     }

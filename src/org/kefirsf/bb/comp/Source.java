@@ -18,10 +18,11 @@ public class Source {
      * Смещение
      */
     private int offset = 0;
+    private boolean onConstant;
 
     private class ConstEntry {
         private final int index;
-        Set<PatternConstant> set = new HashSet<PatternConstant>();
+        List<PatternConstant> set = new ArrayList<PatternConstant>();
 
         private ConstEntry(int index) {
             this.index = index;
@@ -31,7 +32,7 @@ public class Source {
             return index;
         }
 
-        public Set<PatternConstant> getSet() {
+        public List<PatternConstant> getSet() {
             return set;
         }
     }
@@ -128,13 +129,11 @@ public class Source {
         }
 
         constantIndexOffset = 0;
+        recalculateOnConstant();
     }
 
     public boolean nextIs(PatternConstant constant) {
-        if (
-                constantIndexOffset < constantIndexes.length &&
-                        constantIndexes[constantIndexOffset] == offset
-                ) {
+        if (onConstant) {
             for (int i = 0; i < constants[constantIndexOffset].length; i++) {
                 if (constant == constants[constantIndexOffset][i]) {
                     return true;
@@ -143,6 +142,11 @@ public class Source {
         }
 
         return false;
+    }
+
+    private void recalculateOnConstant() {
+        onConstant = constantIndexOffset < constantIndexes.length &&
+                constantIndexes[constantIndexOffset] == offset;
     }
 
     public int find(PatternConstant constant) {
@@ -191,6 +195,7 @@ public class Source {
         while (constantIndexOffset < constantIndexes.length && constantIndexes[constantIndexOffset] < offset) {
             constantIndexOffset++;
         }
+        recalculateOnConstant();
     }
 
     /**
@@ -219,6 +224,7 @@ public class Source {
         if (constantIndexOffset < 0) {
             constantIndexOffset = - constantIndexOffset - 1;
         }
+        recalculateOnConstant();
     }
 
     /**
@@ -247,7 +253,7 @@ public class Source {
      * @return подстрока
      */
     public CharSequence sub(int end) {
-        return String.valueOf(Arrays.copyOfRange(text, offset, end));
+        return String.valueOf(text, offset, end - offset);
     }
 
     /**
@@ -260,6 +266,6 @@ public class Source {
     }
 
     public String toString() {
-        return "ru.perm.kefir.bbcode.Source,length:" + String.valueOf(textLength);
+        return "org.kefirsf.bb.Source,length:" + String.valueOf(textLength);
     }
 }

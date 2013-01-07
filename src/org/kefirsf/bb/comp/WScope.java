@@ -61,10 +61,11 @@ public class WScope {
      * @throws java.io.IOException if can't append chars to target
      */
     public void process(Context context) throws IOException {
+        Source source = context.getSource();
         while (context.hasNextAdjustedForTerminator()) {
-            Source source = context.getSource();
             int offset = source.getOffset();
             boolean parsed = false;
+
             if (!context.checkBadTag(offset)) {
 
                 boolean suspicious = false;
@@ -163,16 +164,6 @@ public class WScope {
                     }
                 }
         );
-    }
-
-    /**
-     * By default it is false.
-     *
-     * @return true if not parseable text mustn't append to result.
-     *         false if not parseable text append to result as is.
-     */
-    public boolean isIgnoreText() {
-        return ignoreText;
     }
 
     /**
