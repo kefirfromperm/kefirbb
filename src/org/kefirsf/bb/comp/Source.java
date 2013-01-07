@@ -18,7 +18,6 @@ public class Source {
      * Смещение
      */
     private int offset = 0;
-    private int constantPositionOffset = 0;
     private char currentChar;
 
     private class ConstEntry {
@@ -38,7 +37,10 @@ public class Source {
         }
     }
 
-    private List<ConstEntry> constantPositions = new ArrayList<ConstEntry>();
+    private int[] constantIndexes;
+    private PatternConstant[][] constants;
+
+    private int constantIndexOffset;
 
     /**
      * Создает класс источник
@@ -52,49 +54,110 @@ public class Source {
     }
 
     public void findAllConstants(Set<PatternConstant> constants) {
+        Set<Character> chars = new TreeSet<Character>();
+        for (PatternConstant constant : constants) {
+            char c = constant.getValue().charAt(0);
+            if (constant.isIgnoreCase()) {
+                chars.add(Character.toLowerCase(c));
+                chars.add(Character.toUpperCase(c));
+            } else {
+                chars.add(c);
+            }
+        }
+
+        char[] cs = new char[chars.size()];
+        int j = 0;
+        for (Character c : chars) {
+            cs[j] = c;
+            j++;
+        }
+        Arrays.sort(cs);
+
+        ArrayList<ConstEntry> constantPositions = new ArrayList<ConstEntry>();
+
         int index = -1;
         for (int i = 0; i < textLength; i++) {
-            for (PatternConstant constant : constants) {
-                String value = constant.getValue();
-                int length = value.length();
-                if (length <= textLength - i) {
-                    String str = String.valueOf(text, i, length);
-                    if (constant.isIgnoreCase() ? value.equalsIgnoreCase(str) : value.equals(str)) {
-                        ConstEntry entry;
-                        if (index < 0 || constantPositions.get(index).getIndex() != i) {
-                            entry = new ConstEntry(i);
-                            constantPositions.add(entry);
-                            index = constantPositions.size() - 1;
+            char c = text[i];
+            int k = Arrays.binarySearch(cs, c);
+            if (k >= 0) {
+                for (PatternConstant constant : constants) {
+                    String value = constant.getValue();
+                    int length = value.length();
+                    if (length <= textLength - i) {
+                        boolean flag;
+
+                        if (constant.isIgnoreCase()) {
+                            String str = String.valueOf(text, i, length);
+                            flag = value.equalsIgnoreCase(str);
                         } else {
-                            entry = constantPositions.get(index);
+                            char[] valChars = value.toCharArray();
+                            int l;
+                            for (l = 0; l < length && text[i + l] == valChars[l]; l++) {
+                            }
+                            flag = l == length;
                         }
 
-                        entry.getSet().add(constant);
+                        if (flag) {
+                            ConstEntry entry;
+                            if (index < 0 || constantPositions.get(index).getIndex() != i) {
+                                entry = new ConstEntry(i);
+                                constantPositions.add(entry);
+                                index = constantPositions.size() - 1;
+                            } else {
+                                entry = constantPositions.get(index);
+                            }
+
+                            entry.getSet().add(constant);
+                        }
                     }
                 }
             }
         }
+
+        constantIndexes = new int[constantPositions.size()];
+        this.constants = new PatternConstant[constantPositions.size()][];
+
+        int i = 0;
+        for (ConstEntry entry : constantPositions) {
+            constantIndexes[i] = entry.getIndex();
+            this.constants[i] = new PatternConstant[entry.getSet().size()];
+            int k = 0;
+            for (PatternConstant constant : entry.getSet()) {
+                this.constants[i][k] = constant;
+                k++;
+            }
+            i++;
+        }
+
+        constantIndexOffset = 0;
     }
 
     public boolean nextIs(PatternConstant constant) {
-        if (!constantPositions.isEmpty()) {
-            ConstEntry entry = constantPositions.get(constantPositionOffset);
-            return entry.getIndex() == offset && entry.getSet().contains(constant);
-        } else {
-            return false;
+        if (
+                constantIndexOffset < constantIndexes.length &&
+                        constantIndexes[constantIndexOffset] == offset
+                ) {
+            for (int i = 0; i < constants[constantIndexOffset].length; i++) {
+                if (constant == constants[constantIndexOffset][i]) {
+                    return true;
+                }
+            }
         }
+
+        return false;
     }
 
     public int find(PatternConstant constant) {
         int index = -1;
-        if (!constantPositions.isEmpty() && offset <= constantPositions.get(constantPositionOffset).getIndex()) {
-            for (int i = constantPositionOffset; i < constantPositions.size() && index < 0; i++) {
-                ConstEntry entry = constantPositions.get(i);
-                if (entry.getSet().contains(constant)) {
-                    index = entry.getIndex();
+
+        for (int i = constantIndexOffset; i < constants.length && index < 0; i++) {
+            for (int j = 0; j < constants[i].length && index < 0; j++) {
+                if (constant == constants[i][j]) {
+                    index = constantIndexes[i];
                 }
             }
         }
+
         return index;
     }
 
@@ -105,9 +168,7 @@ public class Source {
      */
     public char next() {
         char c = current();
-        offset++;
-        incConstantPositionOffset();
-        updateCurrentChar();
+        incOffset();
         return c;
     }
 
@@ -129,16 +190,13 @@ public class Source {
      */
     public void incOffset() {
         offset++;
-        incConstantPositionOffset();
+        incConstantIndexOffset();
         updateCurrentChar();
     }
 
-    private void incConstantPositionOffset() {
-        while (
-                constantPositionOffset < constantPositions.size() - 1 &&
-                        constantPositions.get(constantPositionOffset).getIndex() < offset
-                ) {
-            constantPositionOffset++;
+    private void incConstantIndexOffset() {
+        while (constantIndexOffset < constantIndexes.length && constantIndexes[constantIndexOffset] < offset) {
+            constantIndexOffset++;
         }
     }
 
@@ -155,7 +213,7 @@ public class Source {
      */
     public void incOffset(int increment) {
         offset += increment;
-        incConstantPositionOffset();
+        incConstantIndexOffset();
         updateCurrentChar();
     }
 
@@ -166,9 +224,17 @@ public class Source {
      */
     public void setOffset(int offset) {
         this.offset = offset;
-        constantPositionOffset = 0;
-        incConstantPositionOffset();
+
+        recalculateConstantIndexOffset();
+
         updateCurrentChar();
+    }
+
+    private void recalculateConstantIndexOffset() {
+        constantIndexOffset = Arrays.binarySearch(constantIndexes, offset);
+        if (constantIndexOffset < 0) {
+            constantIndexOffset = - constantIndexOffset - 1;
+        }
     }
 
     /**
@@ -179,17 +245,6 @@ public class Source {
      */
     public boolean hasNext() {
         return offset < textLength;
-    }
-
-    /**
-     * Есть ли еще count символов в строке
-     *
-     * @param count количчество символов которое должно остаться в строке
-     * @return true - если есть
-     *         false если достигнут конец строки
-     */
-    public boolean hasNext(int count) {
-        return (textLength - offset) >= count;
     }
 
     /**
@@ -208,17 +263,7 @@ public class Source {
      * @return подстрока
      */
     public CharSequence sub(int end) {
-        return String.valueOf(Arrays.copyOfRange(text, getOffset(), end));
-    }
-
-    /**
-     * Get String from offset to offset+valueLength
-     *
-     * @param count length of extracted string
-     * @return string
-     */
-    public CharSequence subTo(int count) {
-        return sub(getOffset() + count);
+        return String.valueOf(Arrays.copyOfRange(text, offset, end));
     }
 
     /**

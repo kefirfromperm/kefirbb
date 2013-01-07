@@ -53,7 +53,8 @@ public class WPattern {
      */
     public boolean parse(Context context) {
         boolean flag = true;
-        int start = context.getSource().getOffset();
+        Source source = context.getSource();
+        int offset = source.getOffset();
         int patternSize = elements.size();
         for (int i = 0; i < patternSize && flag; i++) {
             WPatternElement current = elements.get(i);
@@ -63,11 +64,11 @@ public class WPattern {
             } else {
                 next = context.getTerminator();
             }
-            flag = context.getSource().hasNext() && current.parse(context, next);
+            flag = source.hasNext() && current.parse(context, next);
         }
 
         if (!flag) {
-            context.getSource().setOffset(start);
+            source.setOffset(offset);
         }
         return flag;
     }

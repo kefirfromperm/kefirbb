@@ -39,6 +39,9 @@ public class WVariable extends WNamedElement implements WPatternElement {
      *         false - если не удалось
      */
     public boolean parse(Context context, WPatternElement terminator) {
+        Source source = context.getSource();
+        int offset = source.getOffset();
+
         int end;
         if (terminator != null) {
             end = terminator.findIn(context.getSource());
@@ -50,7 +53,6 @@ public class WVariable extends WNamedElement implements WPatternElement {
             return false;
         }
 
-        Source source = context.getSource();
         CharSequence value = source.sub(end);
 
         // If define regex, then find this regex in value
@@ -58,7 +60,7 @@ public class WVariable extends WNamedElement implements WPatternElement {
             Matcher matcher = regex.matcher(value);
             if (matcher.lookingAt()) {
                 int lend = matcher.end();
-                end = source.getOffset() + lend;
+                end = offset + lend;
                 value = value.subSequence(0, lend);
             } else {
                 return false;
@@ -71,7 +73,7 @@ public class WVariable extends WNamedElement implements WPatternElement {
             if (attr == null) {
                 setAttribute(context, value);
             }
-            source.setOffset(end);
+            source.incOffset(end - offset);
             return true;
         } else {
             return false;
