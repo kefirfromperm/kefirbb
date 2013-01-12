@@ -52,6 +52,8 @@ public abstract class AbstractCode implements Comparable<AbstractCode> {
      */
     public abstract boolean suspicious(Source source);
 
+    public abstract int findSuspicious(Source source);
+
     /**
      * Compare by priorities
      */

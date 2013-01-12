@@ -32,4 +32,6 @@ public interface WPatternElement {
      * @return constant offset
      */
     public int findIn(Source source);
+
+    public int findSuspicious(Source source);
 }

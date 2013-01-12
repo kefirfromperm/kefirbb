@@ -58,4 +58,9 @@ public class WCode extends AbstractCode {
     public boolean suspicious(Source source) {
         return pattern.suspicious(source);
     }
+
+    @Override
+    public int findSuspicious(Source source) {
+        return pattern.findSuspicious(source);
+    }
 }

@@ -62,6 +62,33 @@ public class WScope {
      */
     public void process(Context context) throws IOException {
         Source source = context.getSource();
+/*
+        int[] codeOffsets = new int[cachedCodes.length];
+
+        for (int i = 0; i < codeOffsets.length; i++) {
+            codeOffsets[i] = -1;
+        }
+
+        WPatternElement terminator = context.getTerminator();
+        boolean tnn = terminator != null;
+        int terminatorOffset = -1;
+        if (tnn) {
+            terminatorOffset = terminator.findSuspicious(source);
+        }
+
+        while (source.hasNext() && (!tnn || terminatorOffset>0)) {
+
+            int ci = -1;
+            for (int i = 0; i < codeOffsets.length; i++) {
+                int offset = cachedCodes[i].findSuspicious(source);
+                codeOffsets[i] = offset;
+                if (offset >= 0 && (ci < 0 || codeOffsets[ci] > offset)) {
+                    ci = i;
+                }
+            }
+        }
+*/
+
         while (context.hasNextAdjustedForTerminator()) {
             int offset = source.getOffset();
             boolean parsed = false;

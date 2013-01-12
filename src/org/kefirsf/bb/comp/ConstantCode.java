@@ -35,4 +35,9 @@ public class ConstantCode extends AbstractCode {
     public boolean suspicious(Source source) {
         return source.nextIs(constant);
     }
+
+    @Override
+    public int findSuspicious(Source source) {
+        return source.nextConstantIndex();
+    }
 }

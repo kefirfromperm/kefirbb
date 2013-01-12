@@ -60,6 +60,10 @@ public class PatternConstant implements WPatternElement {
         return source.nextIs(this);
     }
 
+    public int findSuspicious(Source source) {
+        return source.nextConstantIndex();
+    }
+
     /**
      * Find this constant.
      *

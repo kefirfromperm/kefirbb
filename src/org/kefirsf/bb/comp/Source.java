@@ -149,6 +149,10 @@ public class Source {
                 constantIndexes[constantIndexOffset] == offset;
     }
 
+    public int nextConstantIndex() {
+        return constantIndexOffset < constantIndexes.length ? constantIndexes[constantIndexOffset] : -1;
+    }
+
     public int find(PatternConstant constant) {
         int index = -1;
 
@@ -222,7 +226,7 @@ public class Source {
     private void recalculateConstantIndexOffset() {
         constantIndexOffset = Arrays.binarySearch(constantIndexes, offset);
         if (constantIndexOffset < 0) {
-            constantIndexOffset = - constantIndexOffset - 1;
+            constantIndexOffset = -constantIndexOffset - 1;
         }
         recalculateOnConstant();
     }

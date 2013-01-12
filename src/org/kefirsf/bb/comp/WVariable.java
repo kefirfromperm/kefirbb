@@ -110,6 +110,10 @@ public class WVariable extends WNamedElement implements WPatternElement {
         }
     }
 
+    public int findSuspicious(Source source) {
+        return findIn(source);
+    }
+
     @Override
     public String toString() {
         return "variable:" + getName();
