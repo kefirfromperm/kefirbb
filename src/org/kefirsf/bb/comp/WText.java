@@ -84,10 +84,6 @@ public class WText extends WNamedElement implements WPatternElement {
         return -1;
     }
 
-    public int findSuspicious(Source source) {
-        return -1;
-    }
-
     @Override
     public String toString() {
         return "text:" + getName();

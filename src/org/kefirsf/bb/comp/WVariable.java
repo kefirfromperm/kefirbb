@@ -11,16 +11,6 @@ public class WVariable extends WNamedElement implements WPatternElement {
     private final java.util.regex.Pattern regex;
 
     /**
-     * Создает именованную переменную
-     *
-     * @param name название переменной
-     */
-    public WVariable(String name) {
-        super(name);
-        regex = null;
-    }
-
-    /**
      * Create named variable
      *
      * @param name  variable name
@@ -108,10 +98,6 @@ public class WVariable extends WNamedElement implements WPatternElement {
         } else {
             return -1;
         }
-    }
-
-    public int findSuspicious(Source source) {
-        return findIn(source);
     }
 
     @Override

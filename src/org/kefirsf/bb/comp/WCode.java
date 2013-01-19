@@ -73,10 +73,6 @@ public class WCode implements Comparable<WCode> {
         return pattern.suspicious(source);
     }
 
-    public int findSuspicious(Source source) {
-        return pattern.findSuspicious(source);
-    }
-
     /**
      * Compare by priorities
      */

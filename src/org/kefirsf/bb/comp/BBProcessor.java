@@ -43,7 +43,7 @@ public final class BBProcessor extends TextProcessorAdapter {
         StringBuilder target = new StringBuilder();
         context.setTarget(target);
         Source source1 = new Source(source);
-        source1.findAllConstants(constants);
+        source1.setConstantSet(constants);
         context.setSource(source1);
         context.setScope(scope);
         if (params != null) {

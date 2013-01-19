@@ -28,27 +28,6 @@ public class SourceTest {
     }
 
     @Test
-    public void testNextIs(){
-        Source source = new Source(STR_FOR_SUB);
-
-        Set<PatternConstant> constants = new HashSet<PatternConstant>();
-
-        PatternConstant left = new PatternConstant(LEFT, false);
-        PatternConstant center = new PatternConstant(CENTER, false);
-        PatternConstant right = new PatternConstant(RIGHT, false);
-
-        constants.add(left);
-        constants.add(center);
-        constants.add(right);
-
-        source.findAllConstants(constants);
-
-        assertEquals(0, source.find(left));
-        assertEquals(LEFT.length(), source.find(center));
-        assertEquals(LEFT.length()+CENTER.length(), source.find(right));
-    }
-
-    @Test
     public void testFind(){
         Source source = new Source(STR_FOR_SUB);
 
@@ -62,7 +41,28 @@ public class SourceTest {
         constants.add(center);
         constants.add(right);
 
-        source.findAllConstants(constants);
+        source.setConstantSet(constants);
+
+        assertEquals(0, source.find(left));
+        assertEquals(LEFT.length(), source.find(center));
+        assertEquals(LEFT.length()+CENTER.length(), source.find(right));
+    }
+
+    @Test
+    public void testNextIs(){
+        Source source = new Source(STR_FOR_SUB);
+
+        Set<PatternConstant> constants = new HashSet<PatternConstant>();
+
+        PatternConstant left = new PatternConstant(LEFT, false);
+        PatternConstant center = new PatternConstant(CENTER, false);
+        PatternConstant right = new PatternConstant(RIGHT, false);
+
+        constants.add(left);
+        constants.add(center);
+        constants.add(right);
+
+        source.setConstantSet(constants);
 
         assertTrue(source.nextIs(left));
 
@@ -76,7 +76,7 @@ public class SourceTest {
     @Test
     public void testNext() {
         Source source = new Source(EXAMPLE);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         for (int i = 0; i < EXAMPLE_LENGTH; i++) {
             assertEquals(EXAMPLE.charAt(i), source.next());
         }
@@ -85,7 +85,7 @@ public class SourceTest {
     @Test
     public void testGetOffset() {
         Source source = new Source(EXAMPLE);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         for (int i = 0; i < source.getLength(); ) {
             assertEquals(source.getOffset(), i);
             i++;
@@ -96,7 +96,7 @@ public class SourceTest {
     @Test
     public void testIncOffset() {
         Source source = new Source(EXAMPLE);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         int inc = 3;
         for (int i = 0; i < source.getLength(); ) {
             assertEquals(source.getOffset(), i);
@@ -108,7 +108,7 @@ public class SourceTest {
     @Test
     public void testHasNext() {
         Source source = new Source(EXAMPLE);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         for (int i = 0; i < EXAMPLE_LENGTH; i++) {
             assertTrue(source.hasNext());
             source.incOffset();
@@ -124,7 +124,7 @@ public class SourceTest {
     @Test
     public void testSub() {
         Source source = new Source(STR_FOR_SUB);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         source.incOffset(LEFT.length());
         assertEquals(source.sub(LEFT.length() + CENTER.length()), CENTER);
     }
@@ -132,7 +132,7 @@ public class SourceTest {
     @Test
     public void testSubToEnd() {
         Source source = new Source(STR_FOR_SUB);
-        source.findAllConstants(new HashSet<PatternConstant>());
+        source.setConstantSet(new HashSet<PatternConstant>());
         source.incOffset(LEFT.length());
         assertEquals(source.subToEnd(), CENTER + RIGHT);
     }

@@ -10,6 +10,7 @@ public class PatternConstant implements WPatternElement {
      * Constant value
      */
     private final String value;
+    private char[] chars;
 
     /**
      * Mark ignore case
@@ -28,6 +29,7 @@ public class PatternConstant implements WPatternElement {
      */
     public PatternConstant(String value, boolean ignoreCase) {
         this.value = value;
+        this.chars = value.toCharArray();
         this.valueLength = value.length();
         this.ignoreCase = ignoreCase;
     }
@@ -60,10 +62,6 @@ public class PatternConstant implements WPatternElement {
         return source.nextIs(this);
     }
 
-    public int findSuspicious(Source source) {
-        return source.nextConstantIndex();
-    }
-
     /**
      * Find this constant.
      *
@@ -80,6 +78,10 @@ public class PatternConstant implements WPatternElement {
 
     public boolean isIgnoreCase() {
         return ignoreCase;
+    }
+
+    public char[] getCharArray(){
+        return chars;
     }
 
     @Override

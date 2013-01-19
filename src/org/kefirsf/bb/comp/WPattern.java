@@ -44,10 +44,6 @@ public class WPattern {
         return firstElement.isNextIn(source);
     }
 
-    public int findSuspicious(Source source) {
-        return firstElement.findSuspicious(source);
-    }
-
     /**
      * Parse context with this pattern
      *
