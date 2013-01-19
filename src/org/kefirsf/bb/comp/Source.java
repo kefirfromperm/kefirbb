@@ -20,6 +20,10 @@ public class Source {
     private int offset = 0;
     private boolean onConstant;
 
+    public boolean nextCanBeConstant() {
+        return onConstant;
+    }
+
     private class ConstEntry {
         private final int index;
         List<PatternConstant> set = new ArrayList<PatternConstant>();

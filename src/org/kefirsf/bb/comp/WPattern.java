@@ -76,4 +76,8 @@ public class WPattern {
         }
         return flag;
     }
+
+    public boolean startsWithConstant(){
+        return firstElement instanceof PatternConstant;
+    }
 }

@@ -92,4 +92,8 @@ public class WCode implements Comparable<WCode> {
     public String getName() {
         return name;
     }
+
+    public boolean startsWithConstant(){
+        return pattern.startsWithConstant();
+    }
 }
