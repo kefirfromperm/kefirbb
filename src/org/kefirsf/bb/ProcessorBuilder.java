@@ -9,7 +9,7 @@ class ProcessorBuilder {
     private final Configuration conf;
 
     private Map<Scope, WScope> createdScopes;
-    private Map<Code, AbstractCode> codes;
+    private Map<Code, WCode> codes;
     private Map<Constant, PatternConstant> constants;
 
     /**
@@ -24,7 +24,7 @@ class ProcessorBuilder {
      */
     public BBProcessor build() {
         this.createdScopes = new HashMap<Scope, WScope>();
-        this.codes = new HashMap<Code, AbstractCode>();
+        this.codes = new HashMap<Code, WCode>();
         this.constants = new HashMap<Constant, PatternConstant>();
 
         BBProcessor processor = new BBProcessor();
@@ -51,7 +51,7 @@ class ProcessorBuilder {
             if (scope.getParent() != null) {
                 created.setParent(createScope(conf.getScope(scope.getParent())));
             }
-            Set<AbstractCode> scopeCodes = new HashSet<AbstractCode>();
+            Set<WCode> scopeCodes = new HashSet<WCode>();
             for (Code code : scope.getCodes()) {
                 scopeCodes.add(createCode(code));
             }
@@ -67,7 +67,7 @@ class ProcessorBuilder {
      * @param defCode code definition
      * @return code object
      */
-    private AbstractCode createCode(Code defCode) {
+    private WCode createCode(Code defCode) {
         if (defCode.getPattern() == null) {
             throw new IllegalStateException("Field pattern can't be null.");
         }
@@ -76,25 +76,15 @@ class ProcessorBuilder {
             throw new IllegalStateException("Field template can't be null.");
         }
 
-        AbstractCode code = codes.get(defCode);
+        WCode code = codes.get(defCode);
         if (code == null) {
-            List<? extends PatternElement> patternElements = defCode.getPattern().getElements();
-            PatternElement first = patternElements.get(0);
-            if (patternElements.size() == 1 && first instanceof Constant && !((Constant) first).isIgnoreCase()) {
-                code = new ConstantCode(
-                        createPatternConstant((Constant)first),
-                        createTemplate(defCode.getTemplate()),
-                        defCode.getName(),
-                        defCode.getPriority()
-                );
-            } else {
-                code = new WCode(
-                        createPattern(defCode.getPattern()),
-                        createTemplate(defCode.getTemplate()),
-                        defCode.getName(),
-                        defCode.getPriority()
-                );
-            }
+            code = new WCode(
+                    createPattern(defCode.getPattern()),
+                    createTemplate(defCode.getTemplate()),
+                    defCode.getName(),
+                    defCode.getPriority()
+            );
+            codes.put(defCode, code);
         }
         return code;
     }
@@ -150,7 +140,7 @@ class ProcessorBuilder {
      * @return pattern element for constant
      */
     private PatternConstant createPatternConstant(Constant constant) {
-        if(!constants.containsKey(constant)){
+        if (!constants.containsKey(constant)) {
             constants.put(constant, new PatternConstant(constant.getValue(), constant.isIgnoreCase()));
         }
         return constants.get(constant);

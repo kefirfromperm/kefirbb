@@ -7,11 +7,23 @@ import java.io.IOException;
  *
  * @author Kefir
  */
-public class WCode extends AbstractCode {
+public class WCode implements Comparable<WCode> {
+    /**
+     * template for build result char sequence
+     */
+    private final WTemplate template;
     /**
      * Pattern for parsing code
      */
     private final WPattern pattern;
+    /**
+     * Priority. If priority higher then code be checking early.
+     */
+    private final int priority;
+    /**
+     * The code name.
+     */
+    private final String name;
 
     /**
      * Create the bb-code with priority
@@ -22,7 +34,9 @@ public class WCode extends AbstractCode {
      * @param priority priority. If priority higher then code be checking early.
      */
     public WCode(WPattern pattern, WTemplate template, String name, int priority) {
-        super(template, name, priority);
+        this.template = template;
+        this.priority = priority;
+        this.name = name;
         this.pattern = pattern;
     }
 
@@ -59,8 +73,23 @@ public class WCode extends AbstractCode {
         return pattern.suspicious(source);
     }
 
-    @Override
     public int findSuspicious(Source source) {
         return pattern.findSuspicious(source);
+    }
+
+    /**
+     * Compare by priorities
+     */
+    public int compareTo(WCode code) {
+        return this.priority - code.priority;
+    }
+
+    /**
+     * Get code name
+     *
+     * @return code name
+     */
+    public String getName() {
+        return name;
     }
 }

@@ -29,7 +29,7 @@ public class WScope {
     /**
      * Code set for current scope without parent scope codes
      */
-    private Set<AbstractCode> scopeCodes = null;
+    private Set<WCode> scopeCodes = null;
 
     /**
      * Mark that not parseable text must not append to result
@@ -39,12 +39,17 @@ public class WScope {
     /**
      * Code of scope include the parent codes
      */
-    private AbstractCode[] cachedCodes = null;
+    private WCode[] cachedCodes = null;
 
     /**
      * Mark that this scope is initialized
      */
     private boolean initialized = false;
+
+    /**
+     * This scope has codes with pattern which starts from non constant pattern elements.
+     */
+    private boolean hasCrazyCode = false;
 
     /**
      * Create scope
@@ -96,7 +101,7 @@ public class WScope {
             if (!context.checkBadTag(offset)) {
 
                 boolean suspicious = false;
-                for (AbstractCode code : cachedCodes) {
+                for (WCode code : cachedCodes) {
                     if (code.suspicious(source)) {
                         suspicious = true;
                         if (code.process(context)) {
@@ -144,7 +149,7 @@ public class WScope {
      *
      * @param codes code set
      */
-    public void setScopeCodes(Set<AbstractCode> codes) {
+    public void setScopeCodes(Set<WCode> codes) {
         this.scopeCodes = codes;
     }
 
@@ -161,7 +166,7 @@ public class WScope {
      *
      * @return list of codes in priority order.
      */
-    private AbstractCode[] getCodes() {
+    private WCode[] getCodes() {
         if (!initialized) {
             throw new IllegalStateException("Scope is not initialized.");
         }
@@ -172,7 +177,7 @@ public class WScope {
      * Cache scope codes. Join scope codes with parent scope codes.
      */
     private void cacheCodes() {
-        Set<AbstractCode> set = new HashSet<AbstractCode>();
+        Set<WCode> set = new HashSet<WCode>();
 
         if (parent != null) {
             set.addAll(Arrays.asList(parent.getCodes()));
@@ -182,11 +187,11 @@ public class WScope {
             set.addAll(scopeCodes);
         }
 
-        cachedCodes = set.toArray(new AbstractCode[set.size()]);
+        cachedCodes = set.toArray(new WCode[set.size()]);
         Arrays.sort(
                 cachedCodes,
-                new Comparator<AbstractCode>() {
-                    public int compare(AbstractCode code1, AbstractCode code2) {
+                new Comparator<WCode>() {
+                    public int compare(WCode code1, WCode code2) {
                         return code2.compareTo(code1);
                     }
                 }
