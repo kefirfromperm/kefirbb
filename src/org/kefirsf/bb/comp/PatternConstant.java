@@ -10,7 +10,7 @@ public class PatternConstant implements WPatternElement {
      * Constant value
      */
     private final String value;
-    private char[] chars;
+    private final char[] chars;
 
     /**
      * Mark ignore case
