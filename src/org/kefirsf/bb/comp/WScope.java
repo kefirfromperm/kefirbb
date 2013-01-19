@@ -73,8 +73,8 @@ public class WScope {
             boolean parsed = false;
 
             if (!context.checkBadTag(offset) && (hasCrazyCode || source.nextCanBeConstant())) {
-
                 boolean suspicious = false;
+
                 for (WCode code : cachedCodes) {
                     if (code.suspicious(source)) {
                         suspicious = true;
