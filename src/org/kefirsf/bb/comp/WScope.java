@@ -72,7 +72,7 @@ public class WScope {
             int offset = source.getOffset();
             boolean parsed = false;
 
-            if (!context.checkBadTag(offset) && (hasCrazyCode || source.nextCanBeConstant())) {
+            if ((source.nextMayBeConstant() || hasCrazyCode) && !context.checkBadTag(offset)) {
                 boolean suspicious = false;
 
                 for (WCode code : cachedCodes) {

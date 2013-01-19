@@ -25,33 +25,9 @@ public class Source {
     private Set<PatternConstant> constantSet;
     private char[] constantChars;
 
-    public boolean nextCanBeConstant() {
+    public boolean nextMayBeConstant() {
         return Arrays.binarySearch(constantChars, text[offset]) >= 0;
     }
-
-/*
-    private class ConstEntry {
-        private final int index;
-        List<PatternConstant> set = new ArrayList<PatternConstant>();
-
-        private ConstEntry(int index) {
-            this.index = index;
-        }
-
-        public int getIndex() {
-            return index;
-        }
-
-        public List<PatternConstant> getSet() {
-            return set;
-        }
-    }
-
-    private int[] constantIndexes;
-    private PatternConstant[][] constants;
-
-    private int constantIndexOffset;
-    */
 
     /**
      * Создает класс источник
@@ -67,71 +43,6 @@ public class Source {
         this.constantSet = constantSet;
         this.constantChars = getConstantChars();
     }
-
-    /*
-    public void findAllConstants() {
-        char[] cs = constantChars;
-
-        ArrayList<ConstEntry> constantPositions = new ArrayList<ConstEntry>();
-
-        int index = -1;
-        for (int i = 0; i < textLength; i++) {
-            char c = text[i];
-            int k = Arrays.binarySearch(cs, c);
-            if (k >= 0) {
-                for (PatternConstant constant : constantSet) {
-                    String value = constant.getValue();
-                    int length = value.length();
-                    if (length <= textLength - i) {
-                        boolean flag;
-
-                        if (constant.isIgnoreCase()) {
-                            String str = String.valueOf(text, i, length);
-                            flag = value.equalsIgnoreCase(str);
-                        } else {
-                            char[] valChars = value.toCharArray();
-                            int l;
-                            for (l = 0; l < length && text[i + l] == valChars[l]; l++) {
-                            }
-                            flag = l == length;
-                        }
-
-                        if (flag) {
-                            ConstEntry entry;
-                            if (index < 0 || constantPositions.get(index).getIndex() != i) {
-                                entry = new ConstEntry(i);
-                                constantPositions.add(entry);
-                                index = constantPositions.size() - 1;
-                            } else {
-                                entry = constantPositions.get(index);
-                            }
-
-                            entry.getSet().add(constant);
-                        }
-                    }
-                }
-            }
-        }
-
-        constantIndexes = new int[constantPositions.size()];
-        this.constants = new PatternConstant[constantPositions.size()][];
-
-        int i = 0;
-        for (ConstEntry entry : constantPositions) {
-            constantIndexes[i] = entry.getIndex();
-            this.constants[i] = new PatternConstant[entry.getSet().size()];
-            int k = 0;
-            for (PatternConstant constant : entry.getSet()) {
-                this.constants[i][k] = constant;
-                k++;
-            }
-            i++;
-        }
-
-        constantIndexOffset = 0;
-        recalculateOnConstant();
-    }
-    */
 
     private char[] getConstantChars() {
         Set<Character> chars = new TreeSet<Character>();
