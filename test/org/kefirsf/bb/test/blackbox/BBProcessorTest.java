@@ -136,4 +136,12 @@ public class BBProcessorTest {
         assertProcess(processor, "<s>strike</s>", "[S]strike[/s]");
         assertProcess(processor, "[S]strike[/S]", "[S]strike[/S]");
     }
+
+    @Test
+    public void testJunk() {
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
+                "org/kefirsf/bb/test/blackbox/config-junk.xml"
+        );
+        assertProcess(processor, "<b>test</b>", "<b style=\"color: red;\">test</b>");
+    }
 }

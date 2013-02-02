@@ -299,6 +299,12 @@ public class DomConfigurationFactory {
                             && (k != 0 || nodeHasAttribute(el, TAG_VAR_ATTR_REGEX))
                     ) {
                 elements.add(parseNamedElement(el));
+            } else if (
+                    el.getNodeType() == Node.ELEMENT_NODE
+                            && el.getLocalName().equals("junk")
+                            && k != 0
+                    ) {
+                elements.add(new Junk());
             } else {
                 throw new TextProcessorFactoryException("Invalid pattern");
             }

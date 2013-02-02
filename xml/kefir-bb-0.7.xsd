@@ -37,6 +37,7 @@
                                 <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
                             </xsd:complexType>
                         </xsd:element>
+                        <xsd:element name="junk"/>
                     </xsd:choice>
                     <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
                 </xsd:complexType>

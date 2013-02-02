@@ -128,6 +128,8 @@ class ProcessorBuilder {
                 elements.add(create(((Text) element)));
             } else if (element instanceof Constant) {
                 elements.add(createPatternConstant(((Constant) element)));
+            } else if(element instanceof Junk){
+                elements.add(new PatternJunk());
             }
         }
         return new WPattern(elements);

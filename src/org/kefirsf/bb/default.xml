@@ -50,7 +50,7 @@
 
     <!-- Comment -->
     <code name="comment">
-        <pattern>[*<var parse="false"/>*]</pattern>
+        <pattern>[*<junk/>*]</pattern>
         <template/>
     </code>
 

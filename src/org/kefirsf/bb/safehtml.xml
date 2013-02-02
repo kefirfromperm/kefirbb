@@ -50,7 +50,7 @@
 
     <!-- Comment -->
     <code name="comment" priority="1">
-        <pattern>&lt;!--<var parse="false"/>&gt;</pattern>
+        <pattern>&lt;!--<junk/>&gt;</pattern>
         <template/>
     </code>
 
@@ -97,25 +97,25 @@
 
     <!-- Simple formatting -->
     <code name="bold" priority="1">
-        <pattern ignoreCase="true">&lt;b<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
+        <pattern ignoreCase="true">&lt;b<junk/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
         <template>&lt;b&gt;<var name="content"/>&lt;/b&gt;</template>
     </code>
     <code name="u" priority="1">
-        <pattern ignoreCase="true">&lt;u<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
+        <pattern ignoreCase="true">&lt;u<junk/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
         <template>&lt;u&gt;<var name="content"/>&lt;/u&gt;</template>
     </code>
     <code name="s" priority="1">
-        <pattern ignoreCase="true">&lt;s<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
+        <pattern ignoreCase="true">&lt;s<junk/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
         <template>&lt;s&gt;<var name="content"/>&lt;/s&gt;</template>
     </code>
     <code name="i" priority="1">
-        <pattern ignoreCase="true">&lt;i<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
+        <pattern ignoreCase="true">&lt;i<junk/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
         <template>&lt;i&gt;<var name="content"/>&lt;i&gt;</template>
     </code>
 
     <!-- Insert image -->
     <code name="img" priority="1">
-        <pattern ignoreCase="true">&lt;img <var name="args1" parse="false"/>src=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="addr" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;</pattern>
+        <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="addr" scope="safeXml"/>&quot;<junk/>&gt;</pattern>
         <template>&lt;img src=&quot;<var name="protocol"/>/<var name="addr"/>&quot;/&gt;</template>
     </code>
 
@@ -131,25 +131,25 @@
 
     <!-- HTTP -->
     <code name="url1" priority="1">
-        <pattern ignoreCase="true">&lt;a <var name="args1" parse="false"/>href=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
         <template>&lt;a href=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
     <!-- MAILTO -->
     <code name="url2" priority="1">
-        <pattern ignoreCase="true">&lt;a <var name="args1" parse="false"/>href=&quot;mailto:<var name="url" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;mailto:<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
         <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
     <!-- Qote block -->
-    <code name="quote">
-        <pattern ignoreCase="true">&lt;blockquote<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
+    <code name="quote" priority="2">
+        <pattern ignoreCase="true">&lt;blockquote<junk/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
         <template>&lt;blockquote&gt;<var name="content"/>&lt;/blockquote&gt;</template>
     </code>
 
     <!-- Quote code block -->
     <code name="code">
-        <pattern ignoreCase="true">&lt;pre<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
+        <pattern ignoreCase="true">&lt;pre<junk/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
         <template>&lt;pre&gt;<var name="content"/>&lt;/pre&gt;</template>
     </code>
 </configuration>
