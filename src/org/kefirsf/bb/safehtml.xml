@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefir-bb.sourceforge.net/schemas"
+               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
+    <!-- XML escape symbols -->
+    <scope name="safeXml">
+        <code>
+            <pattern>&apos;</pattern>
+            <template>&amp;apos;</template>
+        </code>
+        <code>
+            <pattern>&lt;</pattern>
+            <template>&amp;lt;</template>
+        </code>
+        <code>
+            <pattern>&gt;</pattern>
+            <template>&amp;gt;</template>
+        </code>
+        <code>
+            <pattern>&quot;</pattern>
+            <template>&amp;quot;</template>
+        </code>
+    </scope>
+
+    <!-- Scope for escaping some symbols -->
+    <scope name="escapeHtml" parent="safeXml">
+        <!--
+            Escape slash-code symbols
+            double slash to slash
+            slash + corner to escape sequence
+         -->
+        <code name="slash" priority="10">
+            <pattern>\\</pattern>
+            <template>\</template>
+        </code>
+        <code name="left_corner" priority="9">
+            <pattern>\&lt;</pattern>
+            <template>&amp;lt;</template>
+        </code>
+        <code name="right_corner" priority="9">
+            <pattern>\&gt;</pattern>
+            <template>&amp;gt;</template>
+        </code>
+        <code name="amp" priority="9">
+            <pattern>\&amp;</pattern>
+            <template>&amp;amp;</template>
+        </code>
+        <coderef name="comment"/>
+    </scope>
+
+    <!-- Comment -->
+    <code name="comment" priority="1">
+        <pattern>&lt;!--<var parse="false"/>&gt;</pattern>
+        <template/>
+    </code>
+
+    <!-- Escape basic HTML char sequences -->
+    <scope name="basic" parent="escapeHtml">
+        <!-- line feed characters -->
+        <code name="br1" priority="3">
+            <pattern>&#x0A;&#x0D;</pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+        <code name="br2" priority="2">
+            <pattern>&#x0D;&#x0A;</pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+        <code name="br3" priority="1">
+            <pattern>&#x0A;</pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+        <code name="br4" priority="0">
+            <pattern>&#x0D;</pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+    </scope>
+
+    <!-- Root scope. This scope uses when processor started work and by default, if not set other scope -->
+    <scope name="ROOT" parent="basic">
+        <!-- Formatting -->
+        <coderef name="bold"/>
+        <coderef name="u"/>
+        <coderef name="s"/>
+        <coderef name="i"/>
+
+        <!-- Quotes -->
+        <coderef name="code"/>
+        <coderef name="quote"/>
+
+        <!-- Images -->
+        <coderef name="img"/>
+
+        <!-- links -->
+        <coderef name="url1"/>
+        <coderef name="url2"/>
+    </scope>
+
+    <!-- Simple formatting -->
+    <code name="bold" priority="1">
+        <pattern ignoreCase="true">&lt;b<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
+        <template>&lt;b&gt;<var name="content"/>&lt;/b&gt;</template>
+    </code>
+    <code name="u" priority="1">
+        <pattern ignoreCase="true">&lt;u<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
+        <template>&lt;u&gt;<var name="content"/>&lt;/u&gt;</template>
+    </code>
+    <code name="s" priority="1">
+        <pattern ignoreCase="true">&lt;s<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
+        <template>&lt;s&gt;<var name="content"/>&lt;/s&gt;</template>
+    </code>
+    <code name="i" priority="1">
+        <pattern ignoreCase="true">&lt;i<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
+        <template>&lt;i&gt;<var name="content"/>&lt;i&gt;</template>
+    </code>
+
+    <!-- Insert image -->
+    <code name="img" priority="1">
+        <pattern ignoreCase="true">&lt;img <var name="args1" parse="false"/>src=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="addr" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;</pattern>
+        <template>&lt;img src=&quot;<var name="protocol"/>/<var name="addr"/>&quot;/&gt;</template>
+    </code>
+
+    <!-- Links. http, https, malto protocols -->
+    <scope name="url" parent="basic">
+        <coderef name="bold"/>
+        <coderef name="u"/>
+        <coderef name="s"/>
+        <coderef name="i"/>
+
+        <coderef name="img"/>
+    </scope>
+
+    <!-- HTTP -->
+    <code name="url1" priority="1">
+        <pattern ignoreCase="true">&lt;a <var name="args1" parse="false"/>href=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <template>&lt;a href=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+    </code>
+
+    <!-- MAILTO -->
+    <code name="url2" priority="1">
+        <pattern ignoreCase="true">&lt;a <var name="args1" parse="false"/>href=&quot;mailto:<var name="url" scope="safeXml"/>&quot;<var name="args2" parse="false"/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+    </code>
+
+    <!-- Qote block -->
+    <code name="quote">
+        <pattern ignoreCase="true">&lt;blockquote<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
+        <template>&lt;blockquote&gt;<var name="content"/>&lt;/blockquote&gt;</template>
+    </code>
+
+    <!-- Quote code block -->
+    <code name="code">
+        <pattern ignoreCase="true">&lt;pre<var name="args" parse="false"/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
+        <template>&lt;pre&gt;<var name="content"/>&lt;/pre&gt;</template>
+    </code>
+</configuration>
