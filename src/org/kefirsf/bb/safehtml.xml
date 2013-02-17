@@ -85,6 +85,9 @@
         <coderef name="h5"/>
         <coderef name="h6"/>
 
+        <!-- Paragraph -->
+        <coderef name="p"/>
+
         <!-- Formatting -->
         <coderef name="bold"/>
         <coderef name="u"/>
@@ -132,6 +135,11 @@
     <code name="h6">
         <pattern ignoreCase="true">&lt;h6<junk/>&gt;<var scope="basic"/>&lt;/h6&gt;</pattern>
         <template>&lt;h6&gt;<var/>&lt;/h6&gt;</template>
+    </code>
+
+    <code name="p">
+        <pattern ignoreCase="true">&lt;p<junk/>&gt;<var name="content" inherit="true"/>&lt;/p&gt;</pattern>
+        <template>&lt;p&gt;<var name="content"/>&lt;/p&gt;</template>
     </code>
 
     <!-- Simple formatting -->

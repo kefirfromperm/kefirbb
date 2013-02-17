@@ -60,6 +60,9 @@ public class SafeHtmlConfigurationTest {
         assertProcess("<h5>Test</h5>", "<H5 onclick=\"...\">Test</h5>");
         assertProcess("<h6>Test</h6>", "<H6 onclick=\"...\">Test</h6>");
 
+        // Paragraph
+        assertProcess("<p>test</p>", "<P onclick=\"...\">test</P>");
+
         // Simple HTML
         assertProcess("<b>test</b>", "<b onclick=\"javascript:alert('Fail!');\">test</B>");
         assertProcess("<u>test</u>", "<u onclick=\"...\">test</u>");
