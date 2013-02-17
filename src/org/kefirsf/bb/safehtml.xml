@@ -75,8 +75,7 @@
         </code>
     </scope>
 
-    <!-- Links. http, https, malto protocols -->
-    <scope name="url" parent="basic">
+    <scope name="format" parent="basic">
         <!-- Headers -->
         <coderef name="h1"/>
         <coderef name="h2"/>
@@ -85,14 +84,20 @@
         <coderef name="h5"/>
         <coderef name="h6"/>
 
-        <!-- Paragraph -->
-        <coderef name="p"/>
-
         <!-- Formatting -->
         <coderef name="bold"/>
         <coderef name="u"/>
         <coderef name="s"/>
         <coderef name="i"/>
+    </scope>
+
+    <!-- Root scope. This scope uses when processor started work and by default, if not set other scope -->
+    <scope name="ROOT" parent="format">
+        <!-- Paragraph -->
+        <coderef name="p"/>
+        <coderef name="hr"/>
+        <coderef name="span"/>
+        <coderef name="div"/>
 
         <!-- Quotes -->
         <coderef name="pre"/>
@@ -101,16 +106,32 @@
 
         <!-- Images -->
         <coderef name="img"/>
-    </scope>
 
-
-    <!-- Root scope. This scope uses when processor started work and by default, if not set other scope -->
-    <scope name="ROOT" parent="url">
         <!-- links -->
         <coderef name="url1"/>
         <coderef name="url2"/>
+
+        <!-- Lists -->
+        <coderef name="ul"/>
+        <coderef name="ol"/>
+        <coderef name="dl"/>
+
+        <!-- Table -->
+        <coderef name="table"/>
     </scope>
-    
+
+    <!-- Links. http, https, malto protocols -->
+    <scope name="url" parent="format">
+        <!-- Paragraph -->
+        <coderef name="span"/>
+
+        <!-- Quotes -->
+        <coderef name="code"/>
+
+        <!-- Images -->
+        <coderef name="img"/>
+    </scope>
+
     <!-- Headers -->
     <code name="h1">
         <pattern ignoreCase="true">&lt;h1<junk/>&gt;<var scope="basic"/>&lt;/h1&gt;</pattern>
@@ -137,9 +158,22 @@
         <template>&lt;h6&gt;<var/>&lt;/h6&gt;</template>
     </code>
 
+    <!-- Paragraphs -->
     <code name="p">
         <pattern ignoreCase="true">&lt;p<junk/>&gt;<var name="content" inherit="true"/>&lt;/p&gt;</pattern>
         <template>&lt;p&gt;<var name="content"/>&lt;/p&gt;</template>
+    </code>
+    <code name="hr">
+        <pattern ignoreCase="true">&lt;hr<junk/>/&gt;</pattern>
+        <template>&lt;hr/&gt;</template>
+    </code>
+    <code name="div">
+        <pattern ignoreCase="true">&lt;div<junk/>&gt;<var inherit="true"/>&lt;/div&gt;</pattern>
+        <template>&lt;div&gt;<var/>&lt;/div&gt;</template>
+    </code>
+    <code name="span">
+        <pattern ignoreCase="true">&lt;span<junk/>&gt;<var inherit="true"/>&lt;/span&gt;</pattern>
+        <template>&lt;span&gt;<var/>&lt;/span&gt;</template>
     </code>
 
     <!-- Simple formatting -->
@@ -193,4 +227,79 @@
         <pattern ignoreCase="true">&lt;code<junk/>&gt;<var name="content" inherit="true"/>&lt;/code&gt;</pattern>
         <template>&lt;code&gt;<var name="content"/>&lt;/code&gt;</template>
     </code>
+
+    <!-- Lists -->
+    <code name="ol">
+        <pattern ignoreCase="true">&lt;ol<junk/>&gt;<var scope="list"/>&lt;/ol&gt;</pattern>
+        <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+    </code>
+    <code name="ul" priority="1">
+        <pattern ignoreCase="true">&lt;ul<junk/>&gt;<var scope="list"/>&lt;/ul&gt;</pattern>
+        <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
+    </code>
+
+    <scope name="list" ignoreText="true">
+        <code name="li">
+            <pattern ignoreCase="true">&lt;li<junk/>&gt;<var scope="ROOT"/>&lt;/li&gt;</pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+    </scope>
+
+    <code name="dl">
+        <pattern ignoreCase="true">&lt;dl<junk/>&gt;<var scope="dlist"/>&lt;/dl&gt;</pattern>
+        <template>&lt;dl&gt;<var/>&lt;/dl&gt;</template>
+    </code>
+    <scope name="dlist">
+        <code name="dt">
+            <pattern ignoreCase="true">&lt;dt<junk/>&gt;<var scope="ROOT"/>&lt;/dt&gt;</pattern>
+            <template>&lt;dt&gt;<var/>&lt;/dt&gt;</template>
+        </code>
+        <code name="dd">
+            <pattern ignoreCase="true">&lt;dd<junk/>&gt;<var scope="ROOT"/>&lt;/dd&gt;</pattern>
+            <template>&lt;dd&gt;<var/>&lt;/dd&gt;</template>
+        </code>
+    </scope>
+
+    <!-- Table -->
+    <code name="table">
+        <pattern ignoreCase="true">&lt;table<junk/>&gt;<var scope="tableScope"/>&lt;/table&gt;</pattern>
+        <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
+    </code>
+
+    <scope name="tableScope" parent="tableBlock" ignoreText="true">
+        <code name="caption">
+            <pattern ignoreCase="true">&lt;caption<junk/>&gt;<var scope="safeXml"/>&lt;/caption&gt;</pattern>
+            <template>&lt;caption&gt;<var/>&lt;/caption&gt;</template>
+        </code>
+        <code name="thead">
+            <pattern ignoreCase="true">&lt;thead<junk/>&gt;<var scope="tableBlock"/>&lt;/thead&gt;</pattern>
+            <template>&lt;thead&gt;<var/>&lt;/thead&gt;</template>
+        </code>
+        <code name="tbody">
+            <pattern ignoreCase="true">&lt;tbody<junk/>&gt;<var scope="tableBlock"/>&lt;/tbody&gt;</pattern>
+            <template>&lt;tbody&gt;<var/>&lt;/tbody&gt;</template>
+        </code>
+        <code name="tfoot">
+            <pattern ignoreCase="true">&lt;tfoot<junk/>&gt;<var scope="tableBlock"/>&lt;/tfoot&gt;</pattern>
+            <template>&lt;tfoot&gt;<var/>&lt;/tfoot&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="tableBlock" ignoreText="true">
+        <code name="tr">
+            <pattern ignoreCase="true">&lt;tr<junk/>&gt;<var scope="tableRow"/>&lt;/tr&gt;</pattern>
+            <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="tableRow" ignoreText="true">
+        <code name="th">
+            <pattern ignoreCase="true">&lt;th<junk/>&gt;<var scope="ROOT"/>&lt;/th&gt;</pattern>
+            <template>&lt;th&gt;<var/>&lt;/th&gt;</template>
+        </code>
+        <code name="td">
+            <pattern ignoreCase="true">&lt;td<junk/>&gt;<var scope="ROOT"/>&lt;/td&gt;</pattern>
+            <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
+        </code>
+    </scope>
 </configuration>

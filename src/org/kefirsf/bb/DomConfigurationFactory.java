@@ -277,7 +277,7 @@ public class DomConfigurationFactory {
         NodeList patternList = node.getChildNodes();
         int patternLength = patternList.getLength();
         if (patternLength <= 0) {
-            throw new TextProcessorFactoryException("Invalid pattern");
+            throw new TextProcessorFactoryException("Invalid pattern. Pattern is empty.");
         }
 
         // Ignore case for all constants

@@ -62,6 +62,9 @@ public class SafeHtmlConfigurationTest {
 
         // Paragraph
         assertProcess("<p>test</p>", "<P onclick=\"...\">test</P>");
+        assertProcess("test1<hr/>test2", "test1<hr/>test2");
+        assertProcess("<div>test</div>", "<div>test</div>");
+        assertProcess("<span>test</span>", "<span>test</span>");
 
         // Simple HTML
         assertProcess("<b>test</b>", "<b onclick=\"javascript:alert('Fail!');\">test</B>");
@@ -86,6 +89,25 @@ public class SafeHtmlConfigurationTest {
         assertProcess(
                 "<a href=\"mailto:john.smith@example.com\">John Smith</a>",
                 "<A href=\"mailto:john.smith@example.com\" onclick=\"...\">John Smith</A>"
+        );
+    }
+
+    @Test
+    public void testList(){
+        assertProcess("<ol><li>1</li><li>2</li></ol>", "<ol><li>1</li><li>2</li></ol>");
+        assertProcess("<ul><li>1</li><li>2</li></ul>", "<ul><li>1</li><li>2</li></ul>");
+    }
+
+    @Test
+    public void testDefinitionList(){
+        assertProcess("<dl><dt>item</dt><dd>definition</dd></dl>", "<DL><DT>item</DT><DD>definition</DD></DL>");
+    }
+
+    @Test
+    public void testTable(){
+        assertProcess(
+                "<table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr></tbody></table>",
+                "<table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr></tbody></table>"
         );
     }
 }
