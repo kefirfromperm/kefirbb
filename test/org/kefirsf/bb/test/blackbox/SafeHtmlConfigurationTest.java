@@ -29,7 +29,7 @@ public class SafeHtmlConfigurationTest {
     }
 
     @Test
-    public void test(){
+    public void testSimple(){
         // Safe XML
         assertProcess("&lt;", "<");
         assertProcess("&gt;", ">");
@@ -62,5 +62,27 @@ public class SafeHtmlConfigurationTest {
 
         // Simple HTML
         assertProcess("<b>test</b>", "<b onclick=\"javascript:alert('Fail!');\">test</B>");
+        assertProcess("<u>test</u>", "<u onclick=\"...\">test</u>");
+        assertProcess("<s>test</s>", "<s onclick=\"...\">test</s>");
+        assertProcess("<i>test</i>", "<i onclick=\"...\">test</i>");
+
+        // Quotes
+        assertProcess("<pre>test</pre>", "<PrE onclick=\"...\">test</pRe>");
+        assertProcess("<code>test</code>", "<cOde onclick=\"...\">test</cOde>");
+        assertProcess("<blockquote>test</blockquote>", "<blockquote onclick=\"...\">test</blockquote>");
+
+        // Image and links
+        assertProcess(
+                "<img src=\"http://www.example.com/logo.png\"/>",
+                "<IMG onclick=\"...\" src=\"http://www.example.com/logo.png\" style=\"...\"/>"
+        );
+        assertProcess(
+                "<a href=\"http://www.example.com/\">Test</a>",
+                "<A href=\"http://www.example.com/\" onclick=\"...\">Test</A>"
+        );
+        assertProcess(
+                "<a href=\"mailto:john.smith@example.com\">John Smith</a>",
+                "<A href=\"mailto:john.smith@example.com\" onclick=\"...\">John Smith</A>"
+        );
     }
 }
