@@ -1,4 +1,4 @@
-package org.kefirsf.bb.comp;
+package org.kefirsf.bb.proc;
 
 /**
  * Named element are variable and text WPatternElement or WTemplateElement

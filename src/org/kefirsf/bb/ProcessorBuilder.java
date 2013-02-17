@@ -1,7 +1,7 @@
 package org.kefirsf.bb;
 
-import org.kefirsf.bb.comp.*;
 import org.kefirsf.bb.conf.*;
+import org.kefirsf.bb.proc.*;
 
 import java.util.*;
 
@@ -105,8 +105,10 @@ class ProcessorBuilder {
                     elements.add(new WNamedValue(((NamedValue) element).getName()));
                 }
             }
+            return new WTemplate(elements);
+        } else {
+            return WTemplate.EMPTY;
         }
-        return new WTemplate(elements);
     }
 
     /**
@@ -128,7 +130,7 @@ class ProcessorBuilder {
                 elements.add(create(((Text) element)));
             } else if (element instanceof Constant) {
                 elements.add(createPatternConstant(((Constant) element)));
-            } else if(element instanceof Junk){
+            } else if (element instanceof Junk) {
                 elements.add(new PatternJunk());
             }
         }

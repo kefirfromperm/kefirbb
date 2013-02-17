@@ -1,4 +1,4 @@
-package org.kefirsf.bb.comp;
+package org.kefirsf.bb.proc;
 
 import java.util.Arrays;
 import java.util.Set;

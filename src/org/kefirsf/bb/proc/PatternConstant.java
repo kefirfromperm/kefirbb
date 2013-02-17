@@ -1,4 +1,4 @@
-package org.kefirsf.bb.comp;
+package org.kefirsf.bb.proc;
 
 /**
  * Constant element of pattern or template
@@ -92,6 +92,7 @@ public class PatternConstant implements WPatternElement {
         PatternConstant that = (PatternConstant) o;
 
         if (ignoreCase != that.ignoreCase) return false;
+        //noinspection RedundantIfStatement
         if (!value.equals(that.value)) return false;
 
         return true;
