@@ -120,19 +120,19 @@
     <!-- Simple formatting -->
     <code name="bold">
         <pattern ignoreCase="true">[b]<var inherit="true"/>[/b]</pattern>
-        <template>&lt;span style=&quot;font-weight:bold;&quot;&gt;<var/>&lt;/span&gt;</template>
+        <template>&lt;b&gt;<var/>&lt;/b&gt;</template>
     </code>
     <code name="u">
         <pattern ignoreCase="true">[u]<var inherit="true"/>[/u]</pattern>
-        <template>&lt;span style=&quot;text-decoration:underline;&quot;&gt;<var/>&lt;/span&gt;</template>
+        <template>&lt;u&gt;<var/>&lt;/u&gt;</template>
     </code>
     <code name="s">
         <pattern ignoreCase="true">[s]<var inherit="true"/>[/s]</pattern>
-        <template>&lt;span style=&quot;text-decoration:line-through;&quot;&gt;<var/>&lt;/span&gt;</template>
+        <template>&lt;s&gt;<var/>&lt;/s&gt;</template>
     </code>
     <code name="i">
         <pattern ignoreCase="true">[i]<var inherit="true"/>[/i]</pattern>
-        <template>&lt;span style=&quot;font-style:italic;&quot;&gt;<var/>&lt;/span&gt;</template>
+        <template>&lt;i&gt;<var/>&lt;/i&gt;</template>
     </code>
 
     <!-- Font color -->

@@ -66,10 +66,10 @@ public class DefaultConfigurationTest {
         assertProcess("]", "\\]");
 
         // Simple formatting
-        assertProcess("<span style=\"font-weight:bold;\">test</span>", "[B]test[/b]");
-        assertProcess("<span style=\"text-decoration:underline;\">test</span>", "[u]test[/u]");
-        assertProcess("<span style=\"text-decoration:line-through;\">test</span>", "[s]test[/s]");
-        assertProcess("<span style=\"font-style:italic;\">test</span>", "[i]test[/i]");
+        assertProcess("<b>test</b>", "[B]test[/b]");
+        assertProcess("<u>test</u>", "[u]test[/u]");
+        assertProcess("<s>test</s>", "[s]test[/s]");
+        assertProcess("<i>test</i>", "[i]test[/i]");
 
         // pictures
         assertProcess("<img src=\"http://kefir-bb.sourceforge.net/ava.jpg\"/>", "[img]http://kefir-bb.sourceforge.net/ava.jpg[/img]");
