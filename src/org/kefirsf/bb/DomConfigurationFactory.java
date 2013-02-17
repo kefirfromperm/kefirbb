@@ -50,6 +50,7 @@ public class DomConfigurationFactory {
     private static final String TAG_CONSTANT = "constant";
     private static final String TAG_CONSTANT_ATTR_VALUE = "value";
     private static final String TAG_CONSTANT_ATTR_IGNORE_CASE = "ignoreCase";
+    private static final String TAG_JUNK = "junk";
 
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
 
@@ -301,12 +302,12 @@ public class DomConfigurationFactory {
                 elements.add(parseNamedElement(el));
             } else if (
                     el.getNodeType() == Node.ELEMENT_NODE
-                            && el.getLocalName().equals("junk")
+                            && el.getLocalName().equals(TAG_JUNK)
                             && k != 0
                     ) {
                 elements.add(new Junk());
             } else {
-                throw new TextProcessorFactoryException("Invalid pattern");
+                throw new TextProcessorFactoryException("Invalid pattern. Unknown XML element.");
             }
         }
         return new Pattern(elements);
