@@ -170,7 +170,7 @@
         <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
-    <!-- Qote block -->
+    <!-- Quote block -->
     <code name="quote" priority="1">
         <pattern ignoreCase="true">&lt;blockquote<junk/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
         <template>&lt;blockquote&gt;<var name="content"/>&lt;/blockquote&gt;</template>
