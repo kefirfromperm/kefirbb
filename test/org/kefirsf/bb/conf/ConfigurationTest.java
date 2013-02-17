@@ -11,7 +11,7 @@ import java.util.Collection;
  *
  * @author kefir
  */
-public class ConfigurationTests {
+public class ConfigurationTest {
 
     public static final String NAME = "scope";
 

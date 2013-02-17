@@ -193,8 +193,10 @@
             <test name="org.kefirsf.bb.test.blackbox.RollbackTest"/>
             <test name="org.kefirsf.bb.test.blackbox.ProgrammaticConfigurationTest"/>
             <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.SafeHtmlConfigurationTest"/>
 
             <!-- Module tests -->
+            <test name="org.kefirsf.bb.conf.ConfigurationTest"/>
             <test name="org.kefirsf.bb.comp.SourceTest"/>
             <test name="org.kefirsf.bb.comp.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
