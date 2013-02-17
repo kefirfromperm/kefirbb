@@ -3,8 +3,8 @@ package org.kefirsf.bb.proc;
 /**
  * @author Vitalii Samolovskikh aka Kefir
  */
-public class PatternJunk implements WPatternElement {
-    public boolean parse(Context context, WPatternElement terminator) {
+public class PatternJunk implements ProcPatternElement {
+    public boolean parse(Context context, ProcPatternElement terminator) {
         Source source = context.getSource();
         int offset = source.getOffset();
 

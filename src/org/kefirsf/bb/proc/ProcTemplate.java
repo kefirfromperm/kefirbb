@@ -9,24 +9,24 @@ import java.util.List;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class WTemplate {
+public class ProcTemplate {
     /**
      * Empty template
      */
     @SuppressWarnings({"unchecked"})
-    public static final WTemplate EMPTY = new WTemplate(Collections.EMPTY_LIST);
+    public static final ProcTemplate EMPTY = new ProcTemplate(Collections.EMPTY_LIST);
 
     /**
      * Template elemnts
      */
-    private final List<? extends WTemplateElement> elements;
+    private final List<? extends ProcTemplateElement> elements;
 
     /**
      * Create neq template with elements.
      *
      * @param elements template elements.
      */
-    public WTemplate(List<? extends WTemplateElement> elements) {
+    public ProcTemplate(List<? extends ProcTemplateElement> elements) {
         this.elements = Collections.unmodifiableList(elements);
     }
 
@@ -37,7 +37,7 @@ public class WTemplate {
      * @throws IOException if can't append.
      */
     public void generate(Context context) throws IOException {
-        for (WTemplateElement element : elements) {
+        for (ProcTemplateElement element : elements) {
             context.getTarget().append(element.generate(context));
         }
     }

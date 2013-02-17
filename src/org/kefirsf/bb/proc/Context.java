@@ -29,12 +29,12 @@ public class Context {
     /**
      * Text terminator,this mark stop text processing
      */
-    private WPatternElement terminator = null;
+    private ProcPatternElement terminator = null;
 
     /**
      * Code scope
      */
-    private WScope scope;
+    private ProcScope scope;
 
     /**
      * Context attributes
@@ -44,7 +44,7 @@ public class Context {
     /**
      * тэги с ошибками. т.е. позиции в которых тэги с ошибками
      */
-    private final Map<WScope, IntSet> falseMemo;
+    private final Map<ProcScope, IntSet> falseMemo;
     private IntSet scopeFalseMemo;
 
     /**
@@ -52,7 +52,7 @@ public class Context {
      */
     public Context() {
         parent = null;
-        falseMemo = new HashMap<WScope, IntSet>();
+        falseMemo = new HashMap<ProcScope, IntSet>();
     }
 
     /**
@@ -147,7 +147,7 @@ public class Context {
      *
      * @param scope code scope
      */
-    public void setScope(WScope scope) {
+    public void setScope(ProcScope scope) {
         this.scope = scope;
 
         // Scope false memo
@@ -179,18 +179,18 @@ public class Context {
      *
      * @return terminator
      */
-    public WPatternElement getTerminator() {
+    public ProcPatternElement getTerminator() {
         return terminator;
     }
 
     /**
      * @param terminator Text terminator,this mark stop text processing
      */
-    public void setTerminator(WPatternElement terminator) {
+    public void setTerminator(ProcPatternElement terminator) {
         this.terminator = terminator;
     }
 
-    public WScope getScope() {
+    public ProcScope getScope() {
         return scope;
     }
 }

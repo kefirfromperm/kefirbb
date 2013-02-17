@@ -5,7 +5,7 @@ package org.kefirsf.bb.proc;
  *
  * @author Kefir
  */
-public class PatternConstant implements WPatternElement {
+public class PatternConstant implements ProcPatternElement {
     /**
      * Constant value
      */
@@ -42,7 +42,7 @@ public class PatternConstant implements WPatternElement {
      * @return true - if next sequence in source equals to this constant value,
      *         false - other
      */
-    public boolean parse(Context context, WPatternElement terminator) {
+    public boolean parse(Context context, ProcPatternElement terminator) {
         if (isNextIn(context.getSource())) {
             context.getSource().incOffset(valueLength);
             return true;

@@ -7,11 +7,11 @@ import java.io.IOException;
  *
  * @author Kefir
  */
-public class WText extends WNamedElement implements WPatternElement {
+public class ProcText extends ProcNamedElement implements ProcPatternElement {
     /**
      * Scope define the codeset for parsing this text
      */
-    private final WScope scope;
+    private final ProcScope scope;
 
     /**
      * Mark that variables getted in element context will be put into parent context
@@ -24,13 +24,13 @@ public class WText extends WNamedElement implements WPatternElement {
      * @param name        имя переменной
      * @param transparent mark that scope variable must be accessible from parent context
      */
-    public WText(String name, boolean transparent) {
+    public ProcText(String name, boolean transparent) {
         super(name);
         scope = null;
         this.transparent = transparent;
     }
 
-    public WText(String name, WScope scope, boolean transparent) {
+    public ProcText(String name, ProcScope scope, boolean transparent) {
         super(name);
         this.scope = scope;
         this.transparent = transparent;
@@ -43,7 +43,7 @@ public class WText extends WNamedElement implements WPatternElement {
      * @return true - если удалось распарсить константу
      *         false - если не удалось
      */
-    public boolean parse(Context context, WPatternElement terminator) {
+    public boolean parse(Context context, ProcPatternElement terminator) {
         Context child = new Context(context);
         StringBuilder target = new StringBuilder();
         child.setTarget(target);

@@ -3,7 +3,7 @@ package org.kefirsf.bb.proc;
 /**
  * The element of template to build target text
  */
-public interface WTemplateElement {
+public interface ProcTemplateElement {
     /**
      * Append template element to source of context
      *

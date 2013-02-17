@@ -7,15 +7,15 @@ import java.io.IOException;
  *
  * @author Kefir
  */
-public class WCode implements Comparable<WCode> {
+public class ProcCode implements Comparable<ProcCode> {
     /**
      * template for build result char sequence
      */
-    private final WTemplate template;
+    private final ProcTemplate template;
     /**
      * Pattern for parsing code
      */
-    private final WPattern pattern;
+    private final ProcPattern pattern;
     /**
      * Priority. If priority higher then code be checking early.
      */
@@ -33,7 +33,7 @@ public class WCode implements Comparable<WCode> {
      * @param name     name of code
      * @param priority priority. If priority higher then code be checking early.
      */
-    public WCode(WPattern pattern, WTemplate template, String name, int priority) {
+    public ProcCode(ProcPattern pattern, ProcTemplate template, String name, int priority) {
         this.template = template;
         this.priority = priority;
         this.name = name;
@@ -76,7 +76,7 @@ public class WCode implements Comparable<WCode> {
     /**
      * Compare by priorities
      */
-    public int compareTo(WCode code) {
+    public int compareTo(ProcCode code) {
         return this.priority - code.priority;
     }
 

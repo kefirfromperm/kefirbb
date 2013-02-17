@@ -8,8 +8,8 @@ import java.util.*;
 class ProcessorBuilder {
     private final Configuration conf;
 
-    private Map<Scope, WScope> createdScopes;
-    private Map<Code, WCode> codes;
+    private Map<Scope, ProcScope> createdScopes;
+    private Map<Code, ProcCode> codes;
     private Map<Constant, PatternConstant> constants;
 
     /**
@@ -23,8 +23,8 @@ class ProcessorBuilder {
      * Build an processor.
      */
     public BBProcessor build() {
-        this.createdScopes = new HashMap<Scope, WScope>();
-        this.codes = new HashMap<Code, WCode>();
+        this.createdScopes = new HashMap<Scope, ProcScope>();
+        this.codes = new HashMap<Code, ProcCode>();
         this.constants = new HashMap<Constant, PatternConstant>();
 
         BBProcessor processor = new BBProcessor();
@@ -42,16 +42,16 @@ class ProcessorBuilder {
      * @param scope the scope configuration
      * @return scope scope
      */
-    private WScope createScope(Scope scope) {
-        WScope created = createdScopes.get(scope);
+    private ProcScope createScope(Scope scope) {
+        ProcScope created = createdScopes.get(scope);
         if (created == null) {
-            created = new WScope(scope.getName());
+            created = new ProcScope(scope.getName());
             createdScopes.put(scope, created);
             created.setIgnoreText(scope.isIgnoreText());
             if (scope.getParent() != null) {
                 created.setParent(createScope(conf.getScope(scope.getParent())));
             }
-            Set<WCode> scopeCodes = new HashSet<WCode>();
+            Set<ProcCode> scopeCodes = new HashSet<ProcCode>();
             for (Code code : scope.getCodes()) {
                 scopeCodes.add(createCode(code));
             }
@@ -67,7 +67,7 @@ class ProcessorBuilder {
      * @param defCode code definition
      * @return code object
      */
-    private WCode createCode(Code defCode) {
+    private ProcCode createCode(Code defCode) {
         if (defCode.getPattern() == null) {
             throw new IllegalStateException("Field pattern can't be null.");
         }
@@ -76,9 +76,9 @@ class ProcessorBuilder {
             throw new IllegalStateException("Field template can't be null.");
         }
 
-        WCode code = codes.get(defCode);
+        ProcCode code = codes.get(defCode);
         if (code == null) {
-            code = new WCode(
+            code = new ProcCode(
                     createPattern(defCode.getPattern()),
                     createTemplate(defCode.getTemplate()),
                     defCode.getName(),
@@ -95,19 +95,19 @@ class ProcessorBuilder {
      * @param template the template definition
      * @return template
      */
-    private WTemplate createTemplate(Template template) {
-        List<WTemplateElement> elements = new ArrayList<WTemplateElement>();
+    private ProcTemplate createTemplate(Template template) {
+        List<ProcTemplateElement> elements = new ArrayList<ProcTemplateElement>();
         if (template.getElements() != null) {
             for (TemplateElement element : template.getElements()) {
                 if (element instanceof Constant) {
                     elements.add(new TemplateConstant(((Constant) element).getValue()));
                 } else if (element instanceof NamedValue) {
-                    elements.add(new WNamedValue(((NamedValue) element).getName()));
+                    elements.add(new ProcNamedValue(((NamedValue) element).getName()));
                 }
             }
-            return new WTemplate(elements);
+            return new ProcTemplate(elements);
         } else {
-            return WTemplate.EMPTY;
+            return ProcTemplate.EMPTY;
         }
     }
 
@@ -117,15 +117,15 @@ class ProcessorBuilder {
      * @param pattern pattern definition
      * @return pattern pattern
      */
-    private WPattern createPattern(Pattern pattern) {
+    private ProcPattern createPattern(Pattern pattern) {
         if (pattern.getElements() == null || pattern.getElements().isEmpty()) {
             throw new IllegalStateException("Pattern elements list can't be empty.");
         }
 
-        List<WPatternElement> elements = new ArrayList<WPatternElement>();
+        List<ProcPatternElement> elements = new ArrayList<ProcPatternElement>();
         for (PatternElement element : pattern.getElements()) {
             if (element instanceof Variable) {
-                elements.add(new WVariable(((Variable) element).getName(), ((Variable) element).getRegex()));
+                elements.add(new ProcVariable(((Variable) element).getName(), ((Variable) element).getRegex()));
             } else if (element instanceof Text) {
                 elements.add(create(((Text) element)));
             } else if (element instanceof Constant) {
@@ -134,7 +134,7 @@ class ProcessorBuilder {
                 elements.add(new PatternJunk());
             }
         }
-        return new WPattern(elements);
+        return new ProcPattern(elements);
     }
 
     /**
@@ -154,16 +154,16 @@ class ProcessorBuilder {
      * @param text element definition
      * @return pattern element for text
      */
-    private WPatternElement create(Text text) {
+    private ProcPatternElement create(Text text) {
         String scopeName = text.getScope();
         if (scopeName != null) {
-            return new WText(
+            return new ProcText(
                     text.getName(),
                     createScope(conf.getScope(scopeName)),
                     text.isTransparent()
             );
         } else {
-            return new WText(text.getName(), text.isTransparent());
+            return new ProcText(text.getName(), text.isTransparent());
         }
     }
 }

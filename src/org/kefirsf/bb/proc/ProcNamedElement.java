@@ -1,9 +1,9 @@
 package org.kefirsf.bb.proc;
 
 /**
- * Named element are variable and text WPatternElement or WTemplateElement
+ * Named element are variable and text ProcPatternElement or ProcTemplateElement
  */
-public abstract class WNamedElement {
+public abstract class ProcNamedElement {
     /**
      * Variable name
      */
@@ -14,7 +14,7 @@ public abstract class WNamedElement {
      *
      * @param name name of element
      */
-    protected WNamedElement(String name) {
+    protected ProcNamedElement(String name) {
         this.name = name;
     }
 

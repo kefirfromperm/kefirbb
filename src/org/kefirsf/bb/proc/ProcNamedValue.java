@@ -3,8 +3,8 @@ package org.kefirsf.bb.proc;
 /**
  * Named value to build target text
  */
-public class WNamedValue extends WNamedElement implements WTemplateElement {
-    public WNamedValue(String name) {
+public class ProcNamedValue extends ProcNamedElement implements ProcTemplateElement {
+    public ProcNamedValue(String name) {
         super(name);
     }
 

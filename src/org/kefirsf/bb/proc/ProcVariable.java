@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
  *
  * @author Kefir
  */
-public class WVariable extends WNamedElement implements WPatternElement {
+public class ProcVariable extends ProcNamedElement implements ProcPatternElement {
     private final java.util.regex.Pattern regex;
 
     /**
@@ -16,7 +16,7 @@ public class WVariable extends WNamedElement implements WPatternElement {
      * @param name  variable name
      * @param regex regular expression pattern
      */
-    public WVariable(String name, java.util.regex.Pattern regex) {
+    public ProcVariable(String name, java.util.regex.Pattern regex) {
         super(name);
         this.regex = regex;
     }
@@ -28,7 +28,7 @@ public class WVariable extends WNamedElement implements WPatternElement {
      * @return true - если удалось распарсить константу
      *         false - если не удалось
      */
-    public boolean parse(Context context, WPatternElement terminator) {
+    public boolean parse(Context context, ProcPatternElement terminator) {
         Source source = context.getSource();
         int offset = source.getOffset();
 

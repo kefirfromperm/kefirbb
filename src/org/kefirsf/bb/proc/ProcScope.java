@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class WScope {
+public class ProcScope {
 
     /**
      * Name of scope
@@ -24,12 +24,12 @@ public class WScope {
     /**
      * Parent scope for inherit codes
      */
-    private WScope parent = null;
+    private ProcScope parent = null;
 
     /**
      * Code set for current scope without parent scope codes
      */
-    private Set<WCode> scopeCodes = null;
+    private Set<ProcCode> scopeCodes = null;
 
     /**
      * Mark that not parseable text must not append to result
@@ -39,7 +39,7 @@ public class WScope {
     /**
      * Code of scope include the parent codes
      */
-    private WCode[] cachedCodes = null;
+    private ProcCode[] cachedCodes = null;
 
     /**
      * Mark that this scope is initialized
@@ -56,7 +56,7 @@ public class WScope {
      *
      * @param name name of scope
      */
-    public WScope(String name) {
+    public ProcScope(String name) {
         this.name = name;
     }
 
@@ -75,7 +75,7 @@ public class WScope {
             if ((source.nextMayBeConstant() || hasCrazyCode) && !context.checkBadTag(offset)) {
                 boolean suspicious = false;
 
-                for (WCode code : cachedCodes) {
+                for (ProcCode code : cachedCodes) {
                     if (code.suspicious(source)) {
                         suspicious = true;
                         if (code.process(context)) {
@@ -114,7 +114,7 @@ public class WScope {
      *
      * @param parent parent scope. All parent scope code added to scope codes.
      */
-    public void setParent(WScope parent) {
+    public void setParent(ProcScope parent) {
         this.parent = parent;
     }
 
@@ -123,7 +123,7 @@ public class WScope {
      *
      * @param codes code set
      */
-    public void setScopeCodes(Set<WCode> codes) {
+    public void setScopeCodes(Set<ProcCode> codes) {
         this.scopeCodes = codes;
     }
 
@@ -140,7 +140,7 @@ public class WScope {
      *
      * @return list of codes in priority order.
      */
-    private WCode[] getCodes() {
+    private ProcCode[] getCodes() {
         if (!initialized) {
             throw new IllegalStateException("Scope is not initialized.");
         }
@@ -151,7 +151,7 @@ public class WScope {
      * Cache scope codes. Join scope codes with parent scope codes.
      */
     private void cacheCodes() {
-        Set<WCode> set = new HashSet<WCode>();
+        Set<ProcCode> set = new HashSet<ProcCode>();
 
         if (parent != null) {
             set.addAll(Arrays.asList(parent.getCodes()));
@@ -161,17 +161,17 @@ public class WScope {
             set.addAll(scopeCodes);
         }
 
-        cachedCodes = set.toArray(new WCode[set.size()]);
+        cachedCodes = set.toArray(new ProcCode[set.size()]);
         Arrays.sort(
                 cachedCodes,
-                new Comparator<WCode>() {
-                    public int compare(WCode code1, WCode code2) {
+                new Comparator<ProcCode>() {
+                    public int compare(ProcCode code1, ProcCode code2) {
                         return code2.compareTo(code1);
                     }
                 }
         );
 
-        for(WCode code:cachedCodes){
+        for(ProcCode code:cachedCodes){
             hasCrazyCode = hasCrazyCode || !code.startsWithConstant();
         }
     }

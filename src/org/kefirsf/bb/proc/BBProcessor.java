@@ -16,9 +16,9 @@ public final class BBProcessor extends TextProcessorAdapter {
     /**
      * BB-codes
      */
-    private WScope scope = null;
-    private WTemplate prefix = null;
-    private WTemplate suffix = null;
+    private ProcScope scope = null;
+    private ProcTemplate prefix = null;
+    private ProcTemplate suffix = null;
     private Map<String, Object> params = null;
     private Set<PatternConstant> constants;
 
@@ -69,7 +69,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      * @param scope root code scope
      * @throws IllegalStateException if scope already setted
      */
-    public void setScope(WScope scope) throws IllegalStateException {
+    public void setScope(ProcScope scope) throws IllegalStateException {
         if (this.scope == null) {
             this.scope = scope;
         } else {
@@ -83,7 +83,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      * @param prefix template wich uses to create prefix
      * @throws IllegalStateException If prefix already setted
      */
-    public void setPrefix(WTemplate prefix) throws IllegalStateException {
+    public void setPrefix(ProcTemplate prefix) throws IllegalStateException {
         if (this.prefix == null) {
             this.prefix = prefix;
         } else {
@@ -97,7 +97,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      * @param suffix template wich uses to create prefix
      * @throws IllegalStateException If suffix already setted
      */
-    public void setSuffix(WTemplate suffix) {
+    public void setSuffix(ProcTemplate suffix) {
         if (this.suffix == null) {
             this.suffix = suffix;
         } else {

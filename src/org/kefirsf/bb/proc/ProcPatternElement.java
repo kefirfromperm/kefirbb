@@ -5,7 +5,7 @@ package org.kefirsf.bb.proc;
  *
  * @author Kefir
  */
-public interface WPatternElement {
+public interface ProcPatternElement {
     /**
      * Parse element
      *
@@ -14,7 +14,7 @@ public interface WPatternElement {
      * @return true - subsequence is valid to this pattern
      *         false - not valid
      */
-    public boolean parse(Context context, WPatternElement terminator);
+    public boolean parse(Context context, ProcPatternElement terminator);
 
     /**
      * Check next subsequence

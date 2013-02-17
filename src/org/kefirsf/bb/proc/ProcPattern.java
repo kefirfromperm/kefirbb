@@ -8,21 +8,21 @@ import java.util.List;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class WPattern {
+public class ProcPattern {
     /**
      * Pattern elements
      */
-    private final List<? extends WPatternElement> elements;
+    private final List<? extends ProcPatternElement> elements;
 
     // Performance optimization
-    private final WPatternElement firstElement;
+    private final ProcPatternElement firstElement;
 
     /**
      * Construct pattern.
      *
      * @param elements pattern elements
      */
-    public WPattern(List<? extends WPatternElement> elements) {
+    public ProcPattern(List<? extends ProcPatternElement> elements) {
         this.elements = Collections.unmodifiableList(elements);
 
         // Performance optimization
@@ -57,8 +57,8 @@ public class WPattern {
         int offset = source.getOffset();
         int patternSize = elements.size();
         for (int i = 0; i < patternSize && flag; i++) {
-            WPatternElement current = elements.get(i);
-            WPatternElement next;
+            ProcPatternElement current = elements.get(i);
+            ProcPatternElement next;
             if (i < patternSize - 1) {
                 next = elements.get(i + 1);
             } else {
