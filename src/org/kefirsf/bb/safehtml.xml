@@ -4,19 +4,19 @@
                xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
     <!-- XML escape symbols -->
     <scope name="safeXml">
-        <code>
+        <code priority="-1">
             <pattern>&apos;</pattern>
             <template>&amp;apos;</template>
         </code>
-        <code>
+        <code priority="-1">
             <pattern>&lt;</pattern>
             <template>&amp;lt;</template>
         </code>
-        <code>
+        <code priority="-1">
             <pattern>&gt;</pattern>
             <template>&amp;gt;</template>
         </code>
-        <code>
+        <code priority="-1">
             <pattern>&quot;</pattern>
             <template>&amp;quot;</template>
         </code>
@@ -49,7 +49,7 @@
     </scope>
 
     <!-- Comment -->
-    <code name="comment" priority="1">
+    <code name="comment">
         <pattern>&lt;!--<junk/>&gt;</pattern>
         <template/>
     </code>
@@ -109,79 +109,79 @@
     </scope>
     
     <!-- Headers -->
-    <code name="h1" priority="1">
+    <code name="h1">
         <pattern ignoreCase="true">&lt;h1<junk/>&gt;<var scope="basic"/>&lt;/h1&gt;</pattern>
         <template>&lt;h1&gt;<var/>&lt;/h1&gt;</template>
     </code>
-    <code name="h2" priority="1">
+    <code name="h2">
         <pattern ignoreCase="true">&lt;h2<junk/>&gt;<var scope="basic"/>&lt;/h2&gt;</pattern>
         <template>&lt;h2&gt;<var/>&lt;/h2&gt;</template>
     </code>
-    <code name="h3" priority="1">
+    <code name="h3">
         <pattern ignoreCase="true">&lt;h3<junk/>&gt;<var scope="basic"/>&lt;/h3&gt;</pattern>
         <template>&lt;h3&gt;<var/>&lt;/h3&gt;</template>
     </code>
-    <code name="h4" priority="1">
+    <code name="h4">
         <pattern ignoreCase="true">&lt;h4<junk/>&gt;<var scope="basic"/>&lt;/h4&gt;</pattern>
         <template>&lt;h4&gt;<var/>&lt;/h4&gt;</template>
     </code>
-    <code name="h5" priority="1">
+    <code name="h5">
         <pattern ignoreCase="true">&lt;h5<junk/>&gt;<var scope="basic"/>&lt;/h5&gt;</pattern>
         <template>&lt;h5&gt;<var/>&lt;/h5&gt;</template>
     </code>
-    <code name="h6" priority="1">
+    <code name="h6">
         <pattern ignoreCase="true">&lt;h6<junk/>&gt;<var scope="basic"/>&lt;/h6&gt;</pattern>
         <template>&lt;h6&gt;<var/>&lt;/h6&gt;</template>
     </code>
 
     <!-- Simple formatting -->
-    <code name="bold" priority="1">
+    <code name="bold">
         <pattern ignoreCase="true">&lt;b<junk/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
         <template>&lt;b&gt;<var name="content"/>&lt;/b&gt;</template>
     </code>
-    <code name="u" priority="1">
+    <code name="u">
         <pattern ignoreCase="true">&lt;u<junk/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
         <template>&lt;u&gt;<var name="content"/>&lt;/u&gt;</template>
     </code>
-    <code name="s" priority="1">
+    <code name="s">
         <pattern ignoreCase="true">&lt;s<junk/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
         <template>&lt;s&gt;<var name="content"/>&lt;/s&gt;</template>
     </code>
-    <code name="i" priority="1">
+    <code name="i">
         <pattern ignoreCase="true">&lt;i<junk/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
         <template>&lt;i&gt;<var name="content"/>&lt;/i&gt;</template>
     </code>
 
     <!-- Insert image -->
-    <code name="img" priority="1">
+    <code name="img">
         <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="addr" scope="safeXml"/>&quot;<junk/>&gt;</pattern>
         <template>&lt;img src=&quot;<var name="protocol"/>/<var name="addr"/>&quot;/&gt;</template>
     </code>
 
     <!-- HTTP -->
-    <code name="url1" priority="1">
+    <code name="url1">
         <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
         <template>&lt;a href=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
     <!-- MAILTO -->
-    <code name="url2" priority="1">
+    <code name="url2">
         <pattern ignoreCase="true">&lt;a <junk/>href=&quot;mailto:<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
         <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
     <!-- Qote block -->
-    <code name="quote" priority="2">
+    <code name="quote" priority="1">
         <pattern ignoreCase="true">&lt;blockquote<junk/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
         <template>&lt;blockquote&gt;<var name="content"/>&lt;/blockquote&gt;</template>
     </code>
 
     <!-- Quote code block -->
-    <code name="pre" priority="1">
+    <code name="pre">
         <pattern ignoreCase="true">&lt;pre<junk/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
         <template>&lt;pre&gt;<var name="content"/>&lt;/pre&gt;</template>
     </code>
-    <code name="code" priority="1">
+    <code name="code">
         <pattern ignoreCase="true">&lt;code<junk/>&gt;<var name="content" inherit="true"/>&lt;/code&gt;</pattern>
         <template>&lt;code&gt;<var name="content"/>&lt;/code&gt;</template>
     </code>
