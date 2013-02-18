@@ -25,7 +25,7 @@ public class Assert extends org.junit.Assert {
      * @param expected  expected process result
      * @param source    source text
      */
-    public static void assertProcess(TextProcessor processor, String expected, String source) {
-        assertEquals(expected, processor.process(source));
+    public static void assertProcess(TextProcessor processor, String expected, CharSequence source) {
+        assertEquals(expected, processor.process(source).toString());
     }
 }
