@@ -16,8 +16,9 @@ import java.util.Arrays;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class NestingTest {
-    public static final int MAX_NESTING = BBProcessor.DEFAULT_NESTING_LIMIT;
-    public static final int STACK_OVERFLOW_NESTING = 2000;
+    private static final int MAX_NESTING = BBProcessor.DEFAULT_NESTING_LIMIT;
+    private static final int STACK_OVERFLOW_NESTING = 2000;
+    private static final String DATA = "test";
 
     public TextProcessor createProcessor() {
         return BBProcessorFactory.getInstance().create(createConfiguration());
@@ -38,7 +39,7 @@ public class NestingTest {
 
     @Test
     public void testMaxNesting() {
-        Assert.assertProcess(createProcessor(), "test", prepare(MAX_NESTING));
+        Assert.assertProcess(createProcessor(), DATA, prepare(MAX_NESTING));
     }
 
     @Test
@@ -69,12 +70,21 @@ public class NestingTest {
         processor.process(prepare(size + 1));
     }
 
+    @Test(expected = TextProcessorNestingException.class)
+    public void testXmlConfiguration() {
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
+                "org/kefirsf/bb/test/blackbox/config-nesting.xml"
+        );
+        Assert.assertProcess(processor, DATA, prepare(20));
+        processor.process(prepare(21));
+    }
+
     private StringBuilder prepare(int nesting) {
         StringBuilder b = new StringBuilder();
         for (int i = 0; i < nesting; i++) {
             b.append("[");
         }
-        b.append("test");
+        b.append(DATA);
         for (int i = 0; i < nesting; i++) {
             b.append("]");
         }

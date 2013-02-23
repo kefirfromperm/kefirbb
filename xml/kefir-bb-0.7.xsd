@@ -51,6 +51,12 @@
     <xsd:element name="configuration">
         <xsd:complexType>
             <xsd:sequence>
+                <xsd:element name="nesting" minOccurs="0" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:attribute name="limit" type="xsd:int" use="optional"/>
+                        <xsd:attribute name="exception" type="xsd:boolean" use="optional"/>
+                    </xsd:complexType>
+                </xsd:element>
                 <xsd:element name="params" minOccurs="0" maxOccurs="1">
                     <xsd:complexType>
                         <xsd:choice minOccurs="0" maxOccurs="unbounded">

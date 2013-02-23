@@ -71,6 +71,9 @@ public class DomConfigurationFactory {
     public Configuration create(Document dc) {
         // Create configuration
         Configuration configuration = new Configuration();
+
+        parseNesting(configuration, dc);
+
         // Parse parameters
         configuration.setParams(parseParams(dc));
 
@@ -109,6 +112,27 @@ public class DomConfigurationFactory {
 
         // return configuration
         return configuration;
+    }
+
+    /**
+     * Parse nesting element, which describes nesting behavior.
+     *
+     * @param configuration parser configuration
+     * @param dc            DOM-document
+     */
+    private void parseNesting(Configuration configuration, Document dc) {
+        NodeList list = dc.getElementsByTagName("nesting");
+        if (list.getLength() > 0) {
+            Node el = list.item(0);
+            String limit = nodeAttribute(el, "limit");
+            if (limit != null) {
+                configuration.setNestingLimit(Integer.decode(limit));
+            }
+            String exception = nodeAttribute(el, "exception");
+            if (exception != null) {
+                configuration.setPropagateNestingException(Boolean.valueOf(exception));
+            }
+        }
     }
 
     private Map<String, Object> parseParams(Document dc) {
