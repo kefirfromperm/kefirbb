@@ -40,7 +40,6 @@ public class DomConfigurationFactory {
     private static final String TAG_SCOPE_ATTR_NAME = "name";
     private static final String TAG_SCOPE_ATTR_PARENT = "parent";
     private static final String TAG_SCOPE_ATTR_IGNORE_TEXT = "ignoreText";
-    private static final boolean DEFAULT_IGNORE_TEXT = false;
     private static final String TAG_CODEREF = "coderef";
     private static final String TAG_CODEREF_ATTR_NAME = TAG_CODE_ATTR_NAME;
     private static final String TAG_PREFIX = "prefix";
@@ -232,7 +231,7 @@ public class DomConfigurationFactory {
                     new Scope(
                             name,
                             nodeAttribute(scopeElement, TAG_SCOPE_ATTR_PARENT, null),
-                            nodeAttribute(scopeElement, TAG_SCOPE_ATTR_IGNORE_TEXT, DEFAULT_IGNORE_TEXT)
+                            nodeAttribute(scopeElement, TAG_SCOPE_ATTR_IGNORE_TEXT, Scope.DEFAULT_IGNORE_TEXT)
                     );
             scopes.put(scope.getName(), scope);
         }

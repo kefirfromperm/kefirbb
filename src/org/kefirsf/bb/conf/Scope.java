@@ -17,10 +17,11 @@ public final class Scope {
      * then all codes add to default ROOT scope.
      */
     public static final String ROOT = "ROOT";
+    public static final boolean DEFAULT_IGNORE_TEXT = false;
 
     private final String name;
     private String parent;
-    private boolean ignoreText;
+    private boolean ignoreText = DEFAULT_IGNORE_TEXT;
     private final Set<Code> codes = new HashSet<Code>();
 
     public Scope() {
