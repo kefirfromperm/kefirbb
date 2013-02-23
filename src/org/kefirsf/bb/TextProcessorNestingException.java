@@ -8,7 +8,7 @@ import java.text.MessageFormat;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class TextProcessorNestingException extends TextProcessorException {
-    public static final String MESSAGE_PATTERN = "Nesting is too big. Nesting is {0} but max accepted nesting is {1}";
+    public static final String MESSAGE_PATTERN = "Nesting is too big. Nesting is {0} but limit is {1}.";
 
     public TextProcessorNestingException(int nesting, int maxNesting){
         super(
