@@ -1,6 +1,7 @@
 package org.kefirsf.bb.proc;
 
 import org.kefirsf.bb.TextProcessorAdapter;
+import org.kefirsf.bb.TextProcessorNestingException;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,6 +14,8 @@ import java.util.Set;
  * @author Kefir
  */
 public final class BBProcessor extends TextProcessorAdapter {
+    public static final int DEFAULT_NESTING_LIMIT = 500;
+
     /**
      * BB-codes
      */
@@ -21,6 +24,9 @@ public final class BBProcessor extends TextProcessorAdapter {
     private ProcTemplate suffix = null;
     private Map<String, Object> params = null;
     private Set<PatternConstant> constants;
+
+    private int nestingLimit = DEFAULT_NESTING_LIMIT;
+    private boolean propagateNestingException = false;
 
     /**
      * Create the bbcode processor
@@ -46,6 +52,7 @@ public final class BBProcessor extends TextProcessorAdapter {
         source1.setConstantSet(constants);
         context.setSource(source1);
         context.setScope(scope);
+        context.setNestingLimit(nestingLimit*2);
         if (params != null) {
             for (Map.Entry<String, Object> entry : params.entrySet()) {
                 context.setAttribute(entry.getKey(), entry.getValue());
@@ -58,6 +65,11 @@ public final class BBProcessor extends TextProcessorAdapter {
             suffix.generate(context);
         } catch (IOException e) {
             // Never because StringBuilder not throw IOException
+        } catch (NestingException e) {
+            target = new StringBuilder();
+            if(propagateNestingException){
+                throw new TextProcessorNestingException(nestingLimit);
+            }
         }
 
         return target;

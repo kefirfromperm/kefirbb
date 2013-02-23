@@ -50,8 +50,9 @@ public class ProcPattern {
      * @param context current context
      * @return true if next subsequence is valid to this pattern,
      *         false others
+     * @throws NestingException if nesting is too big.
      */
-    public boolean parse(Context context) {
+    public boolean parse(Context context) throws NestingException {
         boolean flag = true;
         Source source = context.getSource();
         int offset = source.getOffset();

@@ -49,8 +49,9 @@ public class ProcCode implements Comparable<ProcCode> {
      * @return true - if parse source
      *         false - if can't parse code
      * @throws java.io.IOException if can't append to target
+     * @throws NestingException if nesting is too big.
      */
-    public boolean process(Context context) throws IOException {
+    public boolean process(Context context) throws IOException, NestingException {
         Context codeContext = new Context(context);
         if (pattern.parse(codeContext)) {
             codeContext.mergeWithParent();

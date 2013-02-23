@@ -64,8 +64,9 @@ public class ProcScope {
      * Парсит тект с BB-кодами
      *
      * @throws java.io.IOException if can't append chars to target
+     * @throws NestingException if nesting is too big.
      */
-    public void process(Context context) throws IOException {
+    public void process(Context context) throws IOException, NestingException {
         Source source = context.getSource();
 
         while (context.hasNextAdjustedForTerminator()) {

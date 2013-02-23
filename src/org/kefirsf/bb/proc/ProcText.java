@@ -42,9 +42,11 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
      * @param context контекст
      * @return true - если удалось распарсить константу
      *         false - если не удалось
+     * @throws NestingException if nesting is too big.
      */
-    public boolean parse(Context context, ProcPatternElement terminator) {
+    public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Context child = new Context(context);
+        child.checkNesting();
         StringBuilder target = new StringBuilder();
         child.setTarget(target);
         if (scope != null) {

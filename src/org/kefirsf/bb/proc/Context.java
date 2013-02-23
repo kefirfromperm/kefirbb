@@ -48,6 +48,11 @@ public class Context {
     private IntSet scopeFalseMemo;
 
     /**
+     * Nesting limit for this context.
+     */
+    private int nestingLimit;
+
+    /**
      * Default constructor
      */
     public Context() {
@@ -66,6 +71,7 @@ public class Context {
         this.target = parent.target;
         this.falseMemo = parent.falseMemo;
         this.terminator = parent.terminator;
+        this.nestingLimit = parent.nestingLimit-1;
 
         this.setScope(parent.scope);
     }
@@ -192,5 +198,24 @@ public class Context {
 
     public ProcScope getScope() {
         return scope;
+    }
+
+    /**
+     * Set nesting limit for this context.
+     *
+     * @param nestingLimit nesting limit
+     */
+    public void setNestingLimit(int nestingLimit) {
+        this.nestingLimit = nestingLimit;
+    }
+
+    /** Check nesting.
+     *
+     * @throws NestingException if nesting limit less than 0.
+     */
+    public void checkNesting() throws NestingException {
+        if(nestingLimit<0){
+            throw new NestingException();
+        }
     }
 }

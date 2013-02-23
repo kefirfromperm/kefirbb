@@ -14,7 +14,7 @@ public interface ProcPatternElement {
      * @return true - subsequence is valid to this pattern
      *         false - not valid
      */
-    public boolean parse(Context context, ProcPatternElement terminator);
+    public boolean parse(Context context, ProcPatternElement terminator) throws NestingException;
 
     /**
      * Check next subsequence
