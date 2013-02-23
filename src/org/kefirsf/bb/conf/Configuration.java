@@ -1,5 +1,6 @@
 package org.kefirsf.bb.conf;
 
+import org.kefirsf.bb.proc.BBProcessor;
 import org.kefirsf.bb.util.ExceptionUtils;
 
 import java.util.Collections;
@@ -18,6 +19,9 @@ public final class Configuration {
     private Template prefix = new Template();
     private Template suffix = new Template();
     private Map<String, Object> params = new HashMap<String, Object>();
+
+    private int nestingLimit = BBProcessor.DEFAULT_NESTING_LIMIT;
+    private boolean propagateNestingException = false;
 
     /**
      * Create the configuration
@@ -100,5 +104,21 @@ public final class Configuration {
      */
     public void setParams(Map<String, Object> params){
         this.params = Collections.unmodifiableMap(params);
+    }
+
+    public int getNestingLimit() {
+        return nestingLimit;
+    }
+
+    public void setNestingLimit(int nestingLimit) {
+        this.nestingLimit = nestingLimit;
+    }
+
+    public boolean isPropagateNestingException() {
+        return propagateNestingException;
+    }
+
+    public void setPropagateNestingException(boolean propagateNestingException) {
+        this.propagateNestingException = propagateNestingException;
     }
 }

@@ -19,7 +19,7 @@ public class NestingTest {
     public static final int MAX_NESTING = BBProcessor.DEFAULT_NESTING_LIMIT;
     public static final int STACK_OVERFLOW_NESTING = 2000;
 
-    public TextProcessor createProcessor(){
+    public TextProcessor createProcessor() {
         return BBProcessorFactory.getInstance().create(createConfiguration());
     }
 
@@ -43,7 +43,7 @@ public class NestingTest {
 
     @Test
     public void testNestingOverflow() {
-        Assert.assertProcess(createProcessor(), "", prepare(MAX_NESTING+1));
+        Assert.assertProcess(createProcessor(), "", prepare(MAX_NESTING + 1));
     }
 
     @Test
@@ -52,10 +52,21 @@ public class NestingTest {
     }
 
     @Test(expected = TextProcessorNestingException.class)
-    public void testException(){
+    public void testException() {
         Configuration configuration = createConfiguration();
+        configuration.setPropagateNestingException(true);
         TextProcessor processor = BBProcessorFactory.getInstance().create(configuration);
-        processor.process(prepare(MAX_NESTING+1));
+        processor.process(prepare(MAX_NESTING + 1));
+    }
+
+    @Test(expected = TextProcessorNestingException.class)
+    public void testCustomLimit() {
+        int size = 10;
+        Configuration configuration = createConfiguration();
+        configuration.setPropagateNestingException(true);
+        configuration.setNestingLimit(size);
+        TextProcessor processor = BBProcessorFactory.getInstance().create(configuration);
+        processor.process(prepare(size + 1));
     }
 
     private StringBuilder prepare(int nesting) {

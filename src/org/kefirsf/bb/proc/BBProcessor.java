@@ -133,4 +133,12 @@ public final class BBProcessor extends TextProcessorAdapter {
     public void setConstants(Set<PatternConstant> constants) {
         this.constants = constants;
     }
+
+    public void setNestingLimit(int nestingLimit) {
+        this.nestingLimit = nestingLimit;
+    }
+
+    public void setPropagateNestingException(boolean propagateNestingException) {
+        this.propagateNestingException = propagateNestingException;
+    }
 }

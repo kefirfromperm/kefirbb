@@ -33,6 +33,8 @@ class ProcessorBuilder {
         processor.setSuffix(createTemplate(conf.getSuffix()));
         processor.setParams(conf.getParams());
         processor.setConstants(new HashSet<PatternConstant>(constants.values()));
+        processor.setNestingLimit(conf.getNestingLimit());
+        processor.setPropagateNestingException(conf.isPropagateNestingException());
         return processor;
     }
 
