@@ -1,9 +1,9 @@
 package org.kefirsf.bb.test.blackbox;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.TextProcessorNestingException;
 import org.kefirsf.bb.conf.*;
 import org.kefirsf.bb.test.Assert;
 
@@ -17,10 +17,12 @@ import java.util.Arrays;
 public class NestingTest {
     public static final int MAX_NESTING = 500;
     public static final int STACK_OVERFLOW_NESTING = 2000;
-    private TextProcessor processor;
 
-    @Before
-    public void createProcessor(){
+    public TextProcessor createProcessor(){
+        return BBProcessorFactory.getInstance().create(createConfiguration());
+    }
+
+    private Configuration createConfiguration() {
         Configuration conf = new Configuration();
         Scope scope = new Scope("ROOT");
         conf.setScopes(Arrays.asList(scope));
@@ -30,22 +32,29 @@ public class NestingTest {
         )));
         code.setTemplate(new Template(Arrays.asList(new NamedValue("val"))));
         scope.addCode(code);
-        processor = BBProcessorFactory.getInstance().create(conf);
+        return conf;
     }
 
     @Test
     public void testMaxNesting() {
-        Assert.assertProcess(processor, "test", prepare(MAX_NESTING));
+        Assert.assertProcess(createProcessor(), "test", prepare(MAX_NESTING));
     }
 
     @Test
     public void testNestingOverflow() {
-        Assert.assertProcess(processor, "", prepare(MAX_NESTING+1));
+        Assert.assertProcess(createProcessor(), "", prepare(MAX_NESTING+1));
     }
 
     @Test
     public void testStackOverflow() {
-        Assert.assertProcess(processor, "", prepare(STACK_OVERFLOW_NESTING));
+        Assert.assertProcess(createProcessor(), "", prepare(STACK_OVERFLOW_NESTING));
+    }
+
+    @Test(expected = TextProcessorNestingException.class)
+    public void testException(){
+        Configuration configuration = createConfiguration();
+        TextProcessor processor = BBProcessorFactory.getInstance().create(configuration);
+        processor.process(prepare(MAX_NESTING+1));
     }
 
     private StringBuilder prepare(int nesting) {

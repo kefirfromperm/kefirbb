@@ -5,7 +5,7 @@ package org.kefirsf.bb;
  *
  * @author Kefir
  */
-public class TextProcessorFactoryException extends RuntimeException {
+public class TextProcessorFactoryException extends TextProcessorException {
     public TextProcessorFactoryException() {
         super();
     }
