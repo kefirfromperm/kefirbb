@@ -18,7 +18,7 @@ import java.util.Properties;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class ConfigurationFactory {
+public class ConfigurationFactory {
     // Helper constants
     private static final String DEFAULT_CONFIGURATION = "ru/perm/kefir/bbcode/default";
     private static final String DEFAULT_USER_CONFIGURATION = "kefirbb";

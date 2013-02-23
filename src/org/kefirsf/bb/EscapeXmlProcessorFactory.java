@@ -11,7 +11,7 @@ package org.kefirsf.bb;
  *
  * @author Kefir
  */
-public final class EscapeXmlProcessorFactory implements TextProcessorFactory {
+public class EscapeXmlProcessorFactory implements TextProcessorFactory {
     /**
      * The default XML escape symbols
      */

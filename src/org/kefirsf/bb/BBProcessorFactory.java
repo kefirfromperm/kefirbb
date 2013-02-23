@@ -10,7 +10,7 @@ import java.io.InputStream;
  *
  * @author Kefir
  */
-public final class BBProcessorFactory implements TextProcessorFactory {
+public class BBProcessorFactory implements TextProcessorFactory {
     /**
      * Instance of this class. See the Singleton pattern
      */
