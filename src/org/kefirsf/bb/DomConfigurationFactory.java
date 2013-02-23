@@ -10,6 +10,8 @@ import org.w3c.dom.NodeList;
 import java.util.*;
 
 /**
+ * Create a text processor configuration from the DOM-document.
+ *
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class DomConfigurationFactory {
