@@ -5,7 +5,6 @@ import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
 import org.kefirsf.bb.TextProcessorNestingException;
 import org.kefirsf.bb.conf.*;
-import org.kefirsf.bb.proc.BBProcessor;
 import org.kefirsf.bb.test.Assert;
 
 import java.util.Arrays;
@@ -16,7 +15,7 @@ import java.util.Arrays;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class NestingTest {
-    private static final int MAX_NESTING = BBProcessor.DEFAULT_NESTING_LIMIT;
+    private static final int MAX_NESTING = Configuration.DEFAULT_NESTING_LIMIT;
     private static final int STACK_OVERFLOW_NESTING = 2000;
     private static final String DATA = "test";
 

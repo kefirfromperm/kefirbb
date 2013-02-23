@@ -14,8 +14,6 @@ import java.util.Set;
  * @author Kefir
  */
 public final class BBProcessor extends TextProcessorAdapter {
-    public static final int DEFAULT_NESTING_LIMIT = 500;
-
     /**
      * BB-codes
      */
@@ -25,7 +23,7 @@ public final class BBProcessor extends TextProcessorAdapter {
     private Map<String, Object> params = null;
     private Set<PatternConstant> constants;
 
-    private int nestingLimit = DEFAULT_NESTING_LIMIT;
+    private int nestingLimit = 0;
     private boolean propagateNestingException = false;
 
     /**

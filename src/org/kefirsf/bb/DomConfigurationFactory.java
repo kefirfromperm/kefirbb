@@ -51,6 +51,9 @@ public class DomConfigurationFactory {
     private static final String TAG_CONSTANT_ATTR_VALUE = "value";
     private static final String TAG_CONSTANT_ATTR_IGNORE_CASE = "ignoreCase";
     private static final String TAG_JUNK = "junk";
+    private static final String TAG_NESTING = "nesting";
+    private static final String TAG_NESTING_ATTR_LIMIT = "limit";
+    private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
 
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
 
@@ -121,17 +124,13 @@ public class DomConfigurationFactory {
      * @param dc            DOM-document
      */
     private void parseNesting(Configuration configuration, Document dc) {
-        NodeList list = dc.getElementsByTagName("nesting");
+        NodeList list = dc.getElementsByTagName(TAG_NESTING);
         if (list.getLength() > 0) {
             Node el = list.item(0);
-            String limit = nodeAttribute(el, "limit");
-            if (limit != null) {
-                configuration.setNestingLimit(Integer.decode(limit));
-            }
-            String exception = nodeAttribute(el, "exception");
-            if (exception != null) {
-                configuration.setPropagateNestingException(Boolean.valueOf(exception));
-            }
+            configuration.setNestingLimit(nodeAttribute(el, TAG_NESTING_ATTR_LIMIT, Configuration.DEFAULT_NESTING_LIMIT));
+            configuration.setPropagateNestingException(
+                    nodeAttribute(el, TAG_NESTING_ATTR_EXCEPTION, Configuration.DEFAULT_PROPAGATE_NESTING_EXCEPTION)
+            );
         }
     }
 
