@@ -20,7 +20,7 @@ public final class Scope {
     public static final boolean DEFAULT_IGNORE_TEXT = false;
 
     private final String name;
-    private String parent;
+    private Scope parent;
     private boolean ignoreText = DEFAULT_IGNORE_TEXT;
     private final Set<Code> codes = new HashSet<Code>();
 
@@ -34,7 +34,13 @@ public final class Scope {
         this.ignoreText = false;
     }
 
-    public Scope(String name, String parent, boolean ignoreText) {
+    public Scope(String name, boolean ignoreText) {
+        this.name = name;
+        this.parent = null;
+        this.ignoreText = ignoreText;
+    }
+
+    public Scope(String name, Scope parent, boolean ignoreText) {
         this.name = name;
         this.parent = parent;
         this.ignoreText = ignoreText;
@@ -44,7 +50,7 @@ public final class Scope {
         return name;
     }
 
-    public String getParent() {
+    public Scope getParent() {
         return parent;
     }
 
@@ -56,7 +62,7 @@ public final class Scope {
         return codes;
     }
 
-    public void setParent(String parent) {
+    public void setParent(Scope parent) {
         this.parent = parent;
     }
 

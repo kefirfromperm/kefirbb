@@ -51,7 +51,7 @@ class ProcessorBuilder {
             createdScopes.put(scope, created);
             created.setIgnoreText(scope.isIgnoreText());
             if (scope.getParent() != null) {
-                created.setParent(createScope(conf.getScope(scope.getParent())));
+                created.setParent(createScope(scope.getParent()));
             }
             Set<ProcCode> scopeCodes = new HashSet<ProcCode>();
             for (Code code : scope.getCodes()) {

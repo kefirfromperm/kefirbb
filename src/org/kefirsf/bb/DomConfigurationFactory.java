@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.text.MessageFormat;
 import java.util.*;
 
 /**
@@ -217,22 +218,47 @@ public class DomConfigurationFactory {
      * @throws TextProcessorFactoryException any problems
      */
     private Map<String, Scope> parseScopes(NodeList scopeNodeList) {
-        Map<String, Scope> scopes =
-                new HashMap<String, Scope>();
+        Map<String, Scope> scopes = new HashMap<String, Scope>();
+
+        // Parse scopes
         for (int i = 0; i < scopeNodeList.getLength(); i++) {
             Element scopeElement = (Element) scopeNodeList.item(i);
             String name = scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME);
             if (name.length() == 0) {
-                throw new TextProcessorFactoryException("Illegal scope name.");
+                throw new TextProcessorFactoryException("Illegal scope name. Scope name can't be empty.");
             }
             Scope scope =
                     new Scope(
                             name,
-                            nodeAttribute(scopeElement, TAG_SCOPE_ATTR_PARENT, null),
                             nodeAttribute(scopeElement, TAG_SCOPE_ATTR_IGNORE_TEXT, Scope.DEFAULT_IGNORE_TEXT)
                     );
             scopes.put(scope.getName(), scope);
         }
+
+        // Set parents
+        for (int i = 0; i < scopeNodeList.getLength(); i++) {
+            Element scopeElement = (Element) scopeNodeList.item(i);
+
+            String name = scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME);
+            Scope scope = scopes.get(name);
+            if(scope==null){
+                throw new TextProcessorFactoryException(
+                        MessageFormat.format("Can't find scope \"{0}\".", name)
+                );
+            }
+
+            String parentName = nodeAttribute(scopeElement, TAG_SCOPE_ATTR_PARENT);
+            if(parentName!=null){
+                Scope parent = scopes.get(parentName);
+                if(parent == null) {
+                    throw new TextProcessorFactoryException(
+                            MessageFormat.format("Can't find parent scope \"{0}\".", parentName)
+                    );
+                }
+                scope.setParent(parent);
+            }
+        }
+
         return scopes;
     }
 
