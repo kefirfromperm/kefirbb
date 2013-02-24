@@ -8,20 +8,50 @@ import java.util.Map;
 
 /**
  * Configuration of bbcode processor.
- * It's thread safe class.
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class Configuration {
+    /**
+     * Default nesting limit for processor. How many codes can be nested.
+     */
     public static final int DEFAULT_NESTING_LIMIT = 500;
+
+    /**
+     * By default the processor don't throw an exception if nesting limit exceeded.
+     * But the user can override this behavior.
+     */
     public static final boolean DEFAULT_PROPAGATE_NESTING_EXCEPTION = false;
 
+    /**
+     * Configuration root scope. Normally this scope has name ROOT.
+     */
     private Scope rootScope = null;
+
+    /**
+     * Prefix will be set before processed text.
+     */
     private Template prefix = new Template();
+
+    /**
+     * Suffix will be set before processed text.
+     */
     private Template suffix = new Template();
+
+    /**
+     * Predefined parameters.
+     */
     private Map<String, Object> params = new HashMap<String, Object>();
 
+    /**
+     * Nesting limit. How many codes can be nested.
+     */
     private int nestingLimit = DEFAULT_NESTING_LIMIT;
+
+    /**
+     * By default the processor don't throw an exception if nesting limit exceeded.
+     * But the user can override this behavior if change this property.
+     */
     private boolean propagateNestingException = DEFAULT_PROPAGATE_NESTING_EXCEPTION;
 
     /**
@@ -48,6 +78,11 @@ public class Configuration {
         this.rootScope = rootScope;
     }
 
+    /**
+     * Get prefix.
+     *
+     * @return template for prefix
+     */
     public Template getPrefix() {
         return prefix;
     }
@@ -64,6 +99,11 @@ public class Configuration {
         this.prefix = prefix;
     }
 
+    /**
+     * Get suffix.
+     *
+     * @return template for suffix
+     */
     public Template getSuffix() {
         return suffix;
     }
@@ -81,6 +121,11 @@ public class Configuration {
         this.suffix = suffix;
     }
 
+    /**
+     * Get predefined parameters. They can be used in var tags.
+     *
+     * @return map of parameters
+     */
     public Map<String, Object> getParams() {
         return params;
     }
@@ -90,22 +135,43 @@ public class Configuration {
      *
      * @param params the map with parameters. Key is a parameter name.
      */
-    public void setParams(Map<String, Object> params){
+    public void setParams(Map<String, Object> params) {
         this.params = Collections.unmodifiableMap(params);
     }
 
+    /**
+     * Get nesting limit. How many codes can be nested.
+     *
+     * @return nesting limit
+     */
     public int getNestingLimit() {
         return nestingLimit;
     }
 
+    /**
+     * Set nesting limit. How many codes can be nested.
+     *
+     * @param nestingLimit nesting limit
+     */
     public void setNestingLimit(int nestingLimit) {
         this.nestingLimit = nestingLimit;
     }
 
+    /**
+     * Get nesting exceeded behavior.
+     *
+     * @return true if the processor will throw an exception when nesting limit is exceeded.
+     *         false if the processor will not throw an exception and return blank text.
+     */
     public boolean isPropagateNestingException() {
         return propagateNestingException;
     }
 
+    /**
+     * Define nesting exceeded behavior.
+     *
+     * @param propagateNestingException throw or not exception
+     */
     public void setPropagateNestingException(boolean propagateNestingException) {
         this.propagateNestingException = propagateNestingException;
     }
