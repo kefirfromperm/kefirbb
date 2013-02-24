@@ -125,7 +125,7 @@ public class DomConfigurationFactory {
      * @param dc            DOM-document
      */
     private void parseNesting(Configuration configuration, Document dc) {
-        NodeList list = dc.getElementsByTagName(TAG_NESTING);
+        NodeList list = dc.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_NESTING);
         if (list.getLength() > 0) {
             Node el = list.item(0);
             configuration.setNestingLimit(nodeAttribute(el, TAG_NESTING_ATTR_LIMIT, Configuration.DEFAULT_NESTING_LIMIT));
@@ -137,10 +137,10 @@ public class DomConfigurationFactory {
 
     private Map<String, Object> parseParams(Document dc) {
         Map<String, Object> params = new HashMap<String, Object>();
-        NodeList paramsElements = dc.getElementsByTagName(TAG_PARAMS);
+        NodeList paramsElements = dc.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PARAMS);
         if (paramsElements.getLength() > 0) {
             Element paramsElement = (Element) paramsElements.item(0);
-            NodeList paramElements = paramsElement.getElementsByTagName(TAG_PARAM);
+            NodeList paramElements = paramsElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PARAM);
             for (int i = 0; i < paramElements.getLength(); i++) {
                 Node paramElement = paramElements.item(i);
                 String name = nodeAttribute(paramElement, TAG_PARAM_ATTR_NAME, "");
@@ -156,7 +156,7 @@ public class DomConfigurationFactory {
     @SuppressWarnings({"unchecked"})
     private Template parseFix(Document dc, String tagname) {
         Template fix;
-        NodeList prefixElementList = dc.getElementsByTagName(tagname);
+        NodeList prefixElementList = dc.getElementsByTagNameNS(SCHEMA_LOCATION, tagname);
         if (prefixElementList.getLength() > 0) {
             fix = parseTemplate(prefixElementList.item(0));
         } else {
@@ -179,12 +179,10 @@ public class DomConfigurationFactory {
             Map<String, Code> codes) {
         for (int i = 0; i < scopeNodeList.getLength(); i++) {
             Element scopeElement = (Element) scopeNodeList.item(i);
-            Scope scope =
-                    scopes.get(scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME));
+            Scope scope = scopes.get(scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME));
 
             // Add codes to scope
-            Set<Code> scopeCodes =
-                    new HashSet<Code>();
+            Set<Code> scopeCodes = new HashSet<Code>();
 
             // bind exists codes
             NodeList coderefs = scopeElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_CODEREF);

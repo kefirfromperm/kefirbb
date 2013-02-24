@@ -30,7 +30,7 @@ public class CreateTest {
     @Test
     public void namespace() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/test/blackbox/config-namespace.xml");
-        assertProcess(processor, "namespace", "test");
+        assertProcess(processor, "[namespace test]", "test");
     }
 
     @Test(expected = TextProcessorFactoryException.class)

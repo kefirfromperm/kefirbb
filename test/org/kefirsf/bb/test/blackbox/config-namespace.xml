@@ -2,9 +2,20 @@
 <bb:configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xmlns:bb="http://kefir-bb.sourceforge.net/schemas"
                   xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas
-                  http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+                  http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
+    <bb:nesting limit="10" exception="true"/>
+
+    <bb:params>
+        <bb:param name="param1" value="test"/>
+    </bb:params>
+
+    <bb:prefix>[</bb:prefix>
+    <bb:suffix>]</bb:suffix>
+
+    <bb:scope name="ROOT">
     <bb:code>
         <bb:pattern>test</bb:pattern>
-        <bb:template>namespace</bb:template>
+        <bb:template>namespace <bb:var name="param1"/></bb:template>
     </bb:code>
+    </bb:scope>
 </bb:configuration>
