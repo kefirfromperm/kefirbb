@@ -102,7 +102,7 @@ public class DomConfigurationFactory {
         }
 
         // Parse codes
-        Map<String, Code> codes = parseCodes(dc);
+        Map<String, Code> codes = parseCodes(dc, scopes);
 
         // include codes in scopes
         fillScopeCodes(scopeNodeList, scopes, codes);
@@ -177,7 +177,8 @@ public class DomConfigurationFactory {
     private void fillScopeCodes(
             NodeList scopeNodeList,
             Map<String, Scope> scopes,
-            Map<String, Code> codes) {
+            Map<String, Code> codes
+    ) {
         for (int i = 0; i < scopeNodeList.getLength(); i++) {
             Element scopeElement = (Element) scopeNodeList.item(i);
             Scope scope = scopes.get(scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME));
@@ -202,7 +203,7 @@ public class DomConfigurationFactory {
             for (int j = 0; j < inlineCodes.getLength(); j++) {
                 // Inline element code
                 Element ice = (Element) inlineCodes.item(j);
-                scopeCodes.add(parseCode(ice));
+                scopeCodes.add(parseCode(ice, scopes));
             }
 
             // Set codes to scope
@@ -269,11 +270,11 @@ public class DomConfigurationFactory {
      * @return codes
      * @throws TextProcessorFactoryException any problem
      */
-    private Map<String, Code> parseCodes(Document dc) {
+    private Map<String, Code> parseCodes(Document dc, Map<String, Scope> scopes) {
         Map<String, Code> codes = new HashMap<String, Code>();
         NodeList codeNodeList = dc.getDocumentElement().getElementsByTagNameNS(SCHEMA_LOCATION, TAG_CODE);
         for (int i = 0; i < codeNodeList.getLength(); i++) {
-            Code code = parseCode((Element) codeNodeList.item(i));
+            Code code = parseCode((Element) codeNodeList.item(i), scopes);
             codes.put(code.getName(), code);
         }
         return codes;
@@ -286,7 +287,7 @@ public class DomConfigurationFactory {
      * @return bb-code
      * @throws TextProcessorFactoryException if error format
      */
-    private Code parseCode(Element codeElement) {
+    private Code parseCode(Element codeElement, Map<String, Scope> scopes) {
         // Code name
         Code code = new Code(nodeAttribute(codeElement, TAG_CODE_ATTR_NAME, Utils.generateRandomName()));
 
@@ -301,11 +302,10 @@ public class DomConfigurationFactory {
             throw new TextProcessorFactoryException("Illegal configuration. Can't find template of code.");
         }
 
-
         // Pattern to parsing
         NodeList patternElements = codeElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PATTERN);
         if (patternElements.getLength() > 0) {
-            code.setPattern(parsePattern(patternElements.item(0)));
+            code.setPattern(parsePattern(patternElements.item(0), scopes));
         } else {
             throw new TextProcessorFactoryException("Illegal configuration. Can't find pattern of code.");
         }
@@ -321,7 +321,7 @@ public class DomConfigurationFactory {
      * @return list of pattern elements
      * @throws TextProcessorFactoryException If invalid pattern format
      */
-    private Pattern parsePattern(Node node) {
+    private Pattern parsePattern(Node node, Map<String, Scope> scopes) {
         List<PatternElement> elements = new LinkedList<PatternElement>();
         NodeList patternList = node.getChildNodes();
         int patternLength = patternList.getLength();
@@ -347,7 +347,7 @@ public class DomConfigurationFactory {
                             && el.getLocalName().equals(TAG_VAR)
                             && (k != 0 || nodeHasAttribute(el, TAG_VAR_ATTR_REGEX))
                     ) {
-                elements.add(parseNamedElement(el));
+                elements.add(parseNamedElement(el, scopes));
             } else if (
                     el.getNodeType() == Node.ELEMENT_NODE
                             && el.getLocalName().equals(TAG_JUNK)
@@ -375,51 +375,59 @@ public class DomConfigurationFactory {
         );
     }
 
-    private PatternElement parseNamedElement(Node el) {
-        String name = nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME);
+    private PatternElement parseNamedElement(Node el, Map<String, Scope> scopes) {
         PatternElement namedElement;
         if (
                 nodeAttribute(el, TAG_VAR_ATTR_PARSE, DEFAULT_PARSE_VALUE)
                         && !nodeHasAttribute(el, TAG_VAR_ATTR_REGEX)
                 ) {
-            namedElement = parseText(el, name);
+            namedElement = parseText(el, scopes);
         } else {
-            namedElement = parseVariable(el, name);
+            namedElement = parseVariable(el);
         }
         return namedElement;
     }
 
     private Text parseText(
             Node el,
-            String name
+            Map<String, Scope> scopes
     ) {
         Text text;
         if (nodeAttribute(el, TAG_VAR_ATTR_INHERIT, DEFAULT_INHERIT_VALUE)) {
             text = new Text(
-                    name, null,
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                    null,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
         } else {
+            String scopeName = nodeAttribute(el, TAG_SCOPE, Scope.ROOT);
+            Scope scope = scopes.get(scopeName);
+            if(scope==null){
+                throw new TextProcessorFactoryException(
+                        MessageFormat.format("Scope \"{0}\" not found.", scopeName)
+                );
+            }
+
             text = new Text(
-                    name,
-                    nodeAttribute(el, TAG_SCOPE, Scope.ROOT),
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                    scope,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
         }
         return text;
     }
 
-    private Variable parseVariable(Node el, String name) {
+    private Variable parseVariable(Node el) {
         Variable variable;
         if (nodeHasAttribute(el, TAG_VAR_ATTR_REGEX)) {
             variable = new Variable(
-                    name,
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
                     java.util.regex.Pattern.compile(
                             nodeAttribute(el, TAG_VAR_ATTR_REGEX)
                     )
             );
         } else {
-            variable = new Variable(name);
+            variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME));
         }
         return variable;
     }

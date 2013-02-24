@@ -157,11 +157,11 @@ class ProcessorBuilder {
      * @return pattern element for text
      */
     private ProcPatternElement create(Text text) {
-        String scopeName = text.getScope();
-        if (scopeName != null) {
+        Scope scope = text.getScope();
+        if (scope != null) {
             return new ProcText(
                     text.getName(),
-                    createScope(conf.getScope(scopeName)),
+                    createScope(scope),
                     text.isTransparent()
             );
         } else {

@@ -6,7 +6,10 @@ package org.kefirsf.bb.conf;
  * @author Vitaliy Samolovskih aka Kefir
  */
 abstract class NamedElement {
-    private final String name;
+    private String name;
+
+    protected NamedElement() {
+    }
 
     public NamedElement(String name) {
         this.name = name;
@@ -14,5 +17,9 @@ abstract class NamedElement {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

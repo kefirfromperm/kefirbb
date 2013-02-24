@@ -3,21 +3,33 @@ package org.kefirsf.bb.conf;
 /**
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Text extends NamedElement implements PatternElement {
-    private final String scope;
-    private final boolean transparent;
+public class Text extends NamedElement implements PatternElement {
+    private Scope scope;
+    private boolean transparent;
 
-    public Text(String name, String scope, boolean transparent) {
+    public Text() {
+        super();
+    }
+
+    public Text(String name, Scope scope, boolean transparent) {
         super(name);
         this.scope = scope;
         this.transparent = transparent;
     }
 
-    public String getScope() {
+    public Scope getScope() {
         return scope;
+    }
+
+    public void setScope(Scope scope) {
+        this.scope = scope;
     }
 
     public boolean isTransparent() {
         return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
     }
 }

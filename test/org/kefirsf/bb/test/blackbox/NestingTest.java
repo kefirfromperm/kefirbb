@@ -29,7 +29,7 @@ public class NestingTest {
         conf.setScopes(Arrays.asList(scope));
         Code code = new Code();
         code.setPattern(new Pattern(Arrays.asList(
-                new Constant("["), new Text("val", "ROOT", false), new Constant("]")
+                new Constant("["), new Text("val", scope, false), new Constant("]")
         )));
         code.setTemplate(new Template(Arrays.asList(new NamedValue("val"))));
         scope.addCode(code);
