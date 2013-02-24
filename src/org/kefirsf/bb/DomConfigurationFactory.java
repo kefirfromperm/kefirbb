@@ -113,7 +113,7 @@ public class DomConfigurationFactory {
         }
 
         // set root scope
-        configuration.setScopes(scopes.values());
+        configuration.setRootScope(root);
 
         // return configuration
         return configuration;

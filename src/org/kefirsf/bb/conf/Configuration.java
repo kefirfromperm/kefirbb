@@ -12,11 +12,11 @@ import java.util.Map;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Configuration {
+public class Configuration {
     public static final int DEFAULT_NESTING_LIMIT = 500;
     public static final boolean DEFAULT_PROPAGATE_NESTING_EXCEPTION = false;
 
-    private Map<String, Scope> scopes = null;
+    private Scope rootScope = null;
     private Template prefix = new Template();
     private Template suffix = new Template();
     private Map<String, Object> params = new HashMap<String, Object>();
@@ -31,34 +31,21 @@ public final class Configuration {
     }
 
     /**
-     * Set root scope for text processor.
-     *
-     * @param scopes scopes
-     */
-    public void setScopes(Iterable<Scope> scopes) {
-        this.scopes = new HashMap<String, Scope>();
-        for (Scope scope : scopes) {
-            this.scopes.put(scope.getName(), scope);
-        }
-    }
-
-    /**
-     * Get scope by name.
-     *
-     * @param name the scope name
-     * @return the scope
-     */
-    public Scope getScope(String name) {
-        return scopes.get(name);
-    }
-
-    /**
      * Get root scope
      *
      * @return root scope
      */
     public Scope getRootScope() {
-        return getScope(Scope.ROOT);
+        return rootScope;
+    }
+
+    /**
+     * Set root scope for configuration.
+     *
+     * @param rootScope scope
+     */
+    public void setRootScope(Scope rootScope) {
+        this.rootScope = rootScope;
     }
 
     public Template getPrefix() {
@@ -95,7 +82,7 @@ public final class Configuration {
     }
 
     public Map<String, Object> getParams() {
-        return Collections.unmodifiableMap(params);
+        return params;
     }
 
     /**

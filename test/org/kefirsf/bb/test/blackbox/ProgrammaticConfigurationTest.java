@@ -33,7 +33,7 @@ public class ProgrammaticConfigurationTest {
         scope.setCodes(codes);
 
         // Set scope to configuration
-        cfg.setScopes(Arrays.asList(scope));
+        cfg.setRootScope(scope);
 
         // Set the parameter
         Map<String, Object> params = new HashMap<String, Object>();

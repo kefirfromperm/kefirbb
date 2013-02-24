@@ -26,7 +26,7 @@ public class NestingTest {
     private Configuration createConfiguration() {
         Configuration conf = new Configuration();
         Scope scope = new Scope("ROOT");
-        conf.setScopes(Arrays.asList(scope));
+        conf.setRootScope(scope);
         Code code = new Code();
         code.setPattern(new Pattern(Arrays.asList(
                 new Constant("["), new Text("val", scope, false), new Constant("]")
