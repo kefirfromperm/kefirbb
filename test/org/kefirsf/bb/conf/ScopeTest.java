@@ -2,6 +2,8 @@ package org.kefirsf.bb.conf;
 
 import junit.framework.Assert;
 import org.junit.Test;
+import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.TextProcessorFactoryException;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -102,5 +104,18 @@ public class ScopeTest {
 
         Assert.assertEquals(2, scope.getCodes().size());
         Assert.assertTrue(scope.getCodes().contains(code));
+    }
+
+    @Test(expected = TextProcessorFactoryException.class)
+    public void testCycle(){
+        Scope root = new Scope(Scope.ROOT);
+        Scope loop = new Scope();
+        root.setParent(loop);
+        loop.setParent(root);
+
+        Configuration conf = new Configuration();
+        conf.setRootScope(root);
+
+        BBProcessorFactory.getInstance().create(conf);
     }
 }
