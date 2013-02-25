@@ -8,10 +8,10 @@ import org.kefirsf.bb.util.Utils;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Code {
+public class Code {
     public static final int DEFAULT_PRIORITY = 0;
 
-    private final String name;
+    private String name;
     private int priority = DEFAULT_PRIORITY;
     private Pattern pattern;
     private Template template;
@@ -67,6 +67,16 @@ public final class Code {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * Set code name.
+     *
+     * @param name code name
+     */
+    public void setName(String name) {
+        assertNameNotNull(name);
+        this.name = name;
     }
 
     /**

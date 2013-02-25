@@ -194,10 +194,12 @@
             <test name="org.kefirsf.bb.test.blackbox.ProgrammaticConfigurationTest"/>
             <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
             <test name="org.kefirsf.bb.test.blackbox.SafeHtmlConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.NestingTest"/>
 
             <!-- Module tests -->
             <test name="org.kefirsf.bb.conf.ConfigurationTest"/>
             <test name="org.kefirsf.bb.conf.ScopeTest"/>
+            <test name="org.kefirsf.bb.conf.CodeTest"/>
             <test name="org.kefirsf.bb.proc.SourceTest"/>
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
@@ -232,8 +234,13 @@
             <test name="org.kefirsf.bb.test.blackbox.RollbackTest"/>
             <test name="org.kefirsf.bb.test.blackbox.ProgrammaticConfigurationTest"/>
             <test name="org.kefirsf.bb.test.blackbox.DynamicConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.SafeHtmlConfigurationTest"/>
+            <test name="org.kefirsf.bb.test.blackbox.NestingTest"/>
 
             <!-- Module tests -->
+            <test name="org.kefirsf.bb.conf.ConfigurationTest"/>
+            <test name="org.kefirsf.bb.conf.ScopeTest"/>
+            <test name="org.kefirsf.bb.conf.CodeTest"/>
             <test name="org.kefirsf.bb.proc.SourceTest"/>
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
