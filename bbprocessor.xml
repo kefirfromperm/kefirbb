@@ -200,6 +200,12 @@
             <test name="org.kefirsf.bb.conf.ConfigurationTest"/>
             <test name="org.kefirsf.bb.conf.ScopeTest"/>
             <test name="org.kefirsf.bb.conf.CodeTest"/>
+            <test name="org.kefirsf.bb.conf.ConstantTest"/>
+            <test name="org.kefirsf.bb.conf.NamedValueTest"/>
+            <test name="org.kefirsf.bb.conf.PatternTest"/>
+            <test name="org.kefirsf.bb.conf.TemplateTest"/>
+            <test name="org.kefirsf.bb.conf.TextTest"/>
+            <test name="org.kefirsf.bb.conf.VariableTest"/>
             <test name="org.kefirsf.bb.proc.SourceTest"/>
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
@@ -241,6 +247,12 @@
             <test name="org.kefirsf.bb.conf.ConfigurationTest"/>
             <test name="org.kefirsf.bb.conf.ScopeTest"/>
             <test name="org.kefirsf.bb.conf.CodeTest"/>
+            <test name="org.kefirsf.bb.conf.ConstantTest"/>
+            <test name="org.kefirsf.bb.conf.NamedValueTest"/>
+            <test name="org.kefirsf.bb.conf.PatternTest"/>
+            <test name="org.kefirsf.bb.conf.TemplateTest"/>
+            <test name="org.kefirsf.bb.conf.TextTest"/>
+            <test name="org.kefirsf.bb.conf.VariableTest"/>
             <test name="org.kefirsf.bb.proc.SourceTest"/>
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
