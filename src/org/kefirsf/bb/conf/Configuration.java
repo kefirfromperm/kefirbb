@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.util.ExceptionUtils;
+import org.kefirsf.bb.util.Exceptions;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -93,9 +93,7 @@ public class Configuration {
      * @param prefix template for prefix
      */
     public void setPrefix(Template prefix) {
-        if (prefix == null) {
-            throw ExceptionUtils.nullArgument("prefix");
-        }
+        Exceptions.nullArgument("prefix", prefix);
         this.prefix = prefix;
     }
 
@@ -114,9 +112,7 @@ public class Configuration {
      * @param suffix template for suffix
      */
     public void setSuffix(Template suffix) {
-        if (suffix == null) {
-            throw ExceptionUtils.nullArgument("suffix");
-        }
+        Exceptions.nullArgument("suffix", suffix);
 
         this.suffix = suffix;
     }

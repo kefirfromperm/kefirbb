@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.util.ExceptionUtils;
+import org.kefirsf.bb.util.Exceptions;
 import org.kefirsf.bb.util.Utils;
 
 /**
@@ -29,7 +29,7 @@ public class Code {
      * @param name code name
      */
     public Code(String name) {
-        assertNameNotNull(name);
+        Exceptions.nullArgument("name", name);
         this.name = name;
     }
 
@@ -42,22 +42,11 @@ public class Code {
      * @param priority code priority
      */
     public Code(Pattern pattern, Template template, String name, int priority) {
-        assertNameNotNull(name);
+        Exceptions.nullArgument("name", name);
         this.name = name;
         this.priority = priority;
         this.pattern = pattern;
         this.template = template;
-    }
-
-    /**
-     * Check name parameter in constructor
-     *
-     * @param name name of code
-     */
-    private void assertNameNotNull(String name) {
-        if (name == null) {
-            throw ExceptionUtils.nullArgument("name");
-        }
     }
 
     /**
@@ -75,7 +64,7 @@ public class Code {
      * @param name code name
      */
     public void setName(String name) {
-        assertNameNotNull(name);
+        Exceptions.nullArgument("name", name);
         this.name = name;
     }
 

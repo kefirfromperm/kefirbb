@@ -1,6 +1,7 @@
 package org.kefirsf.bb;
 
 import org.kefirsf.bb.conf.Configuration;
+import org.kefirsf.bb.util.Exceptions;
 import org.kefirsf.bb.util.Utils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -137,9 +138,7 @@ public class ConfigurationFactory {
      * @throws TextProcessorFactoryException when can't find or read the resource or illegal config file
      */
     public Configuration createFromResource(String resourceName) {
-        if (resourceName == null) {
-            throw new IllegalArgumentException("The resource name is not setted.");
-        }
+        Exceptions.nullArgument("resourceName", resourceName);
 
         Configuration configuration;
         try {

@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import org.kefirsf.bb.util.ExceptionUtils;
+import org.kefirsf.bb.util.Exceptions;
 import org.kefirsf.bb.util.Utils;
 
 import java.util.Collections;
@@ -157,9 +157,7 @@ public class Scope {
      * @param codes set of codes
      */
     public void setCodes(Set<Code> codes) {
-        if (codes == null) {
-            throw ExceptionUtils.nullArgument("codes");
-        }
+        Exceptions.nullArgument("codes", codes);
 
         this.codes.clear();
         this.codes.addAll(codes);
