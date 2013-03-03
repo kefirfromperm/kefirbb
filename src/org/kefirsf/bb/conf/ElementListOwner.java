@@ -4,15 +4,23 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Base abstract class for pattern and template configuration classes.
+ *
  * @author kefir
  */
-class ElementListOwner<T> {
-    protected List<? extends T> elements;
+abstract class ElementListOwner<T> {
+    private List<? extends T> elements;
 
+    /**
+     * The default constructor.
+     */
     public ElementListOwner() {
         elements = Collections.<T>emptyList();
     }
 
+    /**
+     * @param elements pattern or template elements.
+     */
     public ElementListOwner(List<? extends T> elements) {
         this.elements = Collections.unmodifiableList(elements);
     }

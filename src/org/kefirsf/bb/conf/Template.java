@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Template extends ElementListOwner<TemplateElement> {
+public class Template extends ElementListOwner<TemplateElement> {
     /**
      * Create template with empty content
      */

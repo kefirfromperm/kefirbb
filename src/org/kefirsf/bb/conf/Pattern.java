@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public final class Pattern extends ElementListOwner<PatternElement> {
+public class Pattern extends ElementListOwner<PatternElement> {
     /**
      * Create pattern definition with empty pattern elements list.
      */
