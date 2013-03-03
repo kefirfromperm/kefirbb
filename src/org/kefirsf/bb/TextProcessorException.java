@@ -2,6 +2,7 @@ package org.kefirsf.bb;
 
 /**
  * Base class for text processor exceptions.
+ *
  * @author Vitalii Samolovskikh aka Kefir
  */
 public abstract class TextProcessorException extends RuntimeException {
