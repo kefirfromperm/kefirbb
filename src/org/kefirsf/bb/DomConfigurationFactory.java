@@ -20,8 +20,9 @@ public class DomConfigurationFactory {
      * Schema location
      */
     private static final String SCHEMA_LOCATION = "http://kefir-bb.sourceforge.net/schemas";
+
     /**
-     * Constants wich uses when parse XML-configuration
+     * Constants which uses when parse XML-configuration
      */
     private static final String TAG_CODE = "code";
     private static final String TAG_CODE_ATTR_NAME = "name";
@@ -57,11 +58,20 @@ public class DomConfigurationFactory {
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
 
+    /**
+     * Instance of the class.
+     */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
 
+    /**
+     * Private constructor for prevent class initialization.
+     */
     private DomConfigurationFactory() {
     }
 
+    /**
+     * @return factory instance
+     */
     public static DomConfigurationFactory getInstance() {
         return instance;
     }
@@ -136,6 +146,12 @@ public class DomConfigurationFactory {
         }
     }
 
+    /**
+     * Parse configuration predefined parameters.
+     *
+     * @param dc DOM-document
+     * @return parameters
+     */
     private Map<String, Object> parseParams(Document dc) {
         Map<String, Object> params = new HashMap<String, Object>();
         NodeList paramsElements = dc.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PARAMS);
@@ -154,7 +170,13 @@ public class DomConfigurationFactory {
         return params;
     }
 
-    @SuppressWarnings({"unchecked"})
+    /**
+     * Parse prefix or suffix.
+     *
+     * @param dc      DOM-document.
+     * @param tagname tag name.
+     * @return template.
+     */
     private Template parseFix(Document dc, String tagname) {
         Template fix;
         NodeList prefixElementList = dc.getElementsByTagNameNS(SCHEMA_LOCATION, tagname);
@@ -242,16 +264,16 @@ public class DomConfigurationFactory {
 
             String name = scopeElement.getAttribute(TAG_SCOPE_ATTR_NAME);
             Scope scope = scopes.get(name);
-            if(scope==null){
+            if (scope == null) {
                 throw new TextProcessorFactoryException(
                         MessageFormat.format("Can't find scope \"{0}\".", name)
                 );
             }
 
             String parentName = nodeAttribute(scopeElement, TAG_SCOPE_ATTR_PARENT);
-            if(parentName!=null){
+            if (parentName != null) {
                 Scope parent = scopes.get(parentName);
-                if(parent == null) {
+                if (parent == null) {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Can't find parent scope \"{0}\".", parentName)
                     );
@@ -375,6 +397,13 @@ public class DomConfigurationFactory {
         );
     }
 
+    /**
+     * Parse a pattern named element. Text or Variable.
+     *
+     * @param el     a DOM-element
+     * @param scopes map of scopes by name
+     * @return Text or Variable
+     */
     private PatternElement parseNamedElement(Node el, Map<String, Scope> scopes) {
         PatternElement namedElement;
         if (
@@ -388,10 +417,14 @@ public class DomConfigurationFactory {
         return namedElement;
     }
 
-    private Text parseText(
-            Node el,
-            Map<String, Scope> scopes
-    ) {
+    /**
+     * Parse text. Text is a part of pattern.
+     *
+     * @param el     a DOM-element
+     * @param scopes map of scopes by name
+     * @return text
+     */
+    private Text parseText(Node el, Map<String, Scope> scopes) {
         Text text;
         if (nodeAttribute(el, TAG_VAR_ATTR_INHERIT, DEFAULT_INHERIT_VALUE)) {
             text = new Text(
@@ -402,7 +435,7 @@ public class DomConfigurationFactory {
         } else {
             String scopeName = nodeAttribute(el, TAG_SCOPE, Scope.ROOT);
             Scope scope = scopes.get(scopeName);
-            if(scope==null){
+            if (scope == null) {
                 throw new TextProcessorFactoryException(
                         MessageFormat.format("Scope \"{0}\" not found.", scopeName)
                 );
@@ -417,6 +450,12 @@ public class DomConfigurationFactory {
         return text;
     }
 
+    /**
+     * Parse variable. The part of pattern.
+     *
+     * @param el DOM-element
+     * @return variable
+     */
     private Variable parseVariable(Node el) {
         Variable variable;
         if (nodeHasAttribute(el, TAG_VAR_ATTR_REGEX)) {
@@ -433,7 +472,7 @@ public class DomConfigurationFactory {
     }
 
     /**
-     * Parse template fo generate text.
+     * Parse template for generate text.
      *
      * @param node template node
      * @return list of template elements
