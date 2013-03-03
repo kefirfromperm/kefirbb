@@ -76,7 +76,7 @@ public class ConfigurationFactory {
                 if (stream != null) {
                     configuration = create(stream);
                 } else {
-                    throw new TextProcessorFactoryException("Can't find or open resource.");
+                    throw new TextProcessorFactoryException("Can't find or open default configuration resource.");
                 }
             } finally {
                 if (stream != null) {
