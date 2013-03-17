@@ -1,6 +1,6 @@
 package org.kefirsf.bb.conf;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessorFactoryException;

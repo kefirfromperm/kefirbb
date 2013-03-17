@@ -210,7 +210,7 @@
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
             <test name="org.kefirsf.bb.TextProcessorChainTest"/>
-            <test name="org.kefirsf.bb.ExceptionsTest"/>
+            <test name="org.kefirsf.bb.util.ExceptionsTest"/>
         </junit>
     </target>
 
@@ -258,7 +258,7 @@
             <test name="org.kefirsf.bb.proc.ContextTest"/>
             <test name="org.kefirsf.bb.util.IntSetTest"/>
             <test name="org.kefirsf.bb.TextProcessorChainTest"/>
-            <test name="org.kefirsf.bb.ExceptionsTest"/>
+            <test name="org.kefirsf.bb.util.ExceptionsTest"/>
         </junit>
     </target>
 

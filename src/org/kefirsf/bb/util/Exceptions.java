@@ -33,7 +33,7 @@ public final class Exceptions {
     }
 
     public static void blankArgument(String name, CharSequence value) throws IllegalArgumentException {
-        if (value == null || value.toString().trim().isEmpty()) {
+        if (value == null || value.toString().trim().length() == 0) {
             throw new IllegalArgumentException(MessageFormat.format(BLANK_ARGUMENT, name));
         }
     }
