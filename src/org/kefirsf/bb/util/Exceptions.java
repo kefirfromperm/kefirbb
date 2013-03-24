@@ -37,4 +37,10 @@ public final class Exceptions {
             throw new IllegalArgumentException(MessageFormat.format(BLANK_ARGUMENT, name));
         }
     }
+
+    public static void negativeArgument(final String name, int offset) {
+        if(offset<0){
+            throw new IllegalArgumentException("Argument " + name + " can't be negative.");
+        }
+    }
 }

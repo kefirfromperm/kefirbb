@@ -1,5 +1,7 @@
 package org.kefirsf.bb.proc;
 
+import org.kefirsf.bb.util.ArrayCharSequence;
+
 import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
@@ -35,8 +37,18 @@ public class Source {
      * @param text исходный текст
      */
     public Source(CharSequence text) {
-        this.text = text.toString().toCharArray();
         textLength = text.length();
+        this.text = new char[textLength];
+
+        if(text instanceof String){
+            ((String) text).getChars(0, textLength, this.text, 0);
+        } else if(text instanceof StringBuilder){
+            ((StringBuilder) text).getChars(0, textLength, this.text, 0);
+        } else if(text instanceof StringBuffer){
+            ((StringBuffer) text).getChars(0, textLength, this.text, 0);
+        } else {
+            text.toString().getChars(0, textLength, this.text, 0);
+        }
     }
 
     public void setConstantSet(Set<PatternConstant> constantSet) {
@@ -199,7 +211,7 @@ public class Source {
      * @return подстрока
      */
     public CharSequence sub(int end) {
-        return String.valueOf(text, offset, end - offset);
+        return new ArrayCharSequence(text, offset, end - offset);
     }
 
     /**
@@ -212,6 +224,6 @@ public class Source {
     }
 
     public String toString() {
-        return "org.kefirsf.bb.Source,length:" + String.valueOf(textLength);
+        return "org.kefirsf.bb.proc.Source{length:" + String.valueOf(textLength)+"}";
     }
 }

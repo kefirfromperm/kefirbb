@@ -126,7 +126,7 @@ public class SourceTest {
         Source source = new Source(STR_FOR_SUB);
         source.setConstantSet(new HashSet<PatternConstant>());
         source.incOffset(LEFT.length());
-        assertEquals(source.sub(LEFT.length() + CENTER.length()), CENTER);
+        assertEquals(CENTER, source.sub(LEFT.length() + CENTER.length()).toString());
     }
 
     @Test
@@ -134,6 +134,6 @@ public class SourceTest {
         Source source = new Source(STR_FOR_SUB);
         source.setConstantSet(new HashSet<PatternConstant>());
         source.incOffset(LEFT.length());
-        assertEquals(source.subToEnd(), CENTER + RIGHT);
+        assertEquals(CENTER + RIGHT, source.subToEnd().toString());
     }
 }
