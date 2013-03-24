@@ -211,6 +211,7 @@
             <test name="org.kefirsf.bb.util.IntSetTest"/>
             <test name="org.kefirsf.bb.TextProcessorChainTest"/>
             <test name="org.kefirsf.bb.util.ExceptionsTest"/>
+            <test name="org.kefirsf.bb.util.ArrayCharSequenceTest"/>
         </junit>
     </target>
 
@@ -259,6 +260,7 @@
             <test name="org.kefirsf.bb.util.IntSetTest"/>
             <test name="org.kefirsf.bb.TextProcessorChainTest"/>
             <test name="org.kefirsf.bb.util.ExceptionsTest"/>
+            <test name="org.kefirsf.bb.util.ArrayCharSequenceTest"/>
         </junit>
     </target>
 
