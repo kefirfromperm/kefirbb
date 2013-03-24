@@ -13,49 +13,70 @@ import java.util.TreeSet;
  */
 public class Source {
     /**
-     * Текст для парсинга
+     * Source text content
      */
     private final char[] text;
+
+    /**
+     * Source text length
+     */
     private final int textLength;
 
     /**
-     * Смещение
+     * Current offset
      */
     private int offset = 0;
-    //private boolean onConstant;
 
+    /**
+     * Set of constants. All constants in configuration.
+     */
     private Set<PatternConstant> constantSet;
+
+    /**
+     * First chars of constants of configuration. It's needed for fast check constants on current position.
+     */
     private char[] constantChars;
 
+    /**
+     * Check if the current sub sequence can be constant.
+     */
     public boolean nextMayBeConstant() {
         return Arrays.binarySearch(constantChars, text[offset]) >= 0;
     }
 
     /**
-     * Создает класс источник
+     * Create source class.
      *
-     * @param text исходный текст
+     * @param text source text.
      */
     public Source(CharSequence text) {
         textLength = text.length();
         this.text = new char[textLength];
 
-        if(text instanceof String){
+        if (text instanceof String) {
             ((String) text).getChars(0, textLength, this.text, 0);
-        } else if(text instanceof StringBuilder){
+        } else if (text instanceof StringBuilder) {
             ((StringBuilder) text).getChars(0, textLength, this.text, 0);
-        } else if(text instanceof StringBuffer){
+        } else if (text instanceof StringBuffer) {
             ((StringBuffer) text).getChars(0, textLength, this.text, 0);
         } else {
             text.toString().getChars(0, textLength, this.text, 0);
         }
     }
 
+    /**
+     * Set constant set from configuration. For fast search.
+     */
     public void setConstantSet(Set<PatternConstant> constantSet) {
         this.constantSet = constantSet;
         this.constantChars = getConstantChars();
     }
 
+    /**
+     * Collect first chars of constants of configuration.
+     *
+     * @return array of first chars of constants.
+     */
     private char[] getConstantChars() {
         Set<Character> chars = new TreeSet<Character>();
         for (PatternConstant constant : constantSet) {
@@ -78,6 +99,12 @@ public class Source {
         return cs;
     }
 
+    /**
+     * Test id next sequence the constant?
+     *
+     * @param constant constant pattern element
+     * @return true if next sub sequence is constant.
+     */
     public boolean nextIs(PatternConstant constant) {
         char[] cs = constant.getCharArray();
         int length = cs.length;
@@ -109,6 +136,12 @@ public class Source {
         }
     }
 
+    /**
+     * Find constant in source text.
+     *
+     * @param constant constant pattern element
+     * @return index of constant of negative if don't find.
+     */
     public int find(PatternConstant constant) {
         int index = -1;
 
@@ -132,7 +165,7 @@ public class Source {
                                 )
                 );
             }
-            if(flag){
+            if (flag) {
                 return i;
             }
         }
@@ -141,9 +174,9 @@ public class Source {
     }
 
     /**
-     * Возвращает следующий симвойл и увеличивает смещение
+     * Return next character and increment offset.
      *
-     * @return символ
+     * @return character.
      */
     public char next() {
         char c = text[offset];
@@ -152,41 +185,41 @@ public class Source {
     }
 
     /**
-     * Возвращает текущее смещение
+     * Return current offset.
      *
-     * @return смещение от начала
+     * @return offset from begin.
      */
     public int getOffset() {
         return offset;
     }
 
     /**
-     * Increament offset
+     * Increment offset.
      */
     public void incOffset() {
         offset++;
     }
 
     /**
-     * Увеличивает смещение
+     * Increment offset.
      *
-     * @param increment на сколько нужно увеличить смещение
+     * @param increment increment size.
      */
     public void incOffset(int increment) {
         offset += increment;
     }
 
     /**
-     * Устанавливает смещение
+     * Set offset.
      *
-     * @param offset смещение
+     * @param offset new offset value.
      */
     public void setOffset(int offset) {
         this.offset = offset;
     }
 
     /**
-     * Есть ли еще что-то в строке
+     * Есть ли еще что-то в строке?
      *
      * @return true - если есть
      *         false если достигнут конец строки
@@ -196,7 +229,7 @@ public class Source {
     }
 
     /**
-     * Return length of sorce text
+     * Return length of source text
      *
      * @return length of source text
      */
@@ -215,15 +248,15 @@ public class Source {
     }
 
     /**
-     * Get String from offset to end
+     * Get String from offset to end.
      *
-     * @return string
+     * @return char sequence
      */
     public CharSequence subToEnd() {
         return sub(textLength);
     }
 
     public String toString() {
-        return "org.kefirsf.bb.proc.Source{length:" + String.valueOf(textLength)+"}";
+        return "org.kefirsf.bb.proc.Source{length:" + String.valueOf(textLength) + "}";
     }
 }
