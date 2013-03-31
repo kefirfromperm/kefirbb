@@ -48,7 +48,7 @@ public class ProcCode implements Comparable<ProcCode> {
      * @param context the bb-processing context
      * @return true - if parse source
      *         false - if can't parse code
-     * @throws java.io.IOException if can't append to target
+     * @throws IOException if can't append to target
      * @throws NestingException if nesting is too big.
      */
     public boolean process(Context context) throws IOException, NestingException {
@@ -92,5 +92,22 @@ public class ProcCode implements Comparable<ProcCode> {
 
     public boolean startsWithConstant(){
         return pattern.startsWithConstant();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProcCode procCode = (ProcCode) o;
+
+        if (name != null ? !name.equals(procCode.name) : procCode.name != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return name != null ? name.hashCode() : 0;
     }
 }

@@ -13,6 +13,7 @@ public final class Exceptions {
     private static final String NULL_ARGUMENT = "Argument {0} can't be null.";
     private static final String EMPTY_ARGUMENT = "Argument {0} can't be empty.";
     private static final String BLANK_ARGUMENT = "Argument {0} can't be blank.";
+    private static final String NEGATIVE_ARGUMENT = "Argument {0} can''t be negative.";
 
     /**
      * Prevent to create an instance.
@@ -38,9 +39,9 @@ public final class Exceptions {
         }
     }
 
-    public static void negativeArgument(final String name, int offset) {
+    public static void negativeArgument(String name, int offset) {
         if(offset<0){
-            throw new IllegalArgumentException("Argument " + name + " can't be negative.");
+            throw new IllegalArgumentException(MessageFormat.format(NEGATIVE_ARGUMENT, name));
         }
     }
 }

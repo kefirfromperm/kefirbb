@@ -83,6 +83,7 @@ public class Constant implements TemplateElement, PatternElement {
         Constant constant = (Constant) o;
 
         if (ignoreCase != constant.ignoreCase) return false;
+        //noinspection RedundantIfStatement
         if (!value.equals(constant.value)) return false;
 
         return true;

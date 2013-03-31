@@ -15,7 +15,7 @@ class ProcessorBuilder {
     /**
      * @param conf text processor configuration
      */
-    public ProcessorBuilder(Configuration conf) {
+    ProcessorBuilder(Configuration conf) {
         this.conf = conf;
     }
 
@@ -129,9 +129,9 @@ class ProcessorBuilder {
             if (element instanceof Variable) {
                 elements.add(new ProcVariable(((Variable) element).getName(), ((Variable) element).getRegex()));
             } else if (element instanceof Text) {
-                elements.add(create(((Text) element)));
+                elements.add(create((Text) element));
             } else if (element instanceof Constant) {
-                elements.add(createPatternConstant(((Constant) element)));
+                elements.add(createPatternConstant((Constant) element));
             } else if (element instanceof Junk) {
                 elements.add(new PatternJunk());
             }

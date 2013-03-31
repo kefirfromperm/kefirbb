@@ -14,14 +14,14 @@ abstract class ElementListOwner<T> {
     /**
      * The default constructor.
      */
-    public ElementListOwner() {
+    protected ElementListOwner() {
         elements = Collections.<T>emptyList();
     }
 
     /**
      * @param elements pattern or template elements.
      */
-    public ElementListOwner(List<? extends T> elements) {
+    protected ElementListOwner(List<? extends T> elements) {
         this.elements = Collections.unmodifiableList(elements);
     }
 

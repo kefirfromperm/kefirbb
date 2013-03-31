@@ -66,9 +66,9 @@ public class ConfigurationTest {
 
     @Test
     public void testNestingLimit(){
-        int nestingLimit = 10;
         Configuration conf = new Configuration();
         Assert.assertEquals(Configuration.DEFAULT_NESTING_LIMIT, conf.getNestingLimit());
+        int nestingLimit = 10;
         conf.setNestingLimit(nestingLimit);
         Assert.assertEquals(nestingLimit, conf.getNestingLimit());
     }

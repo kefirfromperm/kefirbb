@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * The char sequence based on existing char array.
  */
-public class ArrayCharSequence implements CharSequence {
+public final class ArrayCharSequence implements CharSequence {
     private final char[] text;
     private final int offset;
     private final int length;
@@ -15,7 +15,7 @@ public class ArrayCharSequence implements CharSequence {
         Exceptions.negativeArgument("offset", offset);
         Exceptions.negativeArgument("length", length);
 
-        if (offset + length > text.length) {
+        if ((offset + length) > text.length) {
             throw new ArrayIndexOutOfBoundsException("The breaks are wrong.");
         }
 

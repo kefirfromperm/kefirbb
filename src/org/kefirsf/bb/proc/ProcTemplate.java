@@ -13,8 +13,7 @@ public class ProcTemplate {
     /**
      * Empty template
      */
-    @SuppressWarnings({"unchecked"})
-    public static final ProcTemplate EMPTY = new ProcTemplate(Collections.EMPTY_LIST);
+    public static final ProcTemplate EMPTY = new ProcTemplate(Collections.<ProcTemplateElement>emptyList());
 
     /**
      * Template elemnts

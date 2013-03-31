@@ -5,13 +5,13 @@ package org.kefirsf.bb.util;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class IntSet {
+public final class IntSet {
     private static final int TABLE_SIZE = 256;
     private static final int MASK = 255;
     private static final int INITIAL_CAPACITY = 16;
 
     private final int[][] table = new int[TABLE_SIZE][];      // Init null values by default
-    private final int lengths[] = new int[TABLE_SIZE];      // Init 0 values by default
+    private final int[] lengths = new int[TABLE_SIZE];      // Init 0 values by default
 
     public IntSet() {
     }
@@ -62,7 +62,6 @@ public class IntSet {
      * @param toIndex top break of array
      * @param key     searched value
      * @return value index or -(index of position)
-     * @see java.util.Arrays#binarySearch(int[], int, int, int)
      */
     private static int binarySearch(int[] array, int toIndex, int key) {
         int low = 0;
@@ -89,7 +88,7 @@ public class IntSet {
         return length > 0 && binarySearch(table[rowIndex], length, value) >= 0;
     }
 
-    private int rowIndex(int value) {
+    private static int rowIndex(int value) {
         return value & MASK;
     }
 }

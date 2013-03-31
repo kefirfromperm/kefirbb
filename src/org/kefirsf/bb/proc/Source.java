@@ -119,8 +119,7 @@ public class Source {
             }
             return i == length;
         } else {
-            int i;
-            for (i = 0; i < length; i++) {
+            for (int i = 0; i < length; i++) {
                 char ct = text[offset + i];
                 char cv = cs[i];
                 if (
@@ -143,8 +142,6 @@ public class Source {
      * @return index of constant of negative if don't find.
      */
     public int find(PatternConstant constant) {
-        int index = -1;
-
         char[] cs = constant.getCharArray();
         int length = cs.length;
         boolean ignoreCase = constant.isIgnoreCase();
@@ -170,7 +167,7 @@ public class Source {
             }
         }
 
-        return index;
+        return -1;
     }
 
     /**

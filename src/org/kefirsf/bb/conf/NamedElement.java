@@ -11,7 +11,7 @@ abstract class NamedElement {
     protected NamedElement() {
     }
 
-    public NamedElement(String name) {
+    protected NamedElement(String name) {
         this.name = name;
     }
 

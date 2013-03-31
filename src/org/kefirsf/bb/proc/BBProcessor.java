@@ -44,7 +44,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      */
     public CharSequence process(CharSequence source) {
         Context context = new Context();
-        StringBuilder target = new StringBuilder();
+        StringBuilder target = new StringBuilder(source.length());
         context.setTarget(target);
         Source source1 = new Source(source);
         source1.setConstantSet(constants);
@@ -64,7 +64,7 @@ public final class BBProcessor extends TextProcessorAdapter {
         } catch (IOException e) {
             // Never because StringBuilder not throw IOException
         } catch (NestingException e) {
-            target = new StringBuilder();
+            target = new StringBuilder(0);
             if(propagateNestingException){
                 throw new TextProcessorNestingException(nestingLimit);
             }

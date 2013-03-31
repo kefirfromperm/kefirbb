@@ -357,8 +357,7 @@ public class DomConfigurationFactory {
         for (int k = 0; k < patternLength; k++) {
             Node el = patternList.item(k);
             if (el.getNodeType() == Node.TEXT_NODE) {
-                Constant constant = new Constant(el.getNodeValue(), ignoreCase);
-                elements.add(constant);
+                elements.add(new Constant(el.getNodeValue(), ignoreCase));
             } else if (
                     el.getNodeType() == Node.ELEMENT_NODE
                             && el.getLocalName().equals(TAG_CONSTANT)

@@ -13,7 +13,7 @@ import java.util.Random;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class PerformanceRandomTest {
-    private static final String[] symbols = new String[]{
+    private static final String[] symbols = {
             "[b]", "[/b]",
             "[i]", "[/i]",
             "[s]", "[/s]",

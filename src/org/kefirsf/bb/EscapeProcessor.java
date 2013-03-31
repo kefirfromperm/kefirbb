@@ -31,14 +31,8 @@ public class EscapeProcessor extends TextProcessorAdapter {
      * @see TextProcessor#process(CharSequence)
      */
     public CharSequence process(CharSequence source) {
-        StringBuilder result = new StringBuilder();
         if (source != null && source.length() > 0) {
-            String stringSource;
-            if (source instanceof String) {
-                stringSource = (String) source;
-            } else {
-                stringSource = source.toString();
-            }
+            String stringSource = source instanceof String ? (String) source : source.toString();
 
             // Array to cache founded indexes of sequences
             int[] indexes = new int[escape.length];
@@ -46,6 +40,7 @@ public class EscapeProcessor extends TextProcessorAdapter {
 
             int length = source.length();
             int offset = 0;
+            StringBuilder result = new StringBuilder(length);
             while (offset < length) {
                 // Find next escape sequence
                 int escPosition = -1;
@@ -79,8 +74,9 @@ public class EscapeProcessor extends TextProcessorAdapter {
                     offset = length;
                 }
             }
+            return result;
+        } else {
+            return new StringBuilder(0);
         }
-
-        return result;
     }
 }
