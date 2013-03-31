@@ -1,6 +1,6 @@
 .idea/
 out/
+target/
 *.iml
-bbprocessor.properties
 *.jar
 *.zip
