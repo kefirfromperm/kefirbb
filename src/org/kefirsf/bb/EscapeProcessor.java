@@ -60,7 +60,7 @@ public class EscapeProcessor extends TextProcessorAdapter {
                     }
                 }
 
-                // If escape secuence is found
+                // If escape sequence is found
                 if (escPosition >= 0) {
                     // replace chars before escape sequence
                     result.append(stringSource, offset, escPosition);
