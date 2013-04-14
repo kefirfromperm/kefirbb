@@ -37,10 +37,9 @@ public class SafeHtmlConfigurationTest {
         assertProcess("&quot;", "\"");
 
         // Escape HTML
-        assertProcess("&lt;", "\\<");
-        assertProcess("&gt;", "\\>");
-        assertProcess("&amp;", "\\&");
-        assertProcess("\\", "\\\\");
+        assertProcess("&lt;", "&lt;");
+        assertProcess("&gt;", "&gt;");
+        assertProcess("&amp;", "&amp;");
         assertProcess("", "<!-- Comment -->");
 
         // Line breaks
@@ -109,5 +108,10 @@ public class SafeHtmlConfigurationTest {
                 "<table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr></tbody></table>",
                 "<table><thead><tr><th>1</th><th>2</th></tr></thead><tbody><tr><td>3</td><td>4</td></tr></tbody></table>"
         );
+    }
+
+    @Test
+    public void testUnknown(){
+        assertProcess("test", "<blink>test</blink>");
     }
 }

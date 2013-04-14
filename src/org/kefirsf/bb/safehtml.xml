@@ -4,19 +4,19 @@
                xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
     <!-- XML escape symbols -->
     <scope name="safeXml">
-        <code priority="-1">
+        <code priority="-2">
             <pattern>&apos;</pattern>
             <template>&amp;apos;</template>
         </code>
-        <code priority="-1">
+        <code priority="-2">
             <pattern>&lt;</pattern>
             <template>&amp;lt;</template>
         </code>
-        <code priority="-1">
+        <code priority="-2">
             <pattern>&gt;</pattern>
             <template>&amp;gt;</template>
         </code>
-        <code priority="-1">
+        <code priority="-2">
             <pattern>&quot;</pattern>
             <template>&amp;quot;</template>
         </code>
@@ -24,35 +24,19 @@
 
     <!-- Scope for escaping some symbols -->
     <scope name="escapeHtml" parent="safeXml">
-        <!--
-            Escape slash-code symbols
-            double slash to slash
-            slash + corner to escape sequence
-         -->
-        <code name="slash" priority="10">
-            <pattern>\\</pattern>
-            <template>\</template>
+        <!-- Ignore unknown tags -->
+        <code priority="-1">
+            <pattern>&lt;<junk/>&gt;</pattern>
+            <template/>
         </code>
-        <code name="left_corner" priority="9">
-            <pattern>\&lt;</pattern>
-            <template>&amp;lt;</template>
+
+        <!-- Comment -->
+        <code name="comment">
+            <pattern>&lt;!--<junk/>&gt;</pattern>
+            <template/>
         </code>
-        <code name="right_corner" priority="9">
-            <pattern>\&gt;</pattern>
-            <template>&amp;gt;</template>
-        </code>
-        <code name="amp" priority="9">
-            <pattern>\&amp;</pattern>
-            <template>&amp;amp;</template>
-        </code>
-        <coderef name="comment"/>
     </scope>
 
-    <!-- Comment -->
-    <code name="comment">
-        <pattern>&lt;!--<junk/>&gt;</pattern>
-        <template/>
-    </code>
 
     <!-- Escape basic HTML char sequences -->
     <scope name="basic" parent="escapeHtml">
