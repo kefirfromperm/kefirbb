@@ -8,8 +8,14 @@
     </code>
     <scope name="list">
         <code>
-            <pattern>*<var inherit="true"/></pattern>
+            <pattern>*<var scope="inner"/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+    </scope>
+    <scope name="inner" parent="list">
+        <code priority="1">
+            <pattern>*<var scope="inner"/></pattern>
+            <template>&lt;/li&gt;&lt;li&gt;<var/></template>
         </code>
     </scope>
 </configuration>

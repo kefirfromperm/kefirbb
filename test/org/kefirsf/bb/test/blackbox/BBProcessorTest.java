@@ -145,7 +145,6 @@ public class BBProcessorTest {
         assertProcess(processor, "<b>test</b>", "<b style=\"color: red;\">test</b>");
     }
 
-/*
     @Test
     public void testList() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
@@ -153,5 +152,4 @@ public class BBProcessorTest {
         );
         assertProcess(processor, "<ul><li>item 1</li><li>item 2</li><li>item 3</li></ul>", "{*item 1*item 2*item 3}");
     }
-*/
 }
