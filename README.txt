@@ -1,1 +1,2 @@
-KefirBB is a Java-library for text processing. Initially it was developed for BB2HTML translation. But flexible cponfiguration allowed use it for others translations. For example XML2HTML or for HTML filtration.
+KefirBB is a Java-library for text processing. Initially it was developed for BB2HTML translation. But flexible
+configuration allowed use it for others translations. For example XML2HTML or for HTML filtration.
