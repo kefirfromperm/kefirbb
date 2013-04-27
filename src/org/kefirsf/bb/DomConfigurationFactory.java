@@ -19,7 +19,7 @@ public class DomConfigurationFactory {
     /**
      * Schema location
      */
-    private static final String SCHEMA_LOCATION = "http://kefir-bb.sourceforge.net/schemas";
+    private static final String SCHEMA_LOCATION = "http://kefirsf.org/kefirbb/schema";
 
     /**
      * Constants which uses when parse XML-configuration

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns="http://kefir-bb.sourceforge.net/schemas"
-               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.0.xsd">
     <code>
         <pattern>&lt;b<junk/>&gt;<var inherit="true"/>&lt;/b&gt;</pattern>
         <template>&lt;b&gt;<var/>&lt;/b&gt;</template>

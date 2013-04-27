@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns="http://kefir-bb.sourceforge.net/schemas"
-               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas
-               http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.5.xsd">
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.0.xsd">
     <code>
         <pattern>&lt;<var name="name" regex="\w*"/> <var name="attrs" transparent="true"/>/&gt;</pattern>
         <template>tag=<var name="name"/>,a=<var name="a"/>,b=<var name="b"/>,c=<var name="c"/></template>

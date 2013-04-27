@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xmlns="http://kefir-bb.sourceforge.net/schemas"
-               xsi:schemaLocation="http://kefir-bb.sourceforge.net/schemas http://kefir-bb.sourceforge.net/schemas/kefir-bb-0.7.xsd">
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.0.xsd">
     <code>
         <pattern>{<var scope="list"/>}</pattern>
         <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
@@ -12,7 +12,7 @@
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>
-    <scope name="inner" parent="list">
+    <scope name="inner">
         <code priority="1">
             <pattern>*<var scope="inner"/></pattern>
             <template>&lt;/li&gt;&lt;li&gt;<var/></template>
