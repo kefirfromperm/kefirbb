@@ -72,15 +72,15 @@ public class DefaultConfigurationTest {
         assertProcess("<i>test</i>", "[i]test[/i]");
 
         // pictures
-        assertProcess("<img src=\"http://kefir-bb.sourceforge.net/ava.jpg\"/>", "[img]http://kefir-bb.sourceforge.net/ava.jpg[/img]");
+        assertProcess("<img src=\"http://kefirsf.org/kefirbb/ava.jpg\"/>", "[img]http://kefirsf.org/kefirbb/ava.jpg[/img]");
         assertProcess("<img src=\"/ava.jpg\"/>", "[img]/ava.jpg[/img]");
 
         // links
         // http
-        assertProcess("<a href=\"http://kefir-bb.sourceforge.net\">KefirBB</a>", "[url=http://kefir-bb.sourceforge.net]KefirBB[/url]");
-        assertProcess("<a href=\"http://kefir-bb.sourceforge.net\">http://kefir-bb.sourceforge.net</a>", "[url]http://kefir-bb.sourceforge.net[/url]");
-        assertProcess("<a href=\"http://kefir-bb.sourceforge.net\">KefirBB</a>", "[url=kefir-bb.sourceforge.net]KefirBB[/url]");
-        assertProcess("<a href=\"http://kefir-bb.sourceforge.net\">kefir-bb.sourceforge.net</a>", "[url]kefir-bb.sourceforge.net[/url]");
+        assertProcess("<a href=\"http://kefirsf.org/kefirbb/\">KefirBB</a>", "[url=http://kefirsf.org/kefirbb/]KefirBB[/url]");
+        assertProcess("<a href=\"http://kefirsf.org/kefirbb/\">http://kefirsf.org/kefirbb/</a>", "[url]http://kefirsf.org/kefirbb/[/url]");
+        assertProcess("<a href=\"http://kefirsf.org/kefirbb/\">KefirBB</a>", "[url=kefirsf.org/kefirbb/]KefirBB[/url]");
+        assertProcess("<a href=\"http://kefirsf.org/kefirbb/\">kefirsf.org/kefirbb/</a>", "[url]kefirsf.org/kefirbb/[/url]");
 
         // https
         assertProcess("<a href=\"https://securedsite.org\">Secured</a>", "[url=https://securedsite.org]Secured[/url]");
@@ -144,15 +144,15 @@ public class DefaultConfigurationTest {
         assertCodeScope("[i]test[/i]");
 
         // pictures
-        assertCodeScope("[img]http://kefir-bb.sourceforge.net/ava.jpg[/img]");
+        assertCodeScope("[img]http://kefirsf.org/kefirbb/ava.jpg[/img]");
         assertCodeScope("[img]/ava.jpg[/img]");
 
         // links
         // http
-        assertCodeScope("[url=http://kefir-bb.sourceforge.net]KefirBB[/url]");
-        assertCodeScope("[url]http://kefir-bb.sourceforge.net[/url]");
-        assertCodeScope("[url=kefir-bb.sourceforge.net]KefirBB[/url]");
-        assertCodeScope("[url]kefir-bb.sourceforge.net[/url]");
+        assertCodeScope("[url=http://kefirsf.org/kefirbb/]KefirBB[/url]");
+        assertCodeScope("[url]http://kefirsf.org/kefirbb/[/url]");
+        assertCodeScope("[url=http://kefirsf.org/kefirbb/]KefirBB[/url]");
+        assertCodeScope("[url]http://kefirsf.org/kefirbb/[/url]");
 
         // https
         assertCodeScope("[url=https://securedsite.org]Secured[/url]");

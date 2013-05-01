@@ -28,7 +28,7 @@ public class PerformanceRandomTest {
             "Nevermind", "Contra la Contra", "Hate to state",
             "Klowns", " ", "\n", "\r", "Apple", "Sun microsystems",
             "IBM", "Hello world", "Good job", "Spring", "Hibernate",
-            "Grails", "KefirBB", "http://kefir-bb.sourceforge.net",
+            "Grails", "KefirBB", "http://kefirsf.org/kefirbb/",
             "Sitemech", "More english words"
     };
 

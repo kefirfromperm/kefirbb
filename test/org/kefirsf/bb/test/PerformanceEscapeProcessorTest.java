@@ -25,7 +25,7 @@ public class PerformanceEscapeProcessorTest {
             "f",
             "g",
             "h",
-            "http://kefir-bb.sourceforge.net"
+            "http://kefirsf.org/kefirbb/"
     };
 
     public static void main(String[] args) {
