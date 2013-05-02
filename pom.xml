@@ -27,7 +27,7 @@
 
     <scm>
         <connection>scm:git://github.com/kefirfromperm/kefirbb.git</connection>
-        <developerConnection>scm:git@github.com:kefirfromperm/kefirbb.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:kefirfromperm/kefirbb.git</developerConnection>
         <tag>HEAD</tag>
         <url>https://github.com/kefirfromperm/kefirbb</url>
     </scm>
