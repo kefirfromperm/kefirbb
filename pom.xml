@@ -7,11 +7,50 @@
     <groupId>org.kefirsf</groupId>
     <artifactId>kefirbb</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
+    <name>KefirBB</name>
+    <description>
+        KefirBB is a Java-library for text processing. Initially it was developed for BB2HTML translation.
+        But flexible configuration allowed use it for others translations. For example XML2HTML or for
+        HTML filtration.
+    </description>
+    <url>http://kefirsf.org/kefirbb/</url>
+
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License</name>
+            <url>http://www.gnu.org/copyleft/lesser.html</url>
+            <comments>An OSS license for libraries.</comments>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git://github.com/kefirfromperm/kefirbb.git</connection>
+        <developerConnection>scm:git@github.com:kefirfromperm/kefirbb.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/kefirfromperm/kefirbb</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>kefir</id>
+            <name>Vitalii Samolovskikh</name>
+            <email>kefir@perm.ru</email>
+            <url>http://www.linkedin.com/in/vsamolovskikh</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>6</timezone>
+            <organization>Kefir Software Foundation</organization>
+            <organizationUrl>http://kefirsf.org/</organizationUrl>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <!-- There is only one dependency. For tests only. -->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -96,38 +135,6 @@
             </plugin>
         </plugins>
     </build>
-
-    <licenses>
-        <license>
-            <name>GNU Lesser General Public License</name>
-            <url>http://www.gnu.org/copyleft/lesser.html</url>
-            <comments>An OSS license for libraries.</comments>
-        </license>
-    </licenses>
-
-    <organization>
-        <name>Kefir Software Foundation</name>
-        <url>http://kefirsf.org/</url>
-    </organization>
-
-    <contributors>
-        <contributor>
-            <name>Vitalii Samolovskikh</name>
-            <email>kefir@perm.ru</email>
-            <url>http://www.linkedin.com/in/vsamolovskikh</url>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <timezone>6</timezone>
-        </contributor>
-    </contributors>
-
-    <scm>
-        <connection>git://github.com/kefirfromperm/kefirbb.git</connection>
-        <developerConnection>git@github.com:kefirfromperm/kefirbb.git</developerConnection>
-        <tag>HEAD</tag>
-        <url>https://github.com/kefirfromperm/kefirbb</url>
-    </scm>
 
     <profiles>
         <profile>
