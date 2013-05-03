@@ -3,6 +3,7 @@ package org.kefirsf.bb.test.blackbox;
 import org.junit.Assert;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 
 /**
@@ -17,7 +18,9 @@ public class RollbackTest {
         }
         String text = builder.toString();
 
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/default.xml");
+        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
+                ConfigurationFactory.DEFAULT_CONFIGURATION_FILE
+        );
         long start = System.currentTimeMillis();
         Assert.assertEquals(text, processor.process(text));
         long finish = System.currentTimeMillis();

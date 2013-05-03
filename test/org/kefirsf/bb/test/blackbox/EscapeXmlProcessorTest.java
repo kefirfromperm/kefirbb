@@ -16,6 +16,7 @@ public class EscapeXmlProcessorTest {
         assertProcess(
                 EscapeXmlProcessorFactory.getInstance().create(),
                 "&amp;gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&apos;",
-                "&gt;<a href=\"\"></a>'");
+                "&gt;<a href=\"\"></a>'"
+        );
     }
 }
