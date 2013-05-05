@@ -8,13 +8,13 @@ configuration allowed use it for others translations. For example XML2HTML or fo
 
 Maven dependency
 ----------------
-''<dependency>
+``<dependency>
     <groupId>org.kefirsf</groupId>
     <artifactId>kefirbb</artifactId>
     <version>1.0</version>
-</dependency>''
+</dependency>``
 
 Usage
 -----
-''TextProcessor processor = BBProcessorFactory.getInstance().create();
-assert "<b>text</b>".equals(processor.process("[b]text[/b]"));''
+``TextProcessor processor = BBProcessorFactory.getInstance().create();
+assert "<b>text</b>".equals(processor.process("[b]text[/b]"));``
