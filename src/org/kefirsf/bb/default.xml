@@ -115,6 +115,10 @@
 
         <!-- Table -->
         <coderef name="table"/>
+
+        <!-- List -->
+        <coderef name="list1"/>
+        <coderef name="list2"/>
     </scope>
 
     <!-- Simple formatting -->
@@ -234,5 +238,27 @@
             <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
         </code>
         <coderef name="comment"/>
+    </scope>
+
+    <!-- Standard BB list -->
+    <code name="list1" priority="2">
+        <pattern ignoreCase="true">[list]<junk/>[*]<var name="content" scope="list1Scope" />[/list]</pattern>
+        <template>&lt;ul&gt;&lt;li&gt;<var name="content"/>&lt;/li&gt;&lt;/ul&gt;</template>
+    </code>
+    <code name="list2" priority="1">
+        <pattern ignoreCase="true">[list]<junk/>*<var name="content" scope="list2Scope"/>[/list]</pattern>
+        <template>&lt;ul&gt;&lt;li&gt;<var name="content"/>&lt;/li&gt;&lt;/ul&gt;</template>
+    </code>
+    <scope name="list1Scope" parent="ROOT">
+        <code>
+            <pattern>[*]</pattern>
+            <template>&lt;/li&gt;&lt;li&gt;</template>
+        </code>
+    </scope>
+    <scope name="list2Scope" parent="ROOT">
+        <code>
+            <pattern>*</pattern>
+            <template>&lt;/li&gt;&lt;li&gt;</template>
+        </code>
     </scope>
 </configuration>

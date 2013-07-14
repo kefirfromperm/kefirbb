@@ -207,4 +207,10 @@ public class DefaultConfigurationTest {
                 "[table][tr][th]header1[/th][th]header2[/th][/tr][tr][td]column1[/td][td]column2[/td][/tr][/table]"
         );
     }
+
+    @Test
+    public void list(){
+        assertProcess("<ul><li>Entry 1</li><li>Entry 2</li></ul>", "[list] [*]Entry 1[*]Entry 2[/list]");
+        assertProcess("<ul><li>Entry 1</li><li>Entry 2</li></ul>", "[list] *Entry 1*Entry 2[/list]");
+    }
 }

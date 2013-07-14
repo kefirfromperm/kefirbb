@@ -44,6 +44,7 @@ public class ProcScope {
     /**
      * Mark that this scope is initialized
      */
+    private boolean initializationStarted = false;
     private boolean initialized = false;
 
     /**
@@ -129,8 +130,14 @@ public class ProcScope {
     }
 
     public void init() {
-        if (parent != null && !parent.isInitialized()) {
+        if(initializationStarted && !initialized){
             throw new TextProcessorFactoryException("Can't init scope.");
+        } else {
+            initializationStarted = true;
+        }
+
+        if (parent != null && !parent.isInitialized()) {
+            parent.init();
         }
         cacheCodes();
         initialized = true;

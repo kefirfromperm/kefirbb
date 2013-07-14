@@ -35,6 +35,12 @@ class ProcessorBuilder {
         processor.setConstants(new HashSet<PatternConstant>(constants.values()));
         processor.setNestingLimit(conf.getNestingLimit());
         processor.setPropagateNestingException(conf.isPropagateNestingException());
+
+        // Init scopes
+        for(ProcScope scope: createdScopes.values()){
+            scope.init();
+        }
+
         return processor;
     }
 
@@ -58,7 +64,6 @@ class ProcessorBuilder {
                 scopeCodes.add(createCode(code));
             }
             created.setScopeCodes(scopeCodes);
-            created.init();
         }
         return created;
     }
