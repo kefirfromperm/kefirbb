@@ -3,6 +3,7 @@ package org.kefirsf.bb.test.blackbox;
 import org.junit.Before;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
+import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 import org.kefirsf.bb.test.Assert;
 
@@ -25,7 +26,9 @@ public class SafeHtmlConfigurationTest {
      */
     @Before
     public void createProcessor() {
-        processor = BBProcessorFactory.getInstance().createFromResource("org/kefirsf/bb/safehtml.xml");
+        processor = BBProcessorFactory.getInstance().createFromResource(
+                ConfigurationFactory.SAFE_HTML_CONFIGURATION_FILE
+        );
     }
 
     @Test
