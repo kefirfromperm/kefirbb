@@ -23,13 +23,16 @@ public class ConfigurationFactory {
     // Helper constants
     private static final String DEFAULT_CONFIGURATION = "org/kefirsf/bb/default";
     private static final String SAFE_HTML_CONFIGURATION = "org/kefirsf/bb/safehtml";
+    private static final String TEXTILE_CONFIGURATION = "org/kefirsf/bb/textile";
     private static final String DEFAULT_USER_CONFIGURATION = "kefirbb";
     private static final String CONFIGURATION_EXTENSION = ".xml";
 
     // Configuration paths
     public static final String DEFAULT_USER_CONFIGURATION_FILE = DEFAULT_USER_CONFIGURATION + CONFIGURATION_EXTENSION;
-    public static final String SAFE_HTML_CONFIGURATION_FILE = SAFE_HTML_CONFIGURATION + CONFIGURATION_EXTENSION;
     public static final String DEFAULT_CONFIGURATION_FILE = DEFAULT_CONFIGURATION + CONFIGURATION_EXTENSION;
+    public static final String SAFE_HTML_CONFIGURATION_FILE = SAFE_HTML_CONFIGURATION + CONFIGURATION_EXTENSION;
+    public static final String TEXTILE_CONFIGURATION_FILE = TEXTILE_CONFIGURATION + CONFIGURATION_EXTENSION;
+
     public static final String DEFAULT_PROPERTIES_FILE = "kefirbb.properties";
     public static final String DEFAULT_PROPERTIES_XML_FILE = "kefirbb.properties.xml";
 
