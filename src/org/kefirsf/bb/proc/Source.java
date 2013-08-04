@@ -115,8 +115,8 @@ public class Source {
 
         if (!constant.isIgnoreCase()) {
             int i;
-            for (i = 0; i < length && text[offset + i] == cs[i]; i++) {
-            }
+            //noinspection StatementWithEmptyBody
+            for (i = 0; i < length && text[offset + i] == cs[i]; i++);
             return i == length;
         } else {
             for (int i = 0; i < length; i++) {
@@ -143,14 +143,18 @@ public class Source {
      */
     public int find(PatternConstant constant) {
         char[] cs = constant.getCharArray();
-        int length = cs.length;
         boolean ignoreCase = constant.isIgnoreCase();
 
+        return find(cs, ignoreCase);
+    }
+
+    public int find(char[] chars, boolean ignoreCase) {
+        int length = chars.length;
         for (int i = offset; i < textLength - length + 1; i++) {
             boolean flag = true;
             for (int j = 0; j < length && flag; j++) {
                 char ct = text[i + j];
-                char cv = cs[j];
+                char cv = chars[j];
                 flag = (
                         ct == cv ||
                                 (
@@ -179,6 +183,13 @@ public class Source {
         char c = text[offset];
         incOffset();
         return c;
+    }
+
+    /**
+     * Return the current character without offset increment.
+     */
+    public char current(){
+        return text[offset];
     }
 
     /**

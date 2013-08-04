@@ -65,7 +65,7 @@ public class ProcPattern {
             } else {
                 next = context.getTerminator();
             }
-            flag = source.hasNext() && current.parse(context, next);
+            flag = current.parse(context, next);
         }
 
         if (!flag) {

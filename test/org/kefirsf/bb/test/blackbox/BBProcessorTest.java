@@ -135,4 +135,12 @@ public class BBProcessorTest {
         assertProcess(processor, "Person", "John");
         assertProcess(processor, "Person", "Mary");
     }
+
+    @Test
+    public void testEolEot(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-spec.xml");
+        assertProcess(processor, "<p>Paragraph1</p><p>Paragraph2</p>", "Paragraph1\n\nParagraph2");
+        assertProcess(processor, "<p>line</p>", "line");
+        assertProcess(processor, "newline", "line\n");
+    }
 }

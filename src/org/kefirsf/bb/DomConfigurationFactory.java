@@ -54,6 +54,8 @@ public class DomConfigurationFactory {
     private static final String TAG_CONSTANT_ATTR_VALUE = "value";
     private static final String TAG_CONSTANT_ATTR_IGNORE_CASE = "ignoreCase";
     private static final String TAG_JUNK = "junk";
+    private static final String TAG_EOL = "eol";
+    private static final String TAG_EOT = "eot";
     private static final String TAG_NESTING = "nesting";
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
@@ -327,7 +329,7 @@ public class DomConfigurationFactory {
         // Pattern to parsing
         NodeList patternElements = codeElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PATTERN);
         if (patternElements.getLength() > 0) {
-            for(int i=0; i<patternElements.getLength(); i++){
+            for (int i = 0; i < patternElements.getLength(); i++) {
                 code.addPattern(parsePattern(patternElements.item(i), scopes));
             }
         } else {
@@ -358,27 +360,29 @@ public class DomConfigurationFactory {
 
         for (int k = 0; k < patternLength; k++) {
             Node el = patternList.item(k);
-            if (el.getNodeType() == Node.TEXT_NODE) {
+            short nodeType = el.getNodeType();
+
+            if (nodeType == Node.TEXT_NODE) {
                 elements.add(new Constant(el.getNodeValue(), ignoreCase));
-            } else if (
-                    el.getNodeType() == Node.ELEMENT_NODE
-                            && el.getLocalName().equals(TAG_CONSTANT)
-                    ) {
-                elements.add(parseConstant(el, ignoreCase));
-            } else if (
-                    el.getNodeType() == Node.ELEMENT_NODE
-                            && el.getLocalName().equals(TAG_VAR)
-                            && (k != 0 || nodeHasAttribute(el, TAG_VAR_ATTR_REGEX))
-                    ) {
-                elements.add(parseNamedElement(el, scopes));
-            } else if (
-                    el.getNodeType() == Node.ELEMENT_NODE
-                            && el.getLocalName().equals(TAG_JUNK)
-                            && k != 0
-                    ) {
-                elements.add(new Junk());
+            } else if (nodeType == Node.ELEMENT_NODE) {
+                String tagName = el.getLocalName();
+                if (tagName.equals(TAG_CONSTANT)) {
+                    elements.add(parseConstant(el, ignoreCase));
+                } else if (tagName.equals(TAG_VAR)) {
+                    elements.add(parseNamedElement(el, scopes));
+                } else if (tagName.equals(TAG_JUNK)) {
+                    elements.add(new Junk());
+                } else if (tagName.equals(TAG_EOL)) {
+                    elements.add(new Eol());
+                } else if (tagName.equals(TAG_EOT)) {
+                    elements.add(new Eot());
+                } else {
+                    throw new TextProcessorFactoryException(
+                            MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
+                    );
+                }
             } else {
-                throw new TextProcessorFactoryException("Invalid pattern. Unknown XML element.");
+                throw new TextProcessorFactoryException("Invalid pattern. Unsupported XML node type.");
             }
         }
         return new Pattern(elements);

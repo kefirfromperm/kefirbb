@@ -3,7 +3,7 @@
                xmlns="http://kefirsf.org/kefirbb/schema"
                xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.0.xsd">
     <code>
-        <pattern><var/></pattern>
+        <pattern><bar/></pattern>
         <template>^<var/>^</template>
     </code>
 </configuration>

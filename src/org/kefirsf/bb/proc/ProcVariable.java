@@ -78,7 +78,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
      *         false если не совпадают или строка кончилась
      */
     public boolean isNextIn(Source source) {
-        return regex != null && regex.matcher(source.subToEnd()).lookingAt();
+        return regex == null || regex.matcher(source.subToEnd()).lookingAt();
     }
 
     /**

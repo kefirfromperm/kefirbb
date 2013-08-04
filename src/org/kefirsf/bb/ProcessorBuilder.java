@@ -146,6 +146,10 @@ class ProcessorBuilder {
                 elements.add(createPatternConstant((Constant) element));
             } else if (element instanceof Junk) {
                 elements.add(new PatternJunk());
+            } else if (element instanceof Eol){
+                elements.add(new ProcEol());
+            } else if (element instanceof Eot){
+                elements.add(new ProcEot());
             }
         }
         return new ProcPattern(elements);

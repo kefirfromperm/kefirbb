@@ -73,7 +73,7 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
      *         false если не совпадают или строка кончилась
      */
     public boolean isNextIn(Source source) {
-        return false;
+        return true;
     }
 
     /**
