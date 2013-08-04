@@ -1,6 +1,7 @@
 package org.kefirsf.bb.proc;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The bbcode class
@@ -15,7 +16,7 @@ public class ProcCode implements Comparable<ProcCode> {
     /**
      * Pattern for parsing code
      */
-    private final ProcPattern pattern;
+    private final List<ProcPattern> patterns;
     /**
      * Priority. If priority higher then code be checking early.
      */
@@ -28,16 +29,16 @@ public class ProcCode implements Comparable<ProcCode> {
     /**
      * Create the bb-code with priority
      *
-     * @param pattern  pattern to parse the source text
+     * @param patterns  pattern to parse the source text
      * @param template template to build target text
      * @param name     name of code
      * @param priority priority. If priority higher then code be checking early.
      */
-    public ProcCode(ProcPattern pattern, ProcTemplate template, String name, int priority) {
+    public ProcCode(List<ProcPattern> patterns, ProcTemplate template, String name, int priority) {
         this.template = template;
         this.priority = priority;
         this.name = name;
-        this.pattern = pattern;
+        this.patterns = patterns;
     }
 
     /**
@@ -52,11 +53,13 @@ public class ProcCode implements Comparable<ProcCode> {
      * @throws NestingException if nesting is too big.
      */
     public boolean process(Context context) throws IOException, NestingException {
-        Context codeContext = new Context(context);
-        if (pattern.parse(codeContext)) {
-            codeContext.mergeWithParent();
-            template.generate(context);
-            return true;
+        for(ProcPattern pattern: patterns){
+            Context codeContext = new Context(context);
+            if (pattern.parse(codeContext)) {
+                codeContext.mergeWithParent();
+                template.generate(context);
+                return true;
+            }
         }
 
         return false;
@@ -71,7 +74,12 @@ public class ProcCode implements Comparable<ProcCode> {
      *         false - only if next sequence can't be parsed with this code.
      */
     public boolean suspicious(Source source) {
-        return pattern.suspicious(source);
+        for(ProcPattern pattern:patterns){
+            if(pattern.suspicious(source)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -91,9 +99,15 @@ public class ProcCode implements Comparable<ProcCode> {
     }
 
     public boolean startsWithConstant(){
-        return pattern.startsWithConstant();
+        for(ProcPattern pattern: patterns){
+            if(!pattern.startsWithConstant()){
+                return false;
+            }
+        }
+        return true;
     }
 
+    @SuppressWarnings("RedundantIfStatement")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

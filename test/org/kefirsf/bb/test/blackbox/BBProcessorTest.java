@@ -17,11 +17,12 @@ import static org.kefirsf.bb.test.Assert.assertProcess;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class BBProcessorTest {
+
+    private final BBProcessorFactory factory = BBProcessorFactory.getInstance();
+
     @Test
     public void testPrefix() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-prefix.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-prefix.xml");
         assertProcess(processor, "^text^", "prefixtext");
         assertProcess(processor, "(^text^)", "[prefixtext]");
         assertProcess(processor, "text", "text");
@@ -30,9 +31,7 @@ public class BBProcessorTest {
     @Test
     public void testPrefixAndSuffix() {
         assertProcess(
-                BBProcessorFactory.getInstance().createFromResource(
-                        "org/kefirsf/bb/test/blackbox/config-prefixsuffix.xml"
-                ),
+                factory.createFromResource("org/kefirsf/bb/test/blackbox/config-prefixsuffix.xml"),
                 "<!-- bbcodes begin -->Test<!-- bbcodes end -->",
                 "Test"
         );
@@ -41,41 +40,30 @@ public class BBProcessorTest {
     @Test
     public void testContextRollback() {
         assertProcess(
-                BBProcessorFactory.getInstance().createFromResource(
-                        "org/kefirsf/bb/test/blackbox/config-context-rollback.xml"
-                ),
-                "1",
-                "[1](2)[/]"
+                factory.createFromResource("org/kefirsf/bb/test/blackbox/config-context-rollback.xml"),
+                "1", "[1](2)[/]"
         );
     }
 
     @Test
     public void testVariable() {
         assertProcess(
-                BBProcessorFactory.getInstance().createFromResource(
-                        "org/kefirsf/bb/test/blackbox/config-variable.xml"
-                ),
-                "Oi!",
-                "def Oi!;print;"
+                factory.createFromResource("org/kefirsf/bb/test/blackbox/config-variable.xml"),
+                "Oi!", "def Oi!;print;"
         );
     }
 
     @Test
     public void testNotClosed() {
         assertProcess(
-                BBProcessorFactory.getInstance().createFromResource(
-                        "org/kefirsf/bb/test/blackbox/config-variable.xml"
-                ),
-                "def Oi!",
-                "def Oi!"
+                factory.createFromResource("org/kefirsf/bb/test/blackbox/config-variable.xml"),
+                "def Oi!", "def Oi!"
         );
     }
 
     @Test
     public void testParameters() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-parameters.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-parameters.xml");
         assertProcess(processor, "Oi!", "print;");
         assertProcess(processor, "PunkOi!", "print punk;print;");
 
@@ -88,16 +76,14 @@ public class BBProcessorTest {
 
         configuration.setParams(params);
 
-        TextProcessor defaultProcessor = BBProcessorFactory.getInstance().create(configuration);
+        TextProcessor defaultProcessor = factory.create(configuration);
         assertProcess(defaultProcessor, "12345", "def 5;");
         assertProcess(defaultProcessor, "12344", "print;");
     }
 
     @Test
     public void testRegex() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-regex.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-regex.xml");
         assertProcess(processor, "v:3", "def v=3;");
         assertProcess(processor, "var:33", "def var=33;");
         assertProcess(processor, "def var= 33;", "def var= 33;");
@@ -108,26 +94,20 @@ public class BBProcessorTest {
 
     @Test
     public void testTransparent() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-transparent.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-transparent.xml");
         assertProcess(processor, "tag=tag,a=2,b=1,c=3", "<tag b=\"1\" a=\"2\" c=\"3\" />");
         assertProcess(processor, "tag=tag,a=2,b=null,c=3", "<tag a=\"2\" c=\"3\" />");
     }
 
     @Test
     public void testOpenCodes() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-open.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-open.xml");
         assertProcess(processor, "Set value to name.", "name=value");
     }
 
     @Test
     public void testIgnoreCase() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-ignore-case.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-ignore-case.xml");
         assertProcess(processor, "Passed!", "test");
         assertProcess(processor, "Passed!", "TEST");
         assertProcess(processor, "[B]bold[/B]", "<B>bold</b>");
@@ -139,17 +119,20 @@ public class BBProcessorTest {
 
     @Test
     public void testJunk() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-junk.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-junk.xml");
         assertProcess(processor, "<b>test</b>", "<b style=\"color: red;\">test</b>");
     }
 
     @Test
     public void testList() {
-        TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
-                "org/kefirsf/bb/test/blackbox/config-list.xml"
-        );
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-list.xml");
         assertProcess(processor, "<ul><li>item 1</li><li>item 2</li><li>item 3</li></ul>", "{*item 1*item 2*item 3}");
+    }
+
+    @Test
+    public void testMultiPattern(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-multi-pattern.xml");
+        assertProcess(processor, "Person", "John");
+        assertProcess(processor, "Person", "Mary");
     }
 }

@@ -327,7 +327,9 @@ public class DomConfigurationFactory {
         // Pattern to parsing
         NodeList patternElements = codeElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PATTERN);
         if (patternElements.getLength() > 0) {
-            code.setPattern(parsePattern(patternElements.item(0), scopes));
+            for(int i=0; i<patternElements.getLength(); i++){
+                code.addPattern(parsePattern(patternElements.item(i), scopes));
+            }
         } else {
             throw new TextProcessorFactoryException("Illegal configuration. Can't find pattern of code.");
         }

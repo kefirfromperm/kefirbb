@@ -3,7 +3,9 @@ package org.kefirsf.bb.conf;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Tests for code
@@ -63,6 +65,20 @@ public class CodeTest {
         Pattern pattern = createPattern();
         code.setPattern(pattern);
         Assert.assertEquals(pattern, code.getPattern());
+    }
+
+    @Test
+    public void testPatterns() {
+        Code code = new Code();
+        List<Pattern> patterns = new ArrayList<Pattern >();
+        patterns.add(new Pattern(Arrays.asList(new Constant("1"))));
+        patterns.add(new Pattern(Arrays.asList(new Constant("2"))));
+        code.setPatterns(patterns);
+        Assert.assertArrayEquals(patterns.toArray(), code.getPatterns().toArray());
+
+        Pattern pattern = new Pattern(Arrays.asList(new Constant("3")));
+        code.addPattern(pattern);
+        Assert.assertEquals(pattern, code.getPatterns().get(2));
     }
 
     @Test

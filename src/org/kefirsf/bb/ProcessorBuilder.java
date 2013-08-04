@@ -85,8 +85,15 @@ class ProcessorBuilder {
 
         ProcCode code = codes.get(defCode);
         if (code == null) {
+            List<Pattern> confPatterns = defCode.getPatterns();
+            List<ProcPattern> procPatterns = new ArrayList<ProcPattern>(confPatterns.size());
+
+            for(Pattern confPattern: confPatterns){
+                procPatterns.add(createPattern(confPattern));
+            }
+
             code = new ProcCode(
-                    createPattern(defCode.getPattern()),
+                    procPatterns,
                     createTemplate(defCode.getTemplate()),
                     defCode.getName(),
                     defCode.getPriority()

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://kefirsf.org/kefirbb/schema"
-               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.0.xsd">
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
     <!-- XML escape symbols -->
     <scope name="safeXml">
         <code priority="-2">
@@ -41,19 +41,10 @@
     <!-- Escape basic HTML char sequences -->
     <scope name="basic" parent="escapeHtml">
         <!-- line feed characters -->
-        <code name="br1" priority="3">
+        <code name="br">
             <pattern>&#x0A;&#x0D;</pattern>
-            <template>&lt;br/&gt;</template>
-        </code>
-        <code name="br2" priority="2">
             <pattern>&#x0D;&#x0A;</pattern>
-            <template>&lt;br/&gt;</template>
-        </code>
-        <code name="br3" priority="1">
             <pattern>&#x0A;</pattern>
-            <template>&lt;br/&gt;</template>
-        </code>
-        <code name="br4" priority="0">
             <pattern>&#x0D;</pattern>
             <template>&lt;br/&gt;</template>
         </code>

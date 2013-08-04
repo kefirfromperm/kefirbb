@@ -3,6 +3,9 @@ package org.kefirsf.bb.conf;
 import org.kefirsf.bb.util.Exceptions;
 import org.kefirsf.bb.util.Utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Code description.
  *
@@ -13,7 +16,7 @@ public class Code {
 
     private String name;
     private int priority = DEFAULT_PRIORITY;
-    private Pattern pattern;
+    private List<Pattern> patterns;
     private Template template;
 
     /**
@@ -45,7 +48,7 @@ public class Code {
         Exceptions.nullArgument("name", name);
         this.name = name;
         this.priority = priority;
-        this.pattern = pattern;
+        setPattern(pattern);
         this.template = template;
     }
 
@@ -83,12 +86,45 @@ public class Code {
     }
 
     /**
+     * @return the list of patterns of the code
+     */
+    public List<Pattern> getPatterns() {
+        return patterns;
+    }
+
+    /**
+     * Set the patterns list.
+     *
+     * @param patterns the list of patterns
+     */
+    public void setPatterns(List<Pattern> patterns) {
+        this.patterns = patterns;
+    }
+
+    /**
+     * Add a pattern to the list of patterns.
+     *
+     * @param pattern a pattern
+     */
+    public void addPattern(Pattern pattern) {
+        if (patterns == null) {
+            patterns = new ArrayList<Pattern>();
+        }
+
+        patterns.add(pattern);
+    }
+
+    /**
      * Get pattern for text parsing
      *
      * @return pattern definition object
      */
     public Pattern getPattern() {
-        return pattern;
+        if (patterns != null && !patterns.isEmpty()) {
+            return patterns.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -97,7 +133,8 @@ public class Code {
      * @param pattern pattern definition object
      */
     public void setPattern(Pattern pattern) {
-        this.pattern = pattern;
+        patterns = new ArrayList<Pattern>(1);
+        patterns.add(pattern);
     }
 
     /**
