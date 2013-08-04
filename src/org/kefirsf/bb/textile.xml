@@ -179,52 +179,52 @@
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h1.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h1.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h1.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h1. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h1. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h1. <var scope="textile"/><eot/></pattern>
             <template>&lt;h1&gt;<var/>&lt;/h1&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h2.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h2.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h2.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h2. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h2. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h2. <var scope="textile"/><eot/></pattern>
             <template>&lt;h2&gt;<var/>&lt;/h2&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h3.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h3.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h3.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h3. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h3. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h3. <var scope="textile"/><eot/></pattern>
             <template>&lt;h3&gt;<var/>&lt;/h3&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h4.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h4.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h4.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h4. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h4. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h4. <var scope="textile"/><eot/></pattern>
             <template>&lt;h4&gt;<var/>&lt;/h4&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h5.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h5.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h5.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h5. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h5. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h5. <var scope="textile"/><eot/></pattern>
             <template>&lt;h5&gt;<var/>&lt;/h5&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true">h6.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern ignoreCase="true">h6.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern ignoreCase="true">h6.<var scope="textile"/><eot/></pattern>
+            <pattern ignoreCase="true">h6. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern ignoreCase="true">h6. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern ignoreCase="true">h6. <var scope="textile"/><eot/></pattern>
             <template>&lt;h6&gt;<var/>&lt;/h6&gt;</template>
         </code>
         <code priority="1">
-            <pattern>bq.<var scope="textile"/><eol/><eol/></pattern>
-            <pattern>bq.<var scope="textile"/><eol/><eot/></pattern>
-            <pattern>bq.<var scope="textile"/><eot/></pattern>
+            <pattern>bq. <var scope="textile"/><eol/><eol/></pattern>
+            <pattern>bq. <var scope="textile"/><eol/><eot/></pattern>
+            <pattern>bq. <var scope="textile"/><eot/></pattern>
             <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="1">
-            <pattern>fn<var name="number" regex="\d+"/>.<var name="content" scope="textile"/><eol/><eol/></pattern>
-            <pattern>fn<var name="number" regex="\d+"/>.<var name="content" scope="textile"/><eol/><eot/></pattern>
-            <pattern>fn<var name="number" regex="\d+"/>.<var name="content" scope="textile"/><eot/></pattern>
-            <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt;<var name="content"/>&lt;/p&gt;</template>
+            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eol/><eol/></pattern>
+            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eol/><eot/></pattern>
+            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eot/></pattern>
+            <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt; <var name="content"/>&lt;/p&gt;</template>
         </code>
     </scope>
 
