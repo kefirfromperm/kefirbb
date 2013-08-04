@@ -1,28 +1,16 @@
-package org.kefirsf.bb.test.blackbox;
+package org.kefirsf.bb.test.standard;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.ConfigurationFactory;
-import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.test.Assert;
 
 /**
  * @author Vitalii Samolovskikh aka Kefir
  */
-public class SafeHtmlConfigurationTest {
+public class SafeHtmlConfigurationTest extends AbstractConfigurationTest {
     /**
-     * Default configuration processor (BB2HTML processor)
-     */
-    private TextProcessor processor;
-
-
-    private void assertProcess(String expected, String source) {
-        Assert.assertProcess(processor, expected, source);
-    }
-
-    /**
-     * Create defult text processor
+     * Create the safe HTML text processor.
      */
     @Before
     public void createProcessor() {

@@ -1,27 +1,15 @@
-package org.kefirsf.bb.test.blackbox;
+package org.kefirsf.bb.test.standard;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.ConfigurationFactory;
-import org.kefirsf.bb.TextProcessor;
-import org.kefirsf.bb.test.Assert;
 
 /**
  * Tests for the Textile configuration.
  * @author Vitalii Samolovskikh aka Kefir
  */
-public class TextileTest {
-    /**
-     * Default configuration processor (BB2HTML processor)
-     */
-    private TextProcessor processor;
-
-
-    private void assertProcess(String expected, String source) {
-        Assert.assertProcess(processor, expected, source);
-    }
-
+public class TextileTest extends AbstractConfigurationTest {
     /**
      * Create Textile text processor
      */
@@ -119,12 +107,62 @@ public class TextileTest {
                 "<p>A single paragraph.</p><p>Followed by another.</p>",
                 "A single paragraph.\n\nFollowed by another."
         );
-
-/*
+        
         assertProcess(
-                "<p></p>",
-                ""
+                "<p>A paragraph.</p>",
+                "A paragraph.\n\n"
         );
-*/
+
+        assertProcess(
+                "<p>A paragraph.</p>",
+                "A paragraph.\n"
+        );
+
+        assertProcess("<h1>Header</h1>", "h1.Header");
+        assertProcess("<h1>Header</h1>", "h1.Header\n");
+        assertProcess("<h1>Header</h1>", "h1.Header\n\n");
+
+        assertProcess("<h2>Header</h2>", "h2.Header");
+        assertProcess("<h2>Header</h2>", "h2.Header\n");
+        assertProcess("<h2>Header</h2>", "h2.Header\n\n");
+
+        assertProcess("<h3>Header</h3>", "h3.Header");
+        assertProcess("<h3>Header</h3>", "h3.Header\n");
+        assertProcess("<h3>Header</h3>", "h3.Header\n\n");
+
+        assertProcess("<h4>Header</h4>", "h4.Header");
+        assertProcess("<h4>Header</h4>", "h4.Header\n");
+        assertProcess("<h4>Header</h4>", "h4.Header\n\n");
+
+        assertProcess("<h5>Header</h5>", "h5.Header");
+        assertProcess("<h5>Header</h5>", "h5.Header\n");
+        assertProcess("<h5>Header</h5>", "h5.Header\n\n");
+
+        assertProcess("<h6>Header</h6>", "h6.Header");
+        assertProcess("<h6>Header</h6>", "h6.Header\n");
+        assertProcess("<h6>Header</h6>", "h6.Header\n\n");
+
+        assertProcess(
+                "<p>An old text</p><blockquote><p>A block quotation.</p></blockquote><p>Any old text</p>",
+                "An old text\n\nbq.A block quotation.\n\nAny old text"
+        );
+
+        // Foot note
+        assertProcess(
+                "<p>This is covered elsewhere<sup><a href=\"#fn1\">1</a></sup>.</p>",
+                "This is covered elsewhere[1]."
+        );
+        assertProcess(
+                "<p id=\"fn1\"><sup>1</sup> Down here, in fact.</p>",
+                "fn1. Down here, in fact."
+        );
+        assertProcess(
+                "<p id=\"fn1\"><sup>1</sup> Down here, in fact.</p>",
+                "fn1. Down here, in fact.\n"
+        );
+        assertProcess(
+                "<p id=\"fn1\"><sup>1</sup> Down here, in fact.</p>",
+                "fn1. Down here, in fact.\n\n"
+        );
     }
 }
