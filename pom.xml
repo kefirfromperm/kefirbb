@@ -108,6 +108,29 @@
                 </configuration>
             </plugin>
 
+            <!-- Create the manifest file -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <index>true</index>
+                        <manifestEntries>
+                            <Bundle-Copyright>Kefir Software Foundation (c) 2008-2014</Bundle-Copyright>
+                            <Bundle-Description>A flexible text processor.</Bundle-Description>
+                            <Bundle-DocURL>http://kefirsf.org/kefirbb/</Bundle-DocURL>
+                            <Bundle-License>http://www.gnu.org/copyleft/lesser.html</Bundle-License>
+                            <Bundle-Name>KefirBB</Bundle-Name>
+                            <Bundle-SymbolicName>org.kefirsf.bb</Bundle-SymbolicName>
+                            <Bundle-Vendor>Kefir Software Foundation</Bundle-Vendor>
+                            <Bundle-Version>${project.version}</Bundle-Version>
+                            <Export-Package>org.kefirsf.bb;version=${project.version}</Export-Package>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
             <!-- Add sources -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
