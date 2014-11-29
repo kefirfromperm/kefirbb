@@ -1,6 +1,8 @@
 package org.kefirsf.bb.proc;
 
 /**
+ * End of line
+ *
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class ProcEol implements ProcPatternElement {
@@ -8,7 +10,7 @@ public class ProcEol implements ProcPatternElement {
         Source source = context.getSource();
 
         if(!source.hasNext()){
-            return false;
+            return true;
         }
         char c = source.current();
         if (c == '\n') {
@@ -33,7 +35,7 @@ public class ProcEol implements ProcPatternElement {
             char c = source.current();
             return c == '\n' || c == '\r';
         } else {
-            return false;
+            return true;
         }
     }
 
@@ -47,7 +49,7 @@ public class ProcEol implements ProcPatternElement {
         } else if (r >= 0) {
             return r;
         } else {
-            return -1;
+            return source.getLength();
         }
     }
 }

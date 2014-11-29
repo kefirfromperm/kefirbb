@@ -1,6 +1,8 @@
 package org.kefirsf.bb.proc;
 
 /**
+ * End of text
+ *
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class ProcEot implements ProcPatternElement {

@@ -56,6 +56,8 @@ public class DomConfigurationFactory {
     private static final String TAG_JUNK = "junk";
     private static final String TAG_EOL = "eol";
     private static final String TAG_EOT = "eot";
+    private static final String TAG_SOL = "sol";
+    private static final String TAG_SOT = "sot";
     private static final String TAG_NESTING = "nesting";
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
@@ -376,6 +378,10 @@ public class DomConfigurationFactory {
                     elements.add(new Eol());
                 } else if (tagName.equals(TAG_EOT)) {
                     elements.add(new Eot());
+                } else if (tagName.equals(TAG_SOL)) {
+                    elements.add(new Sol());
+                } else if (tagName.equals(TAG_SOT)) {
+                    elements.add(new Sot());
                 } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)

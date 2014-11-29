@@ -193,6 +193,13 @@ public class Source {
     }
 
     /**
+     * Return a character by index
+     */
+    public char get(int index){
+        return text[index];
+    }
+
+    /**
      * Return current offset.
      *
      * @return offset from begin.

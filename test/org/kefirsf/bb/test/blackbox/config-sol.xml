@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
+    <code>
+        <pattern><sol/><var parse="false"/><eol/></pattern>
+        <pattern><sot/><var parse="false"/><eol/></pattern>
+        <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
+    </code>
+
+    <code priority="1">
+        <pattern><sol/>line</pattern>
+        <template>newline</template>
+    </code>
+</configuration>
