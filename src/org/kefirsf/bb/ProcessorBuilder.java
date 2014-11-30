@@ -148,12 +148,8 @@ class ProcessorBuilder {
                 elements.add(new PatternJunk());
             } else if (element instanceof Eol){
                 elements.add(new ProcEol(((Eol) element).getCount()));
-            } else if (element instanceof Eot){
-                elements.add(new ProcEot());
             } else if (element instanceof Bol){
                 elements.add(new ProcBol());
-            } else if (element instanceof Bot){
-                elements.add(new ProcBot());
             }
         }
         return new ProcPattern(elements);

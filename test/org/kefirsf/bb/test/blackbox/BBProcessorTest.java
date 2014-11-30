@@ -137,14 +137,14 @@ public class BBProcessorTest {
     }
 
     @Test
-    public void testEolEot(){
+    public void testEol(){
         TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-spec.xml");
         assertProcess(processor, "<p>Paragraph1</p><p>Paragraph2</p>", "Paragraph1\n\nParagraph2");
         assertProcess(processor, "newline", "line\n");
     }
 
     @Test
-    public void testBolBot(){
+    public void testBol(){
         TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-sol.xml");
         assertProcess(processor, "<p>Paragraph1</p><p>Paragraph2</p>", "Paragraph1\nParagraph2");
         assertProcess(processor, "newline", "line");
