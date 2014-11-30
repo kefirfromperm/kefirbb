@@ -37,8 +37,8 @@
             <xsd:element name="junk"/>
             <xsd:element name="eol"/>
             <xsd:element name="eot"/>
-            <xsd:element name="sol"/>
-            <xsd:element name="sot"/>
+            <xsd:element name="bol"/>
+            <xsd:element name="bot"/>
         </xsd:choice>
         <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
     </xsd:complexType>

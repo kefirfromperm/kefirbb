@@ -150,10 +150,10 @@ class ProcessorBuilder {
                 elements.add(new ProcEol());
             } else if (element instanceof Eot){
                 elements.add(new ProcEot());
-            } else if (element instanceof Sol){
-                elements.add(new ProcSol());
-            } else if (element instanceof Sot){
-                elements.add(new ProcSot());
+            } else if (element instanceof Bol){
+                elements.add(new ProcBol());
+            } else if (element instanceof Bot){
+                elements.add(new ProcBot());
             }
         }
         return new ProcPattern(elements);

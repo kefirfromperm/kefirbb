@@ -144,7 +144,7 @@ public class BBProcessorTest {
     }
 
     @Test
-    public void testSolSot(){
+    public void testBolBot(){
         TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-sol.xml");
         assertProcess(processor, "<p>Paragraph1</p><p>Paragraph2</p>", "Paragraph1\nParagraph2");
         assertProcess(processor, "newline", "line");

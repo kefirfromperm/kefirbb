@@ -1,10 +1,10 @@
 package org.kefirsf.bb.proc;
 
 /**
- * Start of text
+ * Beginning of text
  * @author kefir
  */
-public class ProcSot implements ProcPatternElement {
+public class ProcBot implements ProcPatternElement {
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         return isNextIn(context.getSource());
     }
