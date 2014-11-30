@@ -6,10 +6,28 @@ package org.kefirsf.bb.proc;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class ProcEol implements ProcPatternElement {
+    private final int count;
+
+    public ProcEol(int count) {
+        this.count = count;
+    }
+
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Source source = context.getSource();
 
-        if(!source.hasNext()){
+        int offset = source.getOffset();
+        boolean flag = true;
+        for (int i = 0; i < count && flag; i++) {
+            flag = parseOne(source);
+        }
+        if (!flag) {
+            source.setOffset(offset);
+        }
+        return flag;
+    }
+
+    private boolean parseOne(Source source) {
+        if (!source.hasNext()) {
             return true;
         }
         char c = source.current();
@@ -31,25 +49,36 @@ public class ProcEol implements ProcPatternElement {
     }
 
     public boolean isNextIn(Source source) {
-        if(source.hasNext()){
-            char c = source.current();
-            return c == '\n' || c == '\r';
-        } else {
-            return true;
+        int offset = source.getOffset();
+        boolean flag = true;
+        for (int i = 0; i < count && flag; i++) {
+            flag = parseOne(source);
         }
+        source.setOffset(offset);
+        return flag;
     }
 
     public int findIn(Source source) {
-        int n = source.find(new char[]{'\n'}, false);
-        int r = source.find(new char[]{'\r'}, false);
-        if (n >= 0 && r >= 0) {
-            return Math.min(n, r);
-        } else if (n >= 0) {
-            return n;
-        } else if (r >= 0) {
-            return r;
-        } else {
-            return source.getLength();
-        }
+        int offset = source.getOffset();
+
+        int index;
+        do {
+            int n = source.find(new char[]{'\n'}, false);
+            int r = source.find(new char[]{'\r'}, false);
+            if (n >= 0 && r >= 0) {
+                index = Math.min(n, r);
+            } else if (n >= 0) {
+                index = n;
+            } else if (r >= 0) {
+                index = r;
+            } else {
+                index = source.getLength();
+            }
+            source.setOffset(index);
+        } while (!isNextIn(source));
+
+        source.setOffset(offset);
+
+        return index;
     }
 }

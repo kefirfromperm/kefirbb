@@ -35,7 +35,11 @@
                 </xsd:complexType>
             </xsd:element>
             <xsd:element name="junk"/>
-            <xsd:element name="eol"/>
+            <xsd:element name="eol">
+                <xsd:complexType>
+                    <xsd:attribute name="count" type="xsd:integer" default="1"/>
+                </xsd:complexType>
+            </xsd:element>
             <xsd:element name="eot"/>
             <xsd:element name="bol"/>
             <xsd:element name="bot"/>

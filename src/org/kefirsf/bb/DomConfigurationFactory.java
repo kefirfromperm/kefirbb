@@ -55,6 +55,7 @@ public class DomConfigurationFactory {
     private static final String TAG_CONSTANT_ATTR_IGNORE_CASE = "ignoreCase";
     private static final String TAG_JUNK = "junk";
     private static final String TAG_EOL = "eol";
+    private static final String TAG_EOL_ATTR_COUNT = "count";
     private static final String TAG_EOT = "eot";
     private static final String TAG_BOL = "bol";
     private static final String TAG_BOT = "bot";
@@ -375,7 +376,7 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_JUNK)) {
                     elements.add(new Junk());
                 } else if (tagName.equals(TAG_EOL)) {
-                    elements.add(new Eol());
+                    elements.add(new Eol(nodeAttribute(el, TAG_EOL_ATTR_COUNT, Eol.DEFAULT_COUNT)));
                 } else if (tagName.equals(TAG_EOT)) {
                     elements.add(new Eot());
                 } else if (tagName.equals(TAG_BOL)) {

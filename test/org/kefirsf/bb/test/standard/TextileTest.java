@@ -109,7 +109,7 @@ public class TextileTest extends AbstractConfigurationTest {
         );
 
         assertProcess(
-                "<p>A single paragraph.</p><p>Followed by another.</p>",
+                "<p>A single paragraph.<br/>With a line break.</p><p>Followed by another.</p>",
                 "A single paragraph.\nWith a line break.\n\nFollowed by another."
         );
 
