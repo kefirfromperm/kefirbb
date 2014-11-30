@@ -14,34 +14,9 @@ public class ProcEol implements ProcPatternElement {
 
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Source source = context.getSource();
-
-        int offset = source.getOffset();
-        boolean flag = true;
-        for (int i = 0; i < count && flag; i++) {
-            flag = parseOne(source);
-        }
-        if (!flag) {
-            source.setOffset(offset);
-        }
-        return flag;
-    }
-
-    private boolean parseOne(Source source) {
-        if (!source.hasNext()) {
-            return true;
-        }
-        char c = source.current();
-        if (c == '\n') {
-            source.incOffset();
-            if (source.hasNext() && source.current() == '\r') {
-                source.incOffset();
-            }
-            return true;
-        } else if (c == '\r') {
-            source.incOffset();
-            if (source.hasNext() && source.current() == '\n') {
-                source.incOffset();
-            }
+        int len = match(source, source.getOffset());
+        if(len>=0){
+            source.incOffset(len);
             return true;
         } else {
             return false;
@@ -49,18 +24,10 @@ public class ProcEol implements ProcPatternElement {
     }
 
     public boolean isNextIn(Source source) {
-        int offset = source.getOffset();
-        boolean flag = true;
-        for (int i = 0; i < count && flag; i++) {
-            flag = parseOne(source);
-        }
-        source.setOffset(offset);
-        return flag;
+        return match(source, source.getOffset())>=0;
     }
 
     public int findIn(Source source) {
-        int offset = source.getOffset();
-
         int index;
         do {
             int n = source.find(new char[]{'\n'}, false);
@@ -74,11 +41,50 @@ public class ProcEol implements ProcPatternElement {
             } else {
                 index = source.getLength();
             }
-            source.setOffset(index);
-        } while (!isNextIn(source));
-
-        source.setOffset(offset);
+        } while (match(source, index)<0);
 
         return index;
+    }
+
+    /**
+     * @return real length of the tag or -1 if not found
+     */
+    private int match(Source source, int index){
+        int ind = index;
+        for(int i=0;i<count;i++){
+            int len = calcLength(source, ind);
+            if(len<0){
+                return -1;
+            }
+            ind+=len;
+        }
+
+        return ind - index;
+    }
+
+    /**
+     * @return
+     *  -1 if at the index there is not end of line
+     *  0 if it's end of text
+     *  1 if it's single \n or \r
+     *  2 if it's pair \n\r or \r\n
+     */
+    private int calcLength(Source source, int index){
+        if(index>=source.getLength()){
+            return 0;
+        } else {
+            char c = source.get(index);
+            if(c == '\n' || c=='\r'){
+                if (index+1 < source.getLength()) {
+                    char nc = source.get(index+1);
+                    if(c == '\n' && nc == '\r' || c == '\r' && nc == '\n'){
+                        return 2;
+                    }
+                }
+                return 1;
+            }else {
+                return -1;
+            }
+        }
     }
 }
