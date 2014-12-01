@@ -191,7 +191,11 @@
         </code>
         <code>
             <pattern><var parse="false" regex="\(+"/></pattern>
-            <template>indent:<var function="length"/>em;</template>
+            <template>padding-left:<var function="length"/>em;</template>
+        </code>
+        <code>
+            <pattern><var parse="false" regex="\)+"/></pattern>
+            <template>padding-right:<var function="length"/>em;</template>
         </code>
     </scope>
 

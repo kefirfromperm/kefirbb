@@ -62,23 +62,28 @@ public class TextileTest extends AbstractConfigurationTest {
         );
 
         assertProcess(
-                "<p style=\"indent:1em;\">Left indent 1em.</p>",
+                "<p style=\"padding-left:1em;\">Left indent 1em.</p>",
                 "p(. Left indent 1em."
         );
 
         assertProcess(
-                "<p style=\"indent:2em;\">Left indent 2em.</p>",
+                "<p style=\"padding-left:2em;\">Left indent 2em.</p>",
                 "p((. Left indent 2em."
         );
 
         assertProcess(
-                "<p style=\"indent:3em;\">Left indent 3em.</p>",
+                "<p style=\"padding-left:3em;\">Left indent 3em.</p>",
                 "p(((. Left indent 3em."
         );
 
         assertProcess(
-                "<p style=\"indent:7em;\">Left indent 7em.</p>",
+                "<p style=\"padding-left:7em;\">Left indent 7em.</p>",
                 "p(((((((. Left indent 7em."
+        );
+
+        assertProcess(
+                "<p style=\"padding-right:7em;\">Right indent 7em.</p>",
+                "p))))))). Right indent 7em."
         );
     }
 
