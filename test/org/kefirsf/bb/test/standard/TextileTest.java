@@ -21,6 +21,68 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     /**
+     * Paragraphs
+     * http://txstyle.org/doc/2/paragraphs
+     */
+    @Test
+    public void testParagraphs(){
+        assertProcess(
+                "<p>A paragraph.</p><p>And a paragraph with<br/>a line break.</p>",
+                "A paragraph.\n\nAnd a paragraph with\na line break."
+        );
+
+        assertProcess(
+                "<p>A paragraph.</p><p>And a paragraph with<br/>a line break.</p>",
+                "p. A paragraph.\n\np. And a paragraph with\na line break."
+        );
+
+        assertProcess(
+                "<p>This is a normal paragraph.<br/>With a continuation line.</p>But no paragraph tags here.",
+                "This is a normal paragraph.\nWith a continuation line.\n\n But no paragraph tags here."
+        );
+
+        assertProcess(
+                "<p style=\"text-align:left;\">Aligned left paragraph (default).</p>",
+                "p<. Aligned left paragraph (default)."
+        );
+
+        assertProcess(
+                "<p style=\"text-align:right;\">Aligned right paragraph.</p>",
+                "p>. Aligned right paragraph."
+        );
+
+        assertProcess(
+                "<p style=\"text-align:center;\">Centered paragraph.</p>",
+                "p=. Centered paragraph."
+        );
+
+        assertProcess(
+                "<p style=\"text-align:justify;\">Justified paragraph.</p>",
+                "p<>. Justified paragraph."
+        );
+
+        assertProcess(
+                "<p style=\"indent:1em;\">Left indent 1em.</p>",
+                "p(. Left indent 1em."
+        );
+
+        assertProcess(
+                "<p style=\"indent:2em;\">Left indent 2em.</p>",
+                "p((. Left indent 2em."
+        );
+
+        assertProcess(
+                "<p style=\"indent:3em;\">Left indent 3em.</p>",
+                "p(((. Left indent 3em."
+        );
+
+        assertProcess(
+                "<p style=\"indent:7em;\">Left indent 7em.</p>",
+                "p(((((((. Left indent 7em."
+        );
+    }
+
+    /**
      * http://redcloth.org/hobix.com/textile/
      */
     @Test
