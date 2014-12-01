@@ -83,6 +83,48 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     /**
+     * Headers
+     * http://txstyle.org/doc/7/headings
+     */
+    @Test
+    public void testHeaders(){
+        assertProcess("<h1>Header</h1>", "h1. Header");
+        assertProcess("<h1>Header</h1>", "h1. Header\n");
+        assertProcess("<h1>Header</h1>", "h1. Header\n\n");
+
+        assertProcess("<h2>Header</h2>", "h2. Header");
+        assertProcess("<h2>Header</h2>", "h2. Header\n");
+        assertProcess("<h2>Header</h2>", "h2. Header\n\n");
+
+        assertProcess("<h3>Header</h3>", "h3. Header");
+        assertProcess("<h3>Header</h3>", "h3. Header\n");
+        assertProcess("<h3>Header</h3>", "h3. Header\n\n");
+
+        assertProcess("<h4>Header</h4>", "h4. Header");
+        assertProcess("<h4>Header</h4>", "h4. Header\n");
+        assertProcess("<h4>Header</h4>", "h4. Header\n\n");
+
+        assertProcess("<h5>Header</h5>", "h5. Header");
+        assertProcess("<h5>Header</h5>", "h5. Header\n");
+        assertProcess("<h5>Header</h5>", "h5. Header\n\n");
+
+        assertProcess("<h6>Header</h6>", "h6. Header");
+        assertProcess("<h6>Header</h6>", "h6. Header\n");
+        assertProcess("<h6>Header</h6>", "h6. Header\n\n");
+
+        assertProcess("<h3 style=\"text-align:left;\">Header</h3>", "h3<. Header");
+        assertProcess("<h3 style=\"text-align:right;\">Header</h3>", "h3>. Header");
+        assertProcess("<h3 style=\"text-align:center;\">Header</h3>", "h3=. Header");
+        assertProcess("<h3 style=\"text-align:justify;\">Header</h3>", "h3<>. Header");
+
+        assertProcess(
+                "<h5>Header</h5><h6>Header</h6><p>Paragraph.</p>",
+                "h5. Header\n\nh6. Header\n\nParagraph."
+        );
+
+    }
+
+    /**
      * http://redcloth.org/hobix.com/textile/
      */
     @Test
@@ -184,30 +226,6 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<p>A paragraph.</p>",
                 "A paragraph.\n"
         );
-
-        assertProcess("<h1>Header</h1>", "h1. Header");
-        assertProcess("<h1>Header</h1>", "h1. Header\n");
-        assertProcess("<h1>Header</h1>", "h1. Header\n\n");
-
-        assertProcess("<h2>Header</h2>", "h2. Header");
-        assertProcess("<h2>Header</h2>", "h2. Header\n");
-        assertProcess("<h2>Header</h2>", "h2. Header\n\n");
-
-        assertProcess("<h3>Header</h3>", "h3. Header");
-        assertProcess("<h3>Header</h3>", "h3. Header\n");
-        assertProcess("<h3>Header</h3>", "h3. Header\n\n");
-
-        assertProcess("<h4>Header</h4>", "h4. Header");
-        assertProcess("<h4>Header</h4>", "h4. Header\n");
-        assertProcess("<h4>Header</h4>", "h4. Header\n\n");
-
-        assertProcess("<h5>Header</h5>", "h5. Header");
-        assertProcess("<h5>Header</h5>", "h5. Header\n");
-        assertProcess("<h5>Header</h5>", "h5. Header\n\n");
-
-        assertProcess("<h6>Header</h6>", "h6. Header");
-        assertProcess("<h6>Header</h6>", "h6. Header\n");
-        assertProcess("<h6>Header</h6>", "h6. Header\n\n");
 
         assertProcess(
                 "<p>An old text</p><blockquote><p>A block quotation.</p></blockquote><p>Any old text</p>",

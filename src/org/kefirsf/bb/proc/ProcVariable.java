@@ -35,13 +35,17 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
         int end;
         if (terminator != null) {
             end = terminator.findIn(context.getSource());
+            if (end < 0) {
+                if(regex == null) {
+                    return false;
+                } else {
+                    end = context.getSource().getLength();
+                }
+            }
         } else {
             end = context.getSource().getLength();
         }
 
-        if (end < 0) {
-            return false;
-        }
 
         CharSequence value = source.sub(end);
 
