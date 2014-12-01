@@ -37,6 +37,7 @@ public class DomConfigurationFactory {
     private static final boolean DEFAULT_INHERIT_VALUE = false;
     private static final String TAG_VAR_ATTR_REGEX = "regex";
     private static final String TAG_VAR_ATTR_TRANSPARENT = "transparent";
+    private static final String TAG_VAR_ATTR_FUNCTION = "function";
     private static final String TAG_TEMPLATE = "template";
     private static final String TAG_SCOPE = "scope";
     private static final String TAG_SCOPE_ATTR_NAME = "name";
@@ -489,7 +490,14 @@ public class DomConfigurationFactory {
         for (int k = 0; k < templateList.getLength(); k++) {
             Node el = templateList.item(k);
             if (el.getNodeType() == Node.ELEMENT_NODE && el.getLocalName().equals(TAG_VAR)) {
-                elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
+                if (nodeHasAttribute(el, TAG_VAR_ATTR_FUNCTION)) {
+                    elements.add(new NamedValue(
+                            nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                            Function.valueOf(nodeAttribute(el, TAG_VAR_ATTR_FUNCTION))
+                    ));
+                } else {
+                    elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
+                }
             } else {
                 elements.add(new Constant(el.getNodeValue()));
             }
@@ -578,7 +586,7 @@ public class DomConfigurationFactory {
      * @param node          XML-node
      * @param attributeName name of attribute
      * @return true if node has attribute with specified name
-     *         false if has not
+     * false if has not
      */
     private boolean nodeHasAttribute(Node node, String attributeName) {
         return node.hasAttributes() && node.getAttributes().getNamedItem(attributeName) != null;

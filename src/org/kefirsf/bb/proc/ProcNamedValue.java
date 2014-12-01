@@ -1,11 +1,16 @@
 package org.kefirsf.bb.proc;
 
+import org.kefirsf.bb.conf.Function;
+
 /**
  * Named value to build target text
  */
 public class ProcNamedValue extends ProcNamedElement implements ProcTemplateElement {
-    public ProcNamedValue(String name) {
+    private Function function = Function.value;
+
+    public ProcNamedValue(String name, Function function) {
         super(name);
+        this.function = function;
     }
 
     /**
@@ -17,10 +22,27 @@ public class ProcNamedValue extends ProcNamedElement implements ProcTemplateElem
         Object attribute = context.getAttribute(getName());
         if (attribute == null) {
             return "null";
-        } else if (attribute instanceof CharSequence) {
-            return (CharSequence) attribute;
         } else {
-            return attribute.toString();
+            CharSequence seq;
+            if (attribute instanceof CharSequence) {
+                seq = (CharSequence) attribute;
+            } else {
+                seq = attribute.toString();
+            }
+
+            if (function == Function.value) {
+                return seq;
+            } else {
+                return String.valueOf(seq.length());
+            }
         }
+    }
+
+    public Function getFunction() {
+        return function;
+    }
+
+    public void setFunction(Function function) {
+        this.function = function;
     }
 }

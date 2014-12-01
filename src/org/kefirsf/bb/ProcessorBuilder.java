@@ -116,7 +116,8 @@ class ProcessorBuilder {
                 if (element instanceof Constant) {
                     elements.add(new TemplateConstant(((Constant) element).getValue()));
                 } else if (element instanceof NamedValue) {
-                    elements.add(new ProcNamedValue(((NamedValue) element).getName()));
+                    NamedValue el = (NamedValue) element;
+                    elements.add(new ProcNamedValue(el.getName(), el.getFunction()));
                 }
             }
             return new ProcTemplate(elements);

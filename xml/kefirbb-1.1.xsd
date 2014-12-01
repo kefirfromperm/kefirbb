@@ -4,12 +4,22 @@
             xmlns="http://kefirsf.org/kefirbb/schema"
             elementFormDefault="qualified"
             attributeFormDefault="unqualified">
+    <!-- Functions -->
+    <xsd:simpleType name="function">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="value"/>
+            <xsd:enumeration value="length"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
     <!-- The template type description -->
     <xsd:complexType name="templateType" mixed="true">
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
             <xsd:element name="var">
                 <xsd:complexType>
                     <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                    <xsd:attribute name="function" type="function" default="value">
+                    </xsd:attribute>
                 </xsd:complexType>
             </xsd:element>
         </xsd:choice>
