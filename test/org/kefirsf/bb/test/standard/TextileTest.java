@@ -7,6 +7,7 @@ import org.kefirsf.bb.ConfigurationFactory;
 
 /**
  * Tests for the Textile configuration.
+ *
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class TextileTest extends AbstractConfigurationTest {
@@ -25,7 +26,7 @@ public class TextileTest extends AbstractConfigurationTest {
      * http://txstyle.org/doc/2/paragraphs
      */
     @Test
-    public void testParagraphs(){
+    public void testParagraphs() {
         assertProcess(
                 "<p>A paragraph.</p><p>And a paragraph with<br/>a line break.</p>",
                 "A paragraph.\n\nAnd a paragraph with\na line break."
@@ -92,7 +93,7 @@ public class TextileTest extends AbstractConfigurationTest {
      * http://txstyle.org/doc/7/headings
      */
     @Test
-    public void testHeaders(){
+    public void testHeaders() {
         assertProcess("<h1>Header</h1>", "h1. Header");
         assertProcess("<h1>Header</h1>", "h1. Header\n");
         assertProcess("<h1>Header</h1>", "h1. Header\n\n");
@@ -126,14 +127,74 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<h5>Header</h5><h6>Header</h6><p>Paragraph.</p>",
                 "h5. Header\n\nh6. Header\n\nParagraph."
         );
+    }
+
+    /**
+     * Blockcode
+     * http://txstyle.org/doc/4/block-code
+     */
+    @Test
+    public void testBlockCode() {
+        // bc.
+        assertProcess("<pre><code>Code in the ond of text</code></pre>", "bc. Code in the ond of text");
+        assertProcess("<pre><code>Code with one nl</code></pre>", "bc. Code with one nl\n");
+        assertProcess("<pre><code>Code with double nl</code></pre>", "bc. Code with double nl\n\n");
+
+        assertProcess("<pre><code>Code with\na new string.</code></pre><p>And the paragraph.</p>", "bc. Code with\na new string.\n\nAnd the paragraph.");
 
     }
+
+    /**
+     * Long block code
+     */
+    @Test
+    public void testLongBlockCode(){
+        assertProcess(
+                "<pre><code>The code\n\nWith blank line.\nWith new line.</code></pre><p>End of code.</p>",
+                "bc.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
+        );
+    }
+
+    /**
+     * Preformatted text
+     * http://txstyle.org/doc/5/pre-formatted-text
+     */
+    @Test
+    public void testPreformatted(){
+        // pre.
+        assertProcess("<pre>Pre text.</pre>", "pre. Pre text.");
+        assertProcess("<pre>Pre text.</pre>", "pre. Pre text.\n");
+        assertProcess("<pre>Pre text.</pre>", "pre. Pre text.\n\n");
+
+        assertProcess("<pre>Pre text.\nWith a new line.</pre><p>Paragraph.</p>", "pre. Pre text.\nWith a new line.\n\nParagraph.");
+    }
+
+    /**
+     * Long preformatted
+     */
+    @Test
+    public void testLongPreformatted(){
+        assertProcess(
+                "<pre>The code\n\nWith blank line.\nWith new line.</pre><p>End of code.</p>",
+                "pre.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
+        );
+    }
+
+    /**
+     * Inline code
+     * http://txstyle.org/doc/21/inline-code
+     */
+    @Test
+    public void testInlineCode(){
+        assertProcess("<p>The string with <code>a code</code>.</p>", "The string with @a code@.");
+    }
+
 
     /**
      * http://redcloth.org/hobix.com/textile/
      */
     @Test
-    public void testWriting(){
+    public void testWriting() {
         assertProcess(
                 "<p>I spoke.<br/>And none replied.</p>",
                 "I spoke.\nAnd none replied."
@@ -171,7 +232,7 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     @Test
-    public void testPhrase(){
+    public void testPhrase() {
         assertProcess(
                 "<p>I <em>believe</em> every word.</p>",
                 "I _believe_ every word."
@@ -211,7 +272,7 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     @Test
-    public void testBlocks(){
+    public void testBlocks() {
         assertProcess(
                 "<p>A single paragraph.</p><p>Followed by another.</p>",
                 "A single paragraph.\n\nFollowed by another."
