@@ -230,16 +230,19 @@
             <template>&lt;h<var name="size"/> style=&quot;<var name="attrs"/>&quot;&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
         </code>
 
+        <!-- Block code -->
         <code priority="2">
             <pattern><bol/>bc. <var scope="safeXml"/><eol count="2"/></pattern>
             <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
+        <!-- Preformatted -->
         <code priority="2">
             <pattern><bol/>pre. <var scope="safeXml"/><eol count="2"/></pattern>
             <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
+        <!-- Block quote -->
         <code priority="2">
             <pattern><bol/>bq. <var scope="textile"/><eol count="2"/></pattern>
             <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
@@ -247,6 +250,12 @@
         <code priority="2">
             <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eol count="2"/></pattern>
             <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt; <var name="content"/>&lt;/p&gt;</template>
+        </code>
+
+        <!-- Comments -->
+        <code priority="2">
+            <pattern><bol/>###.<junk/><eol count="2"/></pattern>
+            <template/>
         </code>
     </scope>
 

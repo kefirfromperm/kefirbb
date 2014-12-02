@@ -149,8 +149,12 @@ public class Source {
     }
 
     public int find(char[] chars, boolean ignoreCase) {
+        return findFrom(offset, chars, ignoreCase);
+    }
+
+    public int findFrom(int index, char[] chars, boolean ignoreCase) {
         int length = chars.length;
-        for (int i = offset; i < textLength - length + 1; i++) {
+        for (int i = index; i < textLength - length + 1; i++) {
             boolean flag = true;
             for (int j = 0; j < length && flag; j++) {
                 char ct = text[i + j];
@@ -183,13 +187,6 @@ public class Source {
         char c = text[offset];
         incOffset();
         return c;
-    }
-
-    /**
-     * Return the current character without offset increment.
-     */
-    public char current(){
-        return text[offset];
     }
 
     /**

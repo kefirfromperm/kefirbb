@@ -86,6 +86,26 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<p style=\"padding-right:7em;\">Right indent 7em.</p>",
                 "p))))))). Right indent 7em."
         );
+
+        assertProcess(
+                "<p>1</p><p>2</p><p>3</p><p>4</p>",
+                "1\n\n2\n\n3\n\n4"
+        );
+
+        assertProcess(
+                "<p>1<br/>2</p>",
+                "1\n2\n\n"
+        );
+
+        assertProcess(
+                "<p>1<br/>2</p><p>3</p>",
+                "1\n2\n\n3\n\n"
+        );
+
+        assertProcess(
+                "<p>1</p><p>2</p><p>3</p><p>4</p>",
+                "1\n\n2\n\n3\n\n4"
+        );
     }
 
     /**
@@ -178,6 +198,27 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<pre>The code\n\nWith blank line.\nWith new line.</pre><p>End of code.</p>",
                 "pre.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
         );
+    }
+
+    /**
+     * Comments
+     * http://txstyle.org/doc/40/textile-comments
+     */
+    @Test
+    public void testComments(){
+        assertProcess("", "###. Comment");
+        assertProcess("", "###. Comment\n");
+        assertProcess("", "###. Comment\n\n");
+        assertProcess("", "###. Comment\nnew line\n\n");
+        assertProcess("<p>Text</p>", "###. Comment\n\nText");
+    }
+
+    /**
+     * Multiline comments
+     */
+    @Test
+    public void testMultilineComments(){
+        assertProcess("<p>Paragraph</p>", "###.. Comment\nnew line\n\nWith blank line.\n\np. Paragraph");
     }
 
     /**
