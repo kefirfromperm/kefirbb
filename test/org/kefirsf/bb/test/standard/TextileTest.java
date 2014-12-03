@@ -247,6 +247,16 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     /**
+     * No formatting
+     * http://txstyle.org/doc/6/no-textile-processing
+     */
+    @Test
+    public void testNoFormatting(){
+        assertProcess("Text", "notextile. Text");
+        assertProcess("<p>Text with no ^2^ formatting.</p>", "Text with no ==^2^== formatting.");
+    }
+
+    /**
      * Inline code
      * http://txstyle.org/doc/21/inline-code
      */
