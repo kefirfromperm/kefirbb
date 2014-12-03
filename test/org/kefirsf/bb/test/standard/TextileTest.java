@@ -168,7 +168,7 @@ public class TextileTest extends AbstractConfigurationTest {
      * Long block code
      */
     @Test
-    public void testLongBlockCode(){
+    public void testMultilineBlockCode(){
         assertProcess(
                 "<pre><code>The code\n\nWith blank line.\nWith new line.</code></pre><p>End of code.</p>",
                 "bc.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
@@ -193,7 +193,7 @@ public class TextileTest extends AbstractConfigurationTest {
      * Long preformatted
      */
     @Test
-    public void testLongPreformatted(){
+    public void testMultilinePreformatted(){
         assertProcess(
                 "<pre>The code\n\nWith blank line.\nWith new line.</pre><p>End of code.</p>",
                 "pre.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
@@ -219,6 +219,31 @@ public class TextileTest extends AbstractConfigurationTest {
     @Test
     public void testMultilineComments(){
         assertProcess("<p>Paragraph</p>", "###.. Comment\nnew line\n\nWith blank line.\n\np. Paragraph");
+    }
+
+    /**
+     * Block quotations
+     * http://txstyle.org/doc/3/block-quotations
+     */
+    @Test
+    public void testBlockQuote(){
+        assertProcess("<blockquote><p>A quoted text.</p></blockquote>", "bq. A quoted text.");
+        assertProcess("<blockquote><p>A quoted text.</p></blockquote>", "bq. A quoted text.\n");
+        assertProcess("<blockquote><p>A quoted text.</p></blockquote>", "bq. A quoted text.\n\n");
+        assertProcess("<blockquote><p>A quoted text.<br/>Newline</p></blockquote>", "bq. A quoted text.\nNewline\n\n");
+
+        assertProcess(
+                "<blockquote cite=\"http://kefirsf.org/\"><p>A quoted text.</p></blockquote>",
+                "bq.:http://kefirsf.org/ A quoted text."
+        );
+    }
+
+    @Test
+    public void testMultilineBlockQuote(){
+        assertProcess(
+                "<blockquote><p>Paragraph 1</p><p>Paragraph 2</p></blockquote><blockquote><p>New quotation</p></blockquote>",
+                "bq.. Paragraph 1\n\nParagraph 2\n\nbq.. New quotation"
+        );
     }
 
     /**

@@ -248,6 +248,11 @@
             <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="2">
+            <pattern><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><eol count="2"/></pattern>
+            <template>&lt;blockquote cite=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+        </code>
+
+        <code priority="2">
             <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eol count="2"/></pattern>
             <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt; <var name="content"/>&lt;/p&gt;</template>
         </code>
