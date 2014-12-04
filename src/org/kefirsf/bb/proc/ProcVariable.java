@@ -39,11 +39,11 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
                 if(regex == null) {
                     return false;
                 } else {
-                    end = context.getSource().getLength();
+                    end = context.getSource().length();
                 }
             }
         } else {
-            end = context.getSource().getLength();
+            end = context.getSource().length();
         }
 
 
@@ -55,7 +55,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
             if (matcher.lookingAt()) {
                 int lend = matcher.end();
                 end = offset + lend;
-                value = value.subSequence(0, lend);
+                value = matcher.group();
             } else {
                 return false;
             }

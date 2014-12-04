@@ -86,7 +86,7 @@ public class SourceTest {
     public void testGetOffset() {
         Source source = new Source(EXAMPLE);
         source.setConstantSet(new HashSet<PatternConstant>());
-        for (int i = 0; i < source.getLength(); ) {
+        for (int i = 0; i < source.length(); ) {
             assertEquals(source.getOffset(), i);
             i++;
             source.incOffset();
@@ -98,7 +98,7 @@ public class SourceTest {
         Source source = new Source(EXAMPLE);
         source.setConstantSet(new HashSet<PatternConstant>());
         int inc = 3;
-        for (int i = 0; i < source.getLength(); ) {
+        for (int i = 0; i < source.length(); ) {
             assertEquals(source.getOffset(), i);
             i += 3;
             source.incOffset(inc);
@@ -118,7 +118,7 @@ public class SourceTest {
 
     @Test
     public void testGetLength() {
-        assertEquals(new Source(EXAMPLE).getLength(), EXAMPLE_LENGTH);
+        assertEquals(new Source(EXAMPLE).length(), EXAMPLE_LENGTH);
     }
 
     @Test

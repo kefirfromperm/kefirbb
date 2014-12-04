@@ -12,7 +12,7 @@ public class PatternJunk implements ProcPatternElement {
         if (terminator != null) {
             end = terminator.findIn(context.getSource());
         } else {
-            end = context.getSource().getLength();
+            end = context.getSource().length();
         }
 
         if (end >= 0) {

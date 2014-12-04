@@ -11,7 +11,7 @@ import java.util.TreeSet;
  *
  * @author Kefir
  */
-public class Source {
+public class Source implements CharSequence {
     /**
      * Source text content
      */
@@ -192,7 +192,7 @@ public class Source {
     /**
      * Return a character by index
      */
-    public char get(int index){
+    public char charAt(int index){
         return text[index];
     }
 
@@ -245,7 +245,7 @@ public class Source {
      *
      * @return length of source text
      */
-    public int getLength() {
+    public int length() {
         return textLength;
     }
 
@@ -268,7 +268,12 @@ public class Source {
         return sub(textLength);
     }
 
+    @SuppressWarnings("NullableProblems")
     public String toString() {
-        return "org.kefirsf.bb.proc.Source{length:" + String.valueOf(textLength) + "}";
+        return String.valueOf(textLength);
+    }
+
+    public CharSequence subSequence(int start, int end) {
+        return new ArrayCharSequence(text, start, end - start);
     }
 }

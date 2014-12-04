@@ -206,15 +206,15 @@
     <scope name="ROOT" ignoreText="true">
         <!-- Paragraphs -->
         <code priority="0">
-            <pattern><bol/><var scope="textile"/><eol count="2"/></pattern>
+            <pattern><bol/><var scope="textile"/><blankline/></pattern>
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
         </code>
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>p. <var scope="textile"/><eol count="2"/></pattern>
+            <pattern ignoreCase="true"><bol/>p. <var scope="textile"/><blankline/></pattern>
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true"><bol/>p<var name="attrs" scope="parAttrs"/>. <var scope="textile"/><eol count="2"/></pattern>
+            <pattern ignoreCase="true"><bol/>p<var name="attrs" scope="parAttrs"/>. <var scope="textile"/><blankline/></pattern>
             <template>&lt;p style=&quot;<var name="attrs"/>&quot;&gt;<var/>&lt;/p&gt;</template>
         </code>
 
@@ -226,50 +226,50 @@
 
         <!-- Headers -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/>. <var scope="textile"/><eol count="2"/></pattern>
+            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/>. <var scope="textile"/><blankline/></pattern>
             <template>&lt;h<var name="size"/>&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
         </code>
         <code priority="1">
-            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/><var name="attrs" scope="parAttrs"/>. <var scope="textile"/><eol count="2"/></pattern>
+            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/><var name="attrs" scope="parAttrs"/>. <var scope="textile"/><blankline/></pattern>
             <template>&lt;h<var name="size"/> style=&quot;<var name="attrs"/>&quot;&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
         </code>
 
         <!-- Block code -->
         <code priority="2">
-            <pattern><bol/>bc. <var scope="safeXml"/><eol count="2"/></pattern>
+            <pattern><bol/>bc. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
         <!-- Preformatted -->
         <code priority="2">
-            <pattern><bol/>pre. <var scope="safeXml"/><eol count="2"/></pattern>
+            <pattern><bol/>pre. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
         <!-- Block quote -->
         <code priority="2">
-            <pattern><bol/>bq. <var scope="textile"/><eol count="2"/></pattern>
+            <pattern><bol/>bq. <var scope="textile"/><blankline/></pattern>
             <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="2">
-            <pattern><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><eol count="2"/></pattern>
+            <pattern><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><blankline/></pattern>
             <template>&lt;blockquote cite=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
 
         <!-- No formatting -->
         <code priority="2">
-            <pattern>notextile. <var scope="safeXml"/><eol count="2"/></pattern>
+            <pattern>notextile. <var scope="safeXml"/><blankline/></pattern>
             <template><var/></template>
         </code>
 
         <code priority="2">
-            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><eol count="2"/></pattern>
+            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><blankline/></pattern>
             <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt; <var name="content"/>&lt;/p&gt;</template>
         </code>
 
         <!-- Comments -->
         <code priority="2">
-            <pattern><bol/>###.<junk/><eol count="2"/></pattern>
+            <pattern><bol/>###.<junk/><blankline/></pattern>
             <template/>
         </code>
     </scope>

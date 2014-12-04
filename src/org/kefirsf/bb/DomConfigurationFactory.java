@@ -58,6 +58,7 @@ public class DomConfigurationFactory {
     private static final String TAG_EOL = "eol";
     private static final String TAG_EOL_ATTR_COUNT = "count";
     private static final String TAG_BOL = "bol";
+    private static final String TAG_BLANKLINE = "blankline";
     private static final String TAG_NESTING = "nesting";
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
@@ -378,7 +379,9 @@ public class DomConfigurationFactory {
                     elements.add(new Eol(nodeAttribute(el, TAG_EOL_ATTR_COUNT, Eol.DEFAULT_COUNT)));
                 } else if (tagName.equals(TAG_BOL)) {
                     elements.add(new Bol());
-                } else {
+                } else if (tagName.equals(TAG_BLANKLINE)){
+                    elements.add(new BlankLine());
+                }else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
                     );

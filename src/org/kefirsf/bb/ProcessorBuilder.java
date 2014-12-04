@@ -151,6 +151,8 @@ class ProcessorBuilder {
                 elements.add(new ProcEol(((Eol) element).getCount()));
             } else if (element instanceof Bol){
                 elements.add(new ProcBol());
+            } else if (element instanceof BlankLine){
+                elements.add(new ProcBlankLine());
             }
         }
         return new ProcPattern(elements);

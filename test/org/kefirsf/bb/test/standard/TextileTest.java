@@ -34,6 +34,11 @@ public class TextileTest extends AbstractConfigurationTest {
 
         assertProcess(
                 "<p>A paragraph.</p><p>And a paragraph with<br/>a line break.</p>",
+                "A paragraph.\n \t\nAnd a paragraph with\na line break."
+        );
+
+        assertProcess(
+                "<p>A paragraph.</p><p>And a paragraph with<br/>a line break.</p>",
                 "p. A paragraph.\n\np. And a paragraph with\na line break."
         );
 
