@@ -24,29 +24,41 @@
         </xsd:choice>
     </xsd:complexType>
 
+    <xsd:complexType name="terminatingPatternElement">
+        <xsd:attribute name="ghost" type="xsd:boolean" default="false"/>
+    </xsd:complexType>
+
     <!-- The pattern type description. -->
     <xsd:complexType name="patternType" mixed="true">
         <xsd:choice minOccurs="0" maxOccurs="unbounded">
             <xsd:element name="constant">
                 <xsd:complexType>
-                    <xsd:attribute name="value" type="xsd:string"/>
-                    <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
+                    <xsd:complexContent>
+                        <xsd:extension base="terminatingPatternElement">
+                            <xsd:attribute name="value" type="xsd:string"/>
+                            <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
                 </xsd:complexType>
             </xsd:element>
-            <xsd:element name="var">
+            <xsd:element name="var" >
                 <xsd:complexType>
-                    <xsd:attribute name="name" type="xsd:string" default="variable"/>
-                    <xsd:attribute name="parse" type="xsd:boolean" default="true"/>
-                    <xsd:attribute name="regex" type="xsd:string" default=".*"/>
-                    <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
-                    <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
-                    <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
+                    <xsd:complexContent>
+                        <xsd:extension base="terminatingPatternElement">
+                            <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                            <xsd:attribute name="parse" type="xsd:boolean" default="true"/>
+                            <xsd:attribute name="regex" type="xsd:string" default=".*"/>
+                            <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
+                            <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
                 </xsd:complexType>
             </xsd:element>
             <xsd:element name="junk"/>
             <xsd:element name="bol"/>
-            <xsd:element name="eol"/>
-            <xsd:element name="blankline"/>
+            <xsd:element name="eol" type="terminatingPatternElement"/>
+            <xsd:element name="blankline" type="terminatingPatternElement"/>
         </xsd:choice>
         <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
     </xsd:complexType>

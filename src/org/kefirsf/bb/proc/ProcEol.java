@@ -6,10 +6,8 @@ package org.kefirsf.bb.proc;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class ProcEol extends AbstractEol {
-    private final int count;
-
-    public ProcEol(int count) {
-        this.count = count;
+    public ProcEol(boolean ghost) {
+        super(ghost);
     }
 
     /**
@@ -17,15 +15,11 @@ public class ProcEol extends AbstractEol {
      */
     @Override
     protected int match(Source source, int index) {
-        int ind = index;
-        for (int i = 0; i < count; i++) {
-            int len = calcLength(source, ind);
-            if (len < 0) {
-                return -1;
-            }
-            ind += len;
+        int len = calcLength(source, index);
+        if (len < 0) {
+            return -1;
+        } else {
+            return len;
         }
-
-        return ind - index;
     }
 }

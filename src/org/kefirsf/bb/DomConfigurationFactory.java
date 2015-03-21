@@ -56,12 +56,13 @@ public class DomConfigurationFactory {
     private static final String TAG_CONSTANT_ATTR_IGNORE_CASE = "ignoreCase";
     private static final String TAG_JUNK = "junk";
     private static final String TAG_EOL = "eol";
-    private static final String TAG_EOL_ATTR_COUNT = "count";
     private static final String TAG_BOL = "bol";
     private static final String TAG_BLANKLINE = "blankline";
     private static final String TAG_NESTING = "nesting";
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
+    private static final String TAG_ATTR_GHOST = "ghost";
+    private static final boolean DEFAULT_GHOST_VALUE = false;
 
     /**
      * Instance of the class.
@@ -376,11 +377,11 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_JUNK)) {
                     elements.add(new Junk());
                 } else if (tagName.equals(TAG_EOL)) {
-                    elements.add(new Eol(nodeAttribute(el, TAG_EOL_ATTR_COUNT, Eol.DEFAULT_COUNT)));
+                    elements.add(parseEol(el));
                 } else if (tagName.equals(TAG_BOL)) {
                     elements.add(new Bol());
                 } else if (tagName.equals(TAG_BLANKLINE)){
-                    elements.add(new BlankLine());
+                    elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)));
                 }else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
@@ -393,6 +394,10 @@ public class DomConfigurationFactory {
         return new Pattern(elements);
     }
 
+    private Eol parseEol(Node el) {
+        return new Eol(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
+    }
+
     /**
      * Parse constant pattern element
      *
@@ -403,7 +408,8 @@ public class DomConfigurationFactory {
     private Constant parseConstant(Node el, boolean ignoreCase) {
         return new Constant(
                 nodeAttribute(el, TAG_CONSTANT_ATTR_VALUE),
-                nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase)
+                nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase),
+                nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)
         );
     }
 
@@ -478,6 +484,7 @@ public class DomConfigurationFactory {
         } else {
             variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME));
         }
+        variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
         return variable;
     }
 

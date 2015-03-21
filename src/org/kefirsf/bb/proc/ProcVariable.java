@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
  */
 public class ProcVariable extends ProcNamedElement implements ProcPatternElement {
     private final java.util.regex.Pattern regex;
+    private final boolean ghost;
 
     /**
      * Create named variable
@@ -16,9 +17,10 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
      * @param name  variable name
      * @param regex regular expression pattern
      */
-    public ProcVariable(String name, java.util.regex.Pattern regex) {
+    public ProcVariable(String name, java.util.regex.Pattern regex, boolean ghost) {
         super(name);
         this.regex = regex;
+        this.ghost = ghost;
     }
 
     /**
@@ -67,7 +69,9 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
             if (attr == null) {
                 setAttribute(context, value);
             }
-            source.incOffset(end - offset);
+            if(!ghost) {
+                source.incOffset(end - offset);
+            }
             return true;
         } else {
             return false;
@@ -95,7 +99,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
         if (regex != null) {
             Matcher matcher = regex.matcher(source.subToEnd());
             if (matcher.find()) {
-                return matcher.start();
+                return source.getOffset() + matcher.start();
             } else {
                 return -1;
             }

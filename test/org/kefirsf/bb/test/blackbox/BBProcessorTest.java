@@ -149,4 +149,10 @@ public class BBProcessorTest {
         assertProcess(processor, "<p>Paragraph1</p><p>Paragraph2</p>", "Paragraph1\nParagraph2");
         assertProcess(processor, "newline", "line");
     }
+
+    @Test
+    public void testGhost(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-ghost.xml");
+        assertProcess(processor, "a1b1c1d1e1f1g1h1", "assbcde\nfg\n\nh");
+    }
 }

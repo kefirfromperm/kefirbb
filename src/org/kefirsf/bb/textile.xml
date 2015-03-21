@@ -236,41 +236,67 @@
 
         <!-- Block code -->
         <code priority="2">
-            <pattern><bol/>bc. <var scope="safeXml"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>bc. <var scope="safeXml"/><blankline/></pattern>
+            <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
+        </code>
+
+        <!-- The multiline block code -->
+        <code priority="3">
+            <pattern ignoreCase="true"><bol/>bc.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
             <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
         <!-- Preformatted -->
         <code priority="2">
-            <pattern><bol/>pre. <var scope="safeXml"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>pre. <var scope="safeXml"/><blankline/></pattern>
+            <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
+        </code>
+        <code priority="3">
+            <pattern ignoreCase="true"><bol/>pre.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
             <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
         <!-- Block quote -->
         <code priority="2">
-            <pattern><bol/>bq. <var scope="textile"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>bq. <var scope="textile"/><blankline/></pattern>
+            <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+        </code>
+        <code priority="3">
+            <pattern ignoreCase="true"><bol/>bq.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
             <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="2">
-            <pattern><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><blankline/></pattern>
             <template>&lt;blockquote cite=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
 
         <!-- No formatting -->
         <code priority="2">
-            <pattern>notextile. <var scope="safeXml"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>notextile. <var scope="safeXml"/><blankline/></pattern>
             <template><var/></template>
         </code>
 
         <code priority="2">
-            <pattern>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><blankline/></pattern>
+            <pattern ignoreCase="true"><bol/>fn<var name="number" regex="\d+"/>. <var name="content" scope="textile"/><blankline/></pattern>
             <template>&lt;p id="fn<var name="number"/>"&gt;&lt;sup&gt;<var name="number"/>&lt;/sup&gt; <var name="content"/>&lt;/p&gt;</template>
         </code>
 
         <!-- Comments -->
         <code priority="2">
-            <pattern><bol/>###.<junk/><blankline/></pattern>
+            <pattern><bol/>###. <junk/><blankline/></pattern>
             <template/>
+        </code>
+        <code priority="3">
+            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
+            <template/>
+        </code>
+    </scope>
+
+    <!-- A scope for the multiline blockauote -->
+    <scope name="bqScope" parent="textile">
+        <code priority="1">
+            <pattern><blankline/></pattern>
+            <template>&lt;/p&gt;&lt;p&gt;</template>
         </code>
     </scope>
 

@@ -23,6 +23,11 @@ public class PatternConstant implements ProcPatternElement {
     private final int valueLength;
 
     /**
+     * Don't move the cursor offset.
+     */
+    private final boolean ghost;
+
+    /**
      * Create constant element.
      *
      * @param value constant value
@@ -32,6 +37,20 @@ public class PatternConstant implements ProcPatternElement {
         this.chars = value.toCharArray();
         this.valueLength = value.length();
         this.ignoreCase = ignoreCase;
+        this.ghost = false;
+    }
+
+    /**
+     * Create constant element.
+     *
+     * @param value constant value
+     */
+    public PatternConstant(String value, boolean ignoreCase, boolean ghost) {
+        this.value = value;
+        this.chars = value.toCharArray();
+        this.valueLength = value.length();
+        this.ignoreCase = ignoreCase;
+        this.ghost = ghost;
     }
 
     /**
@@ -44,7 +63,9 @@ public class PatternConstant implements ProcPatternElement {
      */
     public boolean parse(Context context, ProcPatternElement terminator) {
         if (isNextIn(context.getSource())) {
-            context.getSource().incOffset(valueLength);
+            if(!ghost) {
+                context.getSource().incOffset(valueLength);
+            }
             return true;
         } else {
             return false;

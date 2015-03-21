@@ -5,7 +5,7 @@ package org.kefirsf.bb.conf;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Constant implements TemplateElement, PatternElement {
+public class Constant extends AbstractTerminator implements TemplateElement {
     /**
      * Constant value. String for search.
      */
@@ -41,6 +41,18 @@ public class Constant implements TemplateElement, PatternElement {
     public Constant(String value, boolean ignoreCase) {
         this.value = value;
         this.ignoreCase = ignoreCase;
+    }
+
+    /**
+     * Create constant.
+     * @param value      constant value
+     * @param ignoreCase ignore case or no
+     * @param ghost if true then processor parses it but not moves the cursor
+     */
+    public Constant(String value, boolean ignoreCase, boolean ghost) {
+        this.value = value;
+        this.ignoreCase = ignoreCase;
+        this.ghost = ghost;
     }
 
     /**
@@ -83,6 +95,7 @@ public class Constant implements TemplateElement, PatternElement {
         Constant constant = (Constant) o;
 
         if (ignoreCase != constant.ignoreCase) return false;
+        if (ghost != constant.ghost) return false;
         //noinspection RedundantIfStatement
         if (!value.equals(constant.value)) return false;
 
@@ -93,6 +106,7 @@ public class Constant implements TemplateElement, PatternElement {
     public int hashCode() {
         int result = value.hashCode();
         result = 31 * result + (ignoreCase ? 1 : 0);
+        result = 31 * result + (ghost ? 1 : 0);
         return result;
     }
 }

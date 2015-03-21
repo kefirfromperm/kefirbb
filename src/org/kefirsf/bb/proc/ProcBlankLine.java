@@ -15,6 +15,10 @@ public class ProcBlankLine extends AbstractEol {
             '\u0009', '\uFEFF'
     };
 
+    public ProcBlankLine(boolean ghost) {
+        super(ghost);
+    }
+
     /**
      * @param source text source
      * @param index  index in the text

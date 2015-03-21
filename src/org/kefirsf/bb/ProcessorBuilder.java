@@ -6,6 +6,8 @@ import org.kefirsf.bb.proc.*;
 import java.util.*;
 
 class ProcessorBuilder {
+    public static final ProcBol PROC_BOL = new ProcBol();
+    public static final PatternJunk JUNK = new PatternJunk();
     private final Configuration conf;
 
     private Map<Scope, ProcScope> createdScopes;
@@ -140,19 +142,27 @@ class ProcessorBuilder {
         List<ProcPatternElement> elements = new ArrayList<ProcPatternElement>();
         for (PatternElement element : pattern.getElements()) {
             if (element instanceof Variable) {
-                elements.add(new ProcVariable(((Variable) element).getName(), ((Variable) element).getRegex()));
+                elements.add(
+                        new ProcVariable(
+                                ((Variable) element).getName(),
+                                ((Variable) element).getRegex(),
+                                ((TerminatingPatternElement)element).isGhost()
+                        )
+                );
             } else if (element instanceof Text) {
                 elements.add(create((Text) element));
             } else if (element instanceof Constant) {
                 elements.add(createPatternConstant((Constant) element));
             } else if (element instanceof Junk) {
-                elements.add(new PatternJunk());
+                elements.add(JUNK);
             } else if (element instanceof Eol){
-                elements.add(new ProcEol(((Eol) element).getCount()));
+                elements.add(new ProcEol(((Eol) element).isGhost()));
             } else if (element instanceof Bol){
-                elements.add(new ProcBol());
+                elements.add(PROC_BOL);
             } else if (element instanceof BlankLine){
-                elements.add(new ProcBlankLine());
+                elements.add(
+                        new ProcBlankLine(((BlankLine) element).isGhost())
+                );
             }
         }
         return new ProcPattern(elements);
@@ -166,7 +176,10 @@ class ProcessorBuilder {
      */
     private PatternConstant createPatternConstant(Constant constant) {
         if (!constants.containsKey(constant)) {
-            constants.put(constant, new PatternConstant(constant.getValue(), constant.isIgnoreCase()));
+            constants.put(
+                    constant,
+                    new PatternConstant(constant.getValue(), constant.isIgnoreCase(), constant.isGhost())
+            );
         }
         return constants.get(constant);
     }

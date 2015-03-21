@@ -7,8 +7,9 @@ import java.util.regex.Pattern;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Variable extends NamedElement implements PatternElement {
+public class Variable extends NamedElement implements PatternElement, TerminatingPatternElement {
     private java.util.regex.Pattern regex;
+    private boolean ghost = false;
 
     public Variable(){
         super();
@@ -41,5 +42,14 @@ public class Variable extends NamedElement implements PatternElement {
      */
     public void setRegex(Pattern regex) {
         this.regex = regex;
+    }
+
+
+    public boolean isGhost() {
+        return ghost;
+    }
+
+    public void setGhost(boolean ghost) {
+        this.ghost = ghost;
     }
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
+    <code>
+        <pattern>a<junk/><constant value="b" ghost="true"/></pattern>
+        <template>a1</template>
+    </code>
+    <code>
+        <pattern>b<constant value="c" ghost="true"/></pattern>
+        <template>b1</template>
+    </code>
+    <code>
+        <pattern>c<var regex="d" ghost="true"/></pattern>
+        <template>c1</template>
+    </code>
+    <code>
+        <pattern>d</pattern>
+        <template>d1</template>
+    </code>
+
+    <code>
+        <pattern>e<eol ghost="true"/></pattern>
+        <template>e1</template>
+    </code>
+    <code>
+        <pattern><eol/>f</pattern>
+        <template>f1</template>
+    </code>
+
+    <code>
+        <pattern>g<blankline ghost="true"/></pattern>
+        <template>g1</template>
+    </code>
+    <code>
+        <pattern><blankline/>h</pattern>
+        <template>h1</template>
+    </code>
+</configuration>

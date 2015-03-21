@@ -8,11 +8,19 @@ public abstract class AbstractEol implements ProcPatternElement {
     protected static final char[] AN = new char[]{'\n'};
     protected static final char[] AR = new char[]{'\r'};
 
+    protected final boolean ghost;
+
+    public AbstractEol(boolean ghost) {
+        this.ghost = ghost;
+    }
+
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Source source = context.getSource();
         int len = match(source, source.getOffset());
         if (len >= 0) {
-            source.incOffset(len);
+            if(!ghost) {
+                source.incOffset(len);
+            }
             return true;
         } else {
             return false;
