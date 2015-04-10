@@ -25,6 +25,11 @@ public class Scope {
     public static final boolean DEFAULT_IGNORE_TEXT = false;
 
     /**
+     * By default simple text is permitted.
+     */
+    public static final boolean DEFAULT_STRONG = false;
+
+    /**
      * Scope name.
      */
     private String name;
@@ -33,6 +38,12 @@ public class Scope {
      * Parent scope. Scope inherit all codes of his parent scope.
      */
     private Scope parent;
+
+    /**
+     * If it is true then only codes of this scope are permitted.
+     * When the parser meets a text or non scope code the parser stops parsing.
+     */
+    private boolean strong = DEFAULT_STRONG;
 
     /**
      * Ignore or not text outer the codes. By default false.
@@ -121,6 +132,14 @@ public class Scope {
      */
     public void setParent(Scope parent) {
         this.parent = parent;
+    }
+
+    public boolean isStrong() {
+        return strong;
+    }
+
+    public void setStrong(boolean strong) {
+        this.strong = strong;
     }
 
     /**

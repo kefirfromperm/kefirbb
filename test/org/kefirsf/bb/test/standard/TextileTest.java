@@ -111,6 +111,22 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<p>1</p><p>2</p><p>3</p><p>4</p>",
                 "1\n\n2\n\n3\n\n4"
         );
+
+        // Language
+        assertProcess(
+                "<p lang=\"ru\">Language</p>",
+                "p[ru]. Language"
+        );
+
+        assertProcess(
+                "<p style=\"text-align:left;padding-left:1em;\" lang=\"ru\">Language right</p>",
+                "p<([ru]. Language right"
+        );
+
+        assertProcess(
+                "<p lang=\"ru\" style=\"padding-right:1em;text-align:right;\">Language left</p>",
+                "p[ru])>. Language left"
+        );
     }
 
     /**
@@ -151,6 +167,22 @@ public class TextileTest extends AbstractConfigurationTest {
         assertProcess(
                 "<h5>Header</h5><h6>Header</h6><p>Paragraph.</p>",
                 "h5. Header\n\nh6. Header\n\nParagraph."
+        );
+
+        // Language
+        assertProcess(
+                "<h1 lang=\"ru\">Language</h1>",
+                "h1[ru]. Language"
+        );
+
+        assertProcess(
+                "<h1 style=\"text-align:left;padding-left:1em;\" lang=\"ru\">Language right</h1>",
+                "h1<([ru]. Language right"
+        );
+
+        assertProcess(
+                "<h1 lang=\"ru\" style=\"padding-right:1em;text-align:right;\">Language left</h1>",
+                "h1[ru])>. Language left"
         );
     }
 
@@ -224,6 +256,7 @@ public class TextileTest extends AbstractConfigurationTest {
     @Test
     public void testMultilineComments(){
         assertProcess("<p>Paragraph</p>", "###.. Comment\nnew line\n\nWith blank line.\n\np. Paragraph");
+        assertProcess("<p lang=\"ru\">Paragraph</p>", "###.. Comment\nnew line\n\nWith blank line.\n\np[ru]. Paragraph");
     }
 
     /**

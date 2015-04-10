@@ -38,10 +38,12 @@ public class DomConfigurationFactory {
     private static final String TAG_VAR_ATTR_REGEX = "regex";
     private static final String TAG_VAR_ATTR_TRANSPARENT = "transparent";
     private static final String TAG_VAR_ATTR_FUNCTION = "function";
+    private static final String TAG_VAR_ATTR_ALLOW_BLANK = "allowBlank";
     private static final String TAG_TEMPLATE = "template";
     private static final String TAG_SCOPE = "scope";
     private static final String TAG_SCOPE_ATTR_NAME = "name";
     private static final String TAG_SCOPE_ATTR_PARENT = "parent";
+    private static final String TAG_SCOPE_ATTR_STRONG = "strong";
     private static final String TAG_SCOPE_ATTR_IGNORE_TEXT = "ignoreText";
     private static final String TAG_CODEREF = "coderef";
     private static final String TAG_CODEREF_ATTR_NAME = TAG_CODE_ATTR_NAME;
@@ -261,6 +263,7 @@ public class DomConfigurationFactory {
                             name,
                             nodeAttribute(scopeElement, TAG_SCOPE_ATTR_IGNORE_TEXT, Scope.DEFAULT_IGNORE_TEXT)
                     );
+            scope.setStrong(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_STRONG, Scope.DEFAULT_STRONG));
             scopes.put(scope.getName(), scope);
         }
 
@@ -462,6 +465,7 @@ public class DomConfigurationFactory {
                     scope,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
+            text.setAllowBlank(nodeAttribute(el, TAG_VAR_ATTR_ALLOW_BLANK, true));
         }
         return text;
     }

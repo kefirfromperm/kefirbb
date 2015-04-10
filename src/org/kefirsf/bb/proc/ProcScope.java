@@ -32,6 +32,12 @@ public class ProcScope {
     private Set<ProcCode> scopeCodes = null;
 
     /**
+     * If it is true then only codes of this scope are permitted.
+     * When the parser meets a text or non scope code the parser stops parsing.
+     */
+    private boolean strong = false;
+
+    /**
      * Mark that not parseable text must not append to result
      */
     private boolean ignoreText = false;
@@ -93,7 +99,10 @@ public class ProcScope {
             }
 
             if (!parsed) {
-                if (ignoreText) {
+                if(strong){
+                    // If scope is strong and has not a code from scope then stop the scope processing
+                    break;
+                } else if (ignoreText) {
                     source.incOffset();
                 } else {
                     context.getTarget().append(source.next());
@@ -182,6 +191,14 @@ public class ProcScope {
         for(ProcCode code:cachedCodes){
             hasCrazyCode = hasCrazyCode || !code.startsWithConstant();
         }
+    }
+
+    public boolean isStrong() {
+        return strong;
+    }
+
+    public void setStrong(boolean strong) {
+        this.strong = strong;
     }
 
     /**

@@ -175,8 +175,19 @@
         </code>
     </scope>
 
-    <!-- Paragaph's styles -->
-    <scope name="parAttrs" ignoreText="true">
+    <!-- Block's attributes -->
+    <scope name="blockAttrs" strong="true">
+        <code>
+            <pattern>[<var regex="\w{2}"/>]</pattern>
+            <template> lang=&quot;<var/>&quot;</template>
+        </code>
+        <code>
+            <pattern><var name="attrs" scope="parAttrs" allowBlank="false"/></pattern>
+            <template> style=&quot;<var name="attrs"/>&quot;</template>
+        </code>
+    </scope>
+    <!-- Paragraph's styles -->
+    <scope name="parAttrs" ignoreText="true" strong="true">
         <code>
             <pattern>&lt;</pattern>
             <template>text-align:left;</template>
@@ -210,12 +221,8 @@
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
         </code>
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>p. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
-        </code>
-        <code priority="1">
-            <pattern ignoreCase="true"><bol/>p<var name="attrs" scope="parAttrs"/>. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;p style=&quot;<var name="attrs"/>&quot;&gt;<var/>&lt;/p&gt;</template>
+            <pattern ignoreCase="true"><bol/>p<var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
+            <template>&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;</template>
         </code>
 
         <!-- Free string -->
@@ -226,48 +233,44 @@
 
         <!-- Headers -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/>. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;h<var name="size"/>&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
-        </code>
-        <code priority="1">
-            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/><var name="attrs" scope="parAttrs"/>. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;h<var name="size"/> style=&quot;<var name="attrs"/>&quot;&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
+            <pattern ignoreCase="true"><bol/>h<var name="size" parse="false" regex="[1-6]"/><var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
+            <template>&lt;h<var name="size"/><var name="attrs"/>&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
         </code>
 
         <!-- Block code -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>bc. <var scope="safeXml"/><blankline/></pattern>
-            <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
+            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
+            <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
         <!-- The multiline block code -->
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>bc.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
-            <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
+            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
         <!-- Preformatted -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>pre. <var scope="safeXml"/><blankline/></pattern>
-            <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
+            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
+            <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>pre.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
-            <template>&lt;pre&gt;<var/>&lt;/pre&gt;</template>
+            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
         <!-- Block quote -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>bq. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
+            <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>bq.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
-            <template>&lt;blockquote&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>bq.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><blankline/></pattern>
-            <template>&lt;blockquote cite=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.:<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/> <var scope="textile"/><blankline/></pattern>
+            <template>&lt;blockquote<var name="attrs"/> cite=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
 
         <!-- No formatting -->
@@ -287,7 +290,7 @@
             <template/>
         </code>
         <code priority="3">
-            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)[\d&lt;&gt;=\(\)]*\.)" ghost="true"/></pattern>
+            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template/>
         </code>
     </scope>

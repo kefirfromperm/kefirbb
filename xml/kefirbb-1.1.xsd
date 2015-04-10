@@ -51,6 +51,7 @@
                             <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
                             <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
                             <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="allowBlank" type="xsd:boolean" default="true"/>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
@@ -112,6 +113,12 @@
                             </xsd:choice>
                             <xsd:attribute name="name" type="xsd:ID" use="required"/>
                             <xsd:attribute name="parent" type="xsd:IDREF" use="optional"/>
+
+                            <!--
+                            Allows only scope codes not a text. When meets a text or non scope code breaks
+                            the parsing.
+                             -->
+                            <xsd:attribute name="strong" type="xsd:boolean" use="optional" default="false"/>
                             <xsd:attribute name="ignoreText" type="xsd:boolean" use="optional" default="false"/>
                         </xsd:complexType>
                     </xsd:element>

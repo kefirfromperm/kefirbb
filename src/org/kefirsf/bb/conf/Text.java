@@ -8,6 +8,7 @@ package org.kefirsf.bb.conf;
 public class Text extends NamedElement implements PatternElement {
     private Scope scope;
     private boolean transparent;
+    private boolean allowBlank;
 
     public Text() {
         super();
@@ -35,6 +36,14 @@ public class Text extends NamedElement implements PatternElement {
      */
     public void setScope(Scope scope) {
         this.scope = scope;
+    }
+
+    public boolean isAllowBlank() {
+        return allowBlank;
+    }
+
+    public void setAllowBlank(boolean allowBlank) {
+        this.allowBlank = allowBlank;
     }
 
     /**

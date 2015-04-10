@@ -18,22 +18,26 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
      */
     private final boolean transparent;
 
+    private final boolean allowBlank;
+
     /**
      * Создает именованный элемент
      *
      * @param name        имя переменной
      * @param transparent mark that scope variable must be accessible from parent context
      */
-    public ProcText(String name, boolean transparent) {
+    public ProcText(String name, boolean transparent, boolean allowBlank) {
         super(name);
         scope = null;
         this.transparent = transparent;
+        this.allowBlank = allowBlank;
     }
 
-    public ProcText(String name, ProcScope scope, boolean transparent) {
+    public ProcText(String name, ProcScope scope, boolean transparent, boolean allowBlank) {
         super(name);
         this.scope = scope;
         this.transparent = transparent;
+        this.allowBlank = allowBlank;
     }
 
     /**
@@ -62,7 +66,7 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
             child.mergeWithParent();
         }
         setAttribute(context, target);
-        return true;
+        return allowBlank || target.length()>0;
     }
 
     /**

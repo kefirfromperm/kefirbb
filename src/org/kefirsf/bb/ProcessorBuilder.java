@@ -57,6 +57,7 @@ class ProcessorBuilder {
         if (created == null) {
             created = new ProcScope(scope.getName());
             createdScopes.put(scope, created);
+            created.setStrong(scope.isStrong());
             created.setIgnoreText(scope.isIgnoreText());
             if (scope.getParent() != null) {
                 created.setParent(createScope(scope.getParent()));
@@ -194,10 +195,12 @@ class ProcessorBuilder {
             return new ProcText(
                     text.getName(),
                     createScope(scope),
-                    text.isTransparent()
+                    text.isTransparent(),
+                    text.isAllowBlank()
             );
         } else {
-            return new ProcText(text.getName(), text.isTransparent());
+            return new ProcText(text.getName(), text.isTransparent(),
+                    text.isAllowBlank());
         }
     }
 }
