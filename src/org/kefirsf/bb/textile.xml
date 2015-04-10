@@ -245,7 +245,7 @@
 
         <!-- The multiline block code -->
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn(\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
@@ -255,7 +255,7 @@
             <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn(\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
@@ -265,7 +265,7 @@
             <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|h|bc|pre|bq|notextile|fn(\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
         <code priority="2">
@@ -290,7 +290,7 @@
             <template/>
         </code>
         <code priority="3">
-            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|fn|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|fn(\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template/>
         </code>
     </scope>
