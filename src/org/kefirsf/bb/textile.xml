@@ -173,6 +173,10 @@
             <pattern>==<var scope="safeXml"/>==</pattern>
             <template><var/></template>
         </code>
+        <code>
+            <pattern>%<var inherit="true"/>%</pattern>
+            <template>&lt;span&gt;<var/>&lt;/span&gt;</template>
+        </code>
     </scope>
 
     <!-- Block's attributes -->

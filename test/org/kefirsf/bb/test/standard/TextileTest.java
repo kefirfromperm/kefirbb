@@ -196,8 +196,15 @@ public class TextileTest extends AbstractConfigurationTest {
         assertProcess("<pre><code>Code in the ond of text</code></pre>", "bc. Code in the ond of text");
         assertProcess("<pre><code>Code with one nl</code></pre>", "bc. Code with one nl\n");
         assertProcess("<pre><code>Code with double nl</code></pre>", "bc. Code with double nl\n\n");
+        assertProcess(
+                "<pre lang=\"ru\" style=\"text-align:left;padding-left:1em;\"><code>Code in the ond of text</code></pre>",
+                "bc[ru]<(. Code in the ond of text"
+        );
 
-        assertProcess("<pre><code>Code with\na new string.</code></pre><p>And the paragraph.</p>", "bc. Code with\na new string.\n\nAnd the paragraph.");
+        assertProcess(
+                "<pre><code>Code with\na new string.</code></pre><p>And the paragraph.</p>",
+                "bc. Code with\na new string.\n\nAnd the paragraph."
+        );
 
     }
 
@@ -209,6 +216,10 @@ public class TextileTest extends AbstractConfigurationTest {
         assertProcess(
                 "<pre><code>The code\n\nWith blank line.\nWith new line.</code></pre><p>End of code.</p>",
                 "bc.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
+        );
+        assertProcess(
+                "<pre style=\"text-align:left;\"><code>The code\n\nWith blank line.\nWith new line.</code></pre><p>End of code.</p>",
+                "bc<.. The code\n\nWith blank line.\nWith new line.\n\np. End of code."
         );
     }
 
@@ -223,7 +234,15 @@ public class TextileTest extends AbstractConfigurationTest {
         assertProcess("<pre>Pre text.</pre>", "pre. Pre text.\n");
         assertProcess("<pre>Pre text.</pre>", "pre. Pre text.\n\n");
 
-        assertProcess("<pre>Pre text.\nWith a new line.</pre><p>Paragraph.</p>", "pre. Pre text.\nWith a new line.\n\nParagraph.");
+        assertProcess(
+                "<pre style=\"padding-right:1em;\">Pre text.</pre>",
+                "pre). Pre text.\n\n"
+        );
+
+        assertProcess(
+                "<pre>Pre text.\nWith a new line.</pre><p>Paragraph.</p>",
+                "pre. Pre text.\nWith a new line.\n\nParagraph."
+        );
     }
 
     /**
@@ -383,6 +402,10 @@ public class TextileTest extends AbstractConfigurationTest {
                 "<p>log <sub>2</sub> x</p>",
                 "log ~2~ x"
         );
+        assertProcess(
+                "<p>The <span>span</span> example.</p>",
+                "The %span% example."
+        );
     }
 
     @Test
@@ -422,12 +445,12 @@ public class TextileTest extends AbstractConfigurationTest {
                 "fn1. Down here, in fact."
         );
         assertProcess(
-                "<p id=\"fn1\"><sup>1</sup> Down here, in fact.</p>",
-                "fn1. Down here, in fact.\n"
+                "<p id=\"fn2\"><sup>2</sup> Down here, in fact.</p>",
+                "fn2. Down here, in fact.\n"
         );
         assertProcess(
-                "<p id=\"fn1\"><sup>1</sup> Down here, in fact.</p>",
-                "fn1. Down here, in fact.\n\n"
+                "<p id=\"fn234\"><sup>234</sup> Down here, in fact.</p>",
+                "fn234. Down here, in fact.\n\n"
         );
     }
 }
