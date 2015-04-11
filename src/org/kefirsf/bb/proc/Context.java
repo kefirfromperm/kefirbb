@@ -103,7 +103,7 @@ public class Context {
      *         false if chars canceled
      */
     public boolean hasNextAdjustedForTerminator() {
-        return source.hasNext() && (terminator == null || !terminator.isNextIn(source));
+        return terminator == null || !terminator.isNextIn(source);
     }
 
     /**

@@ -126,44 +126,44 @@
             <template>&amp;trade;</template>
         </code>
         <code>
-            <pattern>_<var inherit="true"/>_</pattern>
-            <template>&lt;em&gt;<var/>&lt;/em&gt;</template>
+            <pattern>_<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>_</pattern>
+            <template>&lt;em<var name="attrs"/>&gt;<var/>&lt;/em&gt;</template>
         </code>
         <code priority="1">
-            <pattern>__<var inherit="true"/>__</pattern>
-            <template>&lt;i&gt;<var/>&lt;/i&gt;</template>
+            <pattern>__<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>__</pattern>
+            <template>&lt;i<var name="attrs"/>&gt;<var/>&lt;/i&gt;</template>
         </code>
         <code>
-            <pattern>*<var inherit="true"/>*</pattern>
-            <template>&lt;strong&gt;<var/>&lt;/strong&gt;</template>
+            <pattern>*<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>*</pattern>
+            <template>&lt;strong<var name="attrs"/>&gt;<var/>&lt;/strong&gt;</template>
         </code>
         <code priority="1">
-            <pattern>**<var inherit="true"/>**</pattern>
-            <template>&lt;b&gt;<var/>&lt;/b&gt;</template>
+            <pattern>**<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>**</pattern>
+            <template>&lt;b<var name="attrs"/>&gt;<var/>&lt;/b&gt;</template>
         </code>
         <code>
-            <pattern>??<var inherit="true"/>??</pattern>
-            <template>&lt;cite&gt;<var/>&lt;/cite&gt;</template>
+            <pattern>??<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>??</pattern>
+            <template>&lt;cite<var name="attrs"/>&gt;<var/>&lt;/cite&gt;</template>
         </code>
         <code>
-            <pattern>@<var inherit="true"/>@</pattern>
-            <template>&lt;code&gt;<var/>&lt;/code&gt;</template>
+            <pattern>@<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>@</pattern>
+            <template>&lt;code<var name="attrs"/>&gt;<var/>&lt;/code&gt;</template>
         </code>
         <code>
-            <pattern>+<var inherit="true"/>+</pattern>
-            <template>&lt;ins&gt;<var/>&lt;/ins&gt;</template>
+            <pattern>+<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>+</pattern>
+            <template>&lt;ins<var name="attrs"/>&gt;<var/>&lt;/ins&gt;</template>
         </code>
         <code priority="1">
-            <pattern>-<var inherit="true"/>-</pattern>
-            <template>&lt;del&gt;<var/>&lt;/del&gt;</template>
+            <pattern>-<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>-</pattern>
+            <template>&lt;del<var name="attrs"/>&gt;<var/>&lt;/del&gt;</template>
         </code>
         <code>
-            <pattern>^<var inherit="true"/>^</pattern>
-            <template>&lt;sup&gt;<var/>&lt;/sup&gt;</template>
+            <pattern>^<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>^</pattern>
+            <template>&lt;sup<var name="attrs"/>&gt;<var/>&lt;/sup&gt;</template>
         </code>
         <code>
-            <pattern>~<var inherit="true"/>~</pattern>
-            <template>&lt;sub&gt;<var/>&lt;/sub&gt;</template>
+            <pattern>~<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>~</pattern>
+            <template>&lt;sub<var name="attrs"/>&gt;<var/>&lt;/sub&gt;</template>
         </code>
         <code>
             <pattern>[<var regex="\d+"/>]</pattern>
@@ -174,8 +174,25 @@
             <template><var/></template>
         </code>
         <code>
-            <pattern>%<var inherit="true"/>%</pattern>
-            <template>&lt;span&gt;<var/>&lt;/span&gt;</template>
+            <pattern>%<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>%</pattern>
+            <template>&lt;span<var name="attrs"/>&gt;<var/>&lt;/span&gt;</template>
+        </code>
+    </scope>
+
+    <!-- Inline attributes -->
+    <scope name="inlineAttrs" strong="true">
+        <code>
+            <pattern><var scope="styleAttrs" allowBlank="false"/></pattern>
+            <template> style=&quot;<var/>&quot;</template>
+        </code>
+    </scope>
+
+    <!-- Style attributes -->
+    <scope name="styleAttrs" strong="true">
+        <code>
+            <!-- TODO: Create list of allowed styles -->
+            <pattern>{<var regex="([\w-]*:[\s\w\d]*;)*([\w-]*:[\s\w\d]*)?"/>}</pattern>
+            <template><var/></template>
         </code>
     </scope>
 
@@ -190,8 +207,9 @@
             <template> style=&quot;<var name="attrs"/>&quot;</template>
         </code>
     </scope>
+
     <!-- Paragraph's styles -->
-    <scope name="parAttrs" ignoreText="true" strong="true">
+    <scope name="parAttrs" ignoreText="true" strong="true" parent="styleAttrs">
         <code>
             <pattern>&lt;</pattern>
             <template>text-align:left;</template>

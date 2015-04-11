@@ -76,7 +76,7 @@ public class ProcScope {
     public void process(Context context) throws IOException, NestingException {
         Source source = context.getSource();
 
-        while (context.hasNextAdjustedForTerminator()) {
+        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator())) {
             int offset = source.getOffset();
             boolean parsed = false;
 

@@ -314,6 +314,38 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     /**
+     * Test inline CSS-styles
+     * http://txstyle.org/doc/23/css-styles
+     */
+    @Test
+    public void testCssStyle(){
+        assertProcess(
+                "<p style=\"margin:1px\">Margin.</p>",
+                "p{margin:1px}. Margin."
+        );
+
+        assertProcess(
+                "<p style=\"margin:1px;\">Margin with semicolon.</p>",
+                "p{margin:1px;}. Margin with semicolon."
+        );
+
+        assertProcess(
+                "<p style=\"margin:1px;padding:1px\">Margin padding.</p>",
+                "p{margin:1px;padding:1px}. Margin padding."
+        );
+
+        assertProcess(
+                "<p style=\"margin:1px;padding:1px;\">Margin padding with semicolon.</p>",
+                "p{margin:1px;padding:1px;}. Margin padding with semicolon."
+        );
+
+        assertProcess(
+                "<p>The <span style=\"padding: 5px;\">span</span> with a style.</p>",
+                "The %{padding: 5px;}span% with a style."
+        );
+    }
+
+    /**
      * Inline code
      * http://txstyle.org/doc/21/inline-code
      */
@@ -371,37 +403,78 @@ public class TextileTest extends AbstractConfigurationTest {
                 "I _believe_ every word."
         );
         assertProcess(
+                "<p>I <em style=\"padding:1px;\">believe</em> every word.</p>",
+                "I _{padding:1px;}believe_ every word."
+        );
+
+        assertProcess(
                 "<p>And then? She <strong>fell</strong>!</p>",
                 "And then? She *fell*!"
         );
+        assertProcess(
+                "<p>And then? She <strong style=\"padding:1px;\">fell</strong>!</p>",
+                "And then? She *{padding:1px;}fell*!"
+        );
+
         assertProcess(
                 "<p>I <i>know</i>.<br/>I <b>really</b> <i>know</i>.</p>",
                 "I __know__.\nI **really** __know__."
         );
         assertProcess(
+                "<p>I <i style=\"padding:1px;\">know</i>.<br/>I <b style=\"padding:1px;\">really</b> <i>know</i>.</p>",
+                "I __{padding:1px;}know__.\nI **{padding:1px;}really** __know__."
+        );
+
+        assertProcess(
                 "<p><cite>Cat&apos;s Cradle</cite> by Vonnegut</p>",
                 "??Cat's Cradle?? by Vonnegut"
         );
+        assertProcess(
+                "<p><cite style=\"padding:1px;\">Cat&apos;s Cradle</cite> by Vonnegut</p>",
+                "??{padding:1px;}Cat's Cradle?? by Vonnegut"
+        );
+
         assertProcess(
                 "<p>Convert with <code>r.to_html</code></p>",
                 "Convert with @r.to_html@"
         );
         assertProcess(
+                "<p>Convert with <code style=\"padding:1px;\">r.to_html</code></p>",
+                "Convert with @{padding:1px;}r.to_html@"
+        );
+
+        assertProcess(
                 "<p>I&apos;m <del>sure</del> not sure.</p>",
                 "I'm -sure- not sure."
         );
+        assertProcess(
+                "<p>I&apos;m <del style=\"padding:1px;\">sure</del> not sure.</p>",
+                "I'm -{padding:1px;}sure- not sure."
+        );
+
         assertProcess(
                 "<p>You are a <ins>pleasant</ins> child.</p>",
                 "You are a +pleasant+ child."
         );
         assertProcess(
-                "<p>a <sup>2</sup> + b <sup>2</sup> = c <sup>2</sup></p>",
-                "a ^2^ + b ^2^ = c ^2^"
+                "<p>You are a <ins style=\"padding:1px;\">pleasant</ins> child.</p>",
+                "You are a +{padding:1px;}pleasant+ child."
         );
+
+        assertProcess(
+                "<p>a <sup>2</sup> + b <sup>2</sup> = c <sup style=\"padding:1px;\">2</sup></p>",
+                "a ^2^ + b ^2^ = c ^{padding:1px;}2^"
+        );
+
         assertProcess(
                 "<p>log <sub>2</sub> x</p>",
                 "log ~2~ x"
         );
+        assertProcess(
+                "<p>log <sub style=\"padding:1px;\">2</sub> x</p>",
+                "log ~{padding:1px;}2~ x"
+        );
+
         assertProcess(
                 "<p>The <span>span</span> example.</p>",
                 "The %span% example."
