@@ -346,6 +346,34 @@ public class TextileTest extends AbstractConfigurationTest {
     }
 
     /**
+     * Test CSS classes and ids.
+     * http://txstyle.org/doc/22/css-classes
+     */
+    @Test
+    public void testCssClass(){
+        assertProcess(
+                "<p>The <span class=\"my-CLASS\">span</span> with a class.</p>",
+                "The %(my-CLASS)span% with a class."
+        );
+        assertProcess(
+                "<p>The <span id=\"my-id\">span</span> with an id.</p>",
+                "The %(#my-id)span% with an id."
+        );
+        assertProcess(
+                "<p>The <span id=\"my-id\" class=\"my-class\">span</span> with a class and an id.</p>",
+                "The %(my-class#my-id)span% with a class and an id."
+        );
+        assertProcess(
+                "<p>The <span class=\"my-class\" style=\"padding: 5px;\">span</span> with a class and a style.</p>",
+                "The %(my-class){padding: 5px;}span% with a class and a style."
+        );
+        assertProcess(
+                "<p>The <span id=\"my-id\" class=\"my-class\" style=\"padding: 5px;\">span</span> with a class and an id and a style.</p>",
+                "The %(my-class#my-id){padding: 5px;}span% with a class and an id and a style."
+        );
+    }
+
+    /**
      * Inline code
      * http://txstyle.org/doc/21/inline-code
      */

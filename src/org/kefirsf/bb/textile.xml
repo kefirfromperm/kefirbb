@@ -179,8 +179,23 @@
         </code>
     </scope>
 
+    <scope name="classAttrs">
+        <code name="cssClass" priority="1">
+            <pattern>(<var regex="[\s\w\d-]+"/>)</pattern>
+            <template> class=&quot;<var/>&quot;</template>
+        </code>
+        <code name="cssId" priority="3">
+            <pattern>(#<var regex="[\w\d-]+"/>)</pattern>
+            <template> id=&quot;<var/>&quot;</template>
+        </code>
+        <code name="cssClassId" priority="2">
+            <pattern>(<var name="class" regex="[\s\w\d-]+"/>#<var name="id" regex="[\w\d-]+"/>)</pattern>
+            <template> id=&quot;<var name="id"/>&quot; class=&quot;<var name="class"/>&quot;</template>
+        </code>
+    </scope>
+
     <!-- Inline attributes -->
-    <scope name="inlineAttrs" strong="true">
+    <scope name="inlineAttrs" strong="true" parent="classAttrs">
         <code>
             <pattern><var scope="styleAttrs" allowBlank="false"/></pattern>
             <template> style=&quot;<var/>&quot;</template>
@@ -197,7 +212,7 @@
     </scope>
 
     <!-- Block's attributes -->
-    <scope name="blockAttrs" strong="true">
+    <scope name="blockAttrs" strong="true" parent="classAttrs">
         <code>
             <pattern>[<var regex="\w{2}"/>]</pattern>
             <template> lang=&quot;<var/>&quot;</template>
