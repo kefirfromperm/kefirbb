@@ -58,10 +58,7 @@
     <scope name="basic" parent="escapeBb">
         <!-- line feed characters -->
         <code name="br">
-            <pattern>&#x0A;&#x0D;</pattern>
-            <pattern>&#x0D;&#x0A;</pattern>
-            <pattern>&#x0A;</pattern>
-            <pattern>&#x0D;</pattern>
+            <pattern><eol/></pattern>
             <template>&lt;br/&gt;</template>
         </code>
 
@@ -108,8 +105,7 @@
         <coderef name="table"/>
 
         <!-- List -->
-        <coderef name="list1"/>
-        <coderef name="list2"/>
+        <coderef name="list"/>
     </scope>
 
     <!-- Simple formatting -->
@@ -152,7 +148,7 @@
         <template>&lt;img src=&quot;http://<var name="addr"/>&quot;/&gt;</template>
     </code>
 
-    <!-- Links. http, https, malto protocols -->
+    <!-- Links. http, https, mailto protocols -->
     <scope name="url" parent="basic">
         <coderef name="bold"/>
         <coderef name="u"/>
@@ -195,7 +191,7 @@
         <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;mailto:<var name="url"/>&lt;/a&gt;</template>
     </code>
 
-    <!-- Qote block -->
+    <!-- Quote block -->
     <code name="quote">
         <pattern ignoreCase="true">[quote]<var inherit="true"/>[/quote]</pattern>
         <template>&lt;blockquote&gt;<var/>&lt;/blockquote&gt;</template>
@@ -232,25 +228,19 @@
     </scope>
 
     <!-- Standard BB list -->
-    <code name="list1" priority="2">
-        <pattern ignoreCase="true">[list]<junk/>[*]<var name="content" scope="list1Scope" />[/list]</pattern>
-        <template>&lt;ul&gt;&lt;li&gt;<var name="content"/>&lt;/li&gt;&lt;/ul&gt;</template>
+    <code name="list" priority="2">
+        <pattern ignoreCase="true">[list]<var name="content" scope="listScope" />[/list]</pattern>
+        <template>&lt;ul&gt;<var name="content"/>&lt;/ul&gt;</template>
     </code>
-    <scope name="list1Scope" parent="ROOT">
+    <scope name="listScope" ignoreText="true">
         <code>
-            <pattern>[*]</pattern>
-            <template>&lt;/li&gt;&lt;li&gt;</template>
-        </code>
-    </scope>
-
-    <code name="list2" priority="1">
-        <pattern ignoreCase="true">[list]<junk/>*<var name="content" scope="list2Scope"/>[/list]</pattern>
-        <template>&lt;ul&gt;&lt;li&gt;<var name="content"/>&lt;/li&gt;&lt;/ul&gt;</template>
-    </code>
-    <scope name="list2Scope" parent="ROOT">
-        <code>
-            <pattern>*</pattern>
-            <template>&lt;/li&gt;&lt;li&gt;</template>
+            <pattern>[*]<var scope="ROOT"/><constant value="[*]" ghost="true"/></pattern>
+            <pattern>*<var scope="ROOT"/><constant value="*" ghost="true"/></pattern>
+            <pattern>[*]<var scope="ROOT"/><constant value="*" ghost="true"/></pattern>
+            <pattern>*<var scope="ROOT"/><constant value="[*]" ghost="true"/></pattern>
+            <pattern>[*]<var scope="ROOT"/></pattern>
+            <pattern>*<var scope="ROOT"/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>
 </configuration>

@@ -79,6 +79,8 @@ public class Source implements CharSequence {
      */
     private char[] getConstantChars() {
         Set<Character> chars = new TreeSet<Character>();
+        chars.add('\n');
+        chars.add('\r');
         for (PatternConstant constant : constantSet) {
             char c = constant.getValue().charAt(0);
             if (constant.isIgnoreCase()) {

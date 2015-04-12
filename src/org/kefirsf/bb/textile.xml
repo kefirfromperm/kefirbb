@@ -330,6 +330,32 @@
             <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template/>
         </code>
+
+        <!-- Lists -->
+        <code priority="2">
+            <pattern><bol/><constant value="* " ghost="true"/><var scope="bulletListScope"/></pattern>
+            <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
+        </code>
+        <code priority="2">
+            <pattern><bol/><constant value="# " ghost="true"/><var scope="numericListScope"/></pattern>
+            <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+        </code>
+    </scope>
+
+    <!-- A scope fo bullet list -->
+    <scope name="bulletListScope" strong="true">
+        <code>
+            <pattern><bol/><constant value="* "/><var scope="textile"/><eol/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+    </scope>
+
+    <!-- A scope fo bullet list -->
+    <scope name="numericListScope" strong="true">
+        <code>
+            <pattern><bol/><constant value="# "/><var scope="textile"/><eol/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
     </scope>
 
     <!-- A scope for the multiline blockauote -->

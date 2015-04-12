@@ -554,4 +554,22 @@ public class TextileTest extends AbstractConfigurationTest {
                 "fn234. Down here, in fact.\n\n"
         );
     }
+
+    /**
+     * Simple lists
+     * http://txstyle.org/doc/8/bullet-list
+     * http://txstyle.org/doc/9/numbered-lists
+     */
+    @Test
+    public void testSimpleLists(){
+        assertProcess(
+                "<ul><li>1</li><li>2</li><li>3</li></ul>",
+                "* 1\n* 2\n* 3\n"
+        );
+
+        assertProcess(
+                "<ol><li>1</li><li>2</li><li>3</li></ol>",
+                "# 1\n# 2\n# 3\n"
+        );
+    }
 }

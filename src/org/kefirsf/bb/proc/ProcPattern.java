@@ -75,6 +75,8 @@ public class ProcPattern {
     }
 
     public boolean startsWithConstant(){
-        return firstElement instanceof PatternConstant;
+        return
+                firstElement instanceof PatternConstant ||
+                firstElement instanceof ProcEol;
     }
 }
