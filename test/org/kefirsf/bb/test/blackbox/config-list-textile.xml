@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
+    <scope name="ROOT">
+        <!-- Lists -->
+        <code>
+            <pattern><bol/><var name="list" regex="\*" ghost="true"/><var scope="listScope"/></pattern>
+            <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
+        </code>
+        <code>
+            <pattern><bol/><var name="list" regex="#" ghost="true"/><var scope="listScope"/></pattern>
+            <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+        </code>
+    </scope>
+
+    <!-- A scope of a list -->
+    <scope name="listScope" strong="true">
+        <code>
+            <pattern><bol/><var name="list" parse="false" action="check"/><var/><eol/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+        <code priority="1">
+            <pattern><bol/><var name="list" regex="\*" action="check-append" ghost="true"/><var scope="listScope"/><eol/></pattern>
+            <template>&lt;li&gt;&lt;ul&gt;<var/>&lt;/ul&gt;&lt;/li&gt;</template>
+        </code>
+        <code priority="1">
+            <pattern><bol/><var name="list" regex="#" action="check-append" ghost="true"/><var scope="listScope"/><eol/></pattern>
+            <template>&lt;li&gt;&lt;ol&gt;<var/>&lt;/ol&gt;&lt;/li&gt;</template>
+        </code>
+    </scope>
+</configuration>

@@ -39,6 +39,8 @@ public class DomConfigurationFactory {
     private static final String TAG_VAR_ATTR_TRANSPARENT = "transparent";
     private static final String TAG_VAR_ATTR_FUNCTION = "function";
     private static final String TAG_VAR_ATTR_ALLOW_BLANK = "allowBlank";
+    private static final String TAG_VAR_ATTR_REWRITE = "rewrite";
+    private static final boolean DEFAULT_REWRITE_VALUE = true;
     private static final String TAG_TEMPLATE = "template";
     private static final String TAG_SCOPE = "scope";
     private static final String TAG_SCOPE_ATTR_NAME = "name";
@@ -489,6 +491,7 @@ public class DomConfigurationFactory {
             variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME));
         }
         variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
+        variable.setRewrite(nodeAttribute(el, TAG_VAR_ATTR_REWRITE, DEFAULT_REWRITE_VALUE));
         return variable;
     }
 

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class Variable extends NamedElement implements PatternElement, TerminatingPatternElement {
     private java.util.regex.Pattern regex;
     private boolean ghost = false;
+    private boolean rewrite = true;
 
     public Variable(){
         super();
@@ -51,5 +52,16 @@ public class Variable extends NamedElement implements PatternElement, Terminatin
 
     public void setGhost(boolean ghost) {
         this.ghost = ghost;
+    }
+
+    /**
+     * If it is true, then the variable must be rewrite otherwise it must be equals context variable value.
+     */
+    public boolean isRewrite() {
+        return rewrite;
+    }
+
+    public void setRewrite(boolean rewrite) {
+        this.rewrite = rewrite;
     }
 }

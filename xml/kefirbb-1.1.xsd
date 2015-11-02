@@ -52,6 +52,16 @@
                             <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
                             <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
                             <xsd:attribute name="allowBlank" type="xsd:boolean" default="true"/>
+                            <xsd:attribute name="action" default="rewrite">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:enumeration value="rewrite"/>
+                                        <xsd:enumeration value="append"/>
+                                        <xsd:enumeration value="check"/>
+                                        <xsd:enumeration value="check-append"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:attribute>
                         </xsd:extension>
                     </xsd:complexContent>
                 </xsd:complexType>
