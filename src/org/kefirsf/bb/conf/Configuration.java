@@ -41,7 +41,7 @@ public class Configuration {
     /**
      * Predefined parameters.
      */
-    private Map<String, Object> params = new HashMap<String, Object>();
+    private Map<String, CharSequence> params = new HashMap<String, CharSequence>();
 
     /**
      * Nesting limit. How many codes can be nested.
@@ -122,7 +122,7 @@ public class Configuration {
      *
      * @return map of parameters
      */
-    public Map<String, Object> getParams() {
+    public Map<String, CharSequence> getParams() {
         return params;
     }
 
@@ -131,7 +131,7 @@ public class Configuration {
      *
      * @param params the map with parameters. Key is a parameter name.
      */
-    public void setParams(Map<String, Object> params) {
+    public void setParams(Map<String, CharSequence> params) {
         this.params = Collections.unmodifiableMap(params);
     }
 

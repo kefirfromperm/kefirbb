@@ -62,7 +62,7 @@ public class PatternConstant implements ProcPatternElement {
      *         false - other
      */
     public boolean parse(Context context, ProcPatternElement terminator) {
-        if (isNextIn(context.getSource())) {
+        if (isNextIn(context)) {
             if(!ghost) {
                 context.getSource().incOffset(valueLength);
             }
@@ -75,12 +75,12 @@ public class PatternConstant implements ProcPatternElement {
     /**
      * Check equals next sequence in source to this constant
      *
-     * @param source source text
+     * @param context current context
      * @return true if next subsequence is equals
      *         false other
      */
-    public boolean isNextIn(Source source) {
-        return source.nextIs(this);
+    public boolean isNextIn(Context context) {
+        return context.getSource().nextIs(this);
     }
 
     /**

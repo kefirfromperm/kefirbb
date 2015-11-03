@@ -4,29 +4,39 @@
                xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
     <scope name="ROOT">
         <!-- Lists -->
-        <code>
-            <pattern><bol/><var name="list" regex="\*" ghost="true"/><var scope="listScope"/></pattern>
-            <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
-        </code>
-        <code>
-            <pattern><bol/><var name="list" regex="#" ghost="true"/><var scope="listScope"/></pattern>
-            <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+        <code priority="1">
+            <pattern><bol/><var name="junk" regex="\*" ghost="true"/><var scope="listScope"/></pattern>
+            <template><var/></template>
         </code>
     </scope>
 
     <!-- A scope of a list -->
     <scope name="listScope" strong="true">
-        <code>
-            <pattern><bol/><var name="list" parse="false" action="check"/><var/><eol/></pattern>
+        <code priority="1">
+            <pattern><bol/><var name="list" regex="\*" ghost="true"/><var scope="listScope1"/></pattern>
+            <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="listScope1" strong="true">
+        <code priority="3">
+            <pattern><bol/><var name="list" action="check"/> <var/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
-        <code priority="1">
-            <pattern><bol/><var name="list" regex="\*" action="check-append" ghost="true"/><var scope="listScope"/><eol/></pattern>
-            <template>&lt;li&gt;&lt;ul&gt;<var/>&lt;/ul&gt;&lt;/li&gt;</template>
+        <code priority="2">
+            <pattern><bol/><var name="list" action="check"/><var name="junk" regex="\*" ghost="true"/><var scope="listScope2"/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
-        <code priority="1">
-            <pattern><bol/><var name="list" regex="#" action="check-append" ghost="true"/><var scope="listScope"/><eol/></pattern>
-            <template>&lt;li&gt;&lt;ol&gt;<var/>&lt;/ol&gt;&lt;/li&gt;</template>
+    </scope>
+
+    <scope name="listScope2" strong="true">
+        <code>
+            <pattern><var name="list" regex="\*" ghost="true" action="append"/> <var name="first"/><eol/><var scope="listScope1"/></pattern>
+            <template>&lt;ul&gt;&lt;li&gt;<var name="first"/>&lt;/li&gt;<var/>&lt;/ul&gt;</template>
+        </code>
+        <code>
+            <pattern><var name="list" regex="\*" ghost="true" action="append"/><var scope="listScope1"/></pattern>
+            <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
         </code>
     </scope>
 </configuration>

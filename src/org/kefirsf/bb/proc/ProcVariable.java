@@ -1,6 +1,9 @@
 package org.kefirsf.bb.proc;
 
+import org.kefirsf.bb.conf.Action;
+
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Класс переменной
@@ -10,17 +13,20 @@ import java.util.regex.Matcher;
 public class ProcVariable extends ProcNamedElement implements ProcPatternElement {
     private final java.util.regex.Pattern regex;
     private final boolean ghost;
+    private final Action action;
 
     /**
      * Create named variable
      *
-     * @param name  variable name
-     * @param regex regular expression pattern
+     * @param name   variable name
+     * @param regex  regular expression pattern
+     * @param action the variable action. Rewrite, append, check
      */
-    public ProcVariable(String name, java.util.regex.Pattern regex, boolean ghost) {
+    public ProcVariable(String name, Pattern regex, boolean ghost, Action action) {
         super(name);
         this.regex = regex;
         this.ghost = ghost;
+        this.action = action;
     }
 
     /**
@@ -28,7 +34,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
      *
      * @param context контекст
      * @return true - если удалось распарсить константу
-     *         false - если не удалось
+     * false - если не удалось
      */
     public boolean parse(Context context, ProcPatternElement terminator) {
         Source source = context.getSource();
@@ -36,16 +42,16 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
 
         int end;
         if (terminator != null) {
-            end = terminator.findIn(context.getSource());
+            end = terminator.findIn(source);
             if (end < 0) {
-                if(regex == null) {
+                if (regex == null) {
                     return false;
                 } else {
-                    end = context.getSource().length();
+                    end = source.length();
                 }
             }
         } else {
-            end = context.getSource().length();
+            end = source.length();
         }
 
 
@@ -63,13 +69,25 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
             }
         }
 
-        // Test this variable already defined and equals with this in this code scope 
-        Object attr = context.getLocalAttribute(getName());
+        // Old context value
+        CharSequence old = (CharSequence) context.getAttribute(getName());
+
+        // Test this variable already defined and equals with this in this code scope
+        CharSequence attr = (CharSequence) context.getLocalAttribute(getName());
         if (attr == null || attr.equals(value)) {
             if (attr == null) {
-                setAttribute(context, value);
+                if (action == Action.rewrite) {
+                    setAttribute(context, value);
+                } else {
+                    /* action == append */
+                    if (old != null) {
+                        setAttribute(context, new StringBuilder().append(old).append(value));
+                    } else {
+                        setAttribute(context, value);
+                    }
+                }
             }
-            if(!ghost) {
+            if (!ghost) {
                 source.incOffset(end - offset);
             }
             return true;
@@ -81,12 +99,12 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
     /**
      * Определяет, что дальше в разбираемой строке находится нужная последовательность
      *
-     * @param source source text
+     * @param context current context
      * @return true если следующие символы в строке совпадают с pattern
-     *         false если не совпадают или строка кончилась
+     * false если не совпадают или строка кончилась
      */
-    public boolean isNextIn(Source source) {
-        return regex == null || regex.matcher(source.subToEnd()).lookingAt();
+    public boolean isNextIn(Context context) {
+        return regex == null || regex.matcher(context.getSource().subToEnd()).lookingAt();
     }
 
     /**

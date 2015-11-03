@@ -15,11 +15,6 @@ public class ProcEol extends AbstractEol {
      */
     @Override
     protected int match(Source source, int index) {
-        int len = calcLength(source, index);
-        if (len < 0) {
-            return -1;
-        } else {
-            return len;
-        }
+        return calcLength(source, index);
     }
 }

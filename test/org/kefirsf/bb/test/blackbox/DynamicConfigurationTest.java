@@ -21,7 +21,7 @@ public class DynamicConfigurationTest {
     public void testAddCodeToRoot() {
         Configuration cfg = ConfigurationFactory.getInstance().create();
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.putAll(cfg.getParams());
         params.put("path", "/img/");
         cfg.setParams(params);

@@ -56,7 +56,7 @@ public class ConfigurationTest {
 
         Assert.assertNotNull(conf.getParams());
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.put("param 1", "value 1");
         params.put("param 2", "value 2");
         conf.setParams(params);

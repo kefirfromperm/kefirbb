@@ -39,8 +39,7 @@ public class DomConfigurationFactory {
     private static final String TAG_VAR_ATTR_TRANSPARENT = "transparent";
     private static final String TAG_VAR_ATTR_FUNCTION = "function";
     private static final String TAG_VAR_ATTR_ALLOW_BLANK = "allowBlank";
-    private static final String TAG_VAR_ATTR_REWRITE = "rewrite";
-    private static final boolean DEFAULT_REWRITE_VALUE = true;
+    private static final String TAG_VAR_ATTR_ACTION = "action";
     private static final String TAG_TEMPLATE = "template";
     private static final String TAG_SCOPE = "scope";
     private static final String TAG_SCOPE_ATTR_NAME = "name";
@@ -162,8 +161,8 @@ public class DomConfigurationFactory {
      * @param dc DOM-document
      * @return parameters
      */
-    private Map<String, Object> parseParams(Document dc) {
-        Map<String, Object> params = new HashMap<String, Object>();
+    private Map<String, CharSequence> parseParams(Document dc) {
+        Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         NodeList paramsElements = dc.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_PARAMS);
         if (paramsElements.getLength() > 0) {
             Element paramsElement = (Element) paramsElements.item(0);
@@ -430,6 +429,7 @@ public class DomConfigurationFactory {
         if (
                 nodeAttribute(el, TAG_VAR_ATTR_PARSE, DEFAULT_PARSE_VALUE)
                         && !nodeHasAttribute(el, TAG_VAR_ATTR_REGEX)
+                        && !nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)
                 ) {
             namedElement = parseText(el, scopes);
         } else {
@@ -491,7 +491,10 @@ public class DomConfigurationFactory {
             variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME));
         }
         variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
-        variable.setRewrite(nodeAttribute(el, TAG_VAR_ATTR_REWRITE, DEFAULT_REWRITE_VALUE));
+
+        if(nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)){
+            variable.setAction(Action.valueOf(nodeAttribute(el, TAG_VAR_ATTR_ACTION)));
+        }
         return variable;
     }
 

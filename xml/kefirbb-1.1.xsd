@@ -58,7 +58,6 @@
                                         <xsd:enumeration value="rewrite"/>
                                         <xsd:enumeration value="append"/>
                                         <xsd:enumeration value="check"/>
-                                        <xsd:enumeration value="check-append"/>
                                     </xsd:restriction>
                                 </xsd:simpleType>
                             </xsd:attribute>

@@ -69,13 +69,13 @@ public class ProcCode implements Comparable<ProcCode> {
      * Check if next sequence can be parsed with this code.
      * It's most called method in this project.
      *
-     * @param source text source
+     * @param context current context
      * @return true - if next sequence can be parsed with this code;
      *         false - only if next sequence can't be parsed with this code.
      */
-    public boolean suspicious(Source source) {
+    public boolean suspicious(Context context) {
         for(ProcPattern pattern:patterns){
-            if(pattern.suspicious(source)){
+            if(pattern.suspicious(context)){
                 return true;
             }
         }

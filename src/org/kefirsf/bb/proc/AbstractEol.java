@@ -16,7 +16,7 @@ public abstract class AbstractEol implements ProcPatternElement {
 
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Source source = context.getSource();
-        int len = match(source, source.getOffset());
+        int len = match(source);
         if (len >= 0) {
             if(!ghost) {
                 source.incOffset(len);
@@ -27,8 +27,12 @@ public abstract class AbstractEol implements ProcPatternElement {
         }
     }
 
-    public boolean isNextIn(Source source) {
-        return match(source, source.getOffset()) >= 0;
+    private int match(Source source) {
+        return match(source, source.getOffset());
+    }
+
+    public boolean isNextIn(Context context) {
+        return match(context.getSource()) >= 0;
     }
 
     public int findIn(Source source) {

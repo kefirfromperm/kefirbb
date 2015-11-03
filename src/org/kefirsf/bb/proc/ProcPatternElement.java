@@ -19,11 +19,11 @@ public interface ProcPatternElement {
     /**
      * Check next subsequence
      *
-     * @param source source text
+     * @param context current context
      * @return true pattern sequence equals with next subsequence
      *         false not equals
      */
-    public boolean isNextIn(Source source);
+    public boolean isNextIn(Context context);
 
     /**
      * Find constant

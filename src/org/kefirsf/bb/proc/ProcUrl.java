@@ -70,12 +70,12 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     /**
      * Check next subsequence
      *
-     * @param source source text
+     * @param context current context
      * @return true pattern sequence equals with next subsequence
      * false not equals
      */
-    public boolean isNextIn(Source source) {
-        return pattern.matcher(source.subToEnd()).lookingAt();
+    public boolean isNextIn(Context context) {
+        return pattern.matcher(context.getSource().subToEnd()).lookingAt();
     }
 
     /**

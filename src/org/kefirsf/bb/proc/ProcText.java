@@ -72,11 +72,11 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
     /**
      * Определяет, что дальше в разбираемой строке находится нужная последовательность
      *
-     * @param source source text
+     * @param context current context
      * @return true если следующие символы в строке совпадают с pattern
      *         false если не совпадают или строка кончилась
      */
-    public boolean isNextIn(Source source) {
+    public boolean isNextIn(Context context) {
         return true;
     }
 

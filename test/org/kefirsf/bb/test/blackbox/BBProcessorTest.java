@@ -69,10 +69,10 @@ public class BBProcessorTest {
 
         Configuration configuration = ConfigurationFactory.getInstance().create();
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.putAll(configuration.getParams());
-        params.put("var4", 4);
-        params.put("var5", 4);
+        params.put("var4", "4");
+        params.put("var5", "4");
 
         configuration.setParams(params);
 

@@ -118,12 +118,12 @@ public class ConfigurationFactory {
             }
 
             if (!properties.isEmpty()) {
-                Map<String, Object> params = new HashMap<String, Object>();
+                Map<String, CharSequence> params = new HashMap<String, CharSequence>();
                 params.putAll(configuration.getParams());
                 for (Map.Entry<Object, Object> entry : properties.entrySet()) {
                     Object key = entry.getKey();
                     if (key != null) {
-                        params.put(key.toString(), entry.getValue());
+                        params.put(key.toString(), entry.getValue().toString());
                     }
                 }
                 configuration.setParams(params);

@@ -36,7 +36,7 @@ public class ProgrammaticConfigurationTest {
         cfg.setRootScope(scope);
 
         // Set the parameter
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, CharSequence> params = new HashMap<String, CharSequence>();
         params.putAll(cfg.getParams());
         params.put("value", "KefirBB");
         cfg.setParams(params);

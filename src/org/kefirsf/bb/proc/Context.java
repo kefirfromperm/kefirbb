@@ -39,7 +39,7 @@ public class Context {
     /**
      * Context attributes
      */
-    private final Map<String, Object> attributes = new HashMap<String, Object>();
+    private final Map<String, CharSequence> attributes = new HashMap<String, CharSequence>();
 
     /**
      * тэги с ошибками. т.е. позиции в которых тэги с ошибками
@@ -103,7 +103,7 @@ public class Context {
      *         false if chars canceled
      */
     public boolean hasNextAdjustedForTerminator() {
-        return terminator == null || !terminator.isNextIn(source);
+        return terminator == null || !terminator.isNextIn(this);
     }
 
     /**
@@ -119,7 +119,7 @@ public class Context {
      * @param name  attribute name
      * @param value attribute value
      */
-    public void setAttribute(String name, Object value) {
+    public void setAttribute(String name, CharSequence value) {
         attributes.put(name, value);
     }
 

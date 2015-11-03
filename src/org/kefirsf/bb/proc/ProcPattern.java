@@ -36,12 +36,12 @@ public class ProcPattern {
     /**
      * Указывает на то что следующая последовательность вполне может оказаться данным тэгом
      *
-     * @param source источник
+     * @param context current context
      * @return true - если следующие несколько символов совпадают с первой константой в коде
      *         false - означает, что это точно не тот код
      */
-    public boolean suspicious(Source source) {
-        return firstElement.isNextIn(source);
+    public boolean suspicious(Context context) {
+        return firstElement.isNextIn(context);
     }
 
     /**

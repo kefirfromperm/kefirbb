@@ -23,7 +23,7 @@ public class PatternJunk implements ProcPatternElement {
         }
     }
 
-    public boolean isNextIn(Source source) {
+    public boolean isNextIn(Context context) {
         return false;
     }
 

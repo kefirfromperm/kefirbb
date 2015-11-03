@@ -45,14 +45,19 @@ public final class ArrayCharSequence implements CharSequence {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ArrayCharSequence)) return false;
+        if (!(o instanceof CharSequence)) return false;
 
-        ArrayCharSequence that = (ArrayCharSequence) o;
+        CharSequence that = (CharSequence) o;
 
-        if (length != that.length) return false;
-        if (offset != that.offset) return false;
-        //noinspection RedundantIfStatement
-        if (!Arrays.equals(text, that.text)) return false;
+        if(length != that.length()){
+            return false;
+        }
+
+        for(int i =0; i<length; i++){
+            if(charAt(i)!=that.charAt(i)){
+                return false;
+            }
+        }
 
         return true;
     }

@@ -84,7 +84,7 @@ public class ProcScope {
                 boolean suspicious = false;
 
                 for (ProcCode code : cachedCodes) {
-                    if (code.suspicious(source)) {
+                    if (code.suspicious(context)) {
                         suspicious = true;
                         if (code.process(context)) {
                             parsed = true;

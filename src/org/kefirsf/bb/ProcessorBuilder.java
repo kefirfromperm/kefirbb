@@ -39,7 +39,7 @@ class ProcessorBuilder {
         processor.setPropagateNestingException(conf.isPropagateNestingException());
 
         // Init scopes
-        for(ProcScope scope: createdScopes.values()){
+        for (ProcScope scope : createdScopes.values()) {
             scope.init();
         }
 
@@ -91,7 +91,7 @@ class ProcessorBuilder {
             List<Pattern> confPatterns = defCode.getPatterns();
             List<ProcPattern> procPatterns = new ArrayList<ProcPattern>(confPatterns.size());
 
-            for(Pattern confPattern: confPatterns){
+            for (Pattern confPattern : confPatterns) {
                 procPatterns.add(createPattern(confPattern));
             }
 
@@ -143,24 +143,34 @@ class ProcessorBuilder {
         List<ProcPatternElement> elements = new ArrayList<ProcPatternElement>();
         for (PatternElement element : pattern.getElements()) {
             if (element instanceof Variable) {
-                elements.add(
-                        new ProcVariable(
-                                ((Variable) element).getName(),
-                                ((Variable) element).getRegex(),
-                                ((TerminatingPatternElement)element).isGhost()
-                        )
-                );
+                Variable variable = (Variable) element;
+                if (variable.getAction() != Action.check) {
+                    elements.add(
+                            new ProcVariable(
+                                    variable.getName(),
+                                    variable.getRegex(),
+                                    variable.isGhost(),
+                                    variable.getAction())
+                    );
+                } else {
+                    elements.add(
+                            new Check(
+                                    variable.getName(),
+                                    ((TerminatingPatternElement) element).isGhost()
+                            )
+                    );
+                }
             } else if (element instanceof Text) {
                 elements.add(create((Text) element));
             } else if (element instanceof Constant) {
                 elements.add(createPatternConstant((Constant) element));
             } else if (element instanceof Junk) {
                 elements.add(JUNK);
-            } else if (element instanceof Eol){
+            } else if (element instanceof Eol) {
                 elements.add(new ProcEol(((Eol) element).isGhost()));
-            } else if (element instanceof Bol){
+            } else if (element instanceof Bol) {
                 elements.add(PROC_BOL);
-            } else if (element instanceof BlankLine){
+            } else if (element instanceof BlankLine) {
                 elements.add(
                         new ProcBlankLine(((BlankLine) element).isGhost())
                 );

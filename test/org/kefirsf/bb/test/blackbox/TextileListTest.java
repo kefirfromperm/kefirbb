@@ -48,6 +48,10 @@ public class TextileListTest extends AbstractConfigurationTest {
                 "* 1\n* 2\n* 3\n"
         );
         assertProcess(
+                "<ul><li>1</li><li>2</li><li>3</li></ul>",
+                "* 1\n* 2\n* 3"
+        );
+        assertProcess(
                 "<ul><li>1</li><li><ul><li>2</li><li>3</li><li>4</li></ul></li><li>5</li></ul>",
                 "* 1\n** 2\n** 3\n** 4\n* 5\n"
         );

@@ -7,10 +7,11 @@ package org.kefirsf.bb.proc;
  */
 public class ProcBol implements ProcPatternElement {
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
-        return isNextIn(context.getSource());
+        return isNextIn(context);
     }
 
-    public boolean isNextIn(Source source) {
+    public boolean isNextIn(Context context) {
+        Source source = context.getSource();
         int offset = source.getOffset();
         int length = source.length();
         if (offset < length) {

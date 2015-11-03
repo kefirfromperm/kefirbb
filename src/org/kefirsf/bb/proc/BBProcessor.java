@@ -20,7 +20,7 @@ public final class BBProcessor extends TextProcessorAdapter {
     private ProcScope scope = null;
     private ProcTemplate prefix = null;
     private ProcTemplate suffix = null;
-    private Map<String, Object> params = null;
+    private Map<String, CharSequence> params = null;
     private Set<PatternConstant> constants;
 
     private int nestingLimit = 0;
@@ -52,7 +52,7 @@ public final class BBProcessor extends TextProcessorAdapter {
         context.setScope(scope);
         context.setNestingLimit(nestingLimit*2);
         if (params != null) {
-            for (Map.Entry<String, Object> entry : params.entrySet()) {
+            for (Map.Entry<String, CharSequence> entry : params.entrySet()) {
                 context.setAttribute(entry.getKey(), entry.getValue());
             }
         }
@@ -120,7 +120,7 @@ public final class BBProcessor extends TextProcessorAdapter {
      *
      * @param params parameters
      */
-    public void setParams(Map<String, Object> params) {
+    public void setParams(Map<String, CharSequence> params) {
         if (this.params == null) {
             this.params = Collections.unmodifiableMap(params);
         } else {
