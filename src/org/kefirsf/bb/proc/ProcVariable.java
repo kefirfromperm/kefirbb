@@ -41,7 +41,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
         int offset = source.getOffset();
 
         int end;
-        if (terminator != null) {
+        if (terminator != null && !ghost) {
             end = terminator.findIn(source);
             if (end < 0) {
                 if (regex == null) {

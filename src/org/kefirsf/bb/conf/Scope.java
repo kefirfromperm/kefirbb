@@ -50,6 +50,8 @@ public class Scope {
      */
     private boolean ignoreText = DEFAULT_IGNORE_TEXT;
 
+    private int max = 0;
+
     /**
      * Codes of scope.
      */
@@ -189,6 +191,14 @@ public class Scope {
      */
     public void addCode(Code code) {
         codes.add(code);
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 
     @Override

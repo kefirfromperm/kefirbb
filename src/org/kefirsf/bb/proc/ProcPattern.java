@@ -79,4 +79,13 @@ public class ProcPattern {
                 firstElement instanceof PatternConstant ||
                 firstElement instanceof ProcEol;
     }
+
+    public boolean hasCheck(){
+        for(ProcPatternElement element: elements){
+            if(element instanceof Check){
+                return true;
+            }
+        }
+        return false;
+    }
 }

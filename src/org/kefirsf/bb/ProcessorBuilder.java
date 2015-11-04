@@ -67,6 +67,7 @@ class ProcessorBuilder {
                 scopeCodes.add(createCode(code));
             }
             created.setScopeCodes(scopeCodes);
+            created.setMax(scope.getMax());
         }
         return created;
     }
@@ -99,8 +100,8 @@ class ProcessorBuilder {
                     procPatterns,
                     createTemplate(defCode.getTemplate()),
                     defCode.getName(),
-                    defCode.getPriority()
-            );
+                    defCode.getPriority(),
+                    defCode.isTransparent());
             codes.put(defCode, code);
         }
         return code;

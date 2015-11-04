@@ -71,6 +71,8 @@ public class DomConfigurationFactory {
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
+    public static final String TAG_CODE_ATTR_TRANSPARENT = "transparent";
+    public static final String TAG_SCOPE_ATTR_MAX = "max";
 
     /**
      * Private constructor for prevent class initialization.
@@ -290,6 +292,7 @@ public class DomConfigurationFactory {
                 }
                 scope.setParent(parent);
             }
+            scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, 0));
         }
 
         return scopes;
@@ -325,6 +328,9 @@ public class DomConfigurationFactory {
 
         // Code priority
         code.setPriority(nodeAttribute(codeElement, TAG_CODE_ATTR_PRIORITY, Code.DEFAULT_PRIORITY));
+
+        // Do show variables outside the code?
+        code.setTransparent(nodeAttribute(codeElement, TAG_CODE_ATTR_TRANSPARENT, true));
 
         // Template to building
         NodeList templateElements = codeElement.getElementsByTagNameNS(SCHEMA_LOCATION, TAG_TEMPLATE);

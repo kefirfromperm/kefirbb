@@ -45,6 +45,11 @@ public class Check extends ProcNamedElement implements ProcPatternElement {
         }
 
         int length = old.length();
+
+        if(offset+length>source.length()){
+            return false;
+        }
+
         CharSequence val = source.sub(offset + length);
         return val.equals(old);
     }

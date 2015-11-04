@@ -27,18 +27,24 @@ public class ProcCode implements Comparable<ProcCode> {
     private final String name;
 
     /**
+     * Do show variables outside the code?
+     */
+    private final boolean transparent;
+
+    /**
      * Create the bb-code with priority
-     *
-     * @param patterns  pattern to parse the source text
+     *  @param patterns  pattern to parse the source text
      * @param template template to build target text
      * @param name     name of code
      * @param priority priority. If priority higher then code be checking early.
+     * @param transparent Do show variables outside the code?
      */
-    public ProcCode(List<ProcPattern> patterns, ProcTemplate template, String name, int priority) {
+    public ProcCode(List<ProcPattern> patterns, ProcTemplate template, String name, int priority, boolean transparent) {
         this.template = template;
         this.priority = priority;
         this.name = name;
         this.patterns = patterns;
+        this.transparent = transparent;
     }
 
     /**
@@ -56,8 +62,10 @@ public class ProcCode implements Comparable<ProcCode> {
         for(ProcPattern pattern: patterns){
             Context codeContext = new Context(context);
             if (pattern.parse(codeContext)) {
-                codeContext.mergeWithParent();
-                template.generate(context);
+                if(transparent) {
+                    codeContext.mergeWithParent();
+                }
+                template.generate(codeContext);
                 return true;
             }
         }
@@ -123,5 +131,14 @@ public class ProcCode implements Comparable<ProcCode> {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    public boolean containsCheck() {
+        for(ProcPattern pattern: patterns){
+            if(pattern.hasCheck()){
+                return true;
+            }
+        }
+        return false;
     }
 }

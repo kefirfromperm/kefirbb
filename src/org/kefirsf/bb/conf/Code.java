@@ -18,6 +18,7 @@ public class Code {
     private int priority = DEFAULT_PRIORITY;
     private List<Pattern> patterns;
     private Template template;
+    private boolean transparent = true;
 
     /**
      * Construct code definition with random name and default priority.
@@ -153,6 +154,14 @@ public class Code {
      */
     public void setTemplate(Template template) {
         this.template = template;
+    }
+
+    public boolean isTransparent() {
+        return transparent;
+    }
+
+    public void setTransparent(boolean transparent) {
+        this.transparent = transparent;
     }
 
     @Override

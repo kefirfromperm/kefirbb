@@ -58,6 +58,14 @@ public class ProcScope {
      */
     private boolean hasCrazyCode = false;
 
+    /** This scope has codes with variable action check. */
+    private boolean hasCheck = false;
+
+    /**
+     * Maximum codes to parse
+     */
+    private int max = 0;
+
     /**
      * Create scope
      *
@@ -70,13 +78,14 @@ public class ProcScope {
     /**
      * Парсит тект с BB-кодами
      *
-     * @throws IOException if can't append chars to target
+     * @throws IOException      if can't append chars to target
      * @throws NestingException if nesting is too big.
      */
     public void process(Context context) throws IOException, NestingException {
         Source source = context.getSource();
 
-        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator())) {
+        int count = 0;
+        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator()) && (max <= 0 || count < max)) {
             int offset = source.getOffset();
             boolean parsed = false;
 
@@ -93,13 +102,13 @@ public class ProcScope {
                     }
                 }
 
-                if (suspicious && !parsed) {
+                if (suspicious && !parsed && !hasCheck) {
                     context.addBadTag(offset);
                 }
             }
 
             if (!parsed) {
-                if(strong){
+                if (strong) {
                     // If scope is strong and has not a code from scope then stop the scope processing
                     break;
                 } else if (ignoreText) {
@@ -107,6 +116,8 @@ public class ProcScope {
                 } else {
                     context.getTarget().append(source.next());
                 }
+            } else {
+                count++;
             }
         }
     }
@@ -139,7 +150,7 @@ public class ProcScope {
     }
 
     public void init() {
-        if(initializationStarted && !initialized){
+        if (initializationStarted && !initialized) {
             throw new TextProcessorFactoryException("Can't init scope.");
         } else {
             initializationStarted = true;
@@ -188,8 +199,9 @@ public class ProcScope {
                 }
         );
 
-        for(ProcCode code:cachedCodes){
+        for (ProcCode code : cachedCodes) {
             hasCrazyCode = hasCrazyCode || !code.startsWithConstant();
+            hasCheck = hasCheck || code.containsCheck();
         }
     }
 
@@ -215,5 +227,13 @@ public class ProcScope {
      */
     public boolean isInitialized() {
         return initialized;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
     }
 }
