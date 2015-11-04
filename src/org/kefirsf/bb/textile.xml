@@ -383,7 +383,7 @@
         </code>
     </scope>
 
-    <!-- Links. http, https, malto protocols -->
+    <!-- Links. http, https, mailto protocols -->
     <scope name="url" parent="format">
         <!-- Paragraph -->
         <coderef name="span"/>
