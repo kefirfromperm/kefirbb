@@ -322,39 +322,56 @@
         </code>
 
         <!-- Comments -->
-        <code priority="2">
+        <code priority="3">
             <pattern><bol/>###. <junk/><blankline/></pattern>
             <template/>
         </code>
-        <code priority="3">
+        <code priority="4">
             <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <template/>
         </code>
 
         <!-- Lists -->
-        <code priority="2">
-            <pattern><bol/><constant value="* " ghost="true"/><var scope="bulletListScope"/></pattern>
+        <!-- Lists -->
+        <code priority="2" transparent="false">
+            <pattern><bol/><var name="check" regex="\*(\*|#)*\s" ghost="true"/><var name="list" regex="\*" ghost="true"/><var scope="listScope"/></pattern>
             <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
         </code>
-        <code priority="2">
-            <pattern><bol/><constant value="# " ghost="true"/><var scope="numericListScope"/></pattern>
+        <code priority="2" transparent="false">
+            <pattern><bol/><var name="check" regex="#(\*|#)*\s" ghost="true"/><var name="list" regex="#" ghost="true"/><var scope="listScope"/></pattern>
             <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
         </code>
     </scope>
 
-    <!-- A scope fo bullet list -->
-    <scope name="bulletListScope" strong="true">
+    <!-- A scope of a list. Contains list elements. -->
+    <scope name="listScope" strong="true">
         <code>
-            <pattern><bol/><constant value="* "/><var scope="textile"/><eol/></pattern>
+            <pattern><bol/><var name="list" action="check"/> <var scope="textile"/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+        <code transparent="false">
+            <pattern><bol/><var name="list" action="check"/><var name="list" action="append" regex="\*"/><var name="first" scope="firstListScope"/><var scope="listScope"/></pattern>
+            <template>&lt;li&gt;&lt;ul&gt;<var name="first"/><var/>&lt;/ul&gt;&lt;/li&gt;</template>
+        </code>
+        <code transparent="false">
+            <pattern><bol/><var name="list" action="check"/><var name="list" action="append" regex="#"/><var name="first" scope="firstListScope"/><var scope="listScope"/></pattern>
+            <template>&lt;li&gt;&lt;ol&gt;<var name="first"/><var/>&lt;/ol&gt;&lt;/li&gt;</template>
         </code>
     </scope>
 
-    <!-- A scope fo bullet list -->
-    <scope name="numericListScope" strong="true">
+    <!-- Contains first lsit elements. -->
+    <scope name="firstListScope" strong="true" max="1">
         <code>
-            <pattern><bol/><constant value="# "/><var scope="textile"/><eol/></pattern>
+            <pattern> <var scope="textile"/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
+        <code transparent="false">
+            <pattern><var name="list" action="append" regex="\*"/><var name="first" scope="firstListScope"/><var scope="listScope"/></pattern>
+            <template>&lt;li&gt;&lt;ul&gt;<var name="first"/><var/>&lt;/ul&gt;&lt;/li&gt;</template>
+        </code>
+        <code transparent="false">
+            <pattern><var name="list" action="append" regex="#"/><var name="first" scope="firstListScope"/><var scope="listScope"/></pattern>
+            <template>&lt;li&gt;&lt;ol&gt;<var name="first"/><var/>&lt;/ol&gt;&lt;/li&gt;</template>
         </code>
     </scope>
 
