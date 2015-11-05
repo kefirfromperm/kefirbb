@@ -177,6 +177,10 @@
             <pattern>%<var name="attrs" scope="inlineAttrs"/><var inherit="true"/>%</pattern>
             <template>&lt;span<var name="attrs"/>&gt;<var/>&lt;/span&gt;</template>
         </code>
+        <code>
+            <pattern><var regex="\p{javaUpperCase}+" name="acronym"/>(<var name="title" scope="escapeHtml"/>)</pattern>
+            <template>&lt;abbr title=&quot;<var name="title"/>&quot;&gt;<var name="acronym"/>&lt;/abbr&gt;</template>
+        </code>
     </scope>
 
     <scope name="classAttrs">

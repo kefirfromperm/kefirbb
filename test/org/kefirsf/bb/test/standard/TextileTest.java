@@ -646,4 +646,34 @@ public class TextileTest extends AbstractConfigurationTest {
                 "# 1\n#* 2\n#* 3\n#* 4\n# 5\n"
         );
     }
+
+    /**
+     * Test textile acronyms
+     */
+    @Test
+    public void testAcronyms(){
+        assertProcess(
+                "<p>The <abbr title=\"United Nations\">UN</abbr> is fall.</p>",
+                "The UN(United Nations) is fall."
+        );
+
+        assertProcess(
+                "<p>Председатель <abbr title=\"Центральный Коммитет\">ЦК</abbr> <abbr title=\"Коммунистическая Партия Советского Союза\">КПСС</abbr></p>",
+                "Председатель ЦК(Центральный Коммитет) КПСС(Коммунистическая Партия Советского Союза)"
+        );
+
+        assertProcess(
+                "<p><abbr title=\"Java Virtual Machine\">JVM</abbr></p>",
+                "JVM(Java Virtual Machine)"
+        );
+
+        assertProcess(
+                "<p>error(Error)</p>",
+                "error(Error)"
+        );
+        assertProcess(
+                "<p>000(111)</p>",
+                "000(111)"
+        );
+    }
 }
