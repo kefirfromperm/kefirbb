@@ -76,7 +76,7 @@ public class Variable extends NamedElement implements PatternElement {
 
     /**
      * Set the action of the variable.
-     * 
+     *
      * rewrite - rewrite current value
      * append - append a string to current value
      * check - check that current value is equals the variable value
