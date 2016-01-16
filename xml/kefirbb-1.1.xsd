@@ -86,6 +86,7 @@
         <xsd:attribute name="transparent" type="xsd:boolean" default="true"/>
     </xsd:complexType>
 
+    <!-- The root element. -->
     <xsd:element name="configuration">
         <xsd:complexType>
             <xsd:sequence>
@@ -130,7 +131,8 @@
                              -->
                             <xsd:attribute name="strong" type="xsd:boolean" use="optional" default="false"/>
                             <xsd:attribute name="ignoreText" type="xsd:boolean" use="optional" default="false"/>
-                            <xsd:attribute name="max" type="xsd:integer" default="0"/>
+                            <xsd:attribute name="min" type="xsd:integer" default="-1"/>
+                            <xsd:attribute name="max" type="xsd:integer" default="-1"/>
                         </xsd:complexType>
                     </xsd:element>
                 </xsd:choice>

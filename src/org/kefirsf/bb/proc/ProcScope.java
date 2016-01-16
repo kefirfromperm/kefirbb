@@ -64,7 +64,7 @@ public class ProcScope {
     /**
      * Maximum codes to parse
      */
-    private int max = 0;
+    private int max = -1;
 
     /**
      * Create scope
@@ -85,7 +85,7 @@ public class ProcScope {
         Source source = context.getSource();
 
         int count = 0;
-        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator()) && (max <= 0 || count < max)) {
+        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator()) && (max < 0 || count < max)) {
             int offset = source.getOffset();
             boolean parsed = false;
 
@@ -227,10 +227,6 @@ public class ProcScope {
      */
     public boolean isInitialized() {
         return initialized;
-    }
-
-    public int getMax() {
-        return max;
     }
 
     public void setMax(int max) {

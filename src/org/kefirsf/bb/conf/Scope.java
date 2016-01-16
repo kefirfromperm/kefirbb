@@ -50,7 +50,7 @@ public class Scope {
      */
     private boolean ignoreText = DEFAULT_IGNORE_TEXT;
 
-    private int max = 0;
+    private int max = -1;
 
     /**
      * Codes of scope.

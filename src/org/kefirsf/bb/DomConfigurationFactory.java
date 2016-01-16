@@ -27,6 +27,7 @@ public class DomConfigurationFactory {
     private static final String TAG_CODE = "code";
     private static final String TAG_CODE_ATTR_NAME = "name";
     private static final String TAG_CODE_ATTR_PRIORITY = "priority";
+    private static final String TAG_CODE_ATTR_TRANSPARENT = "transparent";
     private static final String TAG_PATTERN = "pattern";
     private static final String TAG_VAR = "var";
     private static final String TAG_VAR_ATTR_NAME = "name";
@@ -46,6 +47,8 @@ public class DomConfigurationFactory {
     private static final String TAG_SCOPE_ATTR_PARENT = "parent";
     private static final String TAG_SCOPE_ATTR_STRONG = "strong";
     private static final String TAG_SCOPE_ATTR_IGNORE_TEXT = "ignoreText";
+    private static final String TAG_SCOPE_ATTR_MAX = "max";
+    private static final int DEFAULT_MAX_VALUE = -1;
     private static final String TAG_CODEREF = "coderef";
     private static final String TAG_CODEREF_ATTR_NAME = TAG_CODE_ATTR_NAME;
     private static final String TAG_PREFIX = "prefix";
@@ -71,8 +74,6 @@ public class DomConfigurationFactory {
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
-    public static final String TAG_CODE_ATTR_TRANSPARENT = "transparent";
-    public static final String TAG_SCOPE_ATTR_MAX = "max";
 
     /**
      * Private constructor for prevent class initialization.
@@ -292,7 +293,7 @@ public class DomConfigurationFactory {
                 }
                 scope.setParent(parent);
             }
-            scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, 0));
+            scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, DEFAULT_MAX_VALUE));
         }
 
         return scopes;
