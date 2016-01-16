@@ -58,6 +58,8 @@ public abstract class AbstractEol implements ProcPatternElement {
     protected abstract int match(Source source, int index);
 
     /**
+     * @param source the soruce text
+     * @param index current cursor position
      * @return -1 if at the index there is not end of line
      * 0 if it's end of text
      * 1 if it's single \n or \r

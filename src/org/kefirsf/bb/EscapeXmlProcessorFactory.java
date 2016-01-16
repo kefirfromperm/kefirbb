@@ -2,9 +2,9 @@ package org.kefirsf.bb;
 
 /**
  * The class for creating the escape xml special symbols processor. It's processor change:
- * <p/>
+ *
  * &amp; to &amp;amp;
- * &apos; to &amp;apos;
+ * &amp;apos; to &amp;apos;
  * &lt; to &amp;lt;
  * &gt; to &amp;gt;
  * &quot; to &amp;quot;

@@ -49,7 +49,7 @@ public class ProcCode implements Comparable<ProcCode> {
 
     /**
      * Parse bb-code
-     * <p/>
+     *
      * Before invocation suspicious method must be call
      *
      * @param context the bb-processing context

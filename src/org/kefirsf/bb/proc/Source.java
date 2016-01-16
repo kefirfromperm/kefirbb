@@ -38,7 +38,8 @@ public class Source implements CharSequence {
     private char[] constantChars;
 
     /**
-     * Check if the current sub sequence can be constant.
+     * Check if the current sub sequence can be a constant.
+     * @return true if next sub sequence may be a constant.
      */
     public boolean nextMayBeConstant() {
         return Arrays.binarySearch(constantChars, text[offset]) >= 0;
@@ -66,6 +67,7 @@ public class Source implements CharSequence {
 
     /**
      * Set constant set from configuration. For fast search.
+     * @param constantSet set of constants in the source
      */
     public void setConstantSet(Set<PatternConstant> constantSet) {
         this.constantSet = constantSet;

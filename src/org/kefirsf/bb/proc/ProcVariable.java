@@ -20,6 +20,7 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
      *
      * @param name   variable name
      * @param regex  regular expression pattern
+     * @param ghost don't move the cursor after parsing
      * @param action the variable action. Rewrite, append, check
      */
     public ProcVariable(String name, Pattern regex, boolean ghost, Action action) {

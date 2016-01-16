@@ -85,6 +85,7 @@ public class ProcScope {
     /**
      * Парсит тект с BB-кодами
      *
+     * @param context the parsing context
      * @return true if parsing is success. False otherwise, If count of codes in text is not enough, for example.
      * @throws NestingException if nesting is too big.
      */

@@ -31,6 +31,7 @@ public class PatternConstant implements ProcPatternElement {
      * Create constant element.
      *
      * @param value constant value
+     * @param ignoreCase ignore text case when parse a constant
      */
     public PatternConstant(String value, boolean ignoreCase) {
         this.value = value;
@@ -44,6 +45,8 @@ public class PatternConstant implements ProcPatternElement {
      * Create constant element.
      *
      * @param value constant value
+     * @param ignoreCase ignore text case when parse a constant
+     * @param ghost don't move the cursor after parsing
      */
     public PatternConstant(String value, boolean ignoreCase, boolean ghost) {
         this.value = value;

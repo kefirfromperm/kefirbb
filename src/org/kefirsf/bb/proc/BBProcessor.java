@@ -33,10 +33,10 @@ public final class BBProcessor extends TextProcessorAdapter {
     }
 
     /**
-     * Process bbcodes <br/>
-     * 1. Escape the xml special symbols<br/>
-     * 2. replace bbcodes to HTML-tags<br/>
-     * 3. replace symbols \r\n to HTML-tag "&lt;br/&gt;"<br/>
+     * Process bbcodes
+     * 1. Escape the xml special symbols
+     * 2. replace bbcodes to HTML-tags
+     * 3. replace symbols \r\n to HTML-tag "&lt;br/&gt;"
      *
      * @param source the source string
      * @return result string

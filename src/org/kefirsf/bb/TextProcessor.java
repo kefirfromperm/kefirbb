@@ -8,7 +8,7 @@ package org.kefirsf.bb;
 public interface TextProcessor {
     /**
      * Process the text.
-     * <p/>
+     *
      * ATTENTION!!! Do not use java.nio.CharBuffer.
      * CharBuffer has invalid realization of subSequence methods from interface java.lang.CharSequence
      * since 1.6.0_10 version of JRE. http://bugs.sun.com/view_bug.do?bug_id=6795561
