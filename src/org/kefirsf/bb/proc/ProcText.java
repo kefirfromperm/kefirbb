@@ -1,7 +1,5 @@
 package org.kefirsf.bb.proc;
 
-import java.io.IOException;
-
 /**
  * Класс текста, который подлежит парсингу
  *

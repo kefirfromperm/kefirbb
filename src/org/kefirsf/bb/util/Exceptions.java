@@ -13,7 +13,7 @@ public final class Exceptions {
     private static final String NULL_ARGUMENT = "Argument {0} can't be null.";
     private static final String EMPTY_ARGUMENT = "Argument {0} can't be empty.";
     private static final String BLANK_ARGUMENT = "Argument {0} can't be blank.";
-    private static final String NEGATIVE_ARGUMENT = "Argument {0} can''t be negative.";
+    private static final String NEGATIVE_ARGUMENT = "Argument {0} can't be negative.";
 
     /**
      * Prevent to create an instance.

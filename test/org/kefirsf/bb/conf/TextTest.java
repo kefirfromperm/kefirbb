@@ -10,8 +10,8 @@ import org.junit.Test;
  */
 public class TextTest {
 
-    public static final String NAME = "name";
-    public static final Scope SCOPE = new Scope("scope");
+    private static final String NAME = "name";
+    private static final Scope SCOPE = new Scope("scope");
 
     @Test
     public void testConstructor1() {

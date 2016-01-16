@@ -12,5 +12,5 @@ public interface TextProcessorFactory {
      * @return instance of TextProcessor interface
      * @throws TextProcessorFactoryException when factory can't create the TextProcessor instance
      */
-    public TextProcessor create();
+    TextProcessor create();
 }

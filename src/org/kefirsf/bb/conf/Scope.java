@@ -63,7 +63,7 @@ public class Scope {
     /**
      * Codes of scope.
      */
-    private Set<Code> codes = new HashSet<Code>();
+    private final Set<Code> codes = new HashSet<Code>();
 
     /**
      * Create a scope with random name.

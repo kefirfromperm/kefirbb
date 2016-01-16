@@ -3,7 +3,6 @@ package org.kefirsf.bb.proc;
 import org.kefirsf.bb.TextProcessorAdapter;
 import org.kefirsf.bb.TextProcessorNestingException;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;

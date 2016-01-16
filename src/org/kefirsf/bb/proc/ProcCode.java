@@ -1,6 +1,5 @@
 package org.kefirsf.bb.proc;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -94,15 +93,6 @@ public class ProcCode implements Comparable<ProcCode> {
      */
     public int compareTo(ProcCode code) {
         return this.priority - code.priority;
-    }
-
-    /**
-     * Get code name
-     *
-     * @return code name
-     */
-    public String getName() {
-        return name;
     }
 
     public boolean startsWithConstant(){

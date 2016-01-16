@@ -16,7 +16,7 @@ public interface TextProcessor {
      * @param source the source text
      * @return the result of text processing
      */
-    public CharSequence process(CharSequence source);
+    CharSequence process(CharSequence source);
 
     /**
      * Process the text
@@ -24,7 +24,7 @@ public interface TextProcessor {
      * @param source the source text
      * @return the result of text processing
      */
-    public String process(String source);
+    String process(String source);
 
     /**
      * Process the text
@@ -32,7 +32,7 @@ public interface TextProcessor {
      * @param source the source text
      * @return the result of text processing
      */
-    public StringBuilder process(StringBuilder source);
+    StringBuilder process(StringBuilder source);
 
     /**
      * Process the text
@@ -40,5 +40,5 @@ public interface TextProcessor {
      * @param source the source text
      * @return the result of text processing
      */
-    public StringBuffer process(StringBuffer source);
+    StringBuffer process(StringBuffer source);
 }

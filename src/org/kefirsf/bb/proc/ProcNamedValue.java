@@ -37,12 +37,4 @@ public class ProcNamedValue extends ProcNamedElement implements ProcTemplateElem
             }
         }
     }
-
-    public Function getFunction() {
-        return function;
-    }
-
-    public void setFunction(Function function) {
-        this.function = function;
-    }
 }

@@ -15,7 +15,7 @@ public interface ProcPatternElement {
      *         false - not valid
      * @throws NestingException if nesting of tags is bigger than maximum nesting value
      */
-    public boolean parse(Context context, ProcPatternElement terminator) throws NestingException;
+    boolean parse(Context context, ProcPatternElement terminator) throws NestingException;
 
     /**
      * Check next subsequence
@@ -24,7 +24,7 @@ public interface ProcPatternElement {
      * @return true pattern sequence equals with next subsequence
      *         false not equals
      */
-    public boolean isNextIn(Context context);
+    boolean isNextIn(Context context);
 
     /**
      * Find constant
@@ -32,5 +32,5 @@ public interface ProcPatternElement {
      * @param source text source
      * @return constant offset
      */
-    public int findIn(Source source);
+    int findIn(Source source);
 }

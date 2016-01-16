@@ -6,8 +6,8 @@ import org.kefirsf.bb.proc.*;
 import java.util.*;
 
 class ProcessorBuilder {
-    public static final ProcBol PROC_BOL = new ProcBol();
-    public static final PatternJunk JUNK = new PatternJunk();
+    private static final ProcBol PROC_BOL = new ProcBol();
+    private static final PatternJunk JUNK = new PatternJunk();
     private final Configuration conf;
 
     private Map<Scope, ProcScope> createdScopes;

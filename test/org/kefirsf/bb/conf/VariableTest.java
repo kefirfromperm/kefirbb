@@ -10,8 +10,8 @@ import org.junit.Test;
  */
 public class VariableTest {
 
-    public static final String NAME = "test";
-    public static final java.util.regex.Pattern REGEX = java.util.regex.Pattern.compile("\\d+");
+    private static final String NAME = "test";
+    private static final java.util.regex.Pattern REGEX = java.util.regex.Pattern.compile("\\d+");
 
     @Test
     public void testConstructor1() {

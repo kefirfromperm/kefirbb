@@ -137,15 +137,6 @@ public class ProcScope {
     }
 
     /**
-     * Get scope name
-     *
-     * @return scope name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Set parent scope
      *
      * @param parent parent scope. All parent scope code added to scope codes.
@@ -217,10 +208,6 @@ public class ProcScope {
             hasCrazyCode = hasCrazyCode || !code.startsWithConstant();
             hasCheck = hasCheck || code.containsCheck();
         }
-    }
-
-    public boolean isStrong() {
-        return strong;
     }
 
     public void setStrong(boolean strong) {

@@ -10,5 +10,5 @@ public interface ProcTemplateElement {
      * @param context контекст
      * @return builded text
      */
-    public CharSequence generate(Context context);
+    CharSequence generate(Context context);
 }

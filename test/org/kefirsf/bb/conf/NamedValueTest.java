@@ -8,7 +8,7 @@ import org.junit.Test;
  */
 public class NamedValueTest {
 
-    public static final String NAME = "test";
+    private static final String NAME = "test";
 
     @Test
     public void testConstructor1(){

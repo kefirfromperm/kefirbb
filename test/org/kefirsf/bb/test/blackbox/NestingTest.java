@@ -19,7 +19,7 @@ public class NestingTest {
     private static final int STACK_OVERFLOW_NESTING = 2000;
     private static final String DATA = "test";
 
-    public TextProcessor createProcessor() {
+    private TextProcessor createProcessor() {
         return BBProcessorFactory.getInstance().create(createConfiguration());
     }
 
