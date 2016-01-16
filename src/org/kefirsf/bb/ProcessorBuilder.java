@@ -158,7 +158,7 @@ class ProcessorBuilder {
                     elements.add(
                             new Check(
                                     variable.getName(),
-                                    ((Ghostable) element).isGhost()
+                                    variable.isGhost()
                             )
                     );
                 }

@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Variable extends NamedElement implements PatternElement, Ghostable {
+public class Variable extends NamedElement implements PatternElement {
     private java.util.regex.Pattern regex;
     private boolean ghost = false;
     private Action action = Action.rewrite;

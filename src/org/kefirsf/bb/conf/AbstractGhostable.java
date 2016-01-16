@@ -4,7 +4,7 @@ package org.kefirsf.bb.conf;
  * The abstract ghostable pattern element.
  * @author kefir
  */
-public class AbstractGhostable implements PatternElement, Ghostable {
+public class AbstractGhostable implements PatternElement {
     protected boolean ghost = false;
 
     /**
