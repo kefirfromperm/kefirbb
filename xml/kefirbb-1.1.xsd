@@ -51,7 +51,6 @@
                             <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
                             <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
                             <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
-                            <xsd:attribute name="allowBlank" type="xsd:boolean" default="true"/>
                             <xsd:attribute name="action" default="rewrite">
                                 <xsd:simpleType>
                                     <xsd:restriction base="xsd:string">

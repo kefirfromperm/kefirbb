@@ -207,12 +207,10 @@ class ProcessorBuilder {
             return new ProcText(
                     text.getName(),
                     createScope(scope),
-                    text.isTransparent(),
-                    text.isAllowBlank()
+                    text.isTransparent()
             );
         } else {
-            return new ProcText(text.getName(), text.isTransparent(),
-                    text.isAllowBlank());
+            return new ProcText(text.getName(), text.isTransparent());
         }
     }
 }

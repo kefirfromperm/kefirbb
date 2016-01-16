@@ -39,7 +39,6 @@ public class DomConfigurationFactory {
     private static final String TAG_VAR_ATTR_REGEX = "regex";
     private static final String TAG_VAR_ATTR_TRANSPARENT = "transparent";
     private static final String TAG_VAR_ATTR_FUNCTION = "function";
-    private static final String TAG_VAR_ATTR_ALLOW_BLANK = "allowBlank";
     private static final String TAG_VAR_ATTR_ACTION = "action";
     private static final String TAG_TEMPLATE = "template";
     private static final String TAG_SCOPE = "scope";
@@ -477,7 +476,6 @@ public class DomConfigurationFactory {
                     scope,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
-            text.setAllowBlank(nodeAttribute(el, TAG_VAR_ATTR_ALLOW_BLANK, true));
         }
         return text;
     }

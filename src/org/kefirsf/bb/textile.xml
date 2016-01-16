@@ -201,13 +201,13 @@
     <!-- Inline attributes -->
     <scope name="inlineAttrs" strong="true" parent="classAttrs">
         <code>
-            <pattern><var scope="styleAttrs" allowBlank="false"/></pattern>
+            <pattern><var scope="styleAttrs"/></pattern>
             <template> style=&quot;<var/>&quot;</template>
         </code>
     </scope>
 
     <!-- Style attributes -->
-    <scope name="styleAttrs" strong="true">
+    <scope name="styleAttrs" strong="true" min="1">
         <code>
             <!-- TODO: Create list of allowed styles -->
             <pattern>{<var regex="([\w-]*:[\s\w\d]*;)*([\w-]*:[\s\w\d]*)?"/>}</pattern>
@@ -222,13 +222,13 @@
             <template> lang=&quot;<var/>&quot;</template>
         </code>
         <code>
-            <pattern><var name="attrs" scope="parAttrs" allowBlank="false"/></pattern>
+            <pattern><var name="attrs" scope="parAttrs"/></pattern>
             <template> style=&quot;<var name="attrs"/>&quot;</template>
         </code>
     </scope>
 
     <!-- Paragraph's styles -->
-    <scope name="parAttrs" ignoreText="true" strong="true" parent="styleAttrs">
+    <scope name="parAttrs" ignoreText="true" strong="true" parent="styleAttrs" min="1">
         <code>
             <pattern>&lt;</pattern>
             <template>text-align:left;</template>
