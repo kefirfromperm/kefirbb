@@ -49,6 +49,8 @@ public class DomConfigurationFactory {
     private static final String TAG_SCOPE_ATTR_IGNORE_TEXT = "ignoreText";
     private static final String TAG_SCOPE_ATTR_MAX = "max";
     private static final int DEFAULT_MAX_VALUE = -1;
+    private static final String TAG_SCOPE_ATTR_MIN = "min";
+    private static final int DEFAULT_MIN_VALUE = -1;
     private static final String TAG_CODEREF = "coderef";
     private static final String TAG_CODEREF_ATTR_NAME = TAG_CODE_ATTR_NAME;
     private static final String TAG_PREFIX = "prefix";
@@ -294,6 +296,7 @@ public class DomConfigurationFactory {
                 scope.setParent(parent);
             }
             scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, DEFAULT_MAX_VALUE));
+            scope.setMin(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MIN, DEFAULT_MIN_VALUE));
         }
 
         return scopes;

@@ -58,8 +58,15 @@ public class ProcScope {
      */
     private boolean hasCrazyCode = false;
 
-    /** This scope has codes with variable action check. */
+    /**
+     * This scope has codes with variable action check.
+     */
     private boolean hasCheck = false;
+
+    /**
+     * The minimal count vocdes in the text.
+     */
+    private int min = -1;
 
     /**
      * Maximum codes to parse
@@ -78,10 +85,10 @@ public class ProcScope {
     /**
      * Парсит тект с BB-кодами
      *
-     * @throws IOException      if can't append chars to target
+     * @return true if parsing is success. False otherwise, If count of codes in text is not enough, for example.
      * @throws NestingException if nesting is too big.
      */
-    public void process(Context context) throws IOException, NestingException {
+    public boolean process(Context context) throws NestingException {
         Source source = context.getSource();
 
         int count = 0;
@@ -114,12 +121,18 @@ public class ProcScope {
                 } else if (ignoreText) {
                     source.incOffset();
                 } else {
-                    context.getTarget().append(source.next());
+                    try {
+                        context.getTarget().append(source.next());
+                    } catch (IOException e) {
+                        // Nothing! Because StringBuilder doesn't catch IOException
+                    }
                 }
             } else {
                 count++;
             }
         }
+
+        return min < 0 || count >= min;
     }
 
     /**
@@ -227,6 +240,10 @@ public class ProcScope {
      */
     public boolean isInitialized() {
         return initialized;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
     }
 
     public void setMax(int max) {

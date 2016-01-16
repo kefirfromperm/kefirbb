@@ -50,6 +50,14 @@ public class Scope {
      */
     private boolean ignoreText = DEFAULT_IGNORE_TEXT;
 
+    /**
+     * The minimal count of codes in the text.
+     */
+    private int min = -1;
+
+    /**
+     * The maximum count of codes in the text.
+     */
     private int max = -1;
 
     /**
@@ -191,6 +199,15 @@ public class Scope {
      */
     public void addCode(Code code) {
         codes.add(code);
+    }
+
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
     }
 
     public int getMax() {

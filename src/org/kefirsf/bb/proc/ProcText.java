@@ -45,10 +45,11 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
      *
      * @param context контекст
      * @return true - если удалось распарсить константу
-     *         false - если не удалось
+     * false - если не удалось
      * @throws NestingException if nesting is too big.
      */
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
+        // Prepare a child context
         Context child = new Context(context);
         child.checkNesting();
         StringBuilder target = new StringBuilder();
@@ -57,16 +58,20 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
             child.setScope(scope);
         }
         child.setTerminator(terminator);
-        try {
-            child.getScope().process(child);
-        } catch (IOException e) {
-            // Never because StringBuilder don't throw IOException
+
+        // Parse it
+        boolean parsed = child.getScope().process(child);
+
+        if (parsed) {
+            // If parsing success
+            if (transparent) {
+                child.mergeWithParent();
+            }
+            setAttribute(context, target);
+            return allowBlank || target.length() > 0;
+        } else {
+            return false;
         }
-        if (transparent) {
-            child.mergeWithParent();
-        }
-        setAttribute(context, target);
-        return allowBlank || target.length()>0;
     }
 
     /**
@@ -74,7 +79,7 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
      *
      * @param context current context
      * @return true если следующие символы в строке совпадают с pattern
-     *         false если не совпадают или строка кончилась
+     * false если не совпадают или строка кончилась
      */
     public boolean isNextIn(Context context) {
         return true;

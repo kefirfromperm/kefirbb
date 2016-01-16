@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
+    <scope name="ROOT">
+        <code>
+            <pattern>(<var scope="minScope"/>)</pattern>
+            <template>min</template>
+        </code>
+
+        <code>
+            <pattern>[<var scope="maxScope"/>]</pattern>
+            <template>max</template>
+        </code>
+
+        <code>
+            <pattern>{<var scope="minMaxScope"/>}</pattern>
+            <template>minmax</template>
+        </code>
+    </scope>
+
+    <scope name="minScope" min="2">
+        <code>
+            <pattern>a</pattern>
+            <template/>
+        </code>
+    </scope>
+
+    <scope name="maxScope" max="2">
+        <code>
+            <pattern>b</pattern>
+            <template/>
+        </code>
+    </scope>
+
+    <scope name="minMaxScope" min="3" max="5">
+        <code>
+            <pattern>c</pattern>
+            <template/>
+        </code>
+    </scope>
+
+</configuration>

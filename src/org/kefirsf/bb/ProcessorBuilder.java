@@ -67,6 +67,7 @@ class ProcessorBuilder {
                 scopeCodes.add(createCode(code));
             }
             created.setScopeCodes(scopeCodes);
+            created.setMin(scope.getMin());
             created.setMax(scope.getMax());
         }
         return created;

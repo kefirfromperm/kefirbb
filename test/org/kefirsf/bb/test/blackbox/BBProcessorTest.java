@@ -155,4 +155,30 @@ public class BBProcessorTest {
         TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-ghost.xml");
         assertProcess(processor, "a1b1c1d1e1f1g1h1", "assbcde\nfg\n\nh");
     }
+
+    @Test
+    public void testMin(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-min-max.xml");
+        assertProcess(processor, "(a)", "(a)");
+        assertProcess(processor, "min", "(aa)");
+        assertProcess(processor, "min", "(aaa)");
+    }
+
+    @Test
+    public void testMax(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-min-max.xml");
+        assertProcess(processor, "max", "[b]");
+        assertProcess(processor, "max", "[bb]");
+        assertProcess(processor, "[bbb]", "[bbb]");
+    }
+
+    @Test
+    public void testMinMax(){
+        TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-min-max.xml");
+        assertProcess(processor, "{cc}", "{cc}");
+        assertProcess(processor, "minmax", "{ccc}");
+        assertProcess(processor, "minmax", "{cccc}");
+        assertProcess(processor, "minmax", "{ccccc}");
+        assertProcess(processor, "{cccccc}", "{cccccc}");
+    }
 }

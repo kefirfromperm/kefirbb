@@ -59,10 +59,12 @@ public final class BBProcessor extends TextProcessorAdapter {
 
         try {
             prefix.generate(context);
-            scope.process(context);
+            boolean success = scope.process(context);
             suffix.generate(context);
-        } catch (IOException e) {
-            // Never because StringBuilder not throw IOException
+
+            if(!success){
+                target = new StringBuilder(0);
+            }
         } catch (NestingException e) {
             target = new StringBuilder(0);
             if(propagateNestingException){

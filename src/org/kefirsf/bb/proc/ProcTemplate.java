@@ -33,11 +33,14 @@ public class ProcTemplate {
      * Append to result string processed text.
      *
      * @param context current context.
-     * @throws IOException if can't append.
      */
-    public void generate(Context context) throws IOException {
+    public void generate(Context context) {
         for (ProcTemplateElement element : elements) {
-            context.getTarget().append(element.generate(context));
+            try {
+                context.getTarget().append(element.generate(context));
+            } catch (IOException e) {
+                // Nothing! Because StringBuilder doesn't catch IOException
+            }
         }
     }
 }

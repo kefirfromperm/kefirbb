@@ -55,10 +55,9 @@ public class ProcCode implements Comparable<ProcCode> {
      * @param context the bb-processing context
      * @return true - if parse source
      *         false - if can't parse code
-     * @throws IOException if can't append to target
      * @throws NestingException if nesting is too big.
      */
-    public boolean process(Context context) throws IOException, NestingException {
+    public boolean process(Context context) throws NestingException {
         for(ProcPattern pattern: patterns){
             Context codeContext = new Context(context);
             if (pattern.parse(codeContext)) {
