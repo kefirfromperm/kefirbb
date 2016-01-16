@@ -1,24 +1,20 @@
 package org.kefirsf.bb.conf;
 
 /**
+ * Interface of the classes for element which can be ghost.
+ *
  * @author kefir
  */
-public class AbstractTerminator implements PatternElement, TerminatingPatternElement {
-    protected boolean ghost = false;
-
+public interface Ghostable {
     /**
      * If it's true then processor parse it but no move the cursor.
      *
      * @return is it ghost or no
      */
-    public boolean isGhost() {
-        return ghost;
-    }
+    boolean isGhost();
 
     /**
      * @param ghost If it's true then processor parse it but no move the cursor.
      */
-    public void setGhost(boolean ghost) {
-        this.ghost = ghost;
-    }
+    void setGhost(boolean ghost);
 }

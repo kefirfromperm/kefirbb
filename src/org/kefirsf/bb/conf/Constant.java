@@ -5,7 +5,7 @@ package org.kefirsf.bb.conf;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Constant extends AbstractTerminator implements TemplateElement {
+public class Constant extends AbstractGhostable implements TemplateElement {
     /**
      * Constant value. String for search.
      */
