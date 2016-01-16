@@ -80,7 +80,7 @@ class ProcessorBuilder {
      * @return code object
      */
     private ProcCode createCode(Code defCode) {
-        if (defCode.getPattern() == null) {
+        if (defCode.hasPatterns()) {
             throw new IllegalStateException("Field pattern can't be null.");
         }
 

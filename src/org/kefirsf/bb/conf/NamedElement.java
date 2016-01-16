@@ -1,7 +1,7 @@
 package org.kefirsf.bb.conf;
 
 /**
- * Named element definition
+ * Named element definition. For all element which has a name.
  *
  * @author Vitaliy Samolovskih aka Kefir
  */

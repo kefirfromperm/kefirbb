@@ -1,7 +1,8 @@
 package org.kefirsf.bb.conf;
 
 /**
- * The abstract ghostable pattern element.
+ * The abstract ghostable pattern element. For element which has a ghost property.
+ *
  * @author kefir
  */
 public class AbstractGhostable implements PatternElement {

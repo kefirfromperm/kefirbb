@@ -1,7 +1,7 @@
 package org.kefirsf.bb.conf;
 
 /**
- * End of line
+ * An end of line.
  *
  * @author Vitalii Samolovskikh aka Kefir
  */
