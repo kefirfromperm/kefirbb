@@ -189,7 +189,7 @@ public class Code {
      * If the code is transparent, then all variables which were set on the code processing
      * will be accessible from other codes from on the same context, the same indentation level.
      *
-     * return true if the code is transparent, false otherwise
+     * @return true if the code is transparent, false otherwise
      */
     public boolean isTransparent() {
         return transparent;
