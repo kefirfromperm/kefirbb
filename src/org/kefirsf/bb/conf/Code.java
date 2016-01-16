@@ -59,7 +59,7 @@ public class Code {
         Exceptions.nullArgument("name", name);
         this.name = name;
         this.priority = priority;
-        setPattern(pattern);
+        addPattern(pattern);
         this.template = template;
     }
 
