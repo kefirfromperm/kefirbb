@@ -9,6 +9,9 @@ import java.util.List;
  * @author kefir
  */
 abstract class ElementListOwner<T> {
+    /**
+     * Collection of elements PatternElement or TemplateElement
+     */
     private List<? extends T> elements;
 
     /**

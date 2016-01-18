@@ -144,10 +144,20 @@ public class Scope {
         this.parent = parent;
     }
 
+    /**
+     * If the scope is strong then only the codes from the scope can be parsed by it.
+     *
+     * @return true if the scope is strong, false otherwise
+     */
     public boolean isStrong() {
         return strong;
     }
 
+    /**
+     * If the scope is strong then only the codes from the scope can be parsed by it.
+     *
+     * @param strong true if the scope is strong, false otherwise
+     */
     public void setStrong(boolean strong) {
         this.strong = strong;
     }
@@ -201,19 +211,38 @@ public class Scope {
         codes.add(code);
     }
 
-
+    /**
+     * Get the minimum count of parsed codes.
+     *
+     * @return minimum
+     */
     public int getMin() {
         return min;
     }
 
+    /**
+     * Set the minimum count of parsed codes.
+     *
+     * @param min minimum
+     */
     public void setMin(int min) {
         this.min = min;
     }
 
+    /**
+     * Get the maximum count of codes which can be parsed in this scope.
+     *
+     * @return maximum
+     */
     public int getMax() {
         return max;
     }
 
+    /**
+     * Set the maximum count of codes which can be parsed in this scope.
+     *
+     * @param max maximum
+     */
     public void setMax(int max) {
         this.max = max;
     }

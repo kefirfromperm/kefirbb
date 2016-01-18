@@ -16,8 +16,18 @@ public class Code {
 
     private String name;
     private int priority = DEFAULT_PRIORITY;
+
+    /**
+     * A code contains collection of patterns for parsing. One or more.
+     * A code tries to parse by all patterns from first to last.
+     */
     private List<Pattern> patterns;
+
+    /**
+     * A template for text generating.
+     */
     private Template template;
+
     private boolean transparent = true;
 
     /**
@@ -49,12 +59,12 @@ public class Code {
         Exceptions.nullArgument("name", name);
         this.name = name;
         this.priority = priority;
-        setPattern(pattern);
+        addPattern(pattern);
         this.template = template;
     }
 
     /**
-     * Get code name
+     * Get a code name.
      *
      * @return name of code
      */
@@ -63,7 +73,7 @@ public class Code {
     }
 
     /**
-     * Set code name.
+     * Set a code name.
      *
      * @param name code name
      */
@@ -73,6 +83,8 @@ public class Code {
     }
 
     /**
+     * Get the code priority. By default it is 0. Greater has bigger priority.
+     *
      * @return code priority
      */
     public int getPriority() {
@@ -80,6 +92,8 @@ public class Code {
     }
 
     /**
+     * Set the code priority. By default it is 0. Greater has bigger priority.
+     *
      * @param priority code priority
      */
     public void setPriority(int priority) {
@@ -87,6 +101,9 @@ public class Code {
     }
 
     /**
+     * A code contains collection of patterns for parsing. One or more.
+     * A code tries to parse by all patterns from first to last.
+     *
      * @return the list of patterns of the code
      */
     public List<Pattern> getPatterns() {
@@ -94,7 +111,8 @@ public class Code {
     }
 
     /**
-     * Set the patterns list.
+     * Set the patterns list. A code contains collection of patterns for parsing. One or more.
+     * A code tries to parse by all patterns from first to last.
      *
      * @param patterns the list of patterns
      */
@@ -116,10 +134,20 @@ public class Code {
     }
 
     /**
+     * Check if the code has patterns.
+     *
+     * @return true if the code has one or more patterns, false otherwise
+     */
+    public boolean hasPatterns() {
+        return patterns != null && !patterns.isEmpty();
+    }
+
+    /**
      * Get pattern for text parsing
      *
      * @return pattern definition object
      */
+    @Deprecated
     public Pattern getPattern() {
         if (patterns != null && !patterns.isEmpty()) {
             return patterns.get(0);
@@ -133,6 +161,7 @@ public class Code {
      *
      * @param pattern pattern definition object
      */
+    @Deprecated
     public void setPattern(Pattern pattern) {
         patterns = new ArrayList<Pattern>(1);
         patterns.add(pattern);
@@ -156,10 +185,22 @@ public class Code {
         this.template = template;
     }
 
+    /**
+     * If the code is transparent, then all variables which were set on the code processing
+     * will be accessible from other codes from on the same context, the same indentation level.
+     *
+     * @return true if the code is transparent, false otherwise
+     */
     public boolean isTransparent() {
         return transparent;
     }
 
+    /**
+     * If the code is transparent, then all variables which were set on the code processing
+     * will be accessible from other codes from on the same context, the same indentation level.
+     *
+     * @param transparent true for transparent
+     */
     public void setTransparent(boolean transparent) {
         this.transparent = transparent;
     }

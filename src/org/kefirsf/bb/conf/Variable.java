@@ -7,12 +7,12 @@ import java.util.regex.Pattern;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Variable extends NamedElement implements PatternElement, Ghostable {
+public class Variable extends NamedElement implements PatternElement {
     private java.util.regex.Pattern regex;
     private boolean ghost = false;
     private Action action = Action.rewrite;
 
-    public Variable(){
+    public Variable() {
         super();
         this.regex = null;
     }
@@ -45,19 +45,44 @@ public class Variable extends NamedElement implements PatternElement, Ghostable 
         this.regex = regex;
     }
 
-
+    /**
+     * If it's true then processor parse it but no move the cursor.
+     *
+     * @return is it ghost or no
+     */
     public boolean isGhost() {
         return ghost;
     }
 
+    /**
+     * @param ghost If it's true then processor parse it but no move the cursor.
+     */
     public void setGhost(boolean ghost) {
         this.ghost = ghost;
     }
 
+    /**
+     * Get the action of the variable.
+     *
+     * rewrite - rewrite current value
+     * append - append a string to current value
+     * check - check that current value is equals the variable value
+     *
+     * @return action
+     */
     public Action getAction() {
         return action;
     }
 
+    /**
+     * Set the action of the variable.
+     *
+     * rewrite - rewrite current value
+     * append - append a string to current value
+     * check - check that current value is equals the variable value
+     *
+     * @param action action
+     */
     public void setAction(Action action) {
         this.action = action;
     }

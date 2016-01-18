@@ -1,7 +1,8 @@
 package org.kefirsf.bb.conf;
 
 /**
- * A blank line
+ * A blank line.
+ *
  * @author kefir
  */
 public class BlankLine extends AbstractGhostable {

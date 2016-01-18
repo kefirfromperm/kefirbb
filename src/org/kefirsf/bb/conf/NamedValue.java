@@ -21,10 +21,24 @@ public class NamedValue extends NamedElement implements TemplateElement {
         this.function = function;
     }
 
+    /**
+     * This element can use different functions.
+     * By default it's value. In this case will be generated a text within the value of variable.
+     * Other function is length. In this case will be generated a text within the length of variable value.
+     *
+     * @return function
+     */
     public Function getFunction() {
         return function;
     }
 
+    /**
+     * This element can use different functions.
+     * By default it's value. In this case will be generated a text within the value of variable.
+     * Other function is length. In this case will be generated a text within the length of variable value.
+     *
+     * @param function one of function
+     */
     public void setFunction(Function function) {
         this.function = function;
     }

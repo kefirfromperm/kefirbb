@@ -1,7 +1,7 @@
 package org.kefirsf.bb.conf;
 
 /**
- * Beginning of line
+ * A beginning of line.
  *
  * @author kefir
  */
