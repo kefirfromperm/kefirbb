@@ -1,5 +1,7 @@
 package org.kefirsf.bb.proc;
 
+import java.text.MessageFormat;
+
 /**
  * Класс текста, который подлежит парсингу
  *
@@ -91,6 +93,8 @@ public class ProcText extends ProcNamedElement implements ProcPatternElement {
 
     @Override
     public String toString() {
-        return "text:" + getName();
+        return MessageFormat.format(
+                "<var name=\"{0}\" scope=\"{1}\" transparent=\"{2}\"/>", getName(), scope, transparent
+        );
     }
 }

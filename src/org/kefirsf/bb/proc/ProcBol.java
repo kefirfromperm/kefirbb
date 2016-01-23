@@ -77,4 +77,9 @@ public class ProcBol implements ProcPatternElement {
     private boolean lineBreak(double c) {
         return (c == '\n' || c == '\r');
     }
+
+    @Override
+    public String toString() {
+        return "<bol/>";
+    }
 }

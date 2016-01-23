@@ -1,5 +1,7 @@
 package org.kefirsf.bb.proc;
 
+import java.text.MessageFormat;
+
 /**
  * Check if the variable is equals with context value
  */
@@ -56,5 +58,10 @@ public class Check extends ProcNamedElement implements ProcPatternElement {
 
     public int findIn(Source source) {
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("<var name=\"{0}\" action=\"check\" ghost=\"{1}\"/>", getName(), ghost);
     }
 }

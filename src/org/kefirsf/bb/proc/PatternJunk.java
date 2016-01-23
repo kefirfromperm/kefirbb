@@ -30,4 +30,9 @@ public class PatternJunk implements ProcPatternElement {
     public int findIn(Source source) {
         return -1;
     }
+
+    @Override
+    public String toString() {
+        return "<junk/>";
+    }
 }

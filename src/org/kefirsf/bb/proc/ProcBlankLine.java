@@ -57,4 +57,18 @@ public class ProcBlankLine extends AbstractEol {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        b.append("<blankline");
+        if(ghost) {
+            b.append(" ghost=\"");
+            b.append(ghost);
+            b.append("\"");
+        }
+        b.append("/>");
+
+        return b.toString();
+    }
 }

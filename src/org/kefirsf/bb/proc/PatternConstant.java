@@ -134,6 +134,6 @@ public class PatternConstant implements ProcPatternElement {
      */
     @Override
     public String toString() {
-        return "constant:" + value;
+        return value;
     }
 }

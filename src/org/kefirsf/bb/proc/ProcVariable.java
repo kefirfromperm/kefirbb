@@ -2,6 +2,7 @@ package org.kefirsf.bb.proc;
 
 import org.kefirsf.bb.conf.Action;
 
+import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -129,6 +130,9 @@ public class ProcVariable extends ProcNamedElement implements ProcPatternElement
 
     @Override
     public String toString() {
-        return "variable:" + getName();
+        return MessageFormat.format(
+                "<var name=\"{0}\" regex=\"{1}\" action=\"{2}\" ghost=\"{3}\"/>",
+                getName(), regex, action, ghost
+        );
     }
 }

@@ -17,4 +17,18 @@ public class ProcEol extends AbstractEol {
     protected int match(Source source, int index) {
         return calcLength(source, index);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        b.append("<eol");
+        if(ghost) {
+            b.append(" ghost=\"");
+            b.append(ghost);
+            b.append("\"");
+        }
+        b.append("/>");
+
+        return b.toString();
+    }
 }
