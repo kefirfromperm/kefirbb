@@ -13,8 +13,9 @@ import java.util.Set;
  * @author Kefir
  */
 public final class BBProcessor extends TextProcessorAdapter {
-    public static String LOGGER_PARSE = "kefirbb.parse";
-    public static String LOGGER_GENERATE = "kefirbb.generate";
+    public static final String LOGGER_CONTEXT = "kefirbb.context";
+    public static final String LOGGER_PARSE = "kefirbb.parse";
+    public static final String LOGGER_GENERATE = "kefirbb.generate";
 
     /**
      * BB-codes

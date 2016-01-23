@@ -1,8 +1,5 @@
 package org.kefirsf.bb.proc;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -13,15 +10,13 @@ import java.util.List;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class ProcTemplate {
-    private final Logger log = LoggerFactory.getLogger(BBProcessor.LOGGER_GENERATE);
-
     /**
      * Empty template
      */
     public static final ProcTemplate EMPTY = new ProcTemplate(Collections.<ProcTemplateElement>emptyList());
 
     /**
-     * Template elemnts
+     * Template elements
      */
     private final List<? extends ProcTemplateElement> elements;
 
@@ -48,10 +43,6 @@ public class ProcTemplate {
             } catch (IOException e) {
                 // Nothing! Because StringBuilder doesn't catch IOException
             }
-        }
-
-        if(log.isTraceEnabled()){
-            log.trace("Generated text: {}", target);
         }
     }
 }

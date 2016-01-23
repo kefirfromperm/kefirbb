@@ -1,6 +1,10 @@
 package org.kefirsf.bb.proc;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
+import java.util.Map;
 
 /**
  * The bbcode class
@@ -8,6 +12,9 @@ import java.util.List;
  * @author Kefir
  */
 public class ProcCode implements Comparable<ProcCode> {
+    private final Logger logGenerate = LoggerFactory.getLogger(BBProcessor.LOGGER_GENERATE);
+    private final Logger logContext = LoggerFactory.getLogger(BBProcessor.LOGGER_CONTEXT);
+
     /**
      * template for build result char sequence
      */
@@ -64,6 +71,17 @@ public class ProcCode implements Comparable<ProcCode> {
                     codeContext.mergeWithParent();
                 }
                 template.generate(codeContext);
+
+                if(logContext.isTraceEnabled()){
+                    for(Map.Entry<String, CharSequence> entry:context.getAttributes().entrySet()){
+                        logContext.trace("Context: {} = {}", entry.getKey(), entry.getValue());
+                    }
+                }
+
+                if(logGenerate.isTraceEnabled()){
+                    logGenerate.trace("Generated text: {}", codeContext.getTarget());
+                }
+
                 return true;
             }
         }

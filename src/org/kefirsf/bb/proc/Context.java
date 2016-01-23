@@ -218,4 +218,8 @@ public class Context {
             throw new NestingException();
         }
     }
+
+    public Map<String, CharSequence> getAttributes() {
+        return attributes;
+    }
 }
