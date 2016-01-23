@@ -2,6 +2,8 @@ package org.kefirsf.bb.test;
 
 import org.kefirsf.bb.TextProcessor;
 
+import java.text.MessageFormat;
+
 /**
  * Class contains static assert methods
  *
@@ -26,6 +28,10 @@ public class Assert extends org.junit.Assert {
      * @param source    source text
      */
     public static void assertProcess(TextProcessor processor, String expected, CharSequence source) {
-        assertEquals(expected, processor.process(source).toString());
+        assertEquals(
+                MessageFormat.format("When parsing text: {0}", source),
+                expected,
+                processor.process(source).toString()
+        );
     }
 }
