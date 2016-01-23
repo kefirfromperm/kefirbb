@@ -19,6 +19,6 @@ Usage
     TextProcessor processor = BBProcessorFactory.getInstance().create();
     assert "<b>text</b>".equals(processor.process("[b]text[/b]"));
 
-Contribution
+Donation
 ------------
 If you want to give me a beer just send some money to <https://www.paypal.me/kefir>
