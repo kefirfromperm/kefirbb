@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://kefirsf.org/kefirbb/schema"
-               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.1.xsd">
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
     <!-- XML escape symbols -->
     <scope name="safeXml">
         <code priority="-2">
@@ -84,7 +84,6 @@
 
         <!-- links -->
         <coderef name="url1"/>
-        <coderef name="url2"/>
 
         <!-- Lists -->
         <coderef name="ul"/>
@@ -171,20 +170,14 @@
 
     <!-- Insert image -->
     <code name="img">
-        <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="addr" scope="safeXml"/>&quot;<junk/>&gt;</pattern>
-        <template>&lt;img src=&quot;<var name="protocol"/>/<var name="addr"/>&quot;/&gt;</template>
+        <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<url/>&quot;<junk/>&gt;</pattern>
+        <template>&lt;img src=&quot;<var name="url"/>&quot;/&gt;</template>
     </code>
 
     <!-- HTTP -->
     <code name="url1">
-        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<var name="protocol" regex="((ht|f)tps?:|\.{1,2})?"/>/<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
-        <template>&lt;a href=&quot;<var name="protocol"/>/<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
-    </code>
-
-    <!-- MAILTO -->
-    <code name="url2">
-        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;mailto:<var name="url" scope="safeXml"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
-        <template>&lt;a href=&quot;mailto:<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<url/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
     <!-- Quote block -->
