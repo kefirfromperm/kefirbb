@@ -17,7 +17,6 @@ import static org.kefirsf.bb.test.Assert.assertProcess;
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class BBProcessorTest {
-
     private final BBProcessorFactory factory = BBProcessorFactory.getInstance();
 
     @Test
