@@ -11,19 +11,22 @@ import java.util.regex.Pattern;
  */
 public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     static final Pattern REGEX_AUTHORITY = Pattern.compile(
-            "[\\w\\.]+(:[\\w\\.]+)?@"
+            "[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+(:[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+)?@"
     );
     static final Pattern REGEX_HOST = Pattern.compile(
-            "([\\da-zA-Z]\\w*\\.)*[\\da-zA-Z]\\w*\\.?"
+            "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
     );
     static final Pattern REGEX_PATH = Pattern.compile(
-            "(/\\w+)*/?"
+            "(/[\\w\\(\\)]+)*/?"
     );
     static final Pattern REGEX_QUERY = Pattern.compile(
-            "\\?(\\w+=\\w+&)*(\\w+=\\w+)?"
+            "\\?([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?&)*([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?)?"
     );
     static final Pattern REGEX_FRAGMENT = Pattern.compile(
-            "#\\w*"
+            "#[\\w&-=]*"
+    );
+    static final Pattern REGEX_PORT = Pattern.compile(
+            ":\\d{1,4}"
     );
 
     /**
@@ -47,7 +50,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
      */
     public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
         Source source = context.getSource();
-        int length = parseLength(source, source.getOffset(), context.getTerminator());
+        int length = parseLength(source, source.getOffset(), terminator);
         if (length >= 0) {
             context.setAttribute(getName(), source.sub(source.getOffset() + length));
             if (!ghost) {
@@ -135,6 +138,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         }
         length += hostLength;
 
+        int portLength = parsePort(source, offset+length);
+        length += portLength;
+
         // A path like /home/web
         int pathLength = parsePath(source, offset + length, terminator);
         length += pathLength;
@@ -164,6 +170,10 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
     int parseHost(Source source, int offset, ProcPatternElement terminator) {
         return parseRegex(source, offset, calcEnd(source, terminator), REGEX_HOST);
+    }
+
+    int parsePort(Source source, int offset) {
+        return parseRegex(source, offset, source.length(), REGEX_PORT);
     }
 
     private int calcEnd(Source source, ProcPatternElement terminator) {

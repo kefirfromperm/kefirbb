@@ -3,6 +3,7 @@ package org.kefirsf.bb.proc;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.kefirsf.bb.UrlCollection;
 
 import static org.junit.Assert.*;
 
@@ -14,17 +15,12 @@ import static org.junit.Assert.*;
 @RunWith(Parameterized.class)
 public class ProcUrlTest {
 
-    public static final String PREFIX = "prefix(";
-    public static final String SUFFIX = ")suffix";
+    public static final String PREFIX = "prefix";
+    public static final String SUFFIX = "suffix";
 
     @Parameterized.Parameters
     public static String[] urlCollection() {
-        return new String[]{
-                "http://example.com",
-                "https://example.com",
-                "ftp://example.com",
-                "mailto:john.smith@example.com"
-        };
+        return UrlCollection.VALID;
     }
 
     @Parameterized.Parameter

@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.UrlCollection;
 
 import static org.kefirsf.bb.test.Assert.assertProcess;
 
@@ -19,12 +20,7 @@ public class UrlTest {
 
     @Parameterized.Parameters
     public static String[] urlCollection() {
-        return new String[]{
-                "http://example.com",
-                "https://example.com",
-                "ftp://example.com",
-                "mailto:john.smith@example.com"
-        };
+        return UrlCollection.VALID;
     }
 
     @Parameterized.Parameter

@@ -1,6 +1,7 @@
 package org.kefirsf.bb.proc;
 
 import org.junit.Test;
+import org.kefirsf.bb.UrlCollection;
 
 import static org.junit.Assert.assertEquals;
 import static org.kefirsf.bb.proc.ProcUrl.Schema.*;
@@ -102,23 +103,7 @@ public class ProcUrlMethodTest {
 
     @Test
     public void testParseLegth(){
-        String[] urls = new String[]{
-                "http://example.com",
-                "http://john.smith@example.com",
-                "http://john.smith:pa55w0rd@example.com",
-                "http://john.smith:pa55w0rd@example.com/",
-                "http://john.smith:pa55w0rd@example.com/home/web",
-                "http://john.smith:pa55w0rd@example.com/home/web?",
-                "http://john.smith:pa55w0rd@example.com/home/web?key=value",
-                "http://john.smith:pa55w0rd@example.com/home/web?key1=value1&key2=value2",
-                "http://john.smith:pa55w0rd@example.com/home/web?key1=value1&key2=value2#",
-                "http://john.smith:pa55w0rd@example.com/home/web?key1=value1&key2=value2#anchor",
-                "https://example.com",
-                "ftp://example.com",
-                "mailto:john.smith@example.com"
-        };
-
-        for(String url1: urls) {
+        for(String url1: UrlCollection.VALID) {
             assertEquals(
                     url1, url1.length(),
                     url.parseLength(createSource(url1), PREFIX.length(), new PatternConstant(SUFFIX, false))
