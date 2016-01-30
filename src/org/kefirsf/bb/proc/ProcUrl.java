@@ -85,7 +85,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
             // Find nearest schema
             for (Schema schema : Schema.values()) {
                 int ni = source.findFrom(start, schema.getPrefix().toCharArray(), true);
-                if (ni>0 && ni < index) {
+                if (ni > 0 && ni < index) {
                     index = ni;
                 }
             }
@@ -126,7 +126,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
         // An authority data like john.smith:pa55W0RD@
         int authorityLength = parseAuthority(source, offset + length);
-        if(schema.isAuthorityMandatory() && authorityLength <=0){
+        if (schema.isAuthorityMandatory() && authorityLength <= 0) {
             return -1;
         }
         length += authorityLength;
@@ -138,7 +138,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         }
         length += hostLength;
 
-        int portLength = parsePort(source, offset+length);
+        int portLength = parsePort(source, offset + length);
         length += portLength;
 
         // A path like /home/web
@@ -178,9 +178,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
     private int calcEnd(Source source, ProcPatternElement terminator) {
         int end = source.length();
-        if(terminator!=null){
+        if (terminator != null) {
             int ind = terminator.findIn(source);
-            if(ind>0){
+            if (ind > 0) {
                 end = ind;
             }
         }
@@ -202,17 +202,21 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     }
 
     Schema parseSchema(Source source, int offset) {
-        for(Schema schema: Schema.values()){
-            String str = source.subSequence(offset, Math.min(offset+schema.getLength(), source.length())).toString();
-            if(schema.getPrefix().equalsIgnoreCase(str)){
+        for (Schema schema : Schema.values()) {
+            String str = source.subSequence(offset, Math.min(offset + schema.getLength(), source.length())).toString();
+            if (schema.getPrefix().equalsIgnoreCase(str)) {
                 return schema;
             }
         }
         return null;
     }
 
-    enum Schema{
-        HTTP("http://"), HTTPS("https://"), FTP ("ftp://"), MAILTO("mailto:", true);
+    enum Schema {
+        HTTP("http://"),
+        HTTPS("https://"),
+        FTP("ftp://"),
+        MAILTO("mailto:", true);
+        
         private final String prefix;
         private final boolean authorityMandatory;
 
@@ -235,7 +239,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
             return authorityMandatory;
         }
 
-        public int getLength(){
+        public int getLength() {
             return prefix.length();
         }
     }
