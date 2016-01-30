@@ -176,6 +176,9 @@ class ProcessorBuilder {
                 elements.add(
                         new ProcBlankLine(((BlankLine) element).isGhost())
                 );
+            } else if (element instanceof Url){
+                Url url = (Url) element;
+                elements.add(new ProcUrl(url.getName(), url.isGhost()));
             }
         }
         return new ProcPattern(elements);
