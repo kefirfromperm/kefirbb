@@ -20,7 +20,7 @@ public class ProcUrlTest {
     @Parameterized.Parameters
     public static String[] urlCollection() {
         return new String[]{
-                "http://examle.com",
+                "http://example.com",
                 "https://example.com",
                 "ftp://example.com",
                 "mailto:john.smith@example.com"
