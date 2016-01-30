@@ -17,7 +17,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
             "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
     );
     static final Pattern REGEX_PATH = Pattern.compile(
-            "(/[\\w\\(\\)]+)*/?"
+            "(/[\\w\\(\\)\\.]+)*/?"
     );
     static final Pattern REGEX_QUERY = Pattern.compile(
             "\\?([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?&)*([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?)?"

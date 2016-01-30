@@ -45,7 +45,8 @@ public class UrlCollection {
             "http://-.~_!$&'()*+,;=:%40:80%2f::::::@example.com",
             "http://1337.net",
             "http://a.b-c.de",
-            "http://223.255.255.254"
+            "http://223.255.255.254",
+            "http://kefirsf.org/kefirbb/ava.jpg"
     };
 
     public static final String[] INVALID = new String[]{
