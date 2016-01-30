@@ -46,7 +46,8 @@ public class UrlCollection {
             "http://1337.net",
             "http://a.b-c.de",
             "http://223.255.255.254",
-            "http://kefirsf.org/kefirbb/ava.jpg"
+            "http://kefirsf.org/kefirbb/ava.jpg",
+            "http://kefirsf.org/kefirbb/.././ava.jpg"
     };
 
     public static final String[] INVALID = new String[]{
