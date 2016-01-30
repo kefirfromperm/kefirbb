@@ -76,6 +76,7 @@ public class DomConfigurationFactory {
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
+    public static final String DEFAULT_URL_NAME = "url";
 
     /**
      * Private constructor for prevent class initialization.
@@ -399,7 +400,7 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_URL)) {
                     elements.add(
                             new Url(
-                                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_URL_NAME),
                                     nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)
                                     )
                     );
