@@ -10,7 +10,7 @@ public interface ProcPatternElement {
      * Parse element
      *
      * @param context    context
-     * @param terminator teminator to stop text process
+     * @param terminator terminator to stop text process
      * @return true - subsequence is valid to this pattern
      *         false - not valid
      * @throws NestingException if nesting of tags is bigger than maximum nesting value
