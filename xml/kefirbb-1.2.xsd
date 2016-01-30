@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://kefirsf.org/kefirbb/schema"
+            xmlns="http://kefirsf.org/kefirbb/schema"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+    <!-- Functions -->
+    <xsd:simpleType name="function">
+        <xsd:annotation>
+            <xsd:documentation>
+                Allowed functions for variable. They are the variable value, just a text and the variable length i.e.
+                length of a text.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="value"/>
+            <xsd:enumeration value="length"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="templateType" mixed="true">
+        <xsd:annotation>
+            <xsd:documentation>
+                The template type description. It allows plain text and var tags.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="var">
+                <xsd:complexType>
+                    <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                    <xsd:attribute name="function" type="function" default="value"/>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:choice>
+    </xsd:complexType>
+
+    <xsd:complexType name="ghostable">
+        <xsd:annotation>
+            <xsd:documentation>
+                The base type for pattern elements which can be ghost. If an element is a ghost then cursor doesn't
+                move after element was parsed. Be careful with ghosts.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:attribute name="ghost" type="xsd:boolean" default="false"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="patternType" mixed="true">
+        <xsd:annotation>
+            <xsd:documentation>
+                The pattern type description. It can consists of some interesting elements.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="constant">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ghostable">
+                            <xsd:attribute name="value" type="xsd:string"/>
+                            <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="var" >
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ghostable">
+                            <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                            <xsd:attribute name="parse" type="xsd:boolean" default="true"/>
+                            <xsd:attribute name="regex" type="xsd:string" default=".*"/>
+                            <xsd:attribute name="scope" type="xsd:IDREF" default="ROOT"/>
+                            <xsd:attribute name="inherit" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="transparent" type="xsd:boolean" default="false"/>
+                            <xsd:attribute name="action" default="rewrite">
+                                <xsd:simpleType>
+                                    <xsd:restriction base="xsd:string">
+                                        <xsd:enumeration value="rewrite"/>
+                                        <xsd:enumeration value="append"/>
+                                        <xsd:enumeration value="check"/>
+                                    </xsd:restriction>
+                                </xsd:simpleType>
+                            </xsd:attribute>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="url">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ghostable">
+                            <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="junk"/>
+            <xsd:element name="bol"/>
+            <xsd:element name="eol" type="ghostable"/>
+            <xsd:element name="blankline" type="ghostable"/>
+        </xsd:choice>
+        <xsd:attribute name="ignoreCase" type="xsd:boolean" default="false"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="codeType">
+        <xsd:annotation>
+            <xsd:documentation>
+                The code tag description. The code consists of some pattern elements for parsing a text and one template
+                element for generating new text. The template element can be empty.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+            <xsd:choice minOccurs="1" maxOccurs="unbounded">
+                <xsd:element name="pattern" type="patternType"/>
+            </xsd:choice>
+            <xsd:element name="template" type="templateType"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:ID"/>
+        <xsd:attribute name="priority" type="xsd:integer" default="0"/>
+        <xsd:attribute name="transparent" type="xsd:boolean" default="true"/>
+    </xsd:complexType>
+
+    <xsd:element name="configuration">
+        <xsd:annotation>
+            <xsd:documentation>
+                The configuration root element.
+            </xsd:documentation>
+        </xsd:annotation>
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="nesting" minOccurs="0" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:attribute name="limit" type="xsd:int" use="optional"/>
+                        <xsd:attribute name="exception" type="xsd:boolean" use="optional"/>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="params" minOccurs="0" maxOccurs="1">
+                    <xsd:complexType>
+                        <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                            <xsd:element name="param">
+                                <xsd:complexType>
+                                    <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                    <xsd:attribute name="value" type="xsd:string" use="required"/>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:choice>
+                    </xsd:complexType>
+                </xsd:element>
+                <xsd:element name="prefix" type="templateType" minOccurs="0" maxOccurs="1"/>
+                <xsd:element name="suffix" type="templateType" minOccurs="0" maxOccurs="1"/>
+                <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                    <xsd:element name="code" type="codeType"/>
+                    <xsd:element name="scope">
+                        <xsd:complexType>
+                            <xsd:choice minOccurs="0" maxOccurs="unbounded">
+                                <xsd:element name="coderef">
+                                    <xsd:complexType>
+                                        <xsd:attribute name="name" type="xsd:IDREF" use="required"/>
+                                    </xsd:complexType>
+                                </xsd:element>
+                                <xsd:element name="code" type="codeType"/>
+                            </xsd:choice>
+                            <xsd:attribute name="name" type="xsd:ID" use="required"/>
+                            <xsd:attribute name="parent" type="xsd:IDREF" use="optional"/>
+
+                            <!--
+                            Allows only scope codes not a text. When meets a text or non scope code breaks
+                            the parsing.
+                             -->
+                            <xsd:attribute name="strong" type="xsd:boolean" use="optional" default="false"/>
+                            <xsd:attribute name="ignoreText" type="xsd:boolean" use="optional" default="false"/>
+                            <xsd:attribute name="min" type="xsd:integer" default="-1"/>
+                            <xsd:attribute name="max" type="xsd:integer" default="-1"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
