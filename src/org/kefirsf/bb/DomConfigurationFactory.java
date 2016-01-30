@@ -70,6 +70,7 @@ public class DomConfigurationFactory {
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
     private static final String TAG_ATTR_GHOST = "ghost";
     private static final boolean DEFAULT_GHOST_VALUE = false;
+    private static final String TAG_URL = "url";
 
     /**
      * Instance of the class.
@@ -393,9 +394,16 @@ public class DomConfigurationFactory {
                     elements.add(parseEol(el));
                 } else if (tagName.equals(TAG_BOL)) {
                     elements.add(new Bol());
-                } else if (tagName.equals(TAG_BLANKLINE)){
+                } else if (tagName.equals(TAG_BLANKLINE)) {
                     elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)));
-                }else {
+                } else if (tagName.equals(TAG_URL)) {
+                    elements.add(
+                            new Url(
+                                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                                    nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)
+                                    )
+                    );
+                } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
                     );
@@ -500,7 +508,7 @@ public class DomConfigurationFactory {
         }
         variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
 
-        if(nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)){
+        if (nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)) {
             variable.setAction(Action.valueOf(nodeAttribute(el, TAG_VAR_ATTR_ACTION)));
         }
         return variable;

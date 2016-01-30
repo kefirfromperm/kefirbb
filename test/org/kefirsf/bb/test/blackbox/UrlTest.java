@@ -22,7 +22,8 @@ public class UrlTest {
         return new String[]{
                 "http://examle.com",
                 "https://example.com",
-                "ftp://example.com"
+                "ftp://example.com",
+                "mailto:john.smith@example.com"
         };
     }
 
