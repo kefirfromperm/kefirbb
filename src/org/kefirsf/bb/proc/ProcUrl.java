@@ -18,17 +18,17 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     static final Pattern REGEX_HOST = Pattern.compile(
             "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
     );
-    static final Pattern REGEX_PATH = Pattern.compile(
-            "(/[\\w\\(\\)\\.]+)*/?"
-    );
-    static final Pattern REGEX_QUERY = Pattern.compile(
-            "\\?([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?&)*([\\w%\\-\\+]+(=[\\w%\\-\\+]+)?)?"
-    );
-    static final Pattern REGEX_FRAGMENT = Pattern.compile(
-            "#[\\w&-=]*"
-    );
     static final Pattern REGEX_PORT = Pattern.compile(
             ":\\d{1,4}"
+    );
+    static final Pattern REGEX_PATH = Pattern.compile(
+            "(/([\\w\\(\\)\\.]|(%\\p{XDigit}{2}))+)*/?"
+    );
+    static final Pattern REGEX_QUERY = Pattern.compile(
+            "\\?(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?(&|;))*(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?)?"
+    );
+    static final Pattern REGEX_FRAGMENT = Pattern.compile(
+            "#([\\w&-=]|(%\\p{XDigit}{2}))*"
     );
 
     /**

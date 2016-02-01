@@ -180,6 +180,40 @@
             <pattern><var regex="\p{javaUpperCase}+" name="acronym"/>(<var name="title" scope="escapeHtml"/>)</pattern>
             <template>&lt;abbr title=&quot;<var name="title"/>&quot;&gt;<var name="acronym"/>&lt;/abbr&gt;</template>
         </code>
+
+        <!-- Links -->
+        <code priority="1">
+            <pattern>&quot;<var name="text" scope="safeXml"/>&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="2">
+            <pattern>&quot;<var name="text" scope="safeXml"/>(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="3">
+            <pattern>&quot;(<var name="class" scope="safeXml"/>)<var name="text" scope="safeXml"/>&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; class=&quot;<var name="class"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="4">
+            <pattern>&quot;(<var name="class" scope="safeXml"/>)<var name="text" scope="safeXml"/>(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot; class=&quot;<var name="class"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="5">
+            <pattern>&quot;$&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="6">
+            <pattern>&quot;$(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="7">
+            <pattern>&quot;(<var name="class" scope="safeXml"/>)$&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; class=&quot;<var name="class"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
+        </code>
+        <code priority="8">
+            <pattern>&quot;(<var name="class" scope="safeXml"/>)$(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot; class=&quot;<var name="class"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
+        </code>
     </scope>
 
     <scope name="classAttrs">

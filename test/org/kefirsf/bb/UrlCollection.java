@@ -47,7 +47,9 @@ public class UrlCollection {
             "http://a.b-c.de",
             "http://223.255.255.254",
             "http://kefirsf.org/kefirbb/ava.jpg",
-            "http://kefirsf.org/kefirbb/.././ava.jpg"
+            "http://kefirsf.org/kefirbb/.././ava.jpg",
+            "https://www.youtube.com/watch?v=tvVA-vB7-mU",
+            "http://www.youtube.com/embed/AuG9i5cwGW0?rel=0;autoplay=1"
     };
 
     public static final String[] INVALID = new String[]{

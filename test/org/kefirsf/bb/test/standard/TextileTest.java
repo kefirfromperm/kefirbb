@@ -676,4 +676,39 @@ public class TextileTest extends AbstractConfigurationTest {
                 "000(111)"
         );
     }
+
+    /**
+     * Links
+     */
+    @Test
+    public void testLinks(){
+        assertProcess(
+                "<p><a href=\"/example\">link text</a></p>",
+                "\"link text\":/example"
+        );
+        assertProcess(
+                "<p><a href=\"http://example.com/\" title=\"with title\">link text</a></p>",
+                "\"link text(with title)\":http://example.com/"
+        );
+        assertProcess(
+                "<p><a href=\"mailto:someone@example.com\" title=\"title tooltip\" class=\"classname\">link text</a></p>",
+                "\"(classname)link text(title tooltip)\":mailto:someone@example.com"
+        );
+        assertProcess(
+                "<p><a href=\"http://stefdawson.com/sw\">http://stefdawson.com/sw</a></p>",
+                "\"$\":http://stefdawson.com/sw"
+        );
+        assertProcess(
+                "<p><a href=\"http://www.youtube.com/embed/AuG9i5cwGW0?rel=0;autoplay=1\" class=\"various fancybox.iframe\">Grizzly Bear</a></p>",
+                "\"(various fancybox.iframe)Grizzly Bear\":http://www.youtube.com/embed/AuG9i5cwGW0?rel=0;autoplay=1"
+        );
+        assertProcess(
+                "<p><a href=\"http://en.wikipedia.org/\">Wikipedia</a></p>",
+                "\"Wikipedia\":http://en.wikipedia.org/"
+        );
+        assertProcess(
+                "<p><a href=\"http://fr.wikipedia.org/wiki/Page_%28livre%29\">http://fr.wikipedia.org/wiki/Page_&#40;livre&#41;</a></p>",
+                "\"http://fr.wikipedia.org/wiki/Page_&#40;livre&#41;\":http://fr.wikipedia.org/wiki/Page_%28livre%29"
+        );
+    }
 }
