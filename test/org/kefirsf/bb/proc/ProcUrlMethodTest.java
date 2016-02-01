@@ -18,7 +18,7 @@ public class ProcUrlMethodTest {
     private final ProcUrl url;
 
     public ProcUrlMethodTest() {
-        url = new ProcUrl("a", false);
+        url = new ProcUrl("a", false, false, false);
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ProcUrlMethodTest {
     }
 
     @Test
-    public void testParseLegth(){
+    public void testParseLength(){
         for(String url1: UrlCollection.VALID) {
             assertEquals(
                     url1, url1.length(),

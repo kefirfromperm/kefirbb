@@ -37,8 +37,8 @@ public class ProcUrlTest {
         Context context = new Context();
         context.setSource(source);
 
-        ProcUrl norm = new ProcUrl("a", false);
-        ProcUrl ghost = new ProcUrl("b", true);
+        ProcUrl norm = new ProcUrl("a", false, false, false);
+        ProcUrl ghost = new ProcUrl("b", true, false, false);
 
         assertFalse(norm.parse(context, null));
         assertFalse(ghost.parse(context, null));
@@ -56,8 +56,8 @@ public class ProcUrlTest {
         Source source = context.getSource();
         PatternConstant terminator = new PatternConstant(SUFFIX, false);
 
-        ProcUrl norm = new ProcUrl("a", false);
-        ProcUrl ghost = new ProcUrl("b", true);
+        ProcUrl norm = new ProcUrl("a", false, false, false);
+        ProcUrl ghost = new ProcUrl("b", true, false, false);
 
         assertFalse(norm.parse(context, terminator));
         assertFalse(ghost.parse(context, terminator));
@@ -73,7 +73,7 @@ public class ProcUrlTest {
     public void testIsNextIn() {
         Context context = prepareContext();
         Source source = context.getSource();
-        ProcUrl element = new ProcUrl("a", false);
+        ProcUrl element = new ProcUrl("a", false, false, false);
 
         assertFalse(element.isNextIn(context));
         source.setOffset(PREFIX.length() - 1);
@@ -87,7 +87,7 @@ public class ProcUrlTest {
     @Test
     public void testFindIn() {
         Source source = prepareSource();
-        ProcUrl element = new ProcUrl("a", false);
+        ProcUrl element = new ProcUrl("a", false, false, false);
 
         assertEquals(PREFIX.length(), element.findIn(source));
         source.setOffset(PREFIX.length() - 1);

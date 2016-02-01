@@ -5,6 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kefirsf.bb.BBProcessorFactory;
 import org.kefirsf.bb.TextProcessor;
+import org.kefirsf.bb.UrlCollection;
 
 import static org.kefirsf.bb.test.Assert.assertProcess;
 
@@ -18,13 +19,7 @@ public class LocalUrlTest {
 
     @Parameterized.Parameters
     public static String[] urlCollection() {
-        return new String[]{
-                "/", "/home", "/home/", "/home/web", "/home/web/", "/home/web/index.html",
-                ".", "./", "./home", "./home/", "./home/web", "./home/web/", "./home/web/index.html",
-                "..", "../", "../home", "../home/", "../home/web", "../home/web/", "../home/web/index.html",
-                "./..", "./../", "./../home", "./../home/", "./../home/web", "./../home/web/",
-                "./../home/web/index.html", "../../home/../web/index.html"
-        };
+        return UrlCollection.LOCAL;
     }
 
     @Parameterized.Parameter

@@ -77,4 +77,11 @@ public class UrlCollection {
             "http://.www.foo.bar/",
             "http://.www.foo.bar./"
     };
+    public static final String[] LOCAL = new String[]{
+            "/", "/home", "/home/", "/home/web", "/home/web/", "/home/web/index.html",
+            ".", "./", "./home", "./home/", "./home/web", "./home/web/", "./home/web/index.html",
+            "..", "../", "../home", "../home/", "../home/web", "../home/web/", "../home/web/index.html",
+            "./..", "./../", "./../home", "./../home/", "./../home/web", "./../home/web/",
+            "./../home/web/index.html", "../../home/../web/index.html"
+    };
 }

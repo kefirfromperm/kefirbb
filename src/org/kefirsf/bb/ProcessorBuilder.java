@@ -178,7 +178,7 @@ class ProcessorBuilder {
                 );
             } else if (element instanceof Url){
                 Url url = (Url) element;
-                elements.add(new ProcUrl(url.getName(), url.isGhost()));
+                elements.add(new ProcUrl(url.getName(), url.isGhost(), false, false));
             }
         }
         return new ProcPattern(elements);

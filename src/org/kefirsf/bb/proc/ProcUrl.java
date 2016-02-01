@@ -32,17 +32,25 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     /**
      * Don't move the cursor offset.
      */
-    private boolean ghost = false;
+    private final boolean ghost;
+
+    private final boolean local;
+
+    private final boolean schemaless;
 
     /**
      * Create a named URL variable
      *
      * @param name  variable name
      * @param ghost don't move the cursor after parsing
+     * @param local Parse local URLs also
+     * @param schemaless Parse only schemaless URL
      */
-    public ProcUrl(String name, boolean ghost) {
+    public ProcUrl(String name, boolean ghost, boolean local, boolean schemaless) {
         super(name);
         this.ghost = ghost;
+        this.local = local;
+        this.schemaless = schemaless;
     }
 
     /**

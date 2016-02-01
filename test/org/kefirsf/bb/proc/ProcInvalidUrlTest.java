@@ -31,7 +31,7 @@ public class ProcInvalidUrlTest {
         Context context = prepareContext();
         Source source = context.getSource();
 
-        ProcUrl proc = new ProcUrl("a", false);
+        ProcUrl proc = new ProcUrl("a", false, false, false);
 
         assertFalse(proc.parse(context, null));
         source.setOffset(1);
@@ -51,7 +51,7 @@ public class ProcInvalidUrlTest {
         context.setSource(source);
         PatternConstant terminator = new PatternConstant("suffix", false);
 
-        ProcUrl proc = new ProcUrl("a", false);
+        ProcUrl proc = new ProcUrl("a", false, false, false);
 
         assertFalse(url, proc.parse(context, terminator));
 
@@ -63,7 +63,7 @@ public class ProcInvalidUrlTest {
     public void testIsNextIn() {
         Context context = prepareContext();
         Source source = context.getSource();
-        ProcUrl element = new ProcUrl("a", false);
+        ProcUrl element = new ProcUrl("a", false, false, false);
 
         assertFalse(url, element.isNextIn(context));
         source.setOffset(PREFIX.length() - 1);
@@ -77,7 +77,7 @@ public class ProcInvalidUrlTest {
     @Test
     public void testFindIn() {
         Source source = prepareSource();
-        ProcUrl element = new ProcUrl("a", false);
+        ProcUrl element = new ProcUrl("a", false, false, false);
 
         assertEquals(url, -1, element.findIn(source));
         source.setOffset(PREFIX.length() - 1);
