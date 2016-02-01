@@ -23,6 +23,8 @@ public class Url extends NamedElement implements PatternElement {
      *
      * @param name  variable name
      * @param ghost is it ghost?
+     * @param local supports local URLs
+     * @param schemaless true if accept URLs only without a schema, false otherwise
      */
     public Url(String name, boolean ghost, boolean local, boolean schemaless) {
         super(name);
@@ -59,7 +61,7 @@ public class Url extends NamedElement implements PatternElement {
 
     /**
      * Set support local URLs.
-     * <p/>
+     *
      * true - if the URL can accept local URLs also,
      * false - if URL must be absolute.
      *
