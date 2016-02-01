@@ -170,13 +170,13 @@
 
     <!-- Insert image -->
     <code name="img">
-        <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<url/>&quot;<junk/>&gt;</pattern>
+        <pattern ignoreCase="true">&lt;img <junk/>src=&quot;<url local="true"/>&quot;<junk/>&gt;</pattern>
         <template>&lt;img src=&quot;<var name="url"/>&quot;/&gt;</template>
     </code>
 
     <!-- HTTP -->
     <code name="url1">
-        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<url/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
+        <pattern ignoreCase="true">&lt;a <junk/>href=&quot;<url local="true"/>&quot;<junk/>&gt;<var name="text" scope="url"/>&lt;/a&gt;</pattern>
         <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
 
