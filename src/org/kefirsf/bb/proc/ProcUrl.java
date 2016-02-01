@@ -84,6 +84,10 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
      * {@inheritDoc}
      */
     public int findIn(Source source) {
+        if(schemaless){
+            return -1;
+        }
+
         int start = source.getOffset();
         int sourceLength = source.length();
 
@@ -142,23 +146,23 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
         // A schema like http://, https://, mailto:
         Schema schema = parseSchema(source, offset);
-        if (schema != null) {
+        if (schema != null && !schemaless) {
             length += schema.getLength();
-        } else if (!local) {
+        } else if ((schema == null && !local && !schemaless) || (schema != null)) {
             return -1;
         }
 
         // An authority data like john.smith:pa55W0RD@
-        if (schema != null) {
+        if (schema != null || schemaless) {
             int authorityLength = parseAuthority(source, offset + length);
-            if (schema.isAuthorityMandatory() && authorityLength <= 0) {
+            if (schema!=null && schema.isAuthorityMandatory() && authorityLength <= 0) {
                 return -1;
             }
             length += authorityLength;
         }
 
         // A host like example.com
-        if (schema != null) {
+        if (schema != null || schemaless) {
             int hostLength = parseHost(source, offset + length, terminator);
             if (hostLength <= 0) {
                 return -1;
@@ -167,13 +171,13 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         }
 
         // Parse port
-        if (schema != null) {
+        if (schema != null || schemaless) {
             int portLength = parsePort(source, offset + length);
             length += portLength;
         }
 
         // For local URLs it is possible to use "./", "../", "/"
-        if (schema == null) {
+        if (schema == null && local) {
             int prefixLength = parseRegex(source, offset, calcEnd(source, terminator), Pattern.compile("\\.{0,2}/"));
             if(prefixLength<=0){
                 return -1;
@@ -183,6 +187,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
         // A path like /home/web
         int pathLength = parsePath(source, offset + length, terminator);
+        if(local && schema==null && pathLength<=0){
+            return -1;
+        }
         length += pathLength;
 
         // A query like ?key1=value1&key2=value2
