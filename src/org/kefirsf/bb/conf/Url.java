@@ -24,9 +24,11 @@ public class Url extends NamedElement implements PatternElement {
      * @param name  variable name
      * @param ghost is it ghost?
      */
-    public Url(String name, boolean ghost) {
+    public Url(String name, boolean ghost, boolean local, boolean schemaless) {
         super(name);
         this.ghost = ghost;
+        this.local = local;
+        this.schemaless = schemaless;
     }
 
     /**
