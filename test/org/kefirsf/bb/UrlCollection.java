@@ -79,8 +79,8 @@ public class UrlCollection {
     };
     public static final String[] LOCAL = new String[]{
             "/", "/home", "/home/", "/home/web", "/home/web/", "/home/web/index.html",
-            ".", "./", "./home", "./home/", "./home/web", "./home/web/", "./home/web/index.html",
-            "..", "../", "../home", "../home/", "../home/web", "../home/web/", "../home/web/index.html",
+            "./", "./home", "./home/", "./home/web", "./home/web/", "./home/web/index.html",
+            "../", "../home", "../home/", "../home/web", "../home/web/", "../home/web/index.html",
             "./..", "./../", "./../home", "./../home/", "./../home/web", "./../home/web/",
             "./../home/web/index.html", "../../home/../web/index.html"
     };

@@ -1,6 +1,8 @@
 package org.kefirsf.bb.proc;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,9 +43,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     /**
      * Create a named URL variable
      *
-     * @param name  variable name
-     * @param ghost don't move the cursor after parsing
-     * @param local Parse local URLs also
+     * @param name       variable name
+     * @param ghost      don't move the cursor after parsing
+     * @param local      Parse local URLs also
      * @param schemaless Parse only schemaless URL
      */
     public ProcUrl(String name, boolean ghost, boolean local, boolean schemaless) {
@@ -91,8 +93,21 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
             index = sourceLength;
 
             // Find nearest schema
+            List<String> prefixes = new ArrayList<String>(Schema.values().length + (local ? 3 : 0));
             for (Schema schema : Schema.values()) {
-                int ni = source.findFrom(start, schema.getPrefix().toCharArray(), true);
+                prefixes.add(schema.getPrefix());
+            }
+
+            // For local URls prefixes are "./", "../", "/"
+            if (local) {
+                prefixes.add("/");
+                prefixes.add("./");
+                prefixes.add("../");
+            }
+
+            // Find nearest prefix
+            for (String prefix : prefixes) {
+                int ni = source.findFrom(start, prefix.toCharArray(), true);
                 if (ni > 0 && ni < index) {
                     index = ni;
                 }
@@ -127,27 +142,44 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
 
         // A schema like http://, https://, mailto:
         Schema schema = parseSchema(source, offset);
-        if (schema == null) {
+        if (schema != null) {
+            length += schema.getLength();
+        } else if (!local) {
             return -1;
         }
-        length += schema.getLength();
 
         // An authority data like john.smith:pa55W0RD@
-        int authorityLength = parseAuthority(source, offset + length);
-        if (schema.isAuthorityMandatory() && authorityLength <= 0) {
-            return -1;
+        if (schema != null) {
+            int authorityLength = parseAuthority(source, offset + length);
+            if (schema.isAuthorityMandatory() && authorityLength <= 0) {
+                return -1;
+            }
+            length += authorityLength;
         }
-        length += authorityLength;
 
         // A host like example.com
-        int hostLength = parseHost(source, offset + length, terminator);
-        if (hostLength <= 0) {
-            return -1;
+        if (schema != null) {
+            int hostLength = parseHost(source, offset + length, terminator);
+            if (hostLength <= 0) {
+                return -1;
+            }
+            length += hostLength;
         }
-        length += hostLength;
 
-        int portLength = parsePort(source, offset + length);
-        length += portLength;
+        // Parse port
+        if (schema != null) {
+            int portLength = parsePort(source, offset + length);
+            length += portLength;
+        }
+
+        // For local URLs it is possible to use "./", "../", "/"
+        if (schema == null) {
+            int prefixLength = parseRegex(source, offset, calcEnd(source, terminator), Pattern.compile("\\.{0,2}/"));
+            if(prefixLength<=0){
+                return -1;
+            }
+            length += prefixLength - 1;
+        }
 
         // A path like /home/web
         int pathLength = parsePath(source, offset + length, terminator);
@@ -224,7 +256,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         HTTPS("https://"),
         FTP("ftp://"),
         MAILTO("mailto:", true);
-        
+
         private final String prefix;
         private final boolean authorityMandatory;
 
@@ -255,8 +287,8 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     @Override
     public String toString() {
         return MessageFormat.format(
-                "<url name=\"{0}\" ghost=\"{1}\"/>",
-                getName(), ghost
+                "<url name=\"{0}\" ghost=\"{1}\" local=\"{2}\" schemaless=\"{3}\"/>",
+                getName(), ghost, local, schemaless
         );
     }
 }
