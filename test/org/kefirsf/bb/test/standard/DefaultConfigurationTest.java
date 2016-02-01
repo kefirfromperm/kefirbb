@@ -90,7 +90,7 @@ public class DefaultConfigurationTest extends AbstractConfigurationTest {
         assertProcess("<a href=\"../test.xml\">../test.xml</a>", "[url]../test.xml[/url]");
 
         // XSS attempt
-        assertProcess("<a href=\"http://javascript:alert(&apos;Kefir is stupid!&apos;);\">javascript:alert(&apos;Kefir is stupid!&apos;);</a>", "[url]javascript:alert('Kefir is stupid!');[/url]");
+        assertProcess("[url]javascript:alert(&apos;Kefir is stupid!&apos;);[/url]", "[url]javascript:alert('Kefir is stupid!');[/url]");
 
         // formatting
         assertProcess("<span style=\"color:red;\">Red text</span>", "[color=red]Red text[/color]");

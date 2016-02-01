@@ -98,8 +98,6 @@
         <coderef name="url2"/>
         <coderef name="url3"/>
         <coderef name="url4"/>
-        <coderef name="url7"/>
-        <coderef name="url8"/>
 
         <!-- Table -->
         <coderef name="table"/>
@@ -140,16 +138,12 @@
 
     <!-- Insert image -->
     <code name="img1" priority="3">
-        <pattern ignoreCase="true">[img]<url/>[/img]</pattern>
+        <pattern ignoreCase="true">[img]<url local="true"/>[/img]</pattern>
         <template>&lt;img src=&quot;<var name="url"/>&quot;/&gt;</template>
     </code>
-    <code name="img2" priority="2">
-        <pattern ignoreCase="true">[img]/<var name="addr" scope="escapeXml"/>[/img]</pattern>
-        <template>&lt;img src=&quot;/<var name="addr"/>&quot;/&gt;</template>
-    </code>
-    <code name="img3" priority="1">
-        <pattern ignoreCase="true">[img]<var name="addr" scope="escapeXml"/>[/img]</pattern>
-        <template>&lt;img src=&quot;http://<var name="addr"/>&quot;/&gt;</template>
+    <code name="img2" priority="1">
+        <pattern ignoreCase="true">[img]<url schemaless="true"/>[/img]</pattern>
+        <template>&lt;img src=&quot;http://<var name="url"/>&quot;/&gt;</template>
     </code>
 
     <!-- Links. http, https, mailto protocols -->
@@ -167,27 +161,19 @@
 
     <!-- HTTP -->
     <code name="url1" priority="3">
-        <pattern ignoreCase="true">[url=<url/>]<var name="text" scope="url"/>[/url]</pattern>
+        <pattern ignoreCase="true">[url=<url local="true"/>]<var name="text" scope="url"/>[/url]</pattern>
         <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
     <code name="url2" priority="3">
-        <pattern ignoreCase="true">[url]<url/>[/url]</pattern>
-        <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
-    </code>
-    <code name="url7" priority="2">
-        <pattern ignoreCase="true">[url=<var name="prefix" regex="\.{0,2}/" ghost="true"/><var name="url" scope="escapeXml"/>]<var name="text" scope="url"/>[/url]</pattern>
-        <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
-    </code>
-    <code name="url8" priority="2">
-        <pattern ignoreCase="true">[url]<var name="prefix" regex="\.{0,2}/" ghost="true"/><var name="url" scope="escapeXml"/>[/url]</pattern>
+        <pattern ignoreCase="true">[url]<url local="true"/>[/url]</pattern>
         <template>&lt;a href=&quot;<var name="url"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
     </code>
     <code name="url3" priority="1">
-        <pattern ignoreCase="true">[url=<var name="url" scope="escapeXml"/>]<var name="text" scope="url"/>[/url]</pattern>
+        <pattern ignoreCase="true">[url=<url schemaless="true"/>]<var name="text" scope="url"/>[/url]</pattern>
         <template>&lt;a href=&quot;http://<var name="url"/>&quot;&gt;<var name="text"/>&lt;/a&gt;</template>
     </code>
     <code name="url4" priority="1">
-        <pattern ignoreCase="true">[url]<var name="url" scope="escapeXml"/>[/url]</pattern>
+        <pattern ignoreCase="true">[url]<url schemaless="true"/>[/url]</pattern>
         <template>&lt;a href=&quot;http://<var name="url"/>&quot;&gt;<var name="url"/>&lt;/a&gt;</template>
     </code>
 

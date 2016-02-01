@@ -153,9 +153,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         }
 
         // An authority data like john.smith:pa55W0RD@
-        if (schema != null || schemaless) {
+        if (schema != null) {
             int authorityLength = parseAuthority(source, offset + length);
-            if (schema!=null && schema.isAuthorityMandatory() && authorityLength <= 0) {
+            if (schema.isAuthorityMandatory() && authorityLength <= 0) {
                 return -1;
             }
             length += authorityLength;
