@@ -71,12 +71,16 @@ public class DomConfigurationFactory {
     private static final String TAG_ATTR_GHOST = "ghost";
     private static final boolean DEFAULT_GHOST_VALUE = false;
     private static final String TAG_URL = "url";
+    private static final String DEFAULT_URL_NAME = "url";
+    private static final String TAG_URL_ATTR_LOCAL = "local";
+    private static final String TAG_URL_ATTR_SCHEMALESS = "schemaless";
 
     /**
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
-    public static final String DEFAULT_URL_NAME = "url";
+    public static final boolean DEFAULT_URL_LOCAL = false;
+    public static final boolean DEFAULT_URL_SCHEMALESS = false;
 
     /**
      * Private constructor for prevent class initialization.
@@ -398,12 +402,7 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_BLANKLINE)) {
                     elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)));
                 } else if (tagName.equals(TAG_URL)) {
-                    elements.add(
-                            new Url(
-                                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_URL_NAME),
-                                    nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)
-                                    )
-                    );
+                    elements.add(parseUrl(el));
                 } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
@@ -414,6 +413,20 @@ public class DomConfigurationFactory {
             }
         }
         return new Pattern(elements);
+    }
+
+    /**
+     * Parse a URL tag.
+     * @param el tag element
+     * @return Configuration URL.
+     */
+    private Url parseUrl(Node el) {
+        return new Url(
+                nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_URL_NAME),
+                nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE),
+                nodeAttribute(el, TAG_URL_ATTR_LOCAL, DEFAULT_URL_LOCAL),
+                nodeAttribute(el, TAG_URL_ATTR_SCHEMALESS, DEFAULT_URL_SCHEMALESS)
+                );
     }
 
     private Eol parseEol(Node el) {
