@@ -386,7 +386,6 @@
         </code>
 
         <!-- Lists -->
-        <!-- Lists -->
         <code priority="2" transparent="false">
             <pattern><bol/><var name="check" regex="\*(\*|#)*\s" ghost="true"/><var name="list" regex="\*" ghost="true"/><var scope="listScope"/></pattern>
             <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
@@ -394,6 +393,26 @@
         <code priority="2" transparent="false">
             <pattern><bol/><var name="check" regex="#(\*|#)*\s" ghost="true"/><var name="list" regex="#" ghost="true"/><var scope="listScope"/></pattern>
             <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+        </code>
+
+        <!-- Tables -->
+        <code priority="2">
+            <pattern><constant value="|" ghost="true"/><var scope="textileTableScope"/></pattern>
+            <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="textileTableScope" min="1" strong="true">
+        <code>
+            <pattern><constant value="|" ghost="true"/><var scope="textileRowScope"/><var name="terminator" regex="\|(\r|\n){1,2}"/></pattern>
+            <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="textileRowScope" min="1" ignoreText="true">
+        <code>
+            <pattern>|<var scope="textile"/><constant value="|" ghost="true"/></pattern>
+            <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
         </code>
     </scope>
 

@@ -777,9 +777,9 @@ public class TextileTest extends AbstractConfigurationTest {
                         "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
                         "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
                         "</table>",
-                "| A | simple | table | row |" +
-                        "| And | another | table | row |" +
-                        "| With an | | empty | cell |"
+                "| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |\n"
         );
     }
 }

@@ -93,7 +93,9 @@ public class ProcScope {
         Source source = context.getSource();
 
         int count = 0;
-        while (source.hasNext() && (strong || context.hasNextAdjustedForTerminator()) && (max < 0 || count < max)) {
+        while (source.hasNext() &&
+                (strong || context.hasNextAdjustedForTerminator()) &&
+                (max < 0 || count < max)) {
             int offset = source.getOffset();
             boolean parsed = false;
 
