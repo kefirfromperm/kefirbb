@@ -711,4 +711,31 @@ public class TextileTest extends AbstractConfigurationTest {
                 "\"http://fr.wikipedia.org/wiki/Page_&#40;livre&#41;\":http://fr.wikipedia.org/wiki/Page_%28livre%29"
         );
     }
+
+    /**
+     * Images
+     */
+    @Test
+    public void testImages(){
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\"/></p>",
+                "!/img/carver.jpeg!"
+        );
+        assertProcess(
+                "<p><img src=\"http://textpattern.net/wiki/skins/textbook/images/logo.png\"/></p>",
+                "!http://textpattern.net/wiki/skins/textbook/images/logo.png!"
+        );
+        assertProcess(
+                "<p><img alt=\"the new carver\" title=\"the new carver\" src=\"/img/newcarver.png\"/></p>",
+                "!/img/newcarver.png(the new carver)!"
+        );
+        assertProcess(
+                "<p><a href=\"http://textpattern.com/\"><img src=\"/img/newcarver.png\"/></a></p>",
+                "!/img/newcarver.png!:http://textpattern.com/"
+        );
+        assertProcess(
+                "<p><a href=\"http://textpattern.com/\"><img alt=\"My Title\" title=\"My Title\" src=\"/img/newcarver.png\"/></a></p>",
+                "!/img/newcarver.png(My Title)!:http://textpattern.com/"
+        );
+    }
 }

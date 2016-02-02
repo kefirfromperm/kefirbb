@@ -198,6 +198,24 @@
             <pattern>&quot;<var name="class" scope="classAttrs"/>$(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
             <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot;<var name="class"/>&gt;<var name="url"/>&lt;/a&gt;</template>
         </code>
+
+        <!-- Images -->
+        <code priority="1">
+            <pattern>!<url local="true"/>!</pattern>
+            <template>&lt;img src=&quot;<var name="url"/>&quot;/&gt;</template>
+        </code>
+        <code priority="2">
+            <pattern>!<url local="true"/>(<var name="alt" scope="safeXml"/>)!</pattern>
+            <template>&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;/&gt;</template>
+        </code>
+        <code priority="3">
+            <pattern>!<url local="true"/>!:<url name="link" local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img src=&quot;<var name="url"/>&quot;/&gt;&lt;/a&gt;</template>
+        </code>
+        <code priority="4">
+            <pattern>!<url local="true"/>(<var name="alt" scope="safeXml"/>)!:<url name="link" local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;/&gt;&lt;/a&gt;</template>
+        </code>
     </scope>
 
     <scope name="classAttrs" max="1" strong="true">
