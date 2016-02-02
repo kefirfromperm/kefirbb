@@ -201,20 +201,35 @@
 
         <!-- Images -->
         <code priority="1">
-            <pattern>!<url local="true"/>!</pattern>
-            <template>&lt;img src=&quot;<var name="url"/>&quot;/&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!</pattern>
+            <template>&lt;img src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;</template>
         </code>
         <code priority="2">
-            <pattern>!<url local="true"/>(<var name="alt" scope="safeXml"/>)!</pattern>
-            <template>&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;/&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>(<var name="alt" scope="safeXml"/>)!</pattern>
+            <template>&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;</template>
         </code>
         <code priority="3">
-            <pattern>!<url local="true"/>!:<url name="link" local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img src=&quot;<var name="url"/>&quot;/&gt;&lt;/a&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!:<url name="link" local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;&lt;/a&gt;</template>
         </code>
         <code priority="4">
-            <pattern>!<url local="true"/>(<var name="alt" scope="safeXml"/>)!:<url name="link" local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;/&gt;&lt;/a&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>(<var name="alt" scope="safeXml"/>)!:<url name="link" local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;&lt;/a&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="imgAlign" strong="true" max="1">
+        <code>
+            <pattern>&lt;</pattern>
+            <template> align=&quot;left&quot;</template>
+        </code>
+        <code>
+            <pattern>&gt;</pattern>
+            <template> align=&quot;right&quot;</template>
+        </code>
+        <code>
+            <pattern>=</pattern>
+            <template> align=&quot;center&quot;</template>
         </code>
     </scope>
 
@@ -242,7 +257,7 @@
     </scope>
 
     <!-- Style attributes -->
-    <scope name="styleAttrs" strong="true" min="1">
+    <scope name="styleAttrs" strong="true" min="1" max="1">
         <code>
             <!-- TODO: Create list of allowed styles -->
             <pattern>{<var regex="([\w-]*:[\s\w\d]*;)*([\w-]*:[\s\w\d]*)?"/>}</pattern>

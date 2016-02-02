@@ -738,4 +738,31 @@ public class TextileTest extends AbstractConfigurationTest {
                 "!/img/newcarver.png(My Title)!:http://textpattern.com/"
         );
     }
+
+    /**
+     * Test images with formatting.
+     */
+    @Test
+    public void testImagesWithFormatting(){
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\" align=\"right\"/></p>",
+                "!>/img/carver.jpeg!"
+        );
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\" align=\"center\"/></p>",
+                "!=/img/carver.jpeg!"
+        );
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\" style=\"border:5px solid red;\"/></p>",
+                "!{border:5px solid red;}/img/carver.jpeg!"
+        );
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\" class=\"a_classy_image\"/></p>",
+                "!(a_classy_image)/img/carver.jpeg!"
+        );
+        assertProcess(
+                "<p><img src=\"/img/carver.jpeg\" style=\"display: block;margin-left: auto;margin-right: auto;\"/></p>",
+                "!{display: block;margin-left: auto;margin-right: auto;}/img/carver.jpeg!"
+        );
+    }
 }
