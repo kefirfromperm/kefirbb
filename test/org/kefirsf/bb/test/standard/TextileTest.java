@@ -765,4 +765,21 @@ public class TextileTest extends AbstractConfigurationTest {
                 "!{display: block;margin-left: auto;margin-right: auto;}/img/carver.jpeg!"
         );
     }
+
+    /**
+     * Test table
+     */
+    @Test
+    public void testTables(){
+        assertProcess(
+                "<table>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "| A | simple | table | row |" +
+                        "| And | another | table | row |" +
+                        "| With an | | empty | cell |"
+        );
+    }
 }
