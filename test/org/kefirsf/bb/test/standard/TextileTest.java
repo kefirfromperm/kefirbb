@@ -779,7 +779,16 @@ public class TextileTest extends AbstractConfigurationTest {
                         "</table>",
                 "| A | simple | table | row |\n" +
                         "| And | another | table | row |\n" +
-                        "| With an | | empty | cell |\n"
+                        "| With an | | empty | cell |"
+        );
+
+        assertProcess(
+                "<table>" +
+                        "<tr><th> First Header </th><th> Second Header </th></tr>" +
+                        "<tr><td> Content Cell </td><td> Content Cell </td></tr>" +
+                        "</table>",
+                "|_. First Header |_. Second Header |\n" +
+                        "| Content Cell | Content Cell |"
         );
     }
 }

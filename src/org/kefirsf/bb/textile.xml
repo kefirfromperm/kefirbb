@@ -404,15 +404,19 @@
 
     <scope name="textileTableScope" min="1" strong="true">
         <code>
-            <pattern><constant value="|" ghost="true"/><var scope="textileRowScope"/><var name="terminator" regex="\|(\r|\n){1,2}"/></pattern>
+            <pattern>|<var scope="textileRowScope"/><eol/></pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>
 
     <scope name="textileRowScope" min="1" ignoreText="true">
         <code>
-            <pattern>|<var scope="textile"/><constant value="|" ghost="true"/></pattern>
+            <pattern><var scope="textile"/>|</pattern>
             <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
+        </code>
+        <code priority="1">
+            <pattern>_.<var scope="textile"/>|</pattern>
+            <template>&lt;th&gt;<var/>&lt;/th&gt;</template>
         </code>
     </scope>
 
