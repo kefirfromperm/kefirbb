@@ -790,5 +790,27 @@ public class TextileTest extends AbstractConfigurationTest {
                 "|_. First Header |_. Second Header |\n" +
                         "| Content Cell | Content Cell |"
         );
+
+        assertProcess(
+                "<table>" +
+                        "<thead>" +
+                        "<tr><th> First Header </th><th> Second Header </th></tr>" +
+                        "</thead>" +
+                        "<tbody>" +
+                        "<tr><td> Content Cell </td><td> Content Cell </td></tr>" +
+                        "<tr><td> Content Cell </td><td> Content Cell </td></tr>" +
+                        "</tbody>" +
+                        "<tfoot>" +
+                        "<tr><td> First footer </td><td> Second footer </td></tr>" +
+                        "</tfoot>" +
+                        "</table>",
+                "|^.\n" +
+                        "|_. First Header |_. Second Header |\n" +
+                        "|-.\n" +
+                        "| Content Cell | Content Cell |\n" +
+                        "| Content Cell | Content Cell |\n" +
+                        "|~.\n" +
+                        "| First footer | Second footer |"
+        );
     }
 }

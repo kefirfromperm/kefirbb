@@ -402,9 +402,24 @@
         </code>
     </scope>
 
-    <scope name="textileTableScope" min="1" strong="true">
+    <scope name="textileTableScope" parent="textileBlockScope" min="1" strong="true">
+        <code priority="1">
+            <pattern>|^.<eol/><var scope="textileBlockScope"/></pattern>
+            <template>&lt;thead&gt;<var/>&lt;/thead&gt;</template>
+        </code>
+        <code priority="1">
+            <pattern>|~.<eol/><var scope="textileBlockScope"/></pattern>
+            <template>&lt;tfoot&gt;<var/>&lt;/tfoot&gt;</template>
+        </code>
+        <code priority="1">
+            <pattern>|-.<eol/><var scope="textileBlockScope"/></pattern>
+            <template>&lt;tbody&gt;<var/>&lt;/tbody&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="textileBlockScope" min="1" strong="true">
         <code>
-            <pattern>|<var scope="textileRowScope"/><eol/></pattern>
+            <pattern>|<var name="not" regex="([^\^~\-]|([\^~\-][^\.]))" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>
