@@ -415,11 +415,33 @@
             <pattern>|-.<eol/><var scope="textileBlockScope"/></pattern>
             <template>&lt;tbody&gt;<var/>&lt;/tbody&gt;</template>
         </code>
+        <code priority="1">
+            <pattern>|:.<var name="width" scope="widthScope"/><constant value="|" ghost="true"/><var scope="colGroupScope"/>|<eol/></pattern>
+            <template>&lt;colgroup<var name="width"/>&gt;<var/>&lt;/colgroup&gt;</template>
+        </code>
     </scope>
+
+    <scope name="colGroupScope" strong="true">
+        <code>
+            <pattern>|<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
+            <template>&lt;col<var/>/&gt;</template>
+        </code>
+    </scope>
+    <scope name="widthScope" strong="true">
+        <code>
+            <pattern><var regex="\d+(\*|%)?" action="append"/></pattern>
+            <template> width=&quot;<var/>&quot;</template>
+        </code>
+        <code>
+            <pattern> </pattern>
+            <template/>
+        </code>
+    </scope>
+
 
     <scope name="textileBlockScope" min="1" strong="true">
         <code>
-            <pattern>|<var name="not" regex="([^\^~\-]|([\^~\-][^\.]))" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
+            <pattern>|<var name="not" regex="([^\^~\-:]|([\^~\-:][^\.]))" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>

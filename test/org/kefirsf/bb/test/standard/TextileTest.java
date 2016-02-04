@@ -812,5 +812,44 @@ public class TextileTest extends AbstractConfigurationTest {
                         "|~.\n" +
                         "| First footer | Second footer |"
         );
+
+        assertProcess(
+                "<table>" +
+                        "<colgroup width=\"50\"></colgroup>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "|:. 50 |\n" +
+                        "| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |\n"
+        );
+
+        assertProcess(
+                "<table>" +
+                        "<colgroup><col width=\"200\"/><col/><col/><col width=\"100\"/></colgroup>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "|:. | 200 | | | 100 |\n" +
+                        "| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |"
+        );
+
+        assertProcess(
+                "<table>" +
+                        "<colgroup width=\"300\"><col width=\"200\"/><col/><col/><col width=\"100\"/></colgroup>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "|:. 300 | 200 | | | 100 |\n" +
+                        "| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |"
+        );
     }
 }
