@@ -851,5 +851,38 @@ public class TextileTest extends AbstractConfigurationTest {
                         "| And | another | table | row |\n" +
                         "| With an | | empty | cell |"
         );
+
+        assertProcess(
+                "<table>" +
+                        "<tr>" +
+                        "<th style=\"text-align:left;vertical-align:top;\"> left top </th>" +
+                        "<th style=\"vertical-align:top;text-align:center;\"> center top </th>" +
+                        "<th style=\"vertical-align:top;text-align:right;\"> right top </th>" +
+                        "<th style=\"vertical-align:top;\"> top </th>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style=\"text-align:left;vertical-align:middle;\"> left middle </td>" +
+                        "<td style=\"vertical-align:middle;text-align:center;\"> center middle </td>" +
+                        "<td style=\"text-align:right;vertical-align:middle;\"> right middle </td>" +
+                        "<td style=\"vertical-align:middle;\"> middle </td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style=\"vertical-align:bottom;text-align:left;\"> left bottom </td>" +
+                        "<td style=\"vertical-align:bottom;text-align:center;\"> center bottom </td>" +
+                        "<td style=\"vertical-align:bottom;text-align:right;\"> right bottom </td>" +
+                        "<td style=\"vertical-align:bottom;\"> bottom </td>" +
+                        "</tr>" +
+                        "<tr>" +
+                        "<td style=\"text-align:left;\"> left </td>" +
+                        "<td style=\"text-align:center;\"> center </td>" +
+                        "<td style=\"text-align:right;\"> right </td>" +
+                        "<td> none </td>" +
+                        "</tr>" +
+                        "</table>",
+                "|_<^. left top |_^=. center top |_^>. right top |_^. top |\n" +
+                        "|<-. left middle |-=. center middle |>-. right middle |-. middle |\n" +
+                        "|~<. left bottom |~=. center bottom |~>. right bottom |~. bottom |\n" +
+                        "|<. left |=. center |>. right |. none |"
+        );
     }
 }

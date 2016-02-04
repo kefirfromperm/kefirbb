@@ -441,19 +441,57 @@
 
     <scope name="textileBlockScope" min="1" strong="true">
         <code>
-            <pattern>|<var name="not" regex="([^\^~\-:]|([\^~\-:][^\.]))" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
+            <pattern>|<var name="not" regex="[^\^~\-:]|([\^~\-:][^\.])|([\^~\-:]\.[^\r\n])" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>
 
     <scope name="textileRowScope" min="1" ignoreText="true">
         <code>
+            <pattern><var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
+            <template>&lt;td<var name="attr"/>&gt;<var/>&lt;/td&gt;</template>
+        </code>
+        <code>
             <pattern><var scope="textile"/>|</pattern>
             <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
         </code>
         <code priority="1">
-            <pattern>_.<var scope="textile"/>|</pattern>
-            <template>&lt;th&gt;<var/>&lt;/th&gt;</template>
+            <pattern>_<var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
+            <template>&lt;th<var name="attr"/>&gt;<var/>&lt;/th&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="tdStyle" strong="true" ignoreText="true" parent="styleAttrs" min="1">
+        <code>
+            <pattern>&lt;</pattern>
+            <template>text-align:left;</template>
+        </code>
+        <code>
+            <pattern>&gt;</pattern>
+            <template>text-align:right;</template>
+        </code>
+        <code>
+            <pattern>=</pattern>
+            <template>text-align:center;</template>
+        </code>
+        <code>
+            <pattern>^</pattern>
+            <template>vertical-align:top;</template>
+        </code>
+        <code>
+            <pattern>-</pattern>
+            <template>vertical-align:middle;</template>
+        </code>
+        <code>
+            <pattern>~</pattern>
+            <template>vertical-align:bottom;</template>
+        </code>
+    </scope>
+
+    <scope name="tdAttrs" strong="true" ignoreText="true" parent="classAttrs">
+        <code>
+            <pattern><var scope="tdStyle"/></pattern>
+            <template> style=&quot;<var/>&quot;</template>
         </code>
     </scope>
 
