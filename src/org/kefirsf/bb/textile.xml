@@ -416,8 +416,8 @@
             <template>&lt;tbody&gt;<var/>&lt;/tbody&gt;</template>
         </code>
         <code priority="1">
-            <pattern>|:.<var name="width" scope="widthScope"/><constant value="|" ghost="true"/><var scope="colGroupScope"/>|<eol/></pattern>
-            <template>&lt;colgroup<var name="width"/>&gt;<var/>&lt;/colgroup&gt;</template>
+            <pattern>|:<var name="attr" scope="colAttrs"/>.<var name="width" scope="widthScope"/><constant value="|" ghost="true"/><var scope="colGroupScope"/>|<eol/></pattern>
+            <template>&lt;colgroup<var name="attr"/><var name="width"/>&gt;<var/>&lt;/colgroup&gt;</template>
         </code>
     </scope>
 
@@ -426,10 +426,14 @@
             <pattern>|<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
             <template>&lt;col<var/>/&gt;</template>
         </code>
+        <code priority="1">
+            <pattern>|<var name="attr" scope="colAttrs"/>.<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
+            <template>&lt;col<var name="attr"/><var/>/&gt;</template>
+        </code>
     </scope>
     <scope name="widthScope" strong="true">
         <code>
-            <pattern><var regex="\d+(\*|%)?" action="append"/></pattern>
+            <pattern><var regex="\d+(\*|%)?"/></pattern>
             <template> width=&quot;<var/>&quot;</template>
         </code>
         <code>
@@ -447,7 +451,7 @@
     </scope>
 
     <scope name="textileRowScope" min="1" ignoreText="true">
-        <code>
+        <code priority="1">
             <pattern><var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
             <template>&lt;td<var name="attr"/>&gt;<var/>&lt;/td&gt;</template>
         </code>
@@ -455,7 +459,7 @@
             <pattern><var scope="textile"/>|</pattern>
             <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
         </code>
-        <code priority="1">
+        <code priority="2">
             <pattern>_<var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
             <template>&lt;th<var name="attr"/>&gt;<var/>&lt;/th&gt;</template>
         </code>
@@ -492,6 +496,21 @@
         <code>
             <pattern><var scope="tdStyle"/></pattern>
             <template> style=&quot;<var/>&quot;</template>
+        </code>
+        <code>
+            <pattern>\<var regex="\d+"/></pattern>
+            <template> colspan=&quot;<var/>&quot;</template>
+        </code>
+    </scope>
+
+    <scope name="colAttrs" strong="true" ignoreText="true" parent="classAttrs">
+        <code>
+            <pattern><var scope="styleAttrs"/></pattern>
+            <template> style=&quot;<var/>&quot;</template>
+        </code>
+        <code>
+            <pattern>\<var regex="\d+"/></pattern>
+            <template> span=&quot;<var/>&quot;</template>
         </code>
     </scope>
 

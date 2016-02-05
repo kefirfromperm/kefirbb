@@ -884,5 +884,23 @@ public class TextileTest extends AbstractConfigurationTest {
                         "|~<. left bottom |~=. center bottom |~>. right bottom |~. bottom |\n" +
                         "|<. left |=. center |>. right |. none |"
         );
+
+        assertProcess(
+                "<table>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td colspan=\"2\"> table row </td></tr>" +
+                        "</table>",
+                "| A | simple | table | row |\n" +
+                        "| And | another |\\2. table row |\n"
+        );
+
+        assertProcess(
+                "<table>" +
+                        "<colgroup span=\"2\"><col span=\"3\"/></colgroup>" +
+                        "<tr><td> And </td><td> another </td><td colspan=\"2\"> table row </td></tr>" +
+                        "</table>",
+                "|:\\2. |\\3. |\n" +
+                        "| And | another |\\2. table row |\n"
+        );
     }
 }
