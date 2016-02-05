@@ -397,11 +397,15 @@
 
         <!-- Tables -->
         <code priority="2">
-            <pattern><constant value="|" ghost="true"/><var scope="textileTableScope"/></pattern>
+            <pattern><bol/><constant value="|" ghost="true"/><var scope="textileTableScope"/></pattern>
             <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
         </code>
         <code priority="2">
-            <pattern>table<var name="attr" scope="blockAttrs"/>.<eol/><var scope="textileTableScope"/></pattern>
+            <pattern><bol/><var scope="textileTableScope"/></pattern>
+            <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
+        </code>
+        <code priority="2">
+            <pattern><bol/>table<var name="attr" scope="blockAttrs"/>.<eol/><var scope="textileTableScope"/></pattern>
             <template>&lt;table<var name="attr"/>&gt;<var/>&lt;/table&gt;</template>
         </code>
     </scope>
@@ -446,8 +450,11 @@
         </code>
     </scope>
 
-
     <scope name="textileBlockScope" min="1" strong="true">
+        <code>
+            <pattern><bol/><var name="attr" scope="blockAttrs"/>. |<var scope="textileRowScope"/><eol/></pattern>
+            <template>&lt;tr<var name="attr"/>&gt;<var/>&lt;/tr&gt;</template>
+        </code>
         <code>
             <pattern>|<var name="not" regex="[^\^~\-:]|([\^~\-:][^\.])|([\^~\-:]\.[^\r\n])" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>

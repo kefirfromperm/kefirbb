@@ -932,5 +932,10 @@ public class TextileTest extends AbstractConfigurationTest {
                         "|a|classy|table|\n" +
                         "|a|classy|table|"
         );
+
+        assertProcess(
+                "<table><tr class=\"rowclass\"><td>a</td><td>classy</td><td>row</td></tr></table>",
+                "(rowclass). |a|classy|row|"
+        );
     }
 }
