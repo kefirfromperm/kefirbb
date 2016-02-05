@@ -902,5 +902,16 @@ public class TextileTest extends AbstractConfigurationTest {
                 "|:\\2. |\\3. |\n" +
                         "| And | another |\\2. table row |\n"
         );
+
+        assertProcess(
+                "<table>" +
+                        "<tr><td rowspan=\"3\"> spans 3 rows </td><td> row a </td></tr>" +
+                        "<tr><td> row b </td></tr>" +
+                        "<tr><td> row c </td></tr>" +
+                        "</table>",
+                "|/3. spans 3 rows | row a |\n" +
+                        "| row b |\n" +
+                        "| row c |\n"
+        );
     }
 }

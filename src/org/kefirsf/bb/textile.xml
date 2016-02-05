@@ -501,6 +501,10 @@
             <pattern>\<var regex="\d+"/></pattern>
             <template> colspan=&quot;<var/>&quot;</template>
         </code>
+        <code>
+            <pattern>/<var regex="\d+"/></pattern>
+            <template> rowspan=&quot;<var/>&quot;</template>
+        </code>
     </scope>
 
     <scope name="colAttrs" strong="true" ignoreText="true" parent="classAttrs">
