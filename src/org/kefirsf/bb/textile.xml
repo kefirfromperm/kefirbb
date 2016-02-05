@@ -397,10 +397,6 @@
 
         <!-- Tables -->
         <code priority="2">
-            <pattern><bol/><constant value="|" ghost="true"/><var scope="textileTableScope"/></pattern>
-            <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
-        </code>
-        <code priority="2">
             <pattern><bol/><var scope="textileTableScope"/></pattern>
             <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
         </code>
