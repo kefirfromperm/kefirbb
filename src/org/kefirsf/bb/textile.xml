@@ -400,6 +400,10 @@
             <pattern><constant value="|" ghost="true"/><var scope="textileTableScope"/></pattern>
             <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
         </code>
+        <code priority="2">
+            <pattern>table<var name="attr" scope="blockAttrs"/>.<eol/><var scope="textileTableScope"/></pattern>
+            <template>&lt;table<var name="attr"/>&gt;<var/>&lt;/table&gt;</template>
+        </code>
     </scope>
 
     <scope name="textileTableScope" parent="textileBlockScope" min="1" strong="true">

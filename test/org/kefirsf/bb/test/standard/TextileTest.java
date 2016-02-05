@@ -922,5 +922,15 @@ public class TextileTest extends AbstractConfigurationTest {
                 "|(myclass). A |{text-size:4;}. simple |\n" +
                         "|(myclass){text-size:4;}. And |{text-size:4;}(myclass). another |"
         );
+
+        assertProcess(
+                "<table class=\"tableclass\">" +
+                        "<tr><td>a</td><td>classy</td><td>table</td></tr>" +
+                        "<tr><td>a</td><td>classy</td><td>table</td></tr>" +
+                        "</table>",
+                "table(tableclass).\n" +
+                        "|a|classy|table|\n" +
+                        "|a|classy|table|"
+        );
     }
 }
