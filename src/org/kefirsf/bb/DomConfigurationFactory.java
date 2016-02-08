@@ -539,24 +539,33 @@ public class DomConfigurationFactory {
         NodeList templateList = node.getChildNodes();
         for (int k = 0; k < templateList.getLength(); k++) {
             Node el = templateList.item(k);
-            if (el.getNodeType() == Node.ELEMENT_NODE && el.getLocalName().equals(TAG_VAR)) {
-                if (nodeHasAttribute(el, TAG_VAR_ATTR_FUNCTION)) {
-                    elements.add(new NamedValue(
-                            nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
-                            Function.valueOf(nodeAttribute(el, TAG_VAR_ATTR_FUNCTION))
-                    ));
+            if (el.getNodeType() == Node.ELEMENT_NODE) {
+                String tagName = el.getLocalName();
+                if (tagName.equals(TAG_VAR)) {
+                    if (nodeHasAttribute(el, TAG_VAR_ATTR_FUNCTION)) {
+                        elements.add(new NamedValue(
+                                nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                                Function.valueOf(nodeAttribute(el, TAG_VAR_ATTR_FUNCTION))
+                        ));
+                    } else {
+                        elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
+                    }
                 } else {
-                    elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
+                    throw new TextProcessorFactoryException(
+                            MessageFormat.format("Invalid template. Unknown XML element [{0}].", tagName)
+                    );
                 }
-            } else {
+            } else if(el.getNodeType() == Node.TEXT_NODE) {
                 elements.add(new Constant(el.getNodeValue()));
+            } else {
+                throw new TextProcessorFactoryException("Invalid template. Unsupported XML node type.");
             }
         }
         return new Template(elements);
     }
 
     /**
-     * Return node attribute value, if exists or default attibute value
+     * Return node attribute value, if exists or default attribute value
      *
      * @param node          XML-node
      * @param attributeName attributeName
