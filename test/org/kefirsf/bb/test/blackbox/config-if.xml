@@ -3,10 +3,10 @@
                xmlns="http://kefirsf.org/kefirbb/schema"
                xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
     <code>
-        <pattern>a</pattern>
+        <pattern>a(<var/>){<var name="attr"/>}</pattern>
         <pattern>a(<var/>)</pattern>
         <pattern>a{<var name="attr"/>}</pattern>
-        <pattern>a(<var/>){<var name="attr"/>}</pattern>
+        <pattern>a</pattern>
         <template>b<if>(<var/>)</if><if name="attr">[<var name="attr"/>]</if></template>
     </code>
 </configuration>

@@ -79,8 +79,9 @@ public class DomConfigurationFactory {
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
-    public static final boolean DEFAULT_URL_LOCAL = false;
-    public static final boolean DEFAULT_URL_SCHEMALESS = false;
+    private static final boolean DEFAULT_URL_LOCAL = false;
+    private static final boolean DEFAULT_URL_SCHEMALESS = false;
+    private static final String TAG_IF = "if";
 
     /**
      * Private constructor for prevent class initialization.
@@ -535,7 +536,21 @@ public class DomConfigurationFactory {
      * @return list of template elements
      */
     private Template parseTemplate(Node node) {
-        List<TemplateElement> elements = new LinkedList<TemplateElement>();
+        return new Template(parseTemplateElements(node));
+    }
+
+    /**
+     * Parse an IF expression.
+     */
+    private If parseIf(Node node){
+        return new If(
+                nodeAttribute(node, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                parseTemplateElements(node)
+        );
+    }
+
+    private List<TemplateElement> parseTemplateElements(Node node) {
+        List<TemplateElement> elements = new ArrayList<TemplateElement>();
         NodeList templateList = node.getChildNodes();
         for (int k = 0; k < templateList.getLength(); k++) {
             Node el = templateList.item(k);
@@ -550,6 +565,8 @@ public class DomConfigurationFactory {
                     } else {
                         elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
                     }
+                } else if(tagName.equals(TAG_IF)){
+                    elements.add(parseIf(el));
                 } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid template. Unknown XML element [{0}].", tagName)
@@ -561,7 +578,7 @@ public class DomConfigurationFactory {
                 throw new TextProcessorFactoryException("Invalid template. Unsupported XML node type.");
             }
         }
-        return new Template(elements);
+        return elements;
     }
 
     /**

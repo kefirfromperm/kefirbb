@@ -31,6 +31,15 @@
                     <xsd:attribute name="function" type="function" default="value"/>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element name="if">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="templateType">
+                            <xsd:attribute name="name" type="xsd:string" default="variable"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
         </xsd:choice>
     </xsd:complexType>
 
