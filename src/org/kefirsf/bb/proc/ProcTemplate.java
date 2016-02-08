@@ -9,16 +9,11 @@ import java.util.List;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class ProcTemplate {
+public class ProcTemplate extends AbstractTemplate {
     /**
      * Empty template
      */
     public static final ProcTemplate EMPTY = new ProcTemplate(Collections.<ProcTemplateElement>emptyList());
-
-    /**
-     * Template elements
-     */
-    private final List<? extends ProcTemplateElement> elements;
 
     /**
      * Create neq template with elements.
@@ -26,7 +21,7 @@ public class ProcTemplate {
      * @param elements template elements.
      */
     public ProcTemplate(List<? extends ProcTemplateElement> elements) {
-        this.elements = Collections.unmodifiableList(elements);
+        super(elements);
     }
 
     /**

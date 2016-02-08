@@ -115,20 +115,30 @@ class ProcessorBuilder {
      * @return template
      */
     private ProcTemplate createTemplate(Template template) {
-        List<ProcTemplateElement> elements = new ArrayList<ProcTemplateElement>();
         if (template.getElements() != null) {
-            for (TemplateElement element : template.getElements()) {
-                if (element instanceof Constant) {
-                    elements.add(new TemplateConstant(((Constant) element).getValue()));
-                } else if (element instanceof NamedValue) {
-                    NamedValue el = (NamedValue) element;
-                    elements.add(new ProcNamedValue(el.getName(), el.getFunction()));
-                }
-            }
-            return new ProcTemplate(elements);
+            return new ProcTemplate(createTemplateList(template.getElements()));
         } else {
             return ProcTemplate.EMPTY;
         }
+    }
+
+    private List<ProcTemplateElement> createTemplateList(List<? extends TemplateElement> templateElements) {
+        List<ProcTemplateElement> elements = new ArrayList<ProcTemplateElement>();
+        for (TemplateElement element : templateElements) {
+            if (element instanceof Constant) {
+                elements.add(new TemplateConstant(((Constant) element).getValue()));
+            } else if (element instanceof NamedValue) {
+                NamedValue el = (NamedValue) element;
+                elements.add(new ProcNamedValue(el.getName(), el.getFunction()));
+            } else if(element instanceof If){
+                elements.add(createIf((If)element));
+            }
+        }
+        return elements;
+    }
+
+    private ProcTemplateElement createIf(If element) {
+        return new IfExpression(element.getName(), createTemplateList(element.getElements()));
     }
 
     /**

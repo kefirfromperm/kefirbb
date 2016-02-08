@@ -8,7 +8,7 @@ public interface ProcTemplateElement {
      * Append template element to source of context
      *
      * @param context контекст
-     * @return builded text
+     * @return built text
      */
     CharSequence generate(Context context);
 }
