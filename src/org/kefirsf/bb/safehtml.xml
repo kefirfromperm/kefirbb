@@ -42,10 +42,7 @@
     <scope name="basic" parent="escapeHtml">
         <!-- line feed characters -->
         <code name="br">
-            <pattern>&#x0A;&#x0D;</pattern>
-            <pattern>&#x0D;&#x0A;</pattern>
-            <pattern>&#x0A;</pattern>
-            <pattern>&#x0D;</pattern>
+            <pattern><eol/></pattern>
             <template>&lt;br/&gt;</template>
         </code>
     </scope>
