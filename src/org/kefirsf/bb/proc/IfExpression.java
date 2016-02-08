@@ -17,7 +17,7 @@ public class IfExpression extends AbstractTemplate implements ProcTemplateElemen
     }
 
     public CharSequence generate(Context context) {
-        if (context.getAttribute(name) != null) {
+        if (context.getLocalAttribute(name) != null) {
             StringBuilder b = new StringBuilder();
             for (ProcTemplateElement element : elements) {
                 b.append(element.generate(context));

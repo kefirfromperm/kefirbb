@@ -182,39 +182,27 @@
         </code>
 
         <!-- Links -->
-        <code priority="1">
-            <pattern>&quot;<var name="class" scope="classAttrs"/><var name="text" scope="safeXml"/>&quot;:<url local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="url"/>&quot;<var name="class"/>&gt;<var name="text"/>&lt;/a&gt;</template>
-        </code>
         <code priority="2">
             <pattern>&quot;<var name="class" scope="classAttrs"/><var name="text" scope="safeXml"/>(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot;<var name="class"/>&gt;<var name="text"/>&lt;/a&gt;</template>
-        </code>
-        <code priority="3">
-            <pattern>&quot;<var name="class" scope="classAttrs"/>$&quot;:<url local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="url"/>&quot;<var name="class"/>&gt;<var name="url"/>&lt;/a&gt;</template>
+            <pattern>&quot;<var name="class" scope="classAttrs"/><var name="text" scope="safeXml"/>&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot;<if name="title"> title=&quot;<var name="title"/>&quot;</if><var name="class"/>&gt;<var name="text"/>&lt;/a&gt;</template>
         </code>
         <code priority="4">
             <pattern>&quot;<var name="class" scope="classAttrs"/>$(<var name="title" scope="safeXml"/>)&quot;:<url local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="url"/>&quot; title=&quot;<var name="title"/>&quot;<var name="class"/>&gt;<var name="url"/>&lt;/a&gt;</template>
+            <pattern>&quot;<var name="class" scope="classAttrs"/>$&quot;:<url local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="url"/>&quot;<if name="title">  title=&quot;<var name="title"/>&quot;</if><var name="class"/>&gt;<var name="url"/>&lt;/a&gt;</template>
         </code>
 
         <!-- Images -->
-        <code priority="1">
-            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!</pattern>
-            <template>&lt;img src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;</template>
-        </code>
         <code priority="2">
             <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>(<var name="alt" scope="safeXml"/>)!</pattern>
-            <template>&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;</template>
-        </code>
-        <code priority="3">
-            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!:<url name="link" local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;&lt;/a&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!</pattern>
+            <template>&lt;img<if name="alt"> alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot;</if> src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;</template>
         </code>
         <code priority="4">
             <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>(<var name="alt" scope="safeXml"/>)!:<url name="link" local="true"/></pattern>
-            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot; src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;&lt;/a&gt;</template>
+            <pattern>!<var name="align" scope="imgAlign"/><var name="attrs" scope="inlineAttrs"/><url local="true"/>!:<url name="link" local="true"/></pattern>
+            <template>&lt;a href=&quot;<var name="link"/>&quot;&gt;&lt;img<if name="alt"> alt=&quot;<var name="alt"/>&quot; title=&quot;<var name="alt"/>&quot;</if> src=&quot;<var name="url"/>&quot;<var name="align"/><var name="attrs"/>/&gt;&lt;/a&gt;</template>
         </code>
     </scope>
 
@@ -233,18 +221,13 @@
         </code>
     </scope>
 
+    <!-- TODO -->
     <scope name="classAttrs" max="1" strong="true">
-        <code name="cssClass" priority="1">
-            <pattern>(<var regex="[\s\w\d\-\.]+"/>)</pattern>
-            <template> class=&quot;<var/>&quot;</template>
-        </code>
-        <code name="cssId" priority="3">
-            <pattern>(#<var regex="[\w\d\-]+"/>)</pattern>
-            <template> id=&quot;<var/>&quot;</template>
-        </code>
-        <code name="cssClassId" priority="2">
+        <code name="cssClassId" priority="3">
+            <pattern>(#<var name="id" regex="[\w\d\-]+"/>)</pattern>
             <pattern>(<var name="class" regex="[\s\w\d\-\.]+"/>#<var name="id" regex="[\w\d\-]+"/>)</pattern>
-            <template> id=&quot;<var name="id"/>&quot; class=&quot;<var name="class"/>&quot;</template>
+            <pattern>(<var name="class" regex="[\s\w\d\-\.]+"/>)</pattern>
+            <template><if name="id"> id=&quot;<var name="id"/>&quot;</if><if name="class"> class=&quot;<var name="class"/>&quot;</if></template>
         </code>
     </scope>
 
@@ -328,40 +311,26 @@
             <template>&lt;h<var name="size"/><var name="attrs"/>&gt;<var/>&lt;/h<var name="size"/>&gt;</template>
         </code>
 
-        <!-- Block code -->
-        <code priority="2">
+        <!-- Block code. The multiline block code. -->
+        <code priority="3">
+            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
             <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
-        <!-- The multiline block code -->
-        <code priority="3">
-            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
-            <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
-        </code>
-
         <!-- Preformatted -->
-        <code priority="2">
-            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
-            <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
-        </code>
         <code priority="3">
             <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
         <!-- Block quote -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
-            <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
-        </code>
-        <code priority="3">
             <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
-            <template>&lt;blockquote<var name="attrs"/>&gt;&lt;p<var name="attrs"/>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
-        </code>
-        <code priority="2">
             <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.:<url local="true"/> <var scope="textile"/><blankline/></pattern>
-            <template>&lt;blockquote<var name="attrs"/> cite=&quot;<var name="url"/>&quot;&gt;&lt;p&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
+            <template>&lt;blockquote<var name="attrs"/><if name="url"> cite=&quot;<var name="url"/>&quot;</if>&gt;&lt;p<if name="attrs"><var name="attrs"/></if>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
         </code>
 
         <!-- No formatting -->
@@ -376,12 +345,9 @@
         </code>
 
         <!-- Comments -->
-        <code priority="3">
-            <pattern><bol/>###. <junk/><blankline/></pattern>
-            <template/>
-        </code>
         <code priority="4">
             <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern><bol/>###. <junk/><blankline/></pattern>
             <template/>
         </code>
 
@@ -397,12 +363,9 @@
 
         <!-- Tables -->
         <code priority="2">
-            <pattern><bol/><var scope="textileTableScope"/></pattern>
-            <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
-        </code>
-        <code priority="2">
             <pattern><bol/>table<var name="attr" scope="blockAttrs"/>.<eol/><var scope="textileTableScope"/></pattern>
-            <template>&lt;table<var name="attr"/>&gt;<var/>&lt;/table&gt;</template>
+            <pattern><bol/><var scope="textileTableScope"/></pattern>
+            <template>&lt;table<if name="attr"><var name="attr"/></if>&gt;<var/>&lt;/table&gt;</template>
         </code>
     </scope>
 
@@ -426,13 +389,10 @@
     </scope>
 
     <scope name="colGroupScope" strong="true">
-        <code>
-            <pattern>|<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
-            <template>&lt;col<var/>/&gt;</template>
-        </code>
         <code priority="1">
             <pattern>|<var name="attr" scope="colAttrs"/>.<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
-            <template>&lt;col<var name="attr"/><var/>/&gt;</template>
+            <pattern>|<var scope="widthScope"/><constant value="|" ghost="true"/></pattern>
+            <template>&lt;col<if name="attr"><var name="attr"/></if><var/>/&gt;</template>
         </code>
     </scope>
     <scope name="widthScope" strong="true">
@@ -448,23 +408,17 @@
 
     <scope name="textileBlockScope" min="1" strong="true">
         <code>
-            <pattern><bol/><var name="attr" scope="blockAttrs"/>. |<var scope="textileRowScope"/><eol/></pattern>
-            <template>&lt;tr<var name="attr"/>&gt;<var/>&lt;/tr&gt;</template>
-        </code>
-        <code>
             <pattern>|<var name="not" regex="[^\^~\-:]|([\^~\-:][^\.])|([\^~\-:]\.[^\r\n])" ghost="true"/><var scope="textileRowScope"/><eol/></pattern>
-            <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
+            <pattern><bol/><var name="attr" scope="blockAttrs"/>. |<var scope="textileRowScope"/><eol/></pattern>
+            <template>&lt;tr<if name="attr"><var name="attr"/></if>&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>
 
     <scope name="textileRowScope" min="1" ignoreText="true">
-        <code priority="1">
-            <pattern><var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
-            <template>&lt;td<var name="attr"/>&gt;<var/>&lt;/td&gt;</template>
-        </code>
         <code>
+            <pattern><var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
             <pattern><var scope="textile"/>|</pattern>
-            <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
+            <template>&lt;td<if name="attr"><var name="attr"/></if>&gt;<var/>&lt;/td&gt;</template>
         </code>
         <code priority="2">
             <pattern>_<var name="attr" scope="tdAttrs"/>.<var scope="textile"/>|</pattern>
@@ -541,7 +495,7 @@
         </code>
     </scope>
 
-    <!-- Contains first lsit elements. -->
+    <!-- Contains first list elements. -->
     <scope name="firstListScope" strong="true" max="1">
         <code>
             <pattern> <var scope="textile"/><eol/></pattern>
@@ -557,7 +511,7 @@
         </code>
     </scope>
 
-    <!-- A scope for the multiline blockauote -->
+    <!-- A scope for the multiline blockquote -->
     <scope name="bqScope" parent="textile">
         <code priority="1">
             <pattern><blankline/></pattern>
