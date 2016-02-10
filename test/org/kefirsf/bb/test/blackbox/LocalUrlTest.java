@@ -17,7 +17,7 @@ import static org.kefirsf.bb.test.Assert.assertProcess;
 public class LocalUrlTest {
     private final BBProcessorFactory factory = BBProcessorFactory.getInstance();
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         return UrlCollection.LOCAL;
     }

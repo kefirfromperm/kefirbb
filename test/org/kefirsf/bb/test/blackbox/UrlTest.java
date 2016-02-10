@@ -18,7 +18,7 @@ import static org.kefirsf.bb.test.Assert.assertProcess;
 public class UrlTest {
     private final BBProcessorFactory factory = BBProcessorFactory.getInstance();
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         return UrlCollection.VALID;
     }
