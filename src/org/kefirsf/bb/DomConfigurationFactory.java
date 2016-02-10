@@ -372,7 +372,7 @@ public class DomConfigurationFactory {
      * @throws TextProcessorFactoryException If invalid pattern format
      */
     private Pattern parsePattern(Node node, Map<String, Scope> scopes) {
-        List<PatternElement> elements = new LinkedList<PatternElement>();
+        List<PatternElement> elements = new ArrayList<PatternElement>();
         NodeList patternList = node.getChildNodes();
         int patternLength = patternList.getLength();
         if (patternLength <= 0) {
