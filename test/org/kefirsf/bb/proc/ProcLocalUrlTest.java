@@ -20,7 +20,7 @@ public class ProcLocalUrlTest {
     public static final String PREFIX = "prefix ";
     public static final String SUFFIX = " suffix";
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         String[] urls = new String[UrlCollection.LOCAL.length + UrlCollection.VALID.length];
         System.arraycopy(UrlCollection.LOCAL, 0, urls, 0, UrlCollection.LOCAL.length);

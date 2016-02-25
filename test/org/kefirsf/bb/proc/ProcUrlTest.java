@@ -18,7 +18,7 @@ public class ProcUrlTest {
     public static final String PREFIX = "prefix";
     public static final String SUFFIX = "suffix";
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         return UrlCollection.VALID;
     }
