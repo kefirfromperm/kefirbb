@@ -7,10 +7,11 @@ import java.util.*;
 
 class ProcessorBuilder {
     private final PatternElementFactory patternElementFactory = new PatternElementFactory(this);
+    private final TemplateElementFactory templateElementFactory = new TemplateElementFactory();
 
     private final Configuration conf;
 
-    private Map<Scope, ProcScope> createdScopes;
+    private Map<Scope, ProcScope> scopes;
     private Map<Code, ProcCode> codes;
 
     /**
@@ -24,7 +25,7 @@ class ProcessorBuilder {
      * Build an processor.
      */
     public BBProcessor build() {
-        this.createdScopes = new HashMap<Scope, ProcScope>();
+        this.scopes = new HashMap<Scope, ProcScope>();
         this.codes = new HashMap<Code, ProcCode>();
         patternElementFactory.cleanConstants();
 
@@ -38,7 +39,7 @@ class ProcessorBuilder {
         processor.setPropagateNestingException(conf.isPropagateNestingException());
 
         // Init scopes
-        for (ProcScope scope : createdScopes.values()) {
+        for (ProcScope scope : scopes.values()) {
             scope.init();
         }
 
@@ -52,10 +53,10 @@ class ProcessorBuilder {
      * @return scope scope
      */
     ProcScope createScope(Scope scope) {
-        ProcScope created = createdScopes.get(scope);
+        ProcScope created = scopes.get(scope);
         if (created == null) {
             created = new ProcScope(scope.getName());
-            createdScopes.put(scope, created);
+            scopes.put(scope, created);
             created.setStrong(scope.isStrong());
             created.setIgnoreText(scope.isIgnoreText());
             if (scope.getParent() != null) {
@@ -101,7 +102,8 @@ class ProcessorBuilder {
                     createTemplate(defCode.getTemplate()),
                     defCode.getName(),
                     defCode.getPriority(),
-                    defCode.isTransparent());
+                    defCode.isTransparent()
+            );
             codes.put(defCode, code);
         }
         return code;
@@ -114,30 +116,11 @@ class ProcessorBuilder {
      * @return template
      */
     private ProcTemplate createTemplate(Template template) {
-        if (template.getElements() != null) {
-            return new ProcTemplate(createTemplateList(template.getElements()));
+        if (!template.isEmpty()) {
+            return new ProcTemplate(templateElementFactory.createTemplateList(template.getElements()));
         } else {
             return ProcTemplate.EMPTY;
         }
-    }
-
-    private List<ProcTemplateElement> createTemplateList(List<? extends TemplateElement> templateElements) {
-        List<ProcTemplateElement> elements = new ArrayList<ProcTemplateElement>();
-        for (TemplateElement element : templateElements) {
-            if (element instanceof Constant) {
-                elements.add(new TemplateConstant(((Constant) element).getValue()));
-            } else if (element instanceof NamedValue) {
-                NamedValue el = (NamedValue) element;
-                elements.add(new ProcNamedValue(el.getName(), el.getFunction()));
-            } else if (element instanceof If) {
-                elements.add(createIf((If) element));
-            }
-        }
-        return elements;
-    }
-
-    private ProcTemplateElement createIf(If element) {
-        return new IfExpression(element.getName(), createTemplateList(element.getElements()));
     }
 
     /**
@@ -147,7 +130,7 @@ class ProcessorBuilder {
      * @return pattern pattern
      */
     private ProcPattern createPattern(Pattern pattern) {
-        if (pattern.getElements() == null || pattern.getElements().isEmpty()) {
+        if (pattern.isEmpty()) {
             throw new IllegalStateException("Pattern elements list can't be empty.");
         }
 

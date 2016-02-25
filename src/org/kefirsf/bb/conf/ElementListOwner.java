@@ -29,20 +29,24 @@ abstract class ElementListOwner<T> {
     }
 
     /**
-      * Get pattern elements
-      *
-      * @return elements list
-      */
-     public List<? extends T> getElements() {
-         return elements;
-     }
+     * Get pattern elements
+     *
+     * @return elements list
+     */
+    public List<? extends T> getElements() {
+        return elements;
+    }
 
     /**
-      * Set pattern elements
-      *
-      * @param elements elements list
-      */
-     public void setElements(List<? extends T> elements) {
-         this.elements = Collections.unmodifiableList(elements);
-     }
+     * Set pattern elements
+     *
+     * @param elements elements list
+     */
+    public void setElements(List<? extends T> elements) {
+        this.elements = Collections.unmodifiableList(elements);
+    }
+
+    public boolean isEmpty() {
+        return elements == null || elements.isEmpty();
+    }
 }
