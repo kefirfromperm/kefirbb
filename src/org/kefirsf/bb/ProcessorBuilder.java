@@ -6,13 +6,12 @@ import org.kefirsf.bb.proc.*;
 import java.util.*;
 
 class ProcessorBuilder {
-    private static final ProcBol PROC_BOL = new ProcBol();
-    private static final PatternJunk JUNK = new PatternJunk();
+    private final PatternElementFactory patternElementFactory = new PatternElementFactory(this);
+
     private final Configuration conf;
 
     private Map<Scope, ProcScope> createdScopes;
     private Map<Code, ProcCode> codes;
-    private Map<Constant, PatternConstant> constants;
 
     /**
      * @param conf text processor configuration
@@ -27,14 +26,14 @@ class ProcessorBuilder {
     public BBProcessor build() {
         this.createdScopes = new HashMap<Scope, ProcScope>();
         this.codes = new HashMap<Code, ProcCode>();
-        this.constants = new HashMap<Constant, PatternConstant>();
+        patternElementFactory.cleanConstants();
 
         BBProcessor processor = new BBProcessor();
         processor.setScope(createScope(conf.getRootScope()));
         processor.setPrefix(createTemplate(conf.getPrefix()));
         processor.setSuffix(createTemplate(conf.getSuffix()));
         processor.setParams(conf.getParams());
-        processor.setConstants(new HashSet<PatternConstant>(constants.values()));
+        processor.setConstants(patternElementFactory.getConstants());
         processor.setNestingLimit(conf.getNestingLimit());
         processor.setPropagateNestingException(conf.isPropagateNestingException());
 
@@ -52,7 +51,7 @@ class ProcessorBuilder {
      * @param scope the scope configuration
      * @return scope scope
      */
-    private ProcScope createScope(Scope scope) {
+    ProcScope createScope(Scope scope) {
         ProcScope created = createdScopes.get(scope);
         if (created == null) {
             created = new ProcScope(scope.getName());
@@ -130,8 +129,8 @@ class ProcessorBuilder {
             } else if (element instanceof NamedValue) {
                 NamedValue el = (NamedValue) element;
                 elements.add(new ProcNamedValue(el.getName(), el.getFunction()));
-            } else if(element instanceof If){
-                elements.add(createIf((If)element));
+            } else if (element instanceof If) {
+                elements.add(createIf((If) element));
             }
         }
         return elements;
@@ -154,76 +153,8 @@ class ProcessorBuilder {
 
         List<ProcPatternElement> elements = new ArrayList<ProcPatternElement>();
         for (PatternElement element : pattern.getElements()) {
-            if (element instanceof Variable) {
-                Variable variable = (Variable) element;
-                if (variable.getAction() != Action.check) {
-                    elements.add(
-                            new ProcVariable(
-                                    variable.getName(),
-                                    variable.getRegex(),
-                                    variable.isGhost(),
-                                    variable.getAction())
-                    );
-                } else {
-                    elements.add(
-                            new Check(
-                                    variable.getName(),
-                                    variable.isGhost()
-                            )
-                    );
-                }
-            } else if (element instanceof Text) {
-                elements.add(create((Text) element));
-            } else if (element instanceof Constant) {
-                elements.add(createPatternConstant((Constant) element));
-            } else if (element instanceof Junk) {
-                elements.add(JUNK);
-            } else if (element instanceof Eol) {
-                elements.add(new ProcEol(((Eol) element).isGhost()));
-            } else if (element instanceof Bol) {
-                elements.add(PROC_BOL);
-            } else if (element instanceof BlankLine) {
-                elements.add(
-                        new ProcBlankLine(((BlankLine) element).isGhost())
-                );
-            } else if (element instanceof Url){
-                Url url = (Url) element;
-                elements.add(new ProcUrl(url.getName(), url.isGhost(), url.isLocal(), url.isSchemaless()));
-            }
+            elements.add(patternElementFactory.create(element));
         }
         return new ProcPattern(elements);
-    }
-
-    /**
-     * Create a constant element for text parsing
-     *
-     * @param constant constant definition
-     * @return pattern element for constant
-     */
-    private PatternConstant createPatternConstant(Constant constant) {
-        if (!constants.containsKey(constant)) {
-            constants.put(
-                    constant,
-                    new PatternConstant(constant.getValue(), constant.isIgnoreCase(), constant.isGhost())
-            );
-        }
-        return constants.get(constant);
-    }
-
-    /**
-     * @param text element definition
-     * @return pattern element for text
-     */
-    private ProcPatternElement create(Text text) {
-        Scope scope = text.getScope();
-        if (scope != null) {
-            return new ProcText(
-                    text.getName(),
-                    createScope(scope),
-                    text.isTransparent()
-            );
-        } else {
-            return new ProcText(text.getName(), text.isTransparent());
-        }
     }
 }
