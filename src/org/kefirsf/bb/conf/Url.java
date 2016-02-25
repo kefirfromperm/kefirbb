@@ -6,17 +6,20 @@ package org.kefirsf.bb.conf;
  * @author kefir
  */
 public class Url extends NamedElement implements PatternElement {
+    public static final String DEFAULT_NAME = "url";
+    public static final boolean DEFAULT_LOCAL = false;
+    public static final boolean DEFAULT_SCHEMALESS = false;
     private boolean ghost = false;
 
     /**
      * Accept local URLs.
      */
-    private boolean local = false;
+    private boolean local = DEFAULT_LOCAL;
 
     /**
      * Accept URLs without a schema. This URL can't be terminator and can't accept URLs with a schema.
      */
-    private boolean schemaless = false;
+    private boolean schemaless = DEFAULT_SCHEMALESS;
 
     /**
      * Create an URL pattern element.

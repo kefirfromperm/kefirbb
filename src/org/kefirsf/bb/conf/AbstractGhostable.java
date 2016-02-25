@@ -6,7 +6,8 @@ package org.kefirsf.bb.conf;
  * @author kefir
  */
 public class AbstractGhostable implements PatternElement {
-    protected boolean ghost = false;
+    public static final boolean DEFAULT_GHOST_VALUE = false;
+    protected boolean ghost = DEFAULT_GHOST_VALUE;
 
     /**
      * If it's true then processor parse it but no move the cursor.

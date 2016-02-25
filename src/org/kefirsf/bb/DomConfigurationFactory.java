@@ -31,7 +31,6 @@ public class DomConfigurationFactory {
     private static final String TAG_PATTERN = "pattern";
     private static final String TAG_VAR = "var";
     private static final String TAG_VAR_ATTR_NAME = "name";
-    private static final String DEFAULT_VARIABLE_NAME = "variable";
     private static final String TAG_VAR_ATTR_PARSE = "parse";
     private static final boolean DEFAULT_PARSE_VALUE = true;
     private static final String TAG_VAR_ATTR_INHERIT = "inherit";
@@ -47,9 +46,7 @@ public class DomConfigurationFactory {
     private static final String TAG_SCOPE_ATTR_STRONG = "strong";
     private static final String TAG_SCOPE_ATTR_IGNORE_TEXT = "ignoreText";
     private static final String TAG_SCOPE_ATTR_MAX = "max";
-    private static final int DEFAULT_MAX_VALUE = -1;
     private static final String TAG_SCOPE_ATTR_MIN = "min";
-    private static final int DEFAULT_MIN_VALUE = -1;
     private static final String TAG_CODEREF = "coderef";
     private static final String TAG_CODEREF_ATTR_NAME = TAG_CODE_ATTR_NAME;
     private static final String TAG_PREFIX = "prefix";
@@ -69,19 +66,15 @@ public class DomConfigurationFactory {
     private static final String TAG_NESTING_ATTR_LIMIT = "limit";
     private static final String TAG_NESTING_ATTR_EXCEPTION = "exception";
     private static final String TAG_ATTR_GHOST = "ghost";
-    private static final boolean DEFAULT_GHOST_VALUE = false;
     private static final String TAG_URL = "url";
-    private static final String DEFAULT_URL_NAME = "url";
     private static final String TAG_URL_ATTR_LOCAL = "local";
     private static final String TAG_URL_ATTR_SCHEMALESS = "schemaless";
+    private static final String TAG_IF = "if";
 
     /**
      * Instance of the class.
      */
     private static final DomConfigurationFactory instance = new DomConfigurationFactory();
-    private static final boolean DEFAULT_URL_LOCAL = false;
-    private static final boolean DEFAULT_URL_SCHEMALESS = false;
-    private static final String TAG_IF = "if";
 
     /**
      * Private constructor for prevent class initialization.
@@ -301,8 +294,8 @@ public class DomConfigurationFactory {
                 }
                 scope.setParent(parent);
             }
-            scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, DEFAULT_MAX_VALUE));
-            scope.setMin(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MIN, DEFAULT_MIN_VALUE));
+            scope.setMax(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MAX, Scope.DEFAULT_MAX_VALUE));
+            scope.setMin(nodeAttribute(scopeElement, TAG_SCOPE_ATTR_MIN, Scope.DEFAULT_MIN_VALUE));
         }
 
         return scopes;
@@ -401,7 +394,7 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_BOL)) {
                     elements.add(new Bol());
                 } else if (tagName.equals(TAG_BLANKLINE)) {
-                    elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)));
+                    elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)));
                 } else if (tagName.equals(TAG_URL)) {
                     elements.add(parseUrl(el));
                 } else {
@@ -423,15 +416,15 @@ public class DomConfigurationFactory {
      */
     private Url parseUrl(Node el) {
         return new Url(
-                nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_URL_NAME),
-                nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE),
-                nodeAttribute(el, TAG_URL_ATTR_LOCAL, DEFAULT_URL_LOCAL),
-                nodeAttribute(el, TAG_URL_ATTR_SCHEMALESS, DEFAULT_URL_SCHEMALESS)
+                nodeAttribute(el, TAG_VAR_ATTR_NAME, Url.DEFAULT_NAME),
+                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE),
+                nodeAttribute(el, TAG_URL_ATTR_LOCAL, Url.DEFAULT_LOCAL),
+                nodeAttribute(el, TAG_URL_ATTR_SCHEMALESS, Url.DEFAULT_SCHEMALESS)
                 );
     }
 
     private Eol parseEol(Node el) {
-        return new Eol(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
+        return new Eol(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE));
     }
 
     /**
@@ -445,7 +438,7 @@ public class DomConfigurationFactory {
         return new Constant(
                 nodeAttribute(el, TAG_CONSTANT_ATTR_VALUE),
                 nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase),
-                nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE)
+                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)
         );
     }
 
@@ -481,7 +474,7 @@ public class DomConfigurationFactory {
         Text text;
         if (nodeAttribute(el, TAG_VAR_ATTR_INHERIT, DEFAULT_INHERIT_VALUE)) {
             text = new Text(
-                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                     null,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
@@ -495,7 +488,7 @@ public class DomConfigurationFactory {
             }
 
             text = new Text(
-                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                     scope,
                     nodeAttribute(el, TAG_VAR_ATTR_TRANSPARENT, false)
             );
@@ -513,15 +506,15 @@ public class DomConfigurationFactory {
         Variable variable;
         if (nodeHasAttribute(el, TAG_VAR_ATTR_REGEX)) {
             variable = new Variable(
-                    nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                    nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                     java.util.regex.Pattern.compile(
                             nodeAttribute(el, TAG_VAR_ATTR_REGEX)
                     )
             );
         } else {
-            variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME));
+            variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME));
         }
-        variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, DEFAULT_GHOST_VALUE));
+        variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE));
 
         if (nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)) {
             variable.setAction(Action.valueOf(nodeAttribute(el, TAG_VAR_ATTR_ACTION)));
@@ -544,7 +537,7 @@ public class DomConfigurationFactory {
      */
     private If parseIf(Node node){
         return new If(
-                nodeAttribute(node, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                nodeAttribute(node, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                 parseTemplateElements(node)
         );
     }
@@ -559,11 +552,11 @@ public class DomConfigurationFactory {
                 if (tagName.equals(TAG_VAR)) {
                     if (nodeHasAttribute(el, TAG_VAR_ATTR_FUNCTION)) {
                         elements.add(new NamedValue(
-                                nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME),
+                                nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                                 Function.valueOf(nodeAttribute(el, TAG_VAR_ATTR_FUNCTION))
                         ));
                     } else {
-                        elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, DEFAULT_VARIABLE_NAME)));
+                        elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME)));
                     }
                 } else if(tagName.equals(TAG_IF)){
                     elements.add(parseIf(el));

@@ -28,6 +28,8 @@ public class Scope {
      * By default simple text is permitted.
      */
     public static final boolean DEFAULT_STRONG = false;
+    public static final int DEFAULT_MAX_VALUE = -1;
+    public static final int DEFAULT_MIN_VALUE = -1;
 
     /**
      * Scope name.
@@ -53,12 +55,12 @@ public class Scope {
     /**
      * The minimal count of codes in the text.
      */
-    private int min = -1;
+    private int min = DEFAULT_MIN_VALUE;
 
     /**
      * The maximum count of codes in the text.
      */
-    private int max = -1;
+    private int max = DEFAULT_MAX_VALUE;
 
     /**
      * Codes of scope.
