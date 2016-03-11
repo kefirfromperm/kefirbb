@@ -3,8 +3,7 @@ KefirBB
 
 About
 -----
-KefirBB is a Java-library for text processing. Initially it was developed for BB-code (Bulletin Board Code) to HTML translation. But flexible
-configuration allows to use it in others situations. For example XML-to-HTML translation or for HTML filtration. Actually it's the most powerfull and flexible Java-library for BB-code parsing.
+KefirBB is a Java-library for text processing. Initially it was developed for BBCode or BB-code (Bulletin Board Code) to HTML translation. But flexible configuration allows to use it in others situations. For example XML-to-HTML translation or for HTML filtration. Actually it's the most powerfull and flexible Java-library for BBCode parsing.
 
 Maven dependency
 ----------------
