@@ -938,4 +938,29 @@ public class TextileTest extends AbstractConfigurationTest {
                 "(rowclass). |a|classy|row|"
         );
     }
+
+    @Test
+    public void testParagraphTable(){
+        assertProcess(
+                "<table>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "###.. Multiline comment\n\n| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |"
+        );
+
+        assertProcess(
+                "<table>" +
+                        "<tr><td> A </td><td> simple </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> And </td><td> another </td><td> table </td><td> row </td></tr>" +
+                        "<tr><td> With an </td><td> </td><td> empty </td><td> cell </td></tr>" +
+                        "</table>",
+                "###.. Multiline comment\n\ntable.\n| A | simple | table | row |\n" +
+                        "| And | another | table | row |\n" +
+                        "| With an | | empty | cell |"
+        );
+    }
 }

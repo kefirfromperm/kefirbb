@@ -313,21 +313,21 @@
 
         <!-- Block code. The multiline block code. -->
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}((p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###|table)[^\n\r]*\.)|(\|[^\n\r]*\|))" ghost="true"/></pattern>
             <pattern ignoreCase="true"><bol/>bc<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
 
         <!-- Preformatted -->
         <code priority="3">
-            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>.. <var scope="safeXml"/><var name="terminator" regex="\Z|((\n|\r){2}((p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###|table)[^\n\r]*\.)|(\|[^\n\r]*\|))" ghost="true"/></pattern>
             <pattern ignoreCase="true"><bol/>pre<var name="attrs" scope="blockAttrs"/>. <var scope="safeXml"/><blankline/></pattern>
             <template>&lt;pre<var name="attrs"/>&gt;<var/>&lt;/pre&gt;</template>
         </code>
 
         <!-- Block quote -->
         <code priority="2">
-            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.. <var scope="bqScope"/><var name="terminator" regex="\Z|((\n|\r){2}((p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###|table)[^\n\r]*\.)|(\|[^\n\r]*\|))" ghost="true"/></pattern>
             <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>.:<url local="true"/> <var scope="textile"/><blankline/></pattern>
             <pattern ignoreCase="true"><bol/>bq<var name="attrs" scope="blockAttrs"/>. <var scope="textile"/><blankline/></pattern>
             <template>&lt;blockquote<var name="attrs"/><if name="url"> cite=&quot;<var name="url"/>&quot;</if>&gt;&lt;p<if name="attrs"><var name="attrs"/></if>&gt;<var/>&lt;/p&gt;&lt;/blockquote&gt;</template>
@@ -346,7 +346,7 @@
 
         <!-- Comments -->
         <code priority="4">
-            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}(p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###)(&lt;|&gt;|=|\(|\)|(\[\w{2}\]))*\.)" ghost="true"/></pattern>
+            <pattern><bol/>###.. <junk/><var name="terminator" regex="\Z|((\n|\r){2}((p|(h\d)|bc|pre|bq|notextile|(fn\d+)|###|table)[^\n\r]*\.)|(\|[^\n\r]*\|))" ghost="true"/></pattern>
             <pattern><bol/>###. <junk/><blankline/></pattern>
             <template/>
         </code>
