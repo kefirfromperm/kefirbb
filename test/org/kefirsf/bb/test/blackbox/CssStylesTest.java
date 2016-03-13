@@ -13,11 +13,12 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * Tests for HTML styles collections
+ *
  * @author kefir
  */
 @RunWith(Parameterized.class)
 public class CssStylesTest {
-    @Parameterized.Parameters(name="{0}")
+    @Parameterized.Parameters(name = "{0}")
     public static Collection<String> data() {
         return Arrays.asList(
                 "color: red;",
@@ -28,7 +29,8 @@ public class CssStylesTest {
                 "color: hsla(120, 100%, 50%, 0.3);",
                 "color: white;",
                 "color: black;",
-                "color: Plum;"
+                "color: Plum;",
+                "opacity: 0.5;"
         );
     }
 
@@ -39,13 +41,16 @@ public class CssStylesTest {
     }
 
     @Test
-    public void testStyle(){
+    public void testStyle() {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
                 "org/kefirsf/bb/test/blackbox/config-style.xml"
         );
 
         // Ignore whitespaces
         String expected = style.replaceAll("\\s", "");
+        if (!expected.endsWith(";")) {
+            expected = expected + ";";
+        }
         String actual = processor.process(style).replaceAll("\\s", "");
         assertEquals(expected, actual);
     }

@@ -2,11 +2,18 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://kefirsf.org/kefirbb/schema"
                xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
-    <scope name="ROOT" ignoreText="true">
+    <scope name="ROOT" parent="cssStyles" ignoreText="true"/>
+
+    <scope name="cssStyles" ignoreText="true">
         <code name="color">
             <pattern>color:<var scope="colorValue"/>;</pattern>
             <pattern>color:<var scope="colorValue"/></pattern>
             <template>color:<var/>;</template>
+        </code>
+        <code name="opacity">
+            <pattern>opacity:<junk/><var regex="\d*\.\d+"/><junk/>;</pattern>
+            <pattern>opacity:<junk/><var regex="\d*\.\d+"/></pattern>
+            <template>opacity:<var/>;</template>
         </code>
     </scope>
 
