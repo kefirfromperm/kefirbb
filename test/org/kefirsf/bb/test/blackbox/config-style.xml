@@ -5,6 +5,12 @@
     <scope name="ROOT" parent="cssStyles" ignoreText="true"/>
 
     <scope name="cssStyles" ignoreText="true">
+        <code priority="1">
+            <!-- Initial and inherit for all styles -->
+            <pattern><var name="name" regex="\w+(\-\w+)*"/>:<junk/><var name="value" regex="(initial)|(inherit)"/><junk/>;</pattern>
+            <pattern><var name="name" regex="\w+(\-\w+)*"/>:<junk/><var name="value" regex="(initial)|(inherit)"/></pattern>
+            <template><var name="name"/>:<var name="value"/>;</template>
+        </code>
         <code name="color">
             <pattern>color:<var scope="colorValue"/>;</pattern>
             <pattern>color:<var scope="colorValue"/></pattern>
@@ -15,14 +21,20 @@
             <pattern>opacity:<junk/><var regex="\d*\.\d+"/></pattern>
             <template>opacity:<var/>;</template>
         </code>
+        <code name="background">
+            <!-- Allows change only color.-->
+            <pattern>background:<var scope="backgroundColorValue"/>;</pattern>
+            <pattern>background:<var scope="backgroundColorValue"/></pattern>
+            <template>background:<var/>;</template>
+        </code>
         <code name="background-color">
-            <pattern>background-color:<var scope="colorValue"/>;</pattern>
-            <pattern>background-color:<var scope="colorValue"/></pattern>
+            <pattern>background-color:<var scope="backgroundColorValue"/>;</pattern>
+            <pattern>background-color:<var scope="backgroundColorValue"/></pattern>
             <template>background-color:<var/>;</template>
         </code>
     </scope>
 
-    <scope name="colorValue" min="1" max="1" ignoreText="true">
+    <scope name="colorValue" min="1" max="1" ignoreText="true" parent="predefinedColors">
         <code priority="2">
             <pattern>#<var regex="\p{XDigit}{6}"/></pattern>
             <pattern>#<var regex="\p{XDigit}{3}"/></pattern>
@@ -44,9 +56,163 @@
             <pattern>hsla(<junk/><var name="h" regex="\d+"/><junk/>,<junk/><var name="s" regex="\d+"/>%<junk/>,<junk/><var name="l" regex="\d+"/>%<junk/>,<junk/><var name="a" regex="\d*\.\d+"/><junk/>)</pattern>
             <template>hsla(<var name="h"/>,<var name="s"/>%,<var name="l"/>%,<var name="a"/>)</template>
         </code>
+    </scope>
+
+    <scope name="backgroundColorValue" parent="colorValue" min="1" max="1" ignoreText="true">
         <code>
-            <pattern><var regex="\w+"/></pattern>
-            <template><var/></template>
+            <pattern>transparent</pattern>
+            <template>transparent</template>
         </code>
+    </scope>
+
+    <scope name="predefinedColors">
+        <code><pattern ignoreCase="true">AliceBlue</pattern><template>AliceBlue</template></code>
+        <code><pattern ignoreCase="true">AntiqueWhite</pattern><template>AntiqueWhite</template></code>
+        <code><pattern ignoreCase="true">Aqua</pattern><template>Aqua</template></code>
+        <code><pattern ignoreCase="true">Aquamarine</pattern><template>Aquamarine</template></code>
+        <code><pattern ignoreCase="true">Azure</pattern><template>Azure</template></code>
+        <code><pattern ignoreCase="true">Beige</pattern><template>Beige</template></code>
+        <code><pattern ignoreCase="true">Bisque</pattern><template>Bisque</template></code>
+        <code><pattern ignoreCase="true">Black</pattern><template>Black</template></code>
+        <code><pattern ignoreCase="true">BlanchedAlmond</pattern><template>BlanchedAlmond</template></code>
+        <code><pattern ignoreCase="true">Blue</pattern><template>Blue</template></code>
+        <code><pattern ignoreCase="true">BlueViolet</pattern><template>BlueViolet</template></code>
+        <code><pattern ignoreCase="true">Brown</pattern><template>Brown</template></code>
+        <code><pattern ignoreCase="true">BurlyWood</pattern><template>BurlyWood</template></code>
+        <code><pattern ignoreCase="true">CadetBlue</pattern><template>CadetBlue</template></code>
+        <code><pattern ignoreCase="true">Chartreuse</pattern><template>Chartreuse</template></code>
+        <code><pattern ignoreCase="true">Chocolate</pattern><template>Chocolate</template></code>
+        <code><pattern ignoreCase="true">Coral</pattern><template>Coral</template></code>
+        <code><pattern ignoreCase="true">CornflowerBlue</pattern><template>CornflowerBlue</template></code>
+        <code><pattern ignoreCase="true">Cornsilk</pattern><template>Cornsilk</template></code>
+        <code><pattern ignoreCase="true">Crimson</pattern><template>Crimson</template></code>
+        <code><pattern ignoreCase="true">Cyan</pattern><template>Cyan</template></code>
+        <code><pattern ignoreCase="true">DarkBlue</pattern><template>DarkBlue</template></code>
+        <code><pattern ignoreCase="true">DarkCyan</pattern><template>DarkCyan</template></code>
+        <code><pattern ignoreCase="true">DarkGoldenRod</pattern><template>DarkGoldenRod</template></code>
+        <code><pattern ignoreCase="true">DarkGray</pattern><template>DarkGray</template></code>
+        <code><pattern ignoreCase="true">DarkGrey</pattern><template>DarkGrey</template></code>
+        <code><pattern ignoreCase="true">DarkGreen</pattern><template>DarkGreen</template></code>
+        <code><pattern ignoreCase="true">DarkKhaki</pattern><template>DarkKhaki</template></code>
+        <code><pattern ignoreCase="true">DarkMagenta</pattern><template>DarkMagenta</template></code>
+        <code><pattern ignoreCase="true">DarkOliveGreen</pattern><template>DarkOliveGreen</template></code>
+        <code><pattern ignoreCase="true">DarkOrange</pattern><template>DarkOrange</template></code>
+        <code><pattern ignoreCase="true">DarkOrchid</pattern><template>DarkOrchid</template></code>
+        <code><pattern ignoreCase="true">DarkRed</pattern><template>DarkRed</template></code>
+        <code><pattern ignoreCase="true">DarkSalmon</pattern><template>DarkSalmon</template></code>
+        <code><pattern ignoreCase="true">DarkSeaGreen</pattern><template>DarkSeaGreen</template></code>
+        <code><pattern ignoreCase="true">DarkSlateBlue</pattern><template>DarkSlateBlue</template></code>
+        <code><pattern ignoreCase="true">DarkSlateGray</pattern><template>DarkSlateGray</template></code>
+        <code><pattern ignoreCase="true">DarkSlateGrey</pattern><template>DarkSlateGrey</template></code>
+        <code><pattern ignoreCase="true">DarkTurquoise</pattern><template>DarkTurquoise</template></code>
+        <code><pattern ignoreCase="true">DarkViolet</pattern><template>DarkViolet</template></code>
+        <code><pattern ignoreCase="true">DeepPink</pattern><template>DeepPink</template></code>
+        <code><pattern ignoreCase="true">DeepSkyBlue</pattern><template>DeepSkyBlue</template></code>
+        <code><pattern ignoreCase="true">DimGray</pattern><template>DimGray</template></code>
+        <code><pattern ignoreCase="true">DimGrey</pattern><template>DimGrey</template></code>
+        <code><pattern ignoreCase="true">DodgerBlue</pattern><template>DodgerBlue</template></code>
+        <code><pattern ignoreCase="true">FireBrick</pattern><template>FireBrick</template></code>
+        <code><pattern ignoreCase="true">FloralWhite</pattern><template>FloralWhite</template></code>
+        <code><pattern ignoreCase="true">ForestGreen</pattern><template>ForestGreen</template></code>
+        <code><pattern ignoreCase="true">Fuchsia</pattern><template>Fuchsia</template></code>
+        <code><pattern ignoreCase="true">Gainsboro</pattern><template>Gainsboro</template></code>
+        <code><pattern ignoreCase="true">GhostWhite</pattern><template>GhostWhite</template></code>
+        <code><pattern ignoreCase="true">Gold</pattern><template>Gold</template></code>
+        <code><pattern ignoreCase="true">GoldenRod</pattern><template>GoldenRod</template></code>
+        <code><pattern ignoreCase="true">Gray</pattern><template>Gray</template></code>
+        <code><pattern ignoreCase="true">Grey</pattern><template>Grey</template></code>
+        <code><pattern ignoreCase="true">Green</pattern><template>Green</template></code>
+        <code><pattern ignoreCase="true">GreenYellow</pattern><template>GreenYellow</template></code>
+        <code><pattern ignoreCase="true">HoneyDew</pattern><template>HoneyDew</template></code>
+        <code><pattern ignoreCase="true">HotPink</pattern><template>HotPink</template></code>
+        <code><pattern ignoreCase="true">IndianRed</pattern><template>IndianRed</template></code>
+        <code><pattern ignoreCase="true">Indigo</pattern><template>Indigo</template></code>
+        <code><pattern ignoreCase="true">Ivory</pattern><template>Ivory</template></code>
+        <code><pattern ignoreCase="true">Khaki</pattern><template>Khaki</template></code>
+        <code><pattern ignoreCase="true">Lavender</pattern><template>Lavender</template></code>
+        <code><pattern ignoreCase="true">LavenderBlush</pattern><template>LavenderBlush</template></code>
+        <code><pattern ignoreCase="true">LawnGreen</pattern><template>LawnGreen</template></code>
+        <code><pattern ignoreCase="true">LemonChiffon</pattern><template>LemonChiffon</template></code>
+        <code><pattern ignoreCase="true">LightBlue</pattern><template>LightBlue</template></code>
+        <code><pattern ignoreCase="true">LightCoral</pattern><template>LightCoral</template></code>
+        <code><pattern ignoreCase="true">LightCyan</pattern><template>LightCyan</template></code>
+        <code><pattern ignoreCase="true">LightGoldenRodYellow</pattern><template>LightGoldenRodYellow</template></code>
+        <code><pattern ignoreCase="true">LightGray</pattern><template>LightGray</template></code>
+        <code><pattern ignoreCase="true">LightGrey</pattern><template>LightGrey</template></code>
+        <code><pattern ignoreCase="true">LightGreen</pattern><template>LightGreen</template></code>
+        <code><pattern ignoreCase="true">LightPink</pattern><template>LightPink</template></code>
+        <code><pattern ignoreCase="true">LightSalmon</pattern><template>LightSalmon</template></code>
+        <code><pattern ignoreCase="true">LightSeaGreen</pattern><template>LightSeaGreen</template></code>
+        <code><pattern ignoreCase="true">LightSkyBlue</pattern><template>LightSkyBlue</template></code>
+        <code><pattern ignoreCase="true">LightSlateGray</pattern><template>LightSlateGray</template></code>
+        <code><pattern ignoreCase="true">LightSlateGrey</pattern><template>LightSlateGrey</template></code>
+        <code><pattern ignoreCase="true">LightSteelBlue</pattern><template>LightSteelBlue</template></code>
+        <code><pattern ignoreCase="true">LightYellow</pattern><template>LightYellow</template></code>
+        <code><pattern ignoreCase="true">Lime</pattern><template>Lime</template></code>
+        <code><pattern ignoreCase="true">LimeGreen</pattern><template>LimeGreen</template></code>
+        <code><pattern ignoreCase="true">Linen</pattern><template>Linen</template></code>
+        <code><pattern ignoreCase="true">Magenta</pattern><template>Magenta</template></code>
+        <code><pattern ignoreCase="true">Maroon</pattern><template>Maroon</template></code>
+        <code><pattern ignoreCase="true">MediumAquaMarine</pattern><template>MediumAquaMarine</template></code>
+        <code><pattern ignoreCase="true">MediumBlue</pattern><template>MediumBlue</template></code>
+        <code><pattern ignoreCase="true">MediumOrchid</pattern><template>MediumOrchid</template></code>
+        <code><pattern ignoreCase="true">MediumPurple</pattern><template>MediumPurple</template></code>
+        <code><pattern ignoreCase="true">MediumSeaGreen</pattern><template>MediumSeaGreen</template></code>
+        <code><pattern ignoreCase="true">MediumSlateBlue</pattern><template>MediumSlateBlue</template></code>
+        <code><pattern ignoreCase="true">MediumSpringGreen</pattern><template>MediumSpringGreen</template></code>
+        <code><pattern ignoreCase="true">MediumTurquoise</pattern><template>MediumTurquoise</template></code>
+        <code><pattern ignoreCase="true">MediumVioletRed</pattern><template>MediumVioletRed</template></code>
+        <code><pattern ignoreCase="true">MidnightBlue</pattern><template>MidnightBlue</template></code>
+        <code><pattern ignoreCase="true">MintCream</pattern><template>MintCream</template></code>
+        <code><pattern ignoreCase="true">MistyRose</pattern><template>MistyRose</template></code>
+        <code><pattern ignoreCase="true">Moccasin</pattern><template>Moccasin</template></code>
+        <code><pattern ignoreCase="true">NavajoWhite</pattern><template>NavajoWhite</template></code>
+        <code><pattern ignoreCase="true">Navy</pattern><template>Navy</template></code>
+        <code><pattern ignoreCase="true">OldLace</pattern><template>OldLace</template></code>
+        <code><pattern ignoreCase="true">Olive</pattern><template>Olive</template></code>
+        <code><pattern ignoreCase="true">OliveDrab</pattern><template>OliveDrab</template></code>
+        <code><pattern ignoreCase="true">Orange</pattern><template>Orange</template></code>
+        <code><pattern ignoreCase="true">OrangeRed</pattern><template>OrangeRed</template></code>
+        <code><pattern ignoreCase="true">Orchid</pattern><template>Orchid</template></code>
+        <code><pattern ignoreCase="true">PaleGoldenRod</pattern><template>PaleGoldenRod</template></code>
+        <code><pattern ignoreCase="true">PaleGreen</pattern><template>PaleGreen</template></code>
+        <code><pattern ignoreCase="true">PaleTurquoise</pattern><template>PaleTurquoise</template></code>
+        <code><pattern ignoreCase="true">PaleVioletRed</pattern><template>PaleVioletRed</template></code>
+        <code><pattern ignoreCase="true">PapayaWhip</pattern><template>PapayaWhip</template></code>
+        <code><pattern ignoreCase="true">PeachPuff</pattern><template>PeachPuff</template></code>
+        <code><pattern ignoreCase="true">Peru</pattern><template>Peru</template></code>
+        <code><pattern ignoreCase="true">Pink</pattern><template>Pink</template></code>
+        <code><pattern ignoreCase="true">Plum</pattern><template>Plum</template></code>
+        <code><pattern ignoreCase="true">PowderBlue</pattern><template>PowderBlue</template></code>
+        <code><pattern ignoreCase="true">Purple</pattern><template>Purple</template></code>
+        <code><pattern ignoreCase="true">RebeccaPurple</pattern><template>RebeccaPurple</template></code>
+        <code><pattern ignoreCase="true">Red</pattern><template>Red</template></code>
+        <code><pattern ignoreCase="true">RosyBrown</pattern><template>RosyBrown</template></code>
+        <code><pattern ignoreCase="true">RoyalBlue</pattern><template>RoyalBlue</template></code>
+        <code><pattern ignoreCase="true">SaddleBrown</pattern><template>SaddleBrown</template></code>
+        <code><pattern ignoreCase="true">Salmon</pattern><template>Salmon</template></code>
+        <code><pattern ignoreCase="true">SandyBrown</pattern><template>SandyBrown</template></code>
+        <code><pattern ignoreCase="true">SeaGreen</pattern><template>SeaGreen</template></code>
+        <code><pattern ignoreCase="true">SeaShell</pattern><template>SeaShell</template></code>
+        <code><pattern ignoreCase="true">Sienna</pattern><template>Sienna</template></code>
+        <code><pattern ignoreCase="true">Silver</pattern><template>Silver</template></code>
+        <code><pattern ignoreCase="true">SkyBlue</pattern><template>SkyBlue</template></code>
+        <code><pattern ignoreCase="true">SlateBlue</pattern><template>SlateBlue</template></code>
+        <code><pattern ignoreCase="true">SlateGray</pattern><template>SlateGray</template></code>
+        <code><pattern ignoreCase="true">SlateGrey</pattern><template>SlateGrey</template></code>
+        <code><pattern ignoreCase="true">Snow</pattern><template>Snow</template></code>
+        <code><pattern ignoreCase="true">SpringGreen</pattern><template>SpringGreen</template></code>
+        <code><pattern ignoreCase="true">SteelBlue</pattern><template>SteelBlue</template></code>
+        <code><pattern ignoreCase="true">Tan</pattern><template>Tan</template></code>
+        <code><pattern ignoreCase="true">Teal</pattern><template>Teal</template></code>
+        <code><pattern ignoreCase="true">Thistle</pattern><template>Thistle</template></code>
+        <code><pattern ignoreCase="true">Tomato</pattern><template>Tomato</template></code>
+        <code><pattern ignoreCase="true">Turquoise</pattern><template>Turquoise</template></code>
+        <code><pattern ignoreCase="true">Violet</pattern><template>Violet</template></code>
+        <code><pattern ignoreCase="true">Wheat</pattern><template>Wheat</template></code>
+        <code><pattern ignoreCase="true">White</pattern><template>White</template></code>
+        <code><pattern ignoreCase="true">WhiteSmoke</pattern><template>WhiteSmoke</template></code>
+        <code><pattern ignoreCase="true">Yellow</pattern><template>Yellow</template></code>
+        <code><pattern ignoreCase="true">YellowGreen</pattern><template>YellowGreen</template></code>
     </scope>
 </configuration>

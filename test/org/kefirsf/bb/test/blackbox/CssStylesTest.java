@@ -30,10 +30,23 @@ public class CssStylesTest {
                 "color: white;",
                 "color: black;",
                 "color: Plum;",
+                "color: initial;",
+                "color: inherit;",
                 "opacity: 0.5;",
+                "opacity: initial;",
+                "opacity: inherit;",
+                "background: yellow;",
+                "background: #00ff00;",
+                "background: rgb(255,0,255);",
+                "background: initial;",
+                "background: inherit;",
+                "background: transparent;",
                 "background-color: yellow;",
                 "background-color: #00ff00;",
-                "background-color: rgb(255,0,255);"
+                "background-color: rgb(255,0,255);",
+                "background-color: initial;",
+                "background-color: inherit;",
+                "background-color: transparent;"
         );
     }
 
@@ -50,11 +63,11 @@ public class CssStylesTest {
         );
 
         // Ignore whitespaces
-        String expected = style.replaceAll("\\s", "");
+        String expected = style.replaceAll("\\s", "").toLowerCase();
         if (!expected.endsWith(";")) {
             expected = expected + ";";
         }
-        String actual = processor.process(style).replaceAll("\\s", "");
+        String actual = processor.process(style).replaceAll("\\s", "").toLowerCase();
         assertEquals(expected, actual);
     }
 }

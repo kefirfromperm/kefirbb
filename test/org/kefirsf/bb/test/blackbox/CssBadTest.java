@@ -20,7 +20,7 @@ public class CssBadTest {
     @Parameterized.Parameters(name="{0}")
     public static Collection<String> data() {
         return Arrays.asList(new String[] {
-                "",
+                "background: url(http://example.com/image.gif);",
                 "",
                 "",
                 "",
