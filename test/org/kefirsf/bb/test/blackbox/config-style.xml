@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
+    <scope name="ROOT" ignoreText="true">
+        <code name="color">
+            <pattern>color:<var scope="colorValue"/>;</pattern>
+            <pattern>color:<var scope="colorValue"/></pattern>
+            <template>color:<var/>;</template>
+        </code>
+    </scope>
+
+    <scope name="colorValue" min="1" max="1" ignoreText="true">
+        <code priority="2">
+            <pattern>#<var regex="\p{XDigit}{6}"/></pattern>
+            <pattern>#<var regex="\p{XDigit}{3}"/></pattern>
+            <template>#<var/></template>
+        </code>
+        <code priority="1">
+            <pattern>rgb(<junk/><var name="r" regex="\d+"/><junk/>,<junk/><var name="g" regex="\d+"/><junk/>,<junk/><var name="b" regex="\d+"/><junk/>)</pattern>
+            <template>rgb(<var name="r"/>,<var name="g"/>,<var name="b"/>)</template>
+        </code>
+        <code priority="1">
+            <pattern>rgba(<junk/><var name="r" regex="\d+"/><junk/>,<junk/><var name="g" regex="\d+"/><junk/>,<junk/><var name="b" regex="\d+"/><junk/>,<junk/><var name="a" regex="\d*\.\d+"/><junk/>)</pattern>
+            <template>rgba(<var name="r"/>,<var name="g"/>,<var name="b"/>,<var name="a"/>)</template>
+        </code>
+        <code priority="1">
+            <pattern>hsl(<junk/><var name="h" regex="\d+"/><junk/>,<junk/><var name="s" regex="\d+"/>%<junk/>,<junk/><var name="l" regex="\d+"/>%<junk/>)</pattern>
+            <template>hsl(<var name="h"/>,<var name="s"/>%,<var name="l"/>%)</template>
+        </code>
+        <code priority="1">
+            <pattern>hsla(<junk/><var name="h" regex="\d+"/><junk/>,<junk/><var name="s" regex="\d+"/>%<junk/>,<junk/><var name="l" regex="\d+"/>%<junk/>,<junk/><var name="a" regex="\d*\.\d+"/><junk/>)</pattern>
+            <template>hsla(<var name="h"/>,<var name="s"/>%,<var name="l"/>%,<var name="a"/>)</template>
+        </code>
+        <code>
+            <pattern><var regex="\w+"/></pattern>
+            <template><var/></template>
+        </code>
+    </scope>
+</configuration>
