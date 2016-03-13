@@ -30,7 +30,10 @@ public class CssStylesTest {
                 "color: white;",
                 "color: black;",
                 "color: Plum;",
-                "opacity: 0.5;"
+                "opacity: 0.5;",
+                "background-color: yellow;",
+                "background-color: #00ff00;",
+                "background-color: rgb(255,0,255);"
         );
     }
 
