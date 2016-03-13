@@ -7,6 +7,19 @@
             <pattern><bol/><var scope="paragraphScope"/><blankline/></pattern>
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
         </code>
+        <code name="h1" priority="1">
+            <pattern><bol/><var scope="escapeHtml"/><eol/>=<var name="junk" regex="=*"/><eol/></pattern>
+            <template>&lt;h1&gt;<var/>&lt;/h1&gt;</template>
+        </code>
+        <code name="h2" priority="1">
+            <pattern><bol/><var scope="escapeHtml"/><eol/>-<var name="junk" regex="\-*"/><eol/></pattern>
+            <template>&lt;h2&gt;<var/>&lt;/h2&gt;</template>
+        </code>
+        <code name="hn" priority="1">
+            <pattern><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><var name="junk" regex="\s#+"/><eol/></pattern>
+            <pattern><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><eol/></pattern>
+            <template>&lt;h<var name="count" function="length"/>&gt;<var/>&lt;/h<var name="count" function="length"/>&gt;</template>
+        </code>
     </scope>
 
     <scope name="paragraphScope" parent="escapeHtml">

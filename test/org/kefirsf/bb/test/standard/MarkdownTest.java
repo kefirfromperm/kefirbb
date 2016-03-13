@@ -29,8 +29,14 @@ public class MarkdownTest {
                         {"<p>First paragraph.</p><p>Second paragraph.</p>", "First paragraph.\n\nSecond paragraph."},
                         {"<p>Paragraph with an\n unsigned line break.</p>", "Paragraph with an\n unsigned line break."},
                         {"<p>Paragraph with a signed<br/>line break.</p>", "Paragraph with a signed  \nline break."},
-                        {"", ""},
-                        {"", ""}
+                        {"<h1>This is an H1</h1>", "This is an H1\n============="},
+                        {"<h2>This is an H2</h2>", "This is an H2\n-------------"},
+                        {"<h1>This is an H1</h1>", "# This is an H1"},
+                        {"<h2>This is an H2</h2>", "## This is an H2"},
+                        {"<h6>This is an H6</h6>", "###### This is an H6"},
+                        {"<h1>This is an H1</h1>", "# This is an H1 #"},
+                        {"<h2>This is an H2</h2>", "## This is an H2 ##"},
+                        {"<h3>This is an H3</h3>", "### This is an H3 ######"}
                 }
         );
     }
