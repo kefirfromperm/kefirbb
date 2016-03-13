@@ -2,7 +2,7 @@
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                xmlns="http://kefirsf.org/kefirbb/schema"
                xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
-    <scope name="ROOT">
+    <scope name="ROOT" ignoreText="true">
         <code name="paragraph">
             <pattern><bol/><var scope="paragraphScope"/><blankline/></pattern>
             <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
