@@ -20,6 +20,13 @@
             <pattern><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><eol/></pattern>
             <template>&lt;h<var name="count" function="length"/>&gt;<var/>&lt;/h<var name="count" function="length"/>&gt;</template>
         </code>
+        <code name="hr" priority="1">
+            <pattern><bol/><var regex="\*(\s\*){2,}"/><eol/></pattern>
+            <pattern><bol/><var regex="\*{3,}"/><eol/></pattern>
+            <pattern><bol/><var regex="\-(\s\-){2,}"/><eol/></pattern>
+            <pattern><bol/><var regex="\-{3,}"/><eol/></pattern>
+            <template>&lt;hr/&gt;</template>
+        </code>
     </scope>
 
     <scope name="paragraphScope" parent="escapeHtml">

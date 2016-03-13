@@ -36,7 +36,12 @@ public class MarkdownTest {
                         {"<h6>This is an H6</h6>", "###### This is an H6"},
                         {"<h1>This is an H1</h1>", "# This is an H1 #"},
                         {"<h2>This is an H2</h2>", "## This is an H2 ##"},
-                        {"<h3>This is an H3</h3>", "### This is an H3 ######"}
+                        {"<h3>This is an H3</h3>", "### This is an H3 ######"},
+                        {"<hr/>", "* * *"},
+                        {"<hr/>", "***"},
+                        {"<hr/>", "*****"},
+                        {"<hr/>", "- - -"},
+                        {"<hr/>", "---------------------------------------"}
                 }
         );
     }
