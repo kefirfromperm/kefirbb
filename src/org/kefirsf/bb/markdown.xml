@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
+    <scope name="ROOT">
+        <code name="paragraph">
+            <pattern><bol/><var scope="paragraphScope"/><blankline/></pattern>
+            <template>&lt;p&gt;<var/>&lt;/p&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="paragraphScope" parent="escapeHtml">
+        <code name="br">
+            <pattern>  <eol/></pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+    </scope>
+
+    <!-- XML escape symbols -->
+    <scope name="safeXml">
+        <code priority="-2">
+            <pattern>&apos;</pattern>
+            <template>&amp;apos;</template>
+        </code>
+        <code priority="-2">
+            <pattern>&lt;</pattern>
+            <template>&amp;lt;</template>
+        </code>
+        <code priority="-2">
+            <pattern>&gt;</pattern>
+            <template>&amp;gt;</template>
+        </code>
+        <code priority="-2">
+            <pattern>&quot;</pattern>
+            <template>&amp;quot;</template>
+        </code>
+    </scope>
+
+    <!-- Scope for escaping some symbols -->
+    <scope name="escapeHtml" parent="safeXml">
+        <!-- Ignore unknown tags -->
+        <code priority="-1">
+            <pattern>&lt;<junk/>&gt;</pattern>
+            <template/>
+        </code>
+
+        <!-- Comment -->
+        <code name="comment">
+            <pattern>&lt;!--<junk/>&gt;</pattern>
+            <template/>
+        </code>
+    </scope>
+</configuration>

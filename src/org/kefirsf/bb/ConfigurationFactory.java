@@ -24,6 +24,7 @@ public class ConfigurationFactory {
     private static final String DEFAULT_CONFIGURATION = "org/kefirsf/bb/default";
     private static final String SAFE_HTML_CONFIGURATION = "org/kefirsf/bb/safehtml";
     private static final String TEXTILE_CONFIGURATION = "org/kefirsf/bb/textile";
+    private static final String MARKDOWN_CONFIGURATION = "org/kefirsf/bb/markdown";
     private static final String DEFAULT_USER_CONFIGURATION = "kefirbb";
     private static final String CONFIGURATION_EXTENSION = ".xml";
 
@@ -32,6 +33,7 @@ public class ConfigurationFactory {
     public static final String DEFAULT_CONFIGURATION_FILE = DEFAULT_CONFIGURATION + CONFIGURATION_EXTENSION;
     public static final String SAFE_HTML_CONFIGURATION_FILE = SAFE_HTML_CONFIGURATION + CONFIGURATION_EXTENSION;
     public static final String TEXTILE_CONFIGURATION_FILE = TEXTILE_CONFIGURATION + CONFIGURATION_EXTENSION;
+    public static final String MARKDOWN_CONFIGURATION_FILE = MARKDOWN_CONFIGURATION + CONFIGURATION_EXTENSION;
 
     public static final String DEFAULT_PROPERTIES_FILE = "kefirbb.properties";
     public static final String DEFAULT_PROPERTIES_XML_FILE = "kefirbb.properties.xml";
