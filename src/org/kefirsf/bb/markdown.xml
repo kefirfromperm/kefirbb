@@ -44,6 +44,19 @@
             <pattern>__<var inherit="true"/>__</pattern>
             <template>&lt;strong&gt;<var/>&lt;/strong&gt;</template>
         </code>
+        <code name="link">
+            <pattern>[<var name="content" inherit="true"/>](<url local="true"/> "<var name="title" scope="safeXml"/>")</pattern>
+            <pattern>[<var name="content" scope="escapeMarkdown"/>](<url local="true"/>)</pattern>
+            <template>&lt;a href="<var name="url"/>"<if name="title"> title="<var name="title"/>"</if>&gt;<var name="content"/>&lt;/a&gt;</template>
+        </code>
+        <code name="autoLink" priority="1">
+            <pattern>&lt;<url/>&gt;</pattern>
+            <template>&lt;a href="<var name="url"/>"&gt;<var name="url"/>&lt;/a&gt;</template>
+        </code>
+        <code name="emailLink">
+            <pattern>&lt;<var name="user" scope="safeXml"/>@<var name="host" scope="safeXml"/>&gt;</pattern>
+            <template>&lt;a href="mailto:<var name="user"/>@<var name="host"/>"&gt;<var name="user"/>@<var name="host"/>&lt;/a&gt;</template>
+        </code>
     </scope>
 
     <!-- Escape Markdown slashes -->
