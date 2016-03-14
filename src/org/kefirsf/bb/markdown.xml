@@ -29,10 +29,74 @@
         </code>
     </scope>
 
-    <scope name="paragraphScope" parent="escapeHtml">
+    <scope name="paragraphScope" parent="escapeMarkdown">
         <code name="br">
             <pattern>  <eol/></pattern>
             <template>&lt;br/&gt;</template>
+        </code>
+    </scope>
+
+    <!-- Escape Markdown slashes -->
+    <scope name="escapeMarkdown">
+        <code>
+            <pattern>\\</pattern>
+            <template>\</template>
+        </code>
+        <code>
+            <pattern>\`</pattern>
+            <template>`</template>
+        </code>
+        <code>
+            <pattern>\*</pattern>
+            <template>*</template>
+        </code>
+        <code>
+            <pattern>\_</pattern>
+            <template>_</template>
+        </code>
+        <code>
+            <pattern>\{</pattern>
+            <template>{</template>
+        </code>
+        <code>
+            <pattern>\}</pattern>
+            <template>}</template>
+        </code>
+        <code>
+            <pattern>\[</pattern>
+            <template>[</template>
+        </code>
+        <code>
+            <pattern>\]</pattern>
+            <template>]</template>
+        </code>
+        <code>
+            <pattern>\(</pattern>
+            <template>(</template>
+        </code>
+        <code>
+            <pattern>\)</pattern>
+            <template>)</template>
+        </code>
+        <code>
+            <pattern>\#</pattern>
+            <template>#</template>
+        </code>
+        <code>
+            <pattern>\+</pattern>
+            <template>+</template>
+        </code>
+        <code>
+            <pattern>\-</pattern>
+            <template>-</template>
+        </code>
+        <code>
+            <pattern>\.</pattern>
+            <template>.</template>
+        </code>
+        <code>
+            <pattern>\!</pattern>
+            <template>!</template>
         </code>
     </scope>
 
