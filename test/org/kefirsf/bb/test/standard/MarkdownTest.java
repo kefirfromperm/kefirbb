@@ -42,7 +42,11 @@ public class MarkdownTest {
                         {"<hr/>", "*****"},
                         {"<hr/>", "- - -"},
                         {"<hr/>", "---------------------------------------"},
-                        {"<p>\\`*_{}[]()#+-.!</p>", "\\\\`\\*\\_\\{\\}\\[\\]\\(\\)\\#\\+\\-\\.\\!"}
+                        {"<p>\\`*_{}[]()#+-.!</p>", "\\\\`\\*\\_\\{\\}\\[\\]\\(\\)\\#\\+\\-\\.\\!"},
+                        {"<p>A text with <em>an em</em> block.</p>", "A text with *an em* block."},
+                        {"<p>A text with <em>an em</em> block.</p>", "A text with _an em_ block."},
+                        {"<p>A text with <strong>an strong</strong> block.</p>", "A text with **an strong** block."},
+                        {"<p>A text with <strong>an strong</strong> block.</p>", "A text with __an strong__ block."}
                 }
         );
     }

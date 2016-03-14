@@ -34,6 +34,16 @@
             <pattern>  <eol/></pattern>
             <template>&lt;br/&gt;</template>
         </code>
+        <code name="em">
+            <pattern>*<var inherit="true"/>*</pattern>
+            <pattern>_<var inherit="true"/>_</pattern>
+            <template>&lt;em&gt;<var/>&lt;/em&gt;</template>
+        </code>
+        <code name="strong" priority="1">
+            <pattern>**<var inherit="true"/>**</pattern>
+            <pattern>__<var inherit="true"/>__</pattern>
+            <template>&lt;strong&gt;<var/>&lt;/strong&gt;</template>
+        </code>
     </scope>
 
     <!-- Escape Markdown slashes -->
