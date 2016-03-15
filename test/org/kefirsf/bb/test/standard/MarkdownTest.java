@@ -61,7 +61,33 @@ public class MarkdownTest {
             {
                     "<p><a href=\"mailto:address@example.com\">address@example.com</a></p>",
                     "<address@example.com>"
-            }
+            },
+            {"<p>Use the <code>printf()</code> function.</p>", "Use the `printf()` function."},
+            {
+                    "<p><code>There is a literal backtick (`) here.</code></p>",
+                    "``There is a literal backtick (`) here.``"
+            },
+            {
+                    "<p>A single backtick in a code span: <code>`</code></p>",
+                    "A single backtick in a code span: `` ` ``\n"
+            },
+            {
+                    "<p>A backtick-delimited string in a code span: <code>`foo`</code></p>",
+                    "A backtick-delimited string in a code span: `` `foo` ``"
+            },
+            {
+                    "<p>Please don&apos;t use any <code>&lt;blink&gt;</code> tags.</p>",
+                    "Please don't use any `<blink>` tags."
+            },
+            {
+                    "<p><code>&amp;#8212;</code> is the decimal-encoded equivalent of <code>&amp;mdash;</code>.</p>",
+                    "`&#8212;` is the decimal-encoded equivalent of `&mdash;`."
+            },
+            {"<p>&amp;</p>", "&amp;"},
+            {"<p>&copy;</p>", "&copy;"},
+            {"<p>&amp;</p>", "&"},
+            {"<p>AT&amp;T</p>", "AT&T"},
+            {"<p>4 &lt; 5</p>", "4 < 5"}
     };
     private TextProcessor processor;
 

@@ -57,10 +57,16 @@
             <pattern>&lt;<var name="user" scope="safeXml"/>@<var name="host" scope="safeXml"/>&gt;</pattern>
             <template>&lt;a href="mailto:<var name="user"/>@<var name="host"/>"&gt;<var name="user"/>@<var name="host"/>&lt;/a&gt;</template>
         </code>
+        <code name="code">
+            <pattern>`` <var scope="safeXml"/> ``</pattern>
+            <pattern>``<var scope="safeXml"/>``</pattern>
+            <pattern>`<var scope="safeXml"/>`</pattern>
+            <template>&lt;code&gt;<var/>&lt;/code&gt;</template>
+        </code>
     </scope>
 
     <!-- Escape Markdown slashes -->
-    <scope name="escapeMarkdown">
+    <scope name="escapeMarkdown" parent="escapeHtml">
         <code>
             <pattern>\\</pattern>
             <template>\</template>
@@ -141,6 +147,10 @@
             <pattern>&quot;</pattern>
             <template>&amp;quot;</template>
         </code>
+        <code priority="-2">
+            <pattern>&amp;</pattern>
+            <template>&amp;amp;</template>
+        </code>
     </scope>
 
     <!-- Scope for escaping some symbols -->
@@ -155,6 +165,16 @@
         <code name="comment">
             <pattern>&lt;!--<junk/>&gt;</pattern>
             <template/>
+        </code>
+
+        <!-- special HTML characters -->
+        <code>
+            <pattern>&amp;<var regex="\w+"/>;</pattern>
+            <template>&amp;<var/>;</template>
+        </code>
+        <code>
+            <pattern>&amp;#<var regex="\d+"/>;</pattern>
+            <template>&amp;#<var/>;</template>
         </code>
     </scope>
 </configuration>
