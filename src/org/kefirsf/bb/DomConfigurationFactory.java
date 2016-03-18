@@ -70,6 +70,7 @@ public class DomConfigurationFactory {
     private static final String TAG_URL_ATTR_LOCAL = "local";
     private static final String TAG_URL_ATTR_SCHEMALESS = "schemaless";
     private static final String TAG_IF = "if";
+    private static final String TAG_EMAIL = "email";
 
     /**
      * Instance of the class.
@@ -397,6 +398,8 @@ public class DomConfigurationFactory {
                     elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)));
                 } else if (tagName.equals(TAG_URL)) {
                     elements.add(parseUrl(el));
+                } else if (tagName.equals(TAG_EMAIL)){
+                    elements.add(parseEmail(el));
                 } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid pattern. Unknown XML element [{0}].", tagName)
@@ -410,7 +413,8 @@ public class DomConfigurationFactory {
     }
 
     /**
-     * Parse a URL tag.
+     * Parse an URL tag.
+     *
      * @param el tag element
      * @return Configuration URL.
      */
@@ -420,7 +424,20 @@ public class DomConfigurationFactory {
                 nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE),
                 nodeAttribute(el, TAG_URL_ATTR_LOCAL, Url.DEFAULT_LOCAL),
                 nodeAttribute(el, TAG_URL_ATTR_SCHEMALESS, Url.DEFAULT_SCHEMALESS)
-                );
+        );
+    }
+
+    /**
+     * Parse an email tag.
+
+     * @param el tag element
+     * @return Configuration EMAIL.
+     */
+    private Email parseEmail(Node el){
+        return new Email(
+                nodeAttribute(el, TAG_VAR_ATTR_NAME, Email.DEFAULT_NAME),
+                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)
+        );
     }
 
     private Eol parseEol(Node el) {
@@ -535,7 +552,7 @@ public class DomConfigurationFactory {
     /**
      * Parse an IF expression.
      */
-    private If parseIf(Node node){
+    private If parseIf(Node node) {
         return new If(
                 nodeAttribute(node, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME),
                 parseTemplateElements(node)
@@ -558,14 +575,14 @@ public class DomConfigurationFactory {
                     } else {
                         elements.add(new NamedValue(nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME)));
                     }
-                } else if(tagName.equals(TAG_IF)){
+                } else if (tagName.equals(TAG_IF)) {
                     elements.add(parseIf(el));
                 } else {
                     throw new TextProcessorFactoryException(
                             MessageFormat.format("Invalid template. Unknown XML element [{0}].", tagName)
                     );
                 }
-            } else if(el.getNodeType() == Node.TEXT_NODE) {
+            } else if (el.getNodeType() == Node.TEXT_NODE) {
                 elements.add(new Constant(el.getNodeValue()));
             } else {
                 throw new TextProcessorFactoryException("Invalid template. Unsupported XML node type.");

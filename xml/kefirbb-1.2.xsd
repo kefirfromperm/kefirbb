@@ -104,6 +104,15 @@
                     </xsd:complexContent>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element name="email">
+                <xsd:complexType>
+                    <xsd:complexContent>
+                        <xsd:extension base="ghostable">
+                            <xsd:attribute name="name" type="xsd:string" default="email"/>
+                        </xsd:extension>
+                    </xsd:complexContent>
+                </xsd:complexType>
+            </xsd:element>
             <xsd:element name="junk"/>
             <xsd:element name="bol"/>
             <xsd:element name="eol" type="ghostable"/>

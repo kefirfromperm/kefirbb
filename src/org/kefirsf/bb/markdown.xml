@@ -54,8 +54,8 @@
             <template>&lt;a href="<var name="url"/>"&gt;<var name="url"/>&lt;/a&gt;</template>
         </code>
         <code name="emailLink">
-            <pattern>&lt;<var name="user" scope="safeXml"/>@<var name="host" scope="safeXml"/>&gt;</pattern>
-            <template>&lt;a href="mailto:<var name="user"/>@<var name="host"/>"&gt;<var name="user"/>@<var name="host"/>&lt;/a&gt;</template>
+            <pattern>&lt;<email/>&gt;</pattern>
+            <template>&lt;a href="mailto:<var name="email"/>"&gt;<var name="email"/>&lt;/a&gt;</template>
         </code>
         <code name="code">
             <pattern>`` <var scope="safeXml"/> ``</pattern>

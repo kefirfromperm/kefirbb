@@ -3,7 +3,6 @@ package org.kefirsf.bb.proc;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -11,13 +10,7 @@ import java.util.regex.Pattern;
  *
  * @author kefir
  */
-public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
-    static final Pattern REGEX_AUTHORITY = Pattern.compile(
-            "[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+(:[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+)?@"
-    );
-    static final Pattern REGEX_HOST = Pattern.compile(
-            "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
-    );
+public class ProcUrl extends AbstractUrl implements ProcPatternElement {
     static final Pattern REGEX_PORT = Pattern.compile(
             ":\\d{1,4}"
     );
@@ -30,11 +23,6 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
     static final Pattern REGEX_FRAGMENT = Pattern.compile(
             "#([\\w&-=]|(%\\p{XDigit}{2}))*"
     );
-
-    /**
-     * Don't move the cursor offset.
-     */
-    private final boolean ghost;
 
     private final boolean local;
 
@@ -49,35 +37,9 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
      * @param schemaless Parse only schemaless URL
      */
     public ProcUrl(String name, boolean ghost, boolean local, boolean schemaless) {
-        super(name);
-        this.ghost = ghost;
+        super(name, ghost);
         this.local = local;
         this.schemaless = schemaless;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean parse(Context context, ProcPatternElement terminator) throws NestingException {
-        Source source = context.getSource();
-        int length = parseLength(source, source.getOffset(), terminator);
-        if (length >= 0) {
-            context.setAttribute(getName(), source.sub(source.getOffset() + length));
-            if (!ghost) {
-                source.incOffset(length);
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isNextIn(Context context) {
-        Source source = context.getSource();
-        return parseLength(source, source.getOffset(), context.getTerminator()) >= 0;
     }
 
     /**
@@ -141,6 +103,7 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
      * @param terminator a terminator element which can be used to cut some URL parts. Can be null.
      * @return URL length or -1 if it is not a URL.
      */
+    @Override
     int parseLength(Source source, int offset, ProcPatternElement terminator) {
         int length = 0;
 
@@ -215,37 +178,8 @@ public class ProcUrl extends ProcNamedElement implements ProcPatternElement {
         return parseRegex(source, offset, calcEnd(source, terminator), REGEX_PATH);
     }
 
-    int parseHost(Source source, int offset, ProcPatternElement terminator) {
-        return parseRegex(source, offset, calcEnd(source, terminator), REGEX_HOST);
-    }
-
     int parsePort(Source source, int offset) {
         return parseRegex(source, offset, source.length(), REGEX_PORT);
-    }
-
-    private int calcEnd(Source source, ProcPatternElement terminator) {
-        int end = source.length();
-        if (terminator != null) {
-            int ind = terminator.findIn(source);
-            if (ind > 0) {
-                end = ind;
-            }
-        }
-        return end;
-    }
-
-    private int parseRegex(Source source, int offset, int end, Pattern pattern) {
-        CharSequence seq = source.subSequence(offset, end);
-        Matcher matcher = pattern.matcher(seq);
-        if (matcher.lookingAt()) {
-            return matcher.group().length();
-        } else {
-            return 0;
-        }
-    }
-
-    int parseAuthority(Source source, int offset) {
-        return parseRegex(source, offset, source.length(), REGEX_AUTHORITY);
     }
 
     Schema parseSchema(Source source, int offset) {

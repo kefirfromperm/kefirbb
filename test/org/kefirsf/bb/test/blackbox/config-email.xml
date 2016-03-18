@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns="http://kefirsf.org/kefirbb/schema"
+               xsi:schemaLocation="http://kefirsf.org/kefirbb/schema http://kefirsf.org/kefirbb/schema/kefirbb-1.2.xsd">
+    <code>
+        <pattern><email/></pattern>
+        <template>&lt;a href="mailto:<var name="email"/>"&gt;<var name="email"/>&lt;/a&gt;</template>
+    </code>
+</configuration>

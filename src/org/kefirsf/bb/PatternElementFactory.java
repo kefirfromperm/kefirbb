@@ -41,6 +41,9 @@ class PatternElementFactory {
         } else if (element instanceof Url) {
             Url url = (Url) element;
             return new ProcUrl(url.getName(), url.isGhost(), url.isLocal(), url.isSchemaless());
+        } else if (element instanceof Email){
+            Email email = (Email) element;
+            return new ProcEmail(email.getName(), email.isGhost());
         } else {
             throw new TextProcessorFactoryException("Unknown pattern element " + element.getClass().getName() + ".");
         }
