@@ -8,20 +8,19 @@ import org.kefirsf.bb.UrlCollection;
 import static org.junit.Assert.*;
 
 /**
- * Tests for a URL processor pattern element.
+ * Tests for the ProcEmail class
  *
  * @author kefir
  */
 @RunWith(Parameterized.class)
-public class ProcUrlTest extends AbstractProcTest {
-
+public class ProcEmailTest extends AbstractProcTest {
     @Parameterized.Parameters(name = "{0}")
-    public static String[] urlCollection() {
-        return UrlCollection.VALID;
+    public static String[] emailCollection() {
+        return UrlCollection.VALID_EMAIL;
     }
 
     @Parameterized.Parameter
-    public String url;
+    public String email;
 
     @Test
     public void testParse() throws NestingException {
@@ -30,8 +29,8 @@ public class ProcUrlTest extends AbstractProcTest {
         Context context = new Context();
         context.setSource(source);
 
-        ProcUrl norm = new ProcUrl("a", false, false, false);
-        ProcUrl ghost = new ProcUrl("b", true, false, false);
+        ProcEmail norm = new ProcEmail("a", false);
+        ProcEmail ghost = new ProcEmail("b", true);
 
         assertFalse(norm.parse(context, null));
         assertFalse(ghost.parse(context, null));
@@ -49,8 +48,8 @@ public class ProcUrlTest extends AbstractProcTest {
         Source source = context.getSource();
         PatternConstant terminator = new PatternConstant(SUFFIX, false);
 
-        ProcUrl norm = new ProcUrl("a", false, false, false);
-        ProcUrl ghost = new ProcUrl("b", true, false, false);
+        ProcEmail norm = new ProcEmail("a", false);
+        ProcEmail ghost = new ProcEmail("b", true);
 
         assertFalse(norm.parse(context, terminator));
         assertFalse(ghost.parse(context, terminator));
@@ -66,7 +65,7 @@ public class ProcUrlTest extends AbstractProcTest {
     public void testIsNextIn() {
         Context context = prepareContext();
         Source source = context.getSource();
-        ProcUrl element = new ProcUrl("a", false, false, false);
+        ProcEmail element = new ProcEmail("a", false);
 
         assertFalse(element.isNextIn(context));
         source.setOffset(PREFIX.length() - 1);
@@ -80,7 +79,7 @@ public class ProcUrlTest extends AbstractProcTest {
     @Test
     public void testFindIn() {
         Source source = prepareSource();
-        ProcUrl element = new ProcUrl("a", false, false, false);
+        ProcEmail element = new ProcEmail("a", false);
 
         assertEquals(PREFIX.length(), element.findIn(source));
         source.setOffset(PREFIX.length() - 1);
@@ -91,6 +90,6 @@ public class ProcUrlTest extends AbstractProcTest {
 
     @Override
     protected String getValue() {
-        return url;
+        return email;
     }
 }

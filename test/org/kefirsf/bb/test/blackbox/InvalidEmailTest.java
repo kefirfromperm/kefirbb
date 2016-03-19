@@ -10,28 +10,27 @@ import org.kefirsf.bb.UrlCollection;
 import static org.kefirsf.bb.test.Assert.assertProcess;
 
 /**
- * Tests for email
- *
+ * Tests for invalid emails
  * @author kefir
  */
 @RunWith(Parameterized.class)
-public class EmailTest {
+public class InvalidEmailTest {
     private final BBProcessorFactory factory = BBProcessorFactory.getInstance();
 
     @Parameterized.Parameters
     public static String[] data(){
-        return UrlCollection.VALID_EMAIL;
+        return UrlCollection.INVALID_EMAIL;
     }
 
     private String email;
 
-    public EmailTest(String email) {
+    public InvalidEmailTest(String email) {
         this.email = email;
     }
 
     @Test
     public void testEmail(){
         TextProcessor processor = factory.createFromResource("org/kefirsf/bb/test/blackbox/config-email.xml");
-        assertProcess(processor, "<a href=\"mailto:" + email + "\">" + email + "</a>", email);
+        assertProcess(processor, email, email);
     }
 }

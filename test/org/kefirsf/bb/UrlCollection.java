@@ -86,4 +86,15 @@ public class UrlCollection {
             "./..", "./../", "./../home", "./../home/", "./../home/web", "./../home/web/",
             "./../home/web/index.html", "../../home/../web/index.html"
     };
+
+    public static final String[] VALID_EMAIL = new String[]{
+            "john.smith@example.com",
+            "john.smith@example.com?subject=Subject%20of%20a%20letter."
+    };
+
+    public static final String[] INVALID_EMAIL = new String[]{
+            "john.smith.example.com",
+            "john.smith.example.com?subject=Subject%20of%20a%20letter.",
+            "john.smith@"
+    };
 }
