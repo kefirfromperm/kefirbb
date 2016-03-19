@@ -87,7 +87,24 @@ public class MarkdownTest {
             {"<p>&copy;</p>", "&copy;"},
             {"<p>&amp;</p>", "&"},
             {"<p>AT&amp;T</p>", "AT&T"},
-            {"<p>4 &lt; 5</p>", "4 < 5"}
+            {"<p>4 &lt; 5</p>", "4 < 5"},
+            {"<p><img src=\"/path/to/img.jpg\" alt=\"Alt text\"/></p>", "![Alt text](/path/to/img.jpg)"},
+            {
+                    "<p><img src=\"/path/to/img.jpg\" alt=\"Alt text\" title=\"Optional title\"/></p>",
+                    "![Alt text](/path/to/img.jpg \"Optional title\")"
+            },
+            {
+                    "<p><img src=\"https://example.com/path/to/img.jpg\" alt=\"Alt text\" title=\"Optional title\"/></p>",
+                    "![Alt text](https://example.com/path/to/img.jpg \"Optional title\")"
+            },
+            {
+                    "<p><img src=\"https://example.com/path/to/img.jpg\" title=\"Optional title\"/></p>",
+                    "!(https://example.com/path/to/img.jpg \"Optional title\")"
+            },
+            {
+                    "<p><img src=\"https://example.com/path/to/img.jpg\"/></p>",
+                    "!(https://example.com/path/to/img.jpg)"
+            }
     };
     private TextProcessor processor;
 

@@ -63,6 +63,13 @@
             <pattern>`<var scope="safeXml"/>`</pattern>
             <template>&lt;code&gt;<var/>&lt;/code&gt;</template>
         </code>
+        <code name="img">
+            <pattern>![<var name="alt" scope="escapeHtml"/>](<url local="true"/> &quot;<var name="title" scope="escapeHtml"/>&quot;)</pattern>
+            <pattern>![<var name="alt" scope="escapeHtml"/>](<url local="true"/>)</pattern>
+            <pattern>!(<url local="true"/> &quot;<var name="title" scope="escapeHtml"/>&quot;)</pattern>
+            <pattern>!(<url local="true"/>)</pattern>
+            <template>&lt;img src="<var name="url"/>"<if name="alt"> alt="<var name="alt"/>"</if><if name="title"> title="<var name="title"/>"</if>/&gt;</template>
+        </code>
     </scope>
 
     <!-- Escape Markdown slashes -->
