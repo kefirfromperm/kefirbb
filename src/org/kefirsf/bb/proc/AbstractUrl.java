@@ -6,12 +6,15 @@ import java.util.regex.Pattern;
 /**
  * @author kefir
  */
-public abstract class AbstractUrl extends ProcNamedElement {
+public abstract class AbstractUrl extends ProcNamedElement implements ProcPatternElement {
     static final Pattern REGEX_AUTHORITY = Pattern.compile(
             "[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+(:[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+)?@"
     );
     static final Pattern REGEX_HOST = Pattern.compile(
             "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
+    );
+    static final Pattern REGEX_QUERY = Pattern.compile(
+            "\\?(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?(&|;))*(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?)?"
     );
     /**
      * Don't move the cursor offset.
@@ -47,6 +50,8 @@ public abstract class AbstractUrl extends ProcNamedElement {
         Source source = context.getSource();
         return parseLength(source, source.getOffset(), context.getTerminator()) >= 0;
     }
+
+    public abstract int findIn(Source source);
 
     /**
      * Parse URL. The offset must be on a URL element
@@ -85,5 +90,9 @@ public abstract class AbstractUrl extends ProcNamedElement {
 
     int parseAuthority(Source source, int offset) {
         return parseRegex(source, offset, source.length(), REGEX_AUTHORITY);
+    }
+
+    int parseQuery(Source source, int offset, ProcPatternElement terminator) {
+        return parseRegex(source, offset, calcEnd(source, terminator), REGEX_QUERY);
     }
 }

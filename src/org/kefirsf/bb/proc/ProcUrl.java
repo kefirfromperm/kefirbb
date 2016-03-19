@@ -10,15 +10,12 @@ import java.util.regex.Pattern;
  *
  * @author kefir
  */
-public class ProcUrl extends AbstractUrl implements ProcPatternElement {
+public class ProcUrl extends AbstractUrl {
     static final Pattern REGEX_PORT = Pattern.compile(
             ":\\d{1,4}"
     );
     static final Pattern REGEX_PATH = Pattern.compile(
             "(/([\\w\\(\\)\\.]|(%\\p{XDigit}{2}))+)*/?"
-    );
-    static final Pattern REGEX_QUERY = Pattern.compile(
-            "\\?(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?(&|;))*(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?)?"
     );
     static final Pattern REGEX_FRAGMENT = Pattern.compile(
             "#([\\w&-=]|(%\\p{XDigit}{2}))*"
@@ -45,6 +42,7 @@ public class ProcUrl extends AbstractUrl implements ProcPatternElement {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int findIn(Source source) {
         if(schemaless){
             return -1;
@@ -156,18 +154,12 @@ public class ProcUrl extends AbstractUrl implements ProcPatternElement {
         length += pathLength;
 
         // A query like ?key1=value1&key2=value2
-        int queryLength = parseQuery(source, offset + length, terminator);
-        length += queryLength;
+        length += parseQuery(source, offset + length, terminator);
 
         // A fragment like #anchor
-        int fragmentLength = parseFragment(source, offset + length, terminator);
-        length += fragmentLength;
+        length += parseFragment(source, offset + length, terminator);
 
         return length;
-    }
-
-    int parseQuery(Source source, int offset, ProcPatternElement terminator) {
-        return parseRegex(source, offset, calcEnd(source, terminator), REGEX_QUERY);
     }
 
     int parseFragment(Source source, int offset, ProcPatternElement terminator) {

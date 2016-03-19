@@ -1,12 +1,13 @@
 package org.kefirsf.bb.proc;
 
+import java.util.regex.Matcher;
+
 /**
  * The pattern element to parse EMAILs.
- * TODO: It's needed to create tests for methods of this class.
  *
  * @author kefir
  */
-public class ProcEmail extends AbstractUrl implements ProcPatternElement {
+public class ProcEmail extends AbstractUrl {
     /**
      * Create a named URL variable
      *
@@ -19,10 +20,19 @@ public class ProcEmail extends AbstractUrl implements ProcPatternElement {
 
     /**
      * {@inheritDoc}
-     * TODO: It can be terminator
      */
+    @Override
     public int findIn(Source source) {
-        return -1;
+        Matcher matcher = REGEX_AUTHORITY.matcher(source.subToEnd());
+        int offset = -1;
+        while (matcher.find()) {
+            int matcherPosition = source.getOffset() + matcher.start();
+            if (parseLength(source, matcherPosition, null) > 0) {
+                offset = matcherPosition;
+                break;
+            }
+        }
+        return offset;
     }
 
     /**
@@ -48,6 +58,9 @@ public class ProcEmail extends AbstractUrl implements ProcPatternElement {
             return -1;
         }
         length += hostLength;
+
+        // A query like ?key1=value1&key2=value2
+        length += parseQuery(source, offset + length, terminator);
 
         return length;
     }
