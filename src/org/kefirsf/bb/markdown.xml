@@ -27,6 +27,28 @@
             <pattern><bol/><var regex="\-{3,}"/><eol/></pattern>
             <template>&lt;hr/&gt;</template>
         </code>
+        <code name="codeblock" priority="1">
+            <pattern><constant value="    " ghost="true"/><var scope="codeBlockScope"/></pattern>
+            <pattern><constant value="&#09;" ghost="true"/><var scope="codeBlockScope"/></pattern>
+            <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="codeBlockScope" strong="true">
+        <code name="codeString" priority="2">
+            <pattern>    <var scope="safeXml"/><eol/><var name="nl" regex="\s{4}|\t|([\s\t]*\n)" ghost="true"/></pattern>
+            <pattern>&#09;<var scope="safeXml"/><eol/><var name="nl" regex="\s{4}|\t|([\s\t]*\n)" ghost="true"/></pattern>
+            <template><var/>&#x0A;</template>
+        </code>
+        <code name="emptyString">
+            <pattern><var regex="[\s\t]*"/><eol/></pattern>
+            <template>&#x0A;</template>
+        </code>
+        <code name="endString" priority="1">
+            <pattern><constant value="    "/><var scope="safeXml"/><eol/></pattern>
+            <pattern><constant value="&#09;"/><var scope="safeXml"/><eol/></pattern>
+            <template><var/></template>
+        </code>
     </scope>
 
     <scope name="paragraphScope" parent="escapeMarkdown">

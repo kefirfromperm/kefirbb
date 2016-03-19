@@ -1,5 +1,6 @@
 package org.kefirsf.bb.proc;
 
+import java.text.MessageFormat;
 import java.util.regex.Matcher;
 
 /**
@@ -63,5 +64,13 @@ public class ProcEmail extends AbstractUrl {
         length += parseQuery(source, offset + length, terminator);
 
         return length;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format(
+                "<email name=\"{0}\" ghost=\"{1}\"/>",
+                getName(), ghost
+        );
     }
 }

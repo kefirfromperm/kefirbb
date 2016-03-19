@@ -104,6 +104,31 @@ public class MarkdownTest {
             {
                     "<p><img src=\"https://example.com/path/to/img.jpg\"/></p>",
                     "!(https://example.com/path/to/img.jpg)"
+            },
+            {
+                    "<pre><code>A code block\n" +
+                            "second string\n" +
+                            "\n" +
+                            "third string.</code></pre>",
+                    "    A code block\n    second string\n\n    third string."
+            },
+            {
+                    "<pre><code>A code block\n" +
+                            "second string\n" +
+                            "\n" +
+                            "third string.</code></pre>",
+                    "\tA code block\n\tsecond string\n\n\tthird string."
+            },
+            {
+                    "<pre><code>A code block\n" +
+                            "second string\n" +
+                            "\n" +
+                            "third string.</code></pre><p>Normal text.</p>",
+                    "    A code block\n" +
+                            "    second string\n" +
+                            "\n" +
+                            "    third string.\n" +
+                            "Normal text."
             }
     };
     private TextProcessor processor;
