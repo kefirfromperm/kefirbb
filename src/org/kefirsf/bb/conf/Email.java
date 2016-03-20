@@ -5,13 +5,24 @@ package org.kefirsf.bb.conf;
  *
  * @author kefir
  */
-public class Email extends NamedElement implements PatternElement {
+public class Email extends GhostableNamedElement {
     public static final String DEFAULT_NAME = "email";
 
     /**
-     * Don't move a source cursor.
+     * The default constructor. It's needed to initialize it after construction.
      */
-    private boolean ghost = false;
+    public Email() {
+        super(DEFAULT_NAME);
+    }
+
+    /**
+     * Construct an email pattern element. Not ghost.
+     *
+     * @param name  the name which can be used in template variables. By default is "email".
+     */
+    public Email(String name) {
+        super(name);
+    }
 
     /**
      * Construct an email pattern element.
@@ -20,23 +31,6 @@ public class Email extends NamedElement implements PatternElement {
      * @param ghost indicate that the element mustn't move source cursor.
      */
     public Email(String name, boolean ghost) {
-        super(name);
-        this.ghost = ghost;
-    }
-
-    /**
-     * If it's true then processor parses it but doesn't move the cursor.
-     *
-     * @return is it ghost or no
-     */
-    public boolean isGhost() {
-        return ghost;
-    }
-
-    /**
-     * @param ghost If it's true then processor parses it but doesn't move the cursor.
-     */
-    public void setGhost(boolean ghost) {
-        this.ghost = ghost;
+        super(name, ghost);
     }
 }

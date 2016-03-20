@@ -7,10 +7,9 @@ import java.util.regex.Pattern;
  *
  * @author Vitaliy Samolovskih aka Kefir
  */
-public class Variable extends NamedElement implements PatternElement {
+public class Variable extends GhostableNamedElement {
     public static final String DEFAULT_NAME = "variable";
     private java.util.regex.Pattern regex;
-    private boolean ghost = false;
     private Action action = Action.rewrite;
 
     public Variable() {
@@ -44,22 +43,6 @@ public class Variable extends NamedElement implements PatternElement {
      */
     public void setRegex(Pattern regex) {
         this.regex = regex;
-    }
-
-    /**
-     * If it's true then processor parse it but no move the cursor.
-     *
-     * @return is it ghost or no
-     */
-    public boolean isGhost() {
-        return ghost;
-    }
-
-    /**
-     * @param ghost If it's true then processor parse it but no move the cursor.
-     */
-    public void setGhost(boolean ghost) {
-        this.ghost = ghost;
     }
 
     /**

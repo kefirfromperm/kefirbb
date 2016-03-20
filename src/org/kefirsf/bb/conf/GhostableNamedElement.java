@@ -1,17 +1,21 @@
 package org.kefirsf.bb.conf;
 
 /**
- * The abstract ghostable pattern element. For element which has a ghost property.
- *
  * @author kefir
  */
-abstract class AbstractGhostable implements PatternElement {
-    protected boolean ghost = DEFAULT_GHOST_VALUE;
+class GhostableNamedElement extends NamedElement implements PatternElement {
+    private boolean ghost = DEFAULT_GHOST_VALUE;
 
-    public AbstractGhostable() {
+    public GhostableNamedElement() {
+        super();
     }
 
-    public AbstractGhostable(boolean ghost) {
+    public GhostableNamedElement(String name) {
+        super(name);
+    }
+
+    public GhostableNamedElement(String name, boolean ghost) {
+        super(name);
         this.ghost = ghost;
     }
 

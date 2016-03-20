@@ -6,6 +6,9 @@ package org.kefirsf.bb.conf;
  * @author kefir
  */
 public class BlankLine extends AbstractGhostable {
+    public BlankLine() {
+    }
+
     public BlankLine(boolean ghost) {
         setGhost(ghost);
     }

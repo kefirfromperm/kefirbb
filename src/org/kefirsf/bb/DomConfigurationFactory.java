@@ -395,7 +395,7 @@ public class DomConfigurationFactory {
                 } else if (tagName.equals(TAG_BOL)) {
                     elements.add(new Bol());
                 } else if (tagName.equals(TAG_BLANKLINE)) {
-                    elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)));
+                    elements.add(new BlankLine(nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE)));
                 } else if (tagName.equals(TAG_URL)) {
                     elements.add(parseUrl(el));
                 } else if (tagName.equals(TAG_EMAIL)){
@@ -421,7 +421,7 @@ public class DomConfigurationFactory {
     private Url parseUrl(Node el) {
         return new Url(
                 nodeAttribute(el, TAG_VAR_ATTR_NAME, Url.DEFAULT_NAME),
-                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE),
+                nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE),
                 nodeAttribute(el, TAG_URL_ATTR_LOCAL, Url.DEFAULT_LOCAL),
                 nodeAttribute(el, TAG_URL_ATTR_SCHEMALESS, Url.DEFAULT_SCHEMALESS)
         );
@@ -436,12 +436,12 @@ public class DomConfigurationFactory {
     private Email parseEmail(Node el){
         return new Email(
                 nodeAttribute(el, TAG_VAR_ATTR_NAME, Email.DEFAULT_NAME),
-                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)
+                nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE)
         );
     }
 
     private Eol parseEol(Node el) {
-        return new Eol(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE));
+        return new Eol(nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE));
     }
 
     /**
@@ -455,7 +455,7 @@ public class DomConfigurationFactory {
         return new Constant(
                 nodeAttribute(el, TAG_CONSTANT_ATTR_VALUE),
                 nodeAttribute(el, TAG_CONSTANT_ATTR_IGNORE_CASE, ignoreCase),
-                nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE)
+                nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE)
         );
     }
 
@@ -531,7 +531,7 @@ public class DomConfigurationFactory {
         } else {
             variable = new Variable(nodeAttribute(el, TAG_VAR_ATTR_NAME, Variable.DEFAULT_NAME));
         }
-        variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, AbstractGhostable.DEFAULT_GHOST_VALUE));
+        variable.setGhost(nodeAttribute(el, TAG_ATTR_GHOST, PatternElement.DEFAULT_GHOST_VALUE));
 
         if (nodeHasAttribute(el, TAG_VAR_ATTR_ACTION)) {
             variable.setAction(Action.valueOf(nodeAttribute(el, TAG_VAR_ATTR_ACTION)));

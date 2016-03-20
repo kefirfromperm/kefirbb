@@ -5,11 +5,10 @@ package org.kefirsf.bb.conf;
  *
  * @author kefir
  */
-public class Url extends NamedElement implements PatternElement {
+public class Url extends GhostableNamedElement {
     public static final String DEFAULT_NAME = "url";
     public static final boolean DEFAULT_LOCAL = false;
     public static final boolean DEFAULT_SCHEMALESS = false;
-    private boolean ghost = false;
 
     /**
      * Accept local URLs.
@@ -30,26 +29,9 @@ public class Url extends NamedElement implements PatternElement {
      * @param schemaless true if accept URLs only without a schema, false otherwise
      */
     public Url(String name, boolean ghost, boolean local, boolean schemaless) {
-        super(name);
-        this.ghost = ghost;
+        super(name, ghost);
         this.local = local;
         this.schemaless = schemaless;
-    }
-
-    /**
-     * If it's true then processor parse it but no move the cursor.
-     *
-     * @return is it ghost or no
-     */
-    public boolean isGhost() {
-        return ghost;
-    }
-
-    /**
-     * @param ghost If it's true then processor parse it but no move the cursor.
-     */
-    public void setGhost(boolean ghost) {
-        this.ghost = ghost;
     }
 
     /**

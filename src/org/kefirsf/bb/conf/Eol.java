@@ -6,7 +6,10 @@ package org.kefirsf.bb.conf;
  * @author Vitalii Samolovskikh aka Kefir
  */
 public class Eol extends AbstractGhostable {
+    public Eol() {
+    }
+
     public Eol(boolean ghost) {
-        setGhost(ghost);
+        super(ghost);
     }
 }
