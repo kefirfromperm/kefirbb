@@ -13,10 +13,7 @@ import static org.junit.Assert.assertFalse;
  * @author kefir
  */
 @RunWith(Parameterized.class)
-public class ProcInvalidUrlTest {
-
-    public static final String PREFIX = "prefix";
-    public static final String SUFFIX = " suffix";
+public class ProcInvalidUrlTest extends AbstractProcUrlTest {
 
     @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
@@ -86,17 +83,8 @@ public class ProcInvalidUrlTest {
         assertEquals(url, -1, element.findIn(source));
     }
 
-    private Context prepareContext() {
-        Context context = new Context();
-        context.setSource(prepareSource());
-        return context;
-    }
-
-    private Source prepareSource() {
-        StringBuilder b = new StringBuilder();
-        b.append(PREFIX);
-        b.append(url);
-        b.append(SUFFIX);
-        return new Source(b);
+    @Override
+    protected String getValue() {
+        return url;
     }
 }

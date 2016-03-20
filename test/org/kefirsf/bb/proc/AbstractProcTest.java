@@ -4,8 +4,6 @@ package org.kefirsf.bb.proc;
  * @author kefir
  */
 public abstract class AbstractProcTest {
-    public static final String PREFIX = "prefix ";
-    public static final String SUFFIX = " suffix";
 
     protected Context prepareContext() {
         Context context = new Context();
@@ -15,11 +13,15 @@ public abstract class AbstractProcTest {
 
     protected Source prepareSource() {
         StringBuilder b = new StringBuilder();
-        b.append(PREFIX);
+        b.append(getPrefix());
         b.append(getValue());
-        b.append(SUFFIX);
+        b.append(getSuffix());
         return new Source(b);
     }
+
+    protected abstract String getSuffix();
+
+    protected abstract String getPrefix();
 
     protected abstract String getValue();
 }

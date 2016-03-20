@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * @author kefir
  */
 @RunWith(Parameterized.class)
-public class ProcEmailTest extends AbstractProcTest {
+public class ProcEmailTest extends AbstractProcUrlTest {
     @Parameterized.Parameters(name = "{0}")
     public static String[] emailCollection() {
         return UrlCollection.VALID_EMAIL;
@@ -72,7 +72,7 @@ public class ProcEmailTest extends AbstractProcTest {
         assertFalse(element.isNextIn(context));
         source.setOffset(PREFIX.length());
         assertTrue(element.isNextIn(context));
-        source.setOffset(source.length() - SUFFIX.length());
+        source.setOffset(source.length() - ProcUrlTest.SUFFIX.length());
         assertFalse(element.isNextIn(context));
     }
 

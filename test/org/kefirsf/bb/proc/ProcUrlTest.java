@@ -13,8 +13,7 @@ import static org.junit.Assert.*;
  * @author kefir
  */
 @RunWith(Parameterized.class)
-public class ProcUrlTest extends AbstractProcTest {
-
+public class ProcUrlTest extends AbstractProcUrlTest {
     @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         return UrlCollection.VALID;

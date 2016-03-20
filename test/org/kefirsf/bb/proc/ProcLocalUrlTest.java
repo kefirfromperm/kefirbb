@@ -5,9 +5,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.kefirsf.bb.UrlCollection;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Test ProcUrl for local URLs
@@ -15,11 +13,7 @@ import static org.junit.Assert.assertTrue;
  * @author Vitalii Samolovskikh
  */
 @RunWith(Parameterized.class)
-public class ProcLocalUrlTest {
-
-    public static final String PREFIX = "prefix ";
-    public static final String SUFFIX = " suffix";
-
+public class ProcLocalUrlTest extends AbstractProcUrlTest {
     @Parameterized.Parameters(name = "{0}")
     public static String[] urlCollection() {
         String[] urls = new String[UrlCollection.LOCAL.length + UrlCollection.VALID.length];
@@ -35,7 +29,7 @@ public class ProcLocalUrlTest {
 
     @Test
     public void testParse() throws NestingException {
-        Context context = prepareContext(url);
+        Context context = prepareContext();
         Source source = context.getSource();
         assertFalse(element.parse(context, null));
         source.setOffset(PREFIX.length() - 1);
@@ -49,7 +43,7 @@ public class ProcLocalUrlTest {
 
     @Test
     public void testIsNextIn() {
-        Context context = prepareContext(url);
+        Context context = prepareContext();
         Source source = context.getSource();
         assertFalse(element.isNextIn(context));
         source.setOffset(PREFIX.length() - 1);
@@ -62,7 +56,7 @@ public class ProcLocalUrlTest {
 
     @Test
     public void testFindIn() {
-        Source source = prepareSource(url);
+        Source source = prepareSource();
         assertEquals(url, PREFIX.length(), element.findIn(source));
         source.setOffset(PREFIX.length());
         assertEquals(url, PREFIX.length(), element.findIn(source));
@@ -70,18 +64,8 @@ public class ProcLocalUrlTest {
         assertEquals(url, -1, element.findIn(source));
     }
 
-    private Context prepareContext(String url) {
-        Context context = new Context();
-        context.setSource(prepareSource(url));
-        return context;
+    @Override
+    protected String getValue() {
+        return url;
     }
-
-    private Source prepareSource(String url) {
-        StringBuilder b = new StringBuilder();
-        b.append(PREFIX);
-        b.append(url);
-        b.append(SUFFIX);
-        return new Source(b);
-    }
-
 }
