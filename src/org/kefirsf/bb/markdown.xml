@@ -16,8 +16,8 @@
             <template>&lt;h2&gt;<var/>&lt;/h2&gt;</template>
         </code>
         <code name="hn" priority="1">
-            <pattern><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><var name="junk" regex="\s#+"/><eol/></pattern>
-            <pattern><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><eol/></pattern>
+            <pattern><bol/><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><var name="junk" regex="\s#+"/><eol/></pattern>
+            <pattern><bol/><var name="count" regex="#{1,6}"/> <var scope="escapeHtml"/><eol/></pattern>
             <template>&lt;h<var name="count" function="length"/>&gt;<var/>&lt;/h<var name="count" function="length"/>&gt;</template>
         </code>
         <code name="hr" priority="1">
@@ -28,8 +28,8 @@
             <template>&lt;hr/&gt;</template>
         </code>
         <code name="codeblock" priority="1">
-            <pattern><constant value="    " ghost="true"/><var scope="codeBlockScope"/></pattern>
-            <pattern><constant value="&#09;" ghost="true"/><var scope="codeBlockScope"/></pattern>
+            <pattern><bol/><constant value="    " ghost="true"/><var scope="codeBlockScope"/></pattern>
+            <pattern><bol/><constant value="&#09;" ghost="true"/><var scope="codeBlockScope"/></pattern>
             <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
     </scope>
