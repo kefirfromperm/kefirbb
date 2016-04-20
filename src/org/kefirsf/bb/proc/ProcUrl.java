@@ -22,6 +22,8 @@ public class ProcUrl extends AbstractUrl {
     private static final Pattern REGEX_FRAGMENT = Pattern.compile(
             "#([\\w&-=]|(%\\p{XDigit}{2}))*"
     );
+    private static final Pattern REGEX_LOCAL_PREFIX = Pattern.compile("\\.{0,2}/");
+
     private static final String[] LOCAL_PREFIXES = {"/", "./", "../"};
 
     private final boolean local;
@@ -151,7 +153,7 @@ public class ProcUrl extends AbstractUrl {
 
         // For local URLs it is possible to use "./", "../", "/"
         if (schema == null && local) {
-            int prefixLength = parseRegex(source, offset, calcEnd(source, terminator), Pattern.compile("\\.{0,2}/"));
+            int prefixLength = parseRegex(source, offset, calcEnd(source, terminator), REGEX_LOCAL_PREFIX);
             if (prefixLength <= 0) {
                 return -1;
             }
