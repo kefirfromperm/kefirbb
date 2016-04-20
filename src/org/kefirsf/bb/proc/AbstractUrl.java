@@ -10,10 +10,10 @@ public abstract class AbstractUrl extends ProcNamedElement implements ProcPatter
     static final Pattern REGEX_AUTHORITY = Pattern.compile(
             "[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+(:[\\w\\.\\-~_!\\$&'\\(\\)%;:=\\+,\\*]+)?@"
     );
-    static final Pattern REGEX_HOST = Pattern.compile(
+    private static final Pattern REGEX_HOST = Pattern.compile(
             "([\\da-zA-Z](\\-?\\w+)*\\.)*[\\da-zA-Z](\\-?\\w+)*\\.?"
     );
-    static final Pattern REGEX_QUERY = Pattern.compile(
+    private static final Pattern REGEX_QUERY = Pattern.compile(
             "\\?(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?(&|;))*(([\\w%\\-\\+]|(%\\p{XDigit}{2}))+(=([\\w%\\-\\+]|(%\\p{XDigit}{2}))+)?)?"
     );
     /**

@@ -2,6 +2,8 @@ package org.kefirsf.bb.proc;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -11,15 +13,16 @@ import java.util.regex.Pattern;
  * @author kefir
  */
 public class ProcUrl extends AbstractUrl {
-    static final Pattern REGEX_PORT = Pattern.compile(
+    private static final Pattern REGEX_PORT = Pattern.compile(
             ":\\d{1,4}"
     );
-    static final Pattern REGEX_PATH = Pattern.compile(
+    private static final Pattern REGEX_PATH = Pattern.compile(
             "(/([\\w\\(\\)\\.]|(%\\p{XDigit}{2}))+)*/?"
     );
-    static final Pattern REGEX_FRAGMENT = Pattern.compile(
+    private static final Pattern REGEX_FRAGMENT = Pattern.compile(
             "#([\\w&-=]|(%\\p{XDigit}{2}))*"
     );
+    private static final String[] LOCAL_PREFIXES = {"/", "./", "../"};
 
     private final boolean local;
 
@@ -44,7 +47,7 @@ public class ProcUrl extends AbstractUrl {
      */
     @Override
     public int findIn(Source source) {
-        if(schemaless){
+        if (schemaless) {
             return -1;
         }
 
@@ -56,18 +59,8 @@ public class ProcUrl extends AbstractUrl {
         do {
             index = sourceLength;
 
-            // Find nearest schema
-            List<String> prefixes = new ArrayList<String>(Schema.values().length + (local ? 3 : 0));
-            for (Schema schema : Schema.values()) {
-                prefixes.add(schema.getPrefix());
-            }
-
-            // For local URls prefixes are "./", "../", "/"
-            if (local) {
-                prefixes.add("/");
-                prefixes.add("./");
-                prefixes.add("../");
-            }
+            // Prepare URL's prefixes.
+            List<String> prefixes = preparePrefixes();
 
             // Find nearest prefix
             for (String prefix : prefixes) {
@@ -91,6 +84,25 @@ public class ProcUrl extends AbstractUrl {
         } else {
             return -1;
         }
+    }
+
+    /**
+     * Prepare URL's prefixes.
+     *
+     * @return list of schema prefixes and local prefixes if local URL are allowed.
+     */
+    private List<String> preparePrefixes() {
+        // Prepare prefixes for all schemas
+        List<String> prefixes = new ArrayList<String>(Schema.values().length + (local ? 3 : 0));
+        for (Schema schema : Schema.values()) {
+            prefixes.add(schema.getPrefix());
+        }
+
+        // For local URls prefixes are "./", "../", "/"
+        if (local) {
+            Collections.addAll(prefixes, LOCAL_PREFIXES);
+        }
+        return prefixes;
     }
 
     /**
@@ -140,7 +152,7 @@ public class ProcUrl extends AbstractUrl {
         // For local URLs it is possible to use "./", "../", "/"
         if (schema == null && local) {
             int prefixLength = parseRegex(source, offset, calcEnd(source, terminator), Pattern.compile("\\.{0,2}/"));
-            if(prefixLength<=0){
+            if (prefixLength <= 0) {
                 return -1;
             }
             length += prefixLength - 1;
@@ -148,7 +160,7 @@ public class ProcUrl extends AbstractUrl {
 
         // A path like /home/web
         int pathLength = parsePath(source, offset + length, terminator);
-        if(local && schema==null && pathLength<=0){
+        if (local && schema == null && pathLength <= 0) {
             return -1;
         }
         length += pathLength;

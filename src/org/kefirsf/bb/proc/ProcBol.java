@@ -13,24 +13,21 @@ public class ProcBol implements ProcPatternElement {
     public boolean isNextIn(Context context) {
         Source source = context.getSource();
         int offset = source.getOffset();
-        int length = source.length();
-        return offset < length && onBol(source, offset);
+        return source.hasNext() && onBol(source);
     }
 
     /**
      * I strongly don't recommend to use tag bol as a terminator.
      */
     public int findIn(Source source) {
-        int offset = source.getOffset();
-        int length = source.length();
-        if (offset < length) {
+        if (source.hasNext()) {
             // maybe we are on the beginning of line already?
-            if (onBol(source, offset)) {
-                return offset;
+            if (onBol(source)) {
+                return source.getOffset();
             }
 
             // If no find next line break
-            int index = findLineBreak(source, offset);
+            int index = findLineBreak(source);
 
             if (index < 0) {
                 return -1;
@@ -40,7 +37,7 @@ public class ProcBol implements ProcPatternElement {
             index = skipLineBreak(source, index);
 
             // If index is not on the end of text return it otherwise it's not a beginning of line.
-            if (index < length) {
+            if (index < source.length()) {
                 return index;
             } else {
                 return -1;
@@ -54,10 +51,10 @@ public class ProcBol implements ProcPatternElement {
      * Check we are on the beginning of line
      *
      * @param source the text source
-     * @param offset the offset
      * @return true if we are on the beginning of line
      */
-    private boolean onBol(Source source, int offset) {
+    private boolean onBol(Source source) {
+        int offset = source.getOffset();
         if (offset == 0) {
             return true;
         } else {
@@ -71,12 +68,11 @@ public class ProcBol implements ProcPatternElement {
      * Find first input of line break
      *
      * @param source the text source
-     * @param offset current offset
      */
-    private int findLineBreak(Source source, int offset) {
+    private int findLineBreak(Source source) {
         int index;
-        int n = source.findFrom(offset, AbstractEol.AN, false);
-        int r = source.findFrom(offset, AbstractEol.AR, false);
+        int n = source.find(AbstractEol.AN, false);
+        int r = source.find(AbstractEol.AR, false);
         if (n >= 0 && r >= 0) {
             index = Math.min(n, r);
         } else if (n >= 0) {
