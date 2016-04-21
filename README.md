@@ -1,5 +1,6 @@
 KefirBB
 =======
+[![Build Status](https://travis-ci.org/kefirfromperm/kefirbb.svg?branch=master)](https://travis-ci.org/kefirfromperm/kefirbb)
 
 About
 -----
