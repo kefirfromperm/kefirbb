@@ -1,6 +1,6 @@
 KefirBB
 =======
-[![Build Status](https://travis-ci.org/kefirfromperm/kefirbb.svg?branch=master)](https://travis-ci.org/kefirfromperm/kefirbb) [![Download](https://api.bintray.com/packages/bintray/jcenter/org.kefirsf%3Akefirbb/images/download.svg) ](https://bintray.com/bintray/jcenter/org.kefirsf%3Akefirbb/_latestVersion) [![OpenHUB](https://openhub.net/p/kefirbb/widgets/project_thin_badge?format=gif)](https://openhub.net/p/kefirbb)
+[![Build Status](https://travis-ci.org/kefirfromperm/kefirbb.svg?branch=master)](https://travis-ci.org/kefirfromperm/kefirbb) [![Download](https://api.bintray.com/packages/bintray/jcenter/org.kefirsf%3Akefirbb/images/download.svg) ](https://bintray.com/bintray/jcenter/org.kefirsf%3Akefirbb/_latestVersion) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.kefirsf/kefirbb/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.kefrisf/kefirbb) [![OpenHUB](https://openhub.net/p/kefirbb/widgets/project_thin_badge?format=gif)](https://openhub.net/p/kefirbb)
 
 About
 -----
