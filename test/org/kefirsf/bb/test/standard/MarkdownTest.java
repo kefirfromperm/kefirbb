@@ -130,41 +130,38 @@ public class MarkdownTest {
                             "    third string.\n" +
                             "Normal text."
             }
-/*
             ,
             {
-                    "<blockquote><h1>Blockquote</h1>" +
-                            "<p>First line of paragraph.\n" +
-                            "Second line of paragraph.</p>" +
-                            "<p>Second paragraph.\n" +
-                            "Second second.</p>" +
-                            "<p>Third paragraph.\n" +
-                            "New line of third paragraph.</p>" +
+                    "<blockquote>Blockquote\n\n" +
+                            "First line of paragraph.\n" +
+                            "Second line of paragraph.\n\n" +
+                            "Second paragraph.\n" +
+                            "Second second.\n\n" +
+                            "Third paragraph.\n" +
+                            "New line of third paragraph.\n" +
                             "</blockquote>" +
                             "<p>The paragraph outside the blockquote.</p>",
-                    "> # Blockquote\n" +
+                    "> Blockquote\n" +
                             ">\n" +
                             "> First line of paragraph.\n" +
                             "> Second line of paragraph.\n" +
+                            ">\n" +
+                            ">Second paragraph.\n" +
+                            ">Second second.\n" +
                             "> \n" +
-                            "> Second paragraph.\n" +
-                            "Second second.\n" +
-                            "\n" +
                             "> Third paragraph.\n" +
-                            "New line of third paragraph.\n" +
-                            "\n" +
+                            "> New line of third paragraph.\n" +
                             "The paragraph outside the blockquote."
             },
             {
-                    "<blockquote><p>Simple blockquote.</p></blockquote>",
+                    "<blockquote>Simple blockquote.\n</blockquote>",
                     "> Simple blockquote."
             },
             {
-                    "<blockquote><h1>Header blockquote.</h1></blockquote>",
+                    "<blockquote>Header blockquote.\n=======\n</blockquote>",
                     "> Header blockquote.\n" +
                             "> ======="
             }
-*/
     };
     private TextProcessor processor;
 

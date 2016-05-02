@@ -32,6 +32,18 @@
             <pattern><bol/><constant value="&#09;" ghost="true"/><var scope="codeBlockScope"/></pattern>
             <template>&lt;pre&gt;&lt;code&gt;<var/>&lt;/code&gt;&lt;/pre&gt;</template>
         </code>
+        <code name="blockquote" priority="1">
+            <pattern><bol/><constant value="&gt;" ghost="true"/><var scope="blockquoteScope"/></pattern>
+            <template>&lt;blockquote&gt;<var/>&lt;/blockquote&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="blockquoteScope" strong="true">
+        <code priority="1">
+            <pattern><bol/>&gt; <var scope="escapeHtml"/><eol/></pattern>
+            <pattern><bol/>&gt;<var scope="escapeHtml"/><eol/></pattern>
+            <template><var/>&#x0A;</template>
+        </code>
     </scope>
 
     <scope name="codeBlockScope" strong="true">
