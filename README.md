@@ -13,13 +13,51 @@ Maven dependency
     <dependency>
         <groupId>org.kefirsf</groupId>
         <artifactId>kefirbb</artifactId>
-        <version>1.1</version>
+        <version>1.2</version>
     </dependency>
 
 Usage
 -----
+
+### Convert BBCode
+
+KefirBB fully supports converting from BBCode markup language to HTML. The syntax of BBCode is described at
+[BBCode - Wikipedia](https://en.wikipedia.org/wiki/BBCode).
+
     TextProcessor processor = BBProcessorFactory.getInstance().create();
     assert "<b>text</b>".equals(processor.process("[b]text[/b]"));
+
+### HTML Filtration
+
+If you don't want to use special markup languages in your site but you have to safe your users from XSS-attacks
+you can use KefirBB configuration for HTMl filtration. It prevents using of javascript, styles etc.
+
+    TextProcessor processor = BBProcessorFactory.getInstance()
+        .createFromResource(ConfigurationFactory.SAFE_HTML_CONFIGURATION_FILE);
+    assert "<b>text</b>".equals(processor.process("<b onclick=\"javascript:alert('Fail!');\">test</B>"));
+
+### Convert Textile
+
+KefirBB fully supports Textile markup language. It's described at
+[TxStyle](https://txstyle.org/)
+
+    TextProcessor processor = BBProcessorFactory.getInstance()
+        .createFromResource(ConfigurationFactory.TEXTILE_CONFIGURATION_FILE);
+    assert "<p><b>text</b></p>".equals(processor.process("**text**"));
+
+### Convert Markdown
+
+KefirBB supports Markdown markup language partially described at
+[Markdown Syntax](https://daringfireball.net/projects/markdown/syntax). It doesn't support fully blockquotes and lists.
+
+    TextProcessor processor = BBProcessorFactory.getInstance()
+        .createFromResource(ConfigurationFactory.MARKDOWN_CONFIGURATION_FILE);
+    assert "<p><strong>text</strong></p>".equals(processor.process("**text**"));
+
+### Your custom configuration
+
+Also you can use your own configuration or customize existing. Just put your's own configuration to
+`classpath:kefirbb.xml`.
 
 Donation
 ------------
