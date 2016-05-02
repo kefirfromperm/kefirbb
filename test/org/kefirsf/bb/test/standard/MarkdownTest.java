@@ -150,7 +150,7 @@ public class MarkdownTest {
                             ">Second second.\n" +
                             "> \n" +
                             "> Third paragraph.\n" +
-                            "> New line of third paragraph.\n" +
+                            "> New line of third paragraph.\n\n" +
                             "The paragraph outside the blockquote."
             },
             {
@@ -161,6 +161,24 @@ public class MarkdownTest {
                     "<blockquote>Header blockquote.\n=======\n</blockquote>",
                     "> Header blockquote.\n" +
                             "> ======="
+            },
+            {
+                    "<ul><li>Red</li><li>Green</li><li>Blue</li></ul>",
+                    "* Red\n" +
+                            "* Green\n" +
+                            "* Blue"
+            },
+            {
+                    "<ul><li>Red</li><li>Green</li><li>Blue</li></ul>",
+                    "+ Red\n" +
+                            "+ Green\n" +
+                            "+ Blue\n"
+            },
+            {
+                    "<ul><li>Red</li><li>Green</li><li>Blue</li></ul>",
+                    "- Red\n" +
+                            "- Green\n" +
+                            "- Blue\n\n"
             }
     };
     private TextProcessor processor;
