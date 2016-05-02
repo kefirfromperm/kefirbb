@@ -2,7 +2,6 @@ package org.kefirsf.bb.proc;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -184,7 +183,7 @@ public class ProcUrl extends AbstractUrl {
         return parseRegex(source, offset, calcEnd(source, terminator), REGEX_PATH);
     }
 
-    int parsePort(Source source, int offset) {
+    private int parsePort(Source source, int offset) {
         return parseRegex(source, offset, source.length(), REGEX_PORT);
     }
 

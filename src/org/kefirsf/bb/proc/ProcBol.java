@@ -12,7 +12,6 @@ public class ProcBol implements ProcPatternElement {
 
     public boolean isNextIn(Context context) {
         Source source = context.getSource();
-        int offset = source.getOffset();
         return source.hasNext() && onBol(source);
     }
 
