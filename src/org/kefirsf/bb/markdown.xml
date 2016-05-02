@@ -42,25 +42,40 @@
             <pattern><bol/><constant value="- " ghost="true"/><var scope="minusListScope"/><eol/></pattern>
             <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
         </code>
+        <code name="numList" priority="1">
+            <pattern><bol/><var name="number" regex="\d+\. " ghost="true"/><var scope="numListScope"/><eol/></pattern>
+            <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
+        </code>
+    </scope>
+
+    <scope name="numListScope" strong="true">
+        <code>
+            <pattern><bol/><var name="number" regex="\d+\. "/><var scope="paragraphScope"/><var regex="((\n\r?)|(\r\n?))(((\n\r?)|(\r\n?))|(\d+\.\s))" ghost="true" name="terminator"/><eol/></pattern>
+            <pattern><bol/><var name="number" regex="\d+\. "/><var scope="paragraphScope"/><eol/></pattern>
+            <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
+        </code>
     </scope>
 
     <scope name="mulListScope" strong="true">
         <code>
-            <pattern><bol/>* <var scope="paragraphScope"/><eol/></pattern>
+            <pattern><bol/>* <var scope="paragraphScope"/><var scope="paragraphScope"/><var regex="((\n\r?)|(\r\n?))(((\n\r?)|(\r\n?))|(\*\s))" ghost="true" name="terminator"/><eol/></pattern>
+            <pattern><bol/>* <var scope="paragraphScope"/><var scope="paragraphScope"/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>
 
     <scope name="plusListScope" strong="true">
         <code>
-            <pattern><bol/>+ <var scope="paragraphScope"/><eol/></pattern>
+            <pattern><bol/>+ <var scope="paragraphScope"/><var scope="paragraphScope"/><var regex="((\n\r?)|(\r\n?))(((\n\r?)|(\r\n?))|(\+\s))" ghost="true" name="terminator"/><eol/></pattern>
+            <pattern><bol/>+ <var scope="paragraphScope"/><var scope="paragraphScope"/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>
 
     <scope name="minusListScope" strong="true">
         <code>
-            <pattern><bol/>- <var scope="paragraphScope"/><eol/></pattern>
+            <pattern><bol/>- <var scope="paragraphScope"/><var scope="paragraphScope"/><var regex="((\n\r?)|(\r\n?))(((\n\r?)|(\r\n?))|(\-\s))" ghost="true" name="terminator"/><eol/></pattern>
+            <pattern><bol/>- <var scope="paragraphScope"/><var scope="paragraphScope"/><eol/></pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>

@@ -179,6 +179,40 @@ public class MarkdownTest {
                     "- Red\n" +
                             "- Green\n" +
                             "- Blue\n\n"
+            },
+            {
+                    "<ol><li>Red</li><li>Green</li><li>Blue</li></ol>",
+                    "451. Red\n" +
+                            "666. Green\n" +
+                            "7. Blue\n\n"
+            },
+            {
+                    "<ul><li>Red</li><li>Green\n" +
+                            "Second string</li><li>Blue</li></ul>",
+                    "* Red\n" +
+                            "* Green\nSecond string\n" +
+                            "* Blue"
+            },
+            {
+                    "<ul><li>Red\n" +
+                            "Second string</li><li>Green</li><li>Blue</li></ul>",
+                    "+ Red\nSecond string\n" +
+                            "+ Green\n" +
+                            "+ Blue\n"
+            },
+            {
+                    "<ul><li>Red</li><li>Green</li><li>Blue\n" +
+                            "Second string</li></ul>",
+                    "- Red\n" +
+                            "- Green\n" +
+                            "- Blue\nSecond string\n\n"
+            },
+            {
+                    "<ol><li>Red\n" +
+                            "Second string</li><li>Green</li><li>Blue</li></ol>",
+                    "451. Red\nSecond string\n" +
+                            "666. Green\n" +
+                            "7. Blue\n\n"
             }
     };
     private TextProcessor processor;
