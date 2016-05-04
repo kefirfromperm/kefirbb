@@ -64,7 +64,7 @@ assert "<p><strong>text</strong></p>".equals(processor.process("**text**"));
 
 ### Your custom configuration
 
-Also you can use your own configuration or customize existing. Just put your's own configuration to
+Also you can use your own configuration or customize existing. Just put your own configuration to
 `classpath:kefirbb.xml`.
 
 Donation
