@@ -76,7 +76,7 @@ You can find full documentation in [the wiki of the project](https://github.com/
 
 Support
 -------
-You can report bugs at [GitHub Issues](https://github.com/kefirfromperm/kefirbb/issues). You also can ask me questions by email kefirfromperm@gmail.com.
+You can report bugs at [GitHub Issues](https://github.com/kefirfromperm/kefirbb/issues). Also you can ask me questions by email kefirfromperm@gmail.com.
 
 Donation
 ------------
