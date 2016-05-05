@@ -67,6 +67,17 @@ assert "<p><strong>text</strong></p>".equals(processor.process("**text**"));
 Also you can use your own configuration or customize existing. Just put your own configuration to
 `classpath:kefirbb.xml`.
 
+Documentation
+-------------
+You can find full documentation in [the wiki of the project](https://github.com/kefirfromperm/kefirbb/wiki).
+* [User Guide (English)](https://github.com/kefirfromperm/kefirbb/wiki/User-Guide-%28English%29)
+* [Руководство пользователя (русский)](https://github.com/kefirfromperm/kefirbb/wiki/%D0%A0%D1%83%D0%BA%D0%BE%D0%B2%D0%BE%D0%B4%D1%81%D1%82%D0%B2%D0%BE-%D0%BF%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8F-%28%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9%29)
+* [Javadoc API](https://www.javadoc.io/doc/org.kefirsf/kefirbb/)
+
+Support
+-------
+You can report bugs at [GitHub Issues](https://github.com/kefirfromperm/kefirbb/issues). You also can ask me questions by email kefirfromperm@gmail.com.
+
 Donation
 ------------
 If you want to give me a beer just send some money to <https://www.paypal.me/kefir>
