@@ -10,7 +10,14 @@ import static org.kefirsf.bb.ConfigurationFactory.SAFE_HTML_CONFIGURATION_FILE;
  */
 public class SafeHtmlTest extends AbstractStandardTest {
     private static final String[][] DATA = new String[][]{
-            {"", "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"}
+            {
+                    "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>",
+                    "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>"
+            },
+            {"<br/>", "<br class=\"bad\"/>"},
+            {"<br/>", "<br/>"},
+            {"<br>", "<br>"},
+            {"<br>", "<br class=\"bad\">"}
     };
 
     @Parameterized.Parameters(name = "{1}")

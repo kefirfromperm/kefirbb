@@ -45,6 +45,16 @@
             <pattern><eol/></pattern>
             <template>&lt;br/&gt;</template>
         </code>
+        <code name="br1">
+            <pattern>&lt;br/&gt;</pattern>
+            <pattern>&lt;br <junk/>/&gt;</pattern>
+            <template>&lt;br/&gt;</template>
+        </code>
+        <code name="br2">
+            <pattern>&lt;br&gt;</pattern>
+            <pattern>&lt;br <junk/>&gt;</pattern>
+            <template>&lt;br&gt;</template>
+        </code>
     </scope>
 
     <scope name="format" parent="basic">
@@ -105,63 +115,77 @@
 
     <!-- Headers -->
     <code name="h1">
-        <pattern ignoreCase="true">&lt;h1<junk/>&gt;<var scope="basic"/>&lt;/h1&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h1&gt;<var scope="basic"/>&lt;/h1&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h1 <junk/>&gt;<var scope="basic"/>&lt;/h1&gt;</pattern>
         <template>&lt;h1&gt;<var/>&lt;/h1&gt;</template>
     </code>
     <code name="h2">
-        <pattern ignoreCase="true">&lt;h2<junk/>&gt;<var scope="basic"/>&lt;/h2&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h2&gt;<var scope="basic"/>&lt;/h2&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h2 <junk/>&gt;<var scope="basic"/>&lt;/h2&gt;</pattern>
         <template>&lt;h2&gt;<var/>&lt;/h2&gt;</template>
     </code>
     <code name="h3">
-        <pattern ignoreCase="true">&lt;h3<junk/>&gt;<var scope="basic"/>&lt;/h3&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h3&gt;<var scope="basic"/>&lt;/h3&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h3 <junk/>&gt;<var scope="basic"/>&lt;/h3&gt;</pattern>
         <template>&lt;h3&gt;<var/>&lt;/h3&gt;</template>
     </code>
     <code name="h4">
-        <pattern ignoreCase="true">&lt;h4<junk/>&gt;<var scope="basic"/>&lt;/h4&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h4&gt;<var scope="basic"/>&lt;/h4&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h4 <junk/>&gt;<var scope="basic"/>&lt;/h4&gt;</pattern>
         <template>&lt;h4&gt;<var/>&lt;/h4&gt;</template>
     </code>
     <code name="h5">
-        <pattern ignoreCase="true">&lt;h5<junk/>&gt;<var scope="basic"/>&lt;/h5&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h5&gt;<var scope="basic"/>&lt;/h5&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h5 <junk/>&gt;<var scope="basic"/>&lt;/h5&gt;</pattern>
         <template>&lt;h5&gt;<var/>&lt;/h5&gt;</template>
     </code>
     <code name="h6">
-        <pattern ignoreCase="true">&lt;h6<junk/>&gt;<var scope="basic"/>&lt;/h6&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h6&gt;<var scope="basic"/>&lt;/h6&gt;</pattern>
+        <pattern ignoreCase="true">&lt;h6 <junk/>&gt;<var scope="basic"/>&lt;/h6&gt;</pattern>
         <template>&lt;h6&gt;<var/>&lt;/h6&gt;</template>
     </code>
 
     <!-- Paragraphs -->
     <code name="p">
-        <pattern ignoreCase="true">&lt;p<junk/>&gt;<var name="content" inherit="true"/>&lt;/p&gt;</pattern>
+        <pattern ignoreCase="true">&lt;p&gt;<var name="content" inherit="true"/>&lt;/p&gt;</pattern>
+        <pattern ignoreCase="true">&lt;p <junk/>&gt;<var name="content" inherit="true"/>&lt;/p&gt;</pattern>
         <template>&lt;p&gt;<var name="content"/>&lt;/p&gt;</template>
     </code>
     <code name="hr">
-        <pattern ignoreCase="true">&lt;hr<junk/>/&gt;</pattern>
+        <pattern ignoreCase="true">&lt;hr/&gt;</pattern>
+        <pattern ignoreCase="true">&lt;hr <junk/>/&gt;</pattern>
         <template>&lt;hr/&gt;</template>
     </code>
     <code name="div">
-        <pattern ignoreCase="true">&lt;div<junk/>&gt;<var inherit="true"/>&lt;/div&gt;</pattern>
+        <pattern ignoreCase="true">&lt;div&gt;<var inherit="true"/>&lt;/div&gt;</pattern>
+        <pattern ignoreCase="true">&lt;div <junk/>&gt;<var inherit="true"/>&lt;/div&gt;</pattern>
         <template>&lt;div&gt;<var/>&lt;/div&gt;</template>
     </code>
     <code name="span">
-        <pattern ignoreCase="true">&lt;span<junk/>&gt;<var inherit="true"/>&lt;/span&gt;</pattern>
+        <pattern ignoreCase="true">&lt;span&gt;<var inherit="true"/>&lt;/span&gt;</pattern>
+        <pattern ignoreCase="true">&lt;span <junk/>&gt;<var inherit="true"/>&lt;/span&gt;</pattern>
         <template>&lt;span&gt;<var/>&lt;/span&gt;</template>
     </code>
 
     <!-- Simple formatting -->
     <code name="bold">
-        <pattern ignoreCase="true">&lt;b<junk/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
+        <pattern ignoreCase="true">&lt;b&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
+        <pattern ignoreCase="true">&lt;b <junk/>&gt;<var name="content" inherit="true"/>&lt;/b&gt;</pattern>
         <template>&lt;b&gt;<var name="content"/>&lt;/b&gt;</template>
     </code>
     <code name="u">
-        <pattern ignoreCase="true">&lt;u<junk/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
+        <pattern ignoreCase="true">&lt;u&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
+        <pattern ignoreCase="true">&lt;u <junk/>&gt;<var name="content" inherit="true"/>&lt;/u&gt;</pattern>
         <template>&lt;u&gt;<var name="content"/>&lt;/u&gt;</template>
     </code>
     <code name="s">
-        <pattern ignoreCase="true">&lt;s<junk/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
+        <pattern ignoreCase="true">&lt;s&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
+        <pattern ignoreCase="true">&lt;s <junk/>&gt;<var name="content" inherit="true"/>&lt;/s&gt;</pattern>
         <template>&lt;s&gt;<var name="content"/>&lt;/s&gt;</template>
     </code>
     <code name="i">
-        <pattern ignoreCase="true">&lt;i<junk/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
+        <pattern ignoreCase="true">&lt;i&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
+        <pattern ignoreCase="true">&lt;i <junk/>&gt;<var name="content" inherit="true"/>&lt;/i&gt;</pattern>
         <template>&lt;i&gt;<var name="content"/>&lt;/i&gt;</template>
     </code>
 
@@ -179,91 +203,108 @@
 
     <!-- Quote block -->
     <code name="quote" priority="1">
-        <pattern ignoreCase="true">&lt;blockquote<junk/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
+        <pattern ignoreCase="true">&lt;blockquote&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
+        <pattern ignoreCase="true">&lt;blockquote <junk/>&gt;<var name="content" inherit="true"/>&lt;/blockquote&gt;</pattern>
         <template>&lt;blockquote&gt;<var name="content"/>&lt;/blockquote&gt;</template>
     </code>
 
     <!-- Quote code block -->
     <code name="pre">
-        <pattern ignoreCase="true">&lt;pre<junk/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
+        <pattern ignoreCase="true">&lt;pre&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
+        <pattern ignoreCase="true">&lt;pre <junk/>&gt;<var name="content" inherit="true"/>&lt;/pre&gt;</pattern>
         <template>&lt;pre&gt;<var name="content"/>&lt;/pre&gt;</template>
     </code>
     <code name="code">
-        <pattern ignoreCase="true">&lt;code<junk/>&gt;<var name="content" inherit="true"/>&lt;/code&gt;</pattern>
+        <pattern ignoreCase="true">&lt;code&gt;<var name="content" inherit="true"/>&lt;/code&gt;</pattern>
+        <pattern ignoreCase="true">&lt;code <junk/>&gt;<var name="content" inherit="true"/>&lt;/code&gt;</pattern>
         <template>&lt;code&gt;<var name="content"/>&lt;/code&gt;</template>
     </code>
 
     <!-- Lists -->
     <code name="ol">
-        <pattern ignoreCase="true">&lt;ol<junk/>&gt;<var scope="list"/>&lt;/ol&gt;</pattern>
+        <pattern ignoreCase="true">&lt;ol&gt;<var scope="list"/>&lt;/ol&gt;</pattern>
+        <pattern ignoreCase="true">&lt;ol <junk/>&gt;<var scope="list"/>&lt;/ol&gt;</pattern>
         <template>&lt;ol&gt;<var/>&lt;/ol&gt;</template>
     </code>
     <code name="ul" priority="1">
-        <pattern ignoreCase="true">&lt;ul<junk/>&gt;<var scope="list"/>&lt;/ul&gt;</pattern>
+        <pattern ignoreCase="true">&lt;ul&gt;<var scope="list"/>&lt;/ul&gt;</pattern>
+        <pattern ignoreCase="true">&lt;ul <junk/>&gt;<var scope="list"/>&lt;/ul&gt;</pattern>
         <template>&lt;ul&gt;<var/>&lt;/ul&gt;</template>
     </code>
 
     <scope name="list" ignoreText="true">
         <code name="li">
-            <pattern ignoreCase="true">&lt;li<junk/>&gt;<var scope="ROOT"/>&lt;/li&gt;</pattern>
+            <pattern ignoreCase="true">&lt;li&gt;<var scope="ROOT"/>&lt;/li&gt;</pattern>
+            <pattern ignoreCase="true">&lt;li <junk/>&gt;<var scope="ROOT"/>&lt;/li&gt;</pattern>
             <template>&lt;li&gt;<var/>&lt;/li&gt;</template>
         </code>
     </scope>
 
     <code name="dl">
-        <pattern ignoreCase="true">&lt;dl<junk/>&gt;<var scope="dlist"/>&lt;/dl&gt;</pattern>
+        <pattern ignoreCase="true">&lt;dl&gt;<var scope="dlist"/>&lt;/dl&gt;</pattern>
+        <pattern ignoreCase="true">&lt;dl <junk/>&gt;<var scope="dlist"/>&lt;/dl&gt;</pattern>
         <template>&lt;dl&gt;<var/>&lt;/dl&gt;</template>
     </code>
     <scope name="dlist">
         <code name="dt">
-            <pattern ignoreCase="true">&lt;dt<junk/>&gt;<var scope="ROOT"/>&lt;/dt&gt;</pattern>
+            <pattern ignoreCase="true">&lt;dt&gt;<var scope="ROOT"/>&lt;/dt&gt;</pattern>
+            <pattern ignoreCase="true">&lt;dt <junk/>&gt;<var scope="ROOT"/>&lt;/dt&gt;</pattern>
             <template>&lt;dt&gt;<var/>&lt;/dt&gt;</template>
         </code>
         <code name="dd">
-            <pattern ignoreCase="true">&lt;dd<junk/>&gt;<var scope="ROOT"/>&lt;/dd&gt;</pattern>
+            <pattern ignoreCase="true">&lt;dd&gt;<var scope="ROOT"/>&lt;/dd&gt;</pattern>
+            <pattern ignoreCase="true">&lt;dd <junk/>&gt;<var scope="ROOT"/>&lt;/dd&gt;</pattern>
             <template>&lt;dd&gt;<var/>&lt;/dd&gt;</template>
         </code>
     </scope>
 
     <!-- Table -->
     <code name="table">
-        <pattern ignoreCase="true">&lt;table<junk/>&gt;<var scope="tableScope"/>&lt;/table&gt;</pattern>
+        <pattern ignoreCase="true">&lt;table&gt;<var scope="tableScope"/>&lt;/table&gt;</pattern>
+        <pattern ignoreCase="true">&lt;table <junk/>&gt;<var scope="tableScope"/>&lt;/table&gt;</pattern>
         <template>&lt;table&gt;<var/>&lt;/table&gt;</template>
     </code>
 
     <scope name="tableScope" parent="tableBlock" ignoreText="true">
         <code name="caption">
-            <pattern ignoreCase="true">&lt;caption<junk/>&gt;<var scope="safeXml"/>&lt;/caption&gt;</pattern>
+            <pattern ignoreCase="true">&lt;caption&gt;<var scope="safeXml"/>&lt;/caption&gt;</pattern>
+            <pattern ignoreCase="true">&lt;caption <junk/>&gt;<var scope="safeXml"/>&lt;/caption&gt;</pattern>
             <template>&lt;caption&gt;<var/>&lt;/caption&gt;</template>
         </code>
         <code name="thead">
-            <pattern ignoreCase="true">&lt;thead<junk/>&gt;<var scope="tableBlock"/>&lt;/thead&gt;</pattern>
+            <pattern ignoreCase="true">&lt;thead&gt;<var scope="tableBlock"/>&lt;/thead&gt;</pattern>
+            <pattern ignoreCase="true">&lt;thead <junk/>&gt;<var scope="tableBlock"/>&lt;/thead&gt;</pattern>
             <template>&lt;thead&gt;<var/>&lt;/thead&gt;</template>
         </code>
         <code name="tbody">
-            <pattern ignoreCase="true">&lt;tbody<junk/>&gt;<var scope="tableBlock"/>&lt;/tbody&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tbody&gt;<var scope="tableBlock"/>&lt;/tbody&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tbody <junk/>&gt;<var scope="tableBlock"/>&lt;/tbody&gt;</pattern>
             <template>&lt;tbody&gt;<var/>&lt;/tbody&gt;</template>
         </code>
         <code name="tfoot">
-            <pattern ignoreCase="true">&lt;tfoot<junk/>&gt;<var scope="tableBlock"/>&lt;/tfoot&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tfoot&gt;<var scope="tableBlock"/>&lt;/tfoot&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tfoot <junk/>&gt;<var scope="tableBlock"/>&lt;/tfoot&gt;</pattern>
             <template>&lt;tfoot&gt;<var/>&lt;/tfoot&gt;</template>
         </code>
     </scope>
 
     <scope name="tableBlock" ignoreText="true">
         <code name="tr">
-            <pattern ignoreCase="true">&lt;tr<junk/>&gt;<var scope="tableRow"/>&lt;/tr&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tr&gt;<var scope="tableRow"/>&lt;/tr&gt;</pattern>
+            <pattern ignoreCase="true">&lt;tr <junk/>&gt;<var scope="tableRow"/>&lt;/tr&gt;</pattern>
             <template>&lt;tr&gt;<var/>&lt;/tr&gt;</template>
         </code>
     </scope>
 
     <scope name="tableRow" ignoreText="true">
         <code name="th">
-            <pattern ignoreCase="true">&lt;th<junk/>&gt;<var scope="ROOT"/>&lt;/th&gt;</pattern>
+            <pattern ignoreCase="true">&lt;th&gt;<var scope="ROOT"/>&lt;/th&gt;</pattern>
+            <pattern ignoreCase="true">&lt;th <junk/>&gt;<var scope="ROOT"/>&lt;/th&gt;</pattern>
             <template>&lt;th&gt;<var/>&lt;/th&gt;</template>
         </code>
         <code name="td">
-            <pattern ignoreCase="true">&lt;td<junk/>&gt;<var scope="ROOT"/>&lt;/td&gt;</pattern>
+            <pattern ignoreCase="true">&lt;td&gt;<var scope="ROOT"/>&lt;/td&gt;</pattern>
+            <pattern ignoreCase="true">&lt;td <junk/>&gt;<var scope="ROOT"/>&lt;/td&gt;</pattern>
             <template>&lt;td&gt;<var/>&lt;/td&gt;</template>
         </code>
     </scope>
