@@ -45,7 +45,7 @@
             <pattern><eol/></pattern>
             <template>&lt;br/&gt;</template>
         </code>
-        <code name="br1">
+        <code name="br1" priority="1">
             <pattern>&lt;br/&gt;</pattern>
             <pattern>&lt;br <junk/>/&gt;</pattern>
             <template>&lt;br/&gt;</template>
