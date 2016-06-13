@@ -49,7 +49,9 @@ public class UrlCollection {
             "http://kefirsf.org/kefirbb/ava.jpg",
             "http://kefirsf.org/kefirbb/.././ava.jpg",
             "https://www.youtube.com/watch?v=tvVA-vB7-mU",
-            "http://www.youtube.com/embed/AuG9i5cwGW0?rel=0;autoplay=1"
+            "http://www.youtube.com/embed/AuG9i5cwGW0?rel=0;autoplay=1",
+            "http://example.com/dashed-path/index.html",
+            "http://example.com/path/dashed-index.html"
     };
 
     public static final String[] INVALID = new String[]{

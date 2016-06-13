@@ -16,7 +16,7 @@ public class ProcUrl extends AbstractUrl {
             ":\\d{1,4}"
     );
     private static final Pattern REGEX_PATH = Pattern.compile(
-            "(/([\\w\\(\\)\\.]|(%\\p{XDigit}{2}))+)*/?"
+            "(/([\\w\\(\\)\\.\\-]|(%\\p{XDigit}{2}))+)*/?"
     );
     private static final Pattern REGEX_FRAGMENT = Pattern.compile(
             "#([\\w&-=]|(%\\p{XDigit}{2}))*"
