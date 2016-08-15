@@ -14,7 +14,7 @@ Maven dependency
 <dependency>
     <groupId>org.kefirsf</groupId>
     <artifactId>kefirbb</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
 </dependency>
 ```
 
