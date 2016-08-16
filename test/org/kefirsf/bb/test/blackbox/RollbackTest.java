@@ -8,7 +8,7 @@ import org.kefirsf.bb.TextProcessor;
 
 /**
  * A test to test rolling back timeout when in the text there are many corrupted codes.
- * 
+ *
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class RollbackTest {
