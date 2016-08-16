@@ -7,10 +7,12 @@ import org.kefirsf.bb.ConfigurationFactory;
 import org.kefirsf.bb.TextProcessor;
 
 /**
+ * A test to test rolling back timeout when in the text there are many corrupted codes.
+ * 
  * @author Vitaliy Samolovskih aka Kefir
  */
 public class RollbackTest {
-    @Test
+    @Test(timeout = 1000)
     public void test() {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 500; i++) {
@@ -21,9 +23,7 @@ public class RollbackTest {
         TextProcessor processor = BBProcessorFactory.getInstance().createFromResource(
                 ConfigurationFactory.DEFAULT_CONFIGURATION_FILE
         );
-        long start = System.currentTimeMillis();
+
         Assert.assertEquals(text, processor.process(text));
-        long finish = System.currentTimeMillis();
-        assert finish - start < 1000;
     }
 }
