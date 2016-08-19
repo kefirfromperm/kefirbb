@@ -19,7 +19,7 @@ public class ProcUrl extends AbstractUrl {
             "(/([\\w\\(\\)\\.\\-]|(%\\p{XDigit}{2}))+)*/?"
     );
     private static final Pattern REGEX_FRAGMENT = Pattern.compile(
-            "#([\\w&-=]|(%\\p{XDigit}{2}))*"
+            "#([\\w&\\-=]|(%\\p{XDigit}{2}))*"
     );
     private static final Pattern REGEX_LOCAL_PREFIX = Pattern.compile("\\.{0,2}/");
 
