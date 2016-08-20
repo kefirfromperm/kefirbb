@@ -3,14 +3,14 @@
 
     <groupId>org.kefirsf</groupId>
     <artifactId>kefirbb</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>KefirBB</name>
     <description>
         KefirBB is a Java-library for text processing. Initially it was developed for BB2HTML translation.
-        But flexible configuration allows to use it for others translations. For example Markdown, Textile,
-        and HTML filtration.
+        But flexible configuration allows to use it in different cases. For example for parsing Markdown, Textile,
+        and for HTML filtration.
     </description>
     <url>http://kefirsf.org/kefirbb/</url>
 
