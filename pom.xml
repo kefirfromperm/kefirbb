@@ -110,6 +110,10 @@
                     <source>1.5</source>
                     <target>1.5</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <verbose>true</verbose>
+                    <fork>true</fork>
+                    <executable>${JAVA_1_5_HOME}/bin/javac</executable>
+                    <compilerVersion>1.5</compilerVersion>
                 </configuration>
             </plugin>
 
