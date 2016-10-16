@@ -272,7 +272,6 @@ public class Source implements CharSequence {
         return sub(textLength);
     }
 
-    @SuppressWarnings("NullableProblems")
     public String toString() {
         return String.valueOf(textLength);
     }
