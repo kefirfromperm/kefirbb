@@ -62,7 +62,7 @@ public class ProcUrlMethodTest {
     @Test
     public void testParsePath(){
         String[] paths = new String[]{
-                "", "/", "/home", "/home/", "/home/web"
+                "", "/", "/home", "/home/", "/home/web", "/AZaz09-._~!$&'()*+,;=:@"
         };
 
         for(String path: paths) {

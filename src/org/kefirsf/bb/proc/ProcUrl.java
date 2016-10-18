@@ -12,14 +12,18 @@ import java.util.regex.Pattern;
  * @author kefir
  */
 public class ProcUrl extends AbstractUrl {
+
+    private static final String pct_encoded = "(%\\p{XDigit}{2})";
+    private static final String pchar = "[\\w~!$&'*+,;=:@\\(\\)\\.\\-]|"+pct_encoded;
+
     private static final Pattern REGEX_PORT = Pattern.compile(
             ":\\d{1,4}"
     );
     private static final Pattern REGEX_PATH = Pattern.compile(
-            "(/([\\w\\(\\)\\.\\-]|(%\\p{XDigit}{2}))+)*/?"
+            "(/(" + pchar + ")+)*/?"
     );
     private static final Pattern REGEX_FRAGMENT = Pattern.compile(
-            "#([\\w&\\-=]|(%\\p{XDigit}{2}))*"
+            "#(" + pchar + "|[/?])*"
     );
     private static final Pattern REGEX_LOCAL_PREFIX = Pattern.compile("\\.{0,2}/");
 
