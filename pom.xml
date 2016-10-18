@@ -3,7 +3,7 @@
 
     <groupId>org.kefirsf</groupId>
     <artifactId>kefirbb</artifactId>
-    <version>1.4</version>
+    <version>1.5</version>
     <packaging>jar</packaging>
 
     <name>KefirBB</name>
