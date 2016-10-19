@@ -189,17 +189,20 @@ public class ConfigurationFactory {
      * @throws TextProcessorFactoryException any problems
      */
     public Configuration create(File file) {
+        InputStream stream = null;
         try {
             Configuration configuration;
-            InputStream stream = new BufferedInputStream(new FileInputStream(file));
-            try {
-                configuration = create(stream);
-            } finally {
-                stream.close();
-            }
-            return configuration;
+            stream = new BufferedInputStream(new FileInputStream(file));
+            return create(stream);
         } catch (IOException e) {
             throw new TextProcessorFactoryException(e);
+        } finally {
+            try {
+                if(stream == null)
+                    stream.close();
+            } catch (IOException e) {
+                throw new TextProcessorFactoryException(e);
+            }
         }
     }
 
