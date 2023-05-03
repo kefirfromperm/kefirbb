@@ -17,7 +17,7 @@ public class ProcUrl extends AbstractUrl {
     private static final String pchar = "[\\w~!$&'*+,;=:@\\(\\)\\.\\-]|"+pct_encoded;
 
     private static final Pattern REGEX_PORT = Pattern.compile(
-            ":\\d{1,4}"
+            ":\\d{1,5}"
     );
     private static final Pattern REGEX_PATH = Pattern.compile(
             "(/(" + pchar + ")+)*/?"
